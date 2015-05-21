@@ -1,0 +1,40 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.3.RELEASE'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: "findbugs"
+apply plugin: "pmd"
+apply plugin: 'checkstyle'
+
+group = 'backpaper0'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava].each { it.options.encoding = 'UTF-8' }
+
+[findbugs, pmd, checkstyle].each { it.ignoreFailures = true }
+
+[findbugsTest, pmdTest, checkstyleTest].each { it.onlyIf { false } }
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+}
+
