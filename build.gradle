@@ -24,11 +24,11 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-[compileJava, compileTestJava].each { it.options.encoding = 'UTF-8' }
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-[findbugs, pmd, checkstyle].each { it.ignoreFailures = true }
+[findbugs, pmd, checkstyle]*.ignoreFailures = true
 
-[findbugsTest, pmdTest, checkstyleTest].each { it.onlyIf { false } }
+[findbugsTest, pmdTest, checkstyleTest]*.onlyIf { false }
 
 repositories {
     jcenter()
