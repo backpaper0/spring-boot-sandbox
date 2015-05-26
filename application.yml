@@ -2,3 +2,7 @@ spring:
     batch:
         job:
             enabled: false
+security:
+    user:
+        name: backpaper0
+        password: secret
