@@ -6,3 +6,6 @@ security:
     user:
         name: backpaper0
         password: secret
+management:
+    port: 4848
+
