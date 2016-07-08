@@ -1,0 +1,33 @@
+buildscript {
+    ext {
+        springBootVersion = '1.3.6.RELEASE'
+        stompVersion = '2.3.3'
+        jqueryVersion = '3.0.0'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+apply plugin: 'eclipse'
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-websocket'
+    compile "org.webjars:stomp-websocket:${stompVersion}"
+    compile "org.webjars:jquery:${jqueryVersion}"
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>Stomp Queue Sample</title>
+        <script src="webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+        <script src="webjars/jquery/3.0.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <p>
+        <input type="text" id="message">
+        <input type="button" id="send" value="Send">
+        </p>
+        <p id="output"></p>
+        <script>
+var ws = new WebSocket('ws://' + location.host + '/echo');
+var st = Stomp.over(ws);
+st.connect({}, function(frame) {
+    st.subscribe('/queue/response', function(message) {
+        $('#output').text(message.body);
+    });
+    $('#send').on('click', function() {
+        var message = $('#message').val();
+        if (message) {
+            st.send('/queue/echo', {}, message);
+            $('#message').val('');
+        }
+        $('#message').focus();
+    });
+    $('#message').on('keyup', function(event) {
+        if (event.which == 13) {
+            $('#send').click();
+        }
+    });
+});
+        </script>
+    </body>
+</html>
