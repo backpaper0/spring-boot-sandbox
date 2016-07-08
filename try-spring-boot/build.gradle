@@ -1,23 +1,12 @@
-import org.ajoberstar.grgit.Grgit
-
-ext.repo = Grgit.open(project.file('.'))
-
-task showHeadHash << {
-    println(repo.head().abbreviatedId)
-}
-
 buildscript {
     ext {
         springBootVersion = '1.2.3.RELEASE'
-        gradleGitVersion = '1.1.0'
     }
     repositories {
         jcenter()
-        mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-        classpath("org.ajoberstar:gradle-git:$gradleGitVersion")
     }
 }
 
