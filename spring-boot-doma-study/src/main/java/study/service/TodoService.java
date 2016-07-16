@@ -41,7 +41,9 @@ public class TodoService {
 
     @Transactional
     public Optional<Todo> close(Key<Todo> id) {
-        return dao.selectById(id).map(entity -> entity.close(LocalDateTime.now())).map(dao::update)
+        return dao.selectById(id)
+                .map(entity -> entity.close(LocalDateTime.now()))
+                .map(dao::update)
                 .map(Result::getEntity);
     }
 }
