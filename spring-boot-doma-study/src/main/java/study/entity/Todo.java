@@ -7,7 +7,9 @@ import org.seasar.doma.GeneratedValue;
 import org.seasar.doma.GenerationType;
 import org.seasar.doma.Id;
 
-@Entity
+import study.entity.listener.TodoListener;
+
+@Entity(listener = TodoListener.class)
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

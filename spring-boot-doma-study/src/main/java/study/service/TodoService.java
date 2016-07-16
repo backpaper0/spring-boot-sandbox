@@ -34,7 +34,6 @@ public class TodoService {
     public Todo create(String content) {
         Todo entity = new Todo();
         entity.content = content;
-        entity.createdAt = LocalDateTime.now();
         dao.insert(entity);
         return entity;
     }
