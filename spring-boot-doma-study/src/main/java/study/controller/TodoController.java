@@ -1,18 +1,15 @@
 package study.controller;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import study.controller.exception.NotFoundException;
 import study.entity.Todo;
 import study.service.TodoService;
 
@@ -43,11 +40,11 @@ public class TodoController {
      * 
      * @param id
      * @return
-     * @see #notFound(NoSuchElementException)
+     * @throws NotFoundException
      */
     @RequestMapping(method = RequestMethod.GET, value = "{id}")
     Todo findById(@PathVariable Long id) {
-        return service.findById(id).get();
+        return service.findById(id).orElseThrow(NotFoundException::new);
     }
 
     /**
@@ -67,20 +64,20 @@ public class TodoController {
      * 
      * @param id
      * @return
-     * @see #notFound(NoSuchElementException)
+     * @throws NotFoundException
      */
     @RequestMapping(method = RequestMethod.POST, value = "{id}:close")
     Todo close(@PathVariable Long id) {
-        return service.close(id).get();
+        return service.close(id).orElseThrow(NotFoundException::new);
     }
 
-    /**
-     * NoSuchElementExceptionが投げられたら404 Not Foundにする。
-     * 
-     * @param e
-     */
-    @ExceptionHandler(NoSuchElementException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    void notFound(NoSuchElementException e) {
-    }
+    //    /**
+    //     * NoSuchElementExceptionが投げられたら404 Not Foundにする。
+    //     * 
+    //     * @param e
+    //     */
+    //    @ExceptionHandler(NoSuchElementException.class)
+    //    @ResponseStatus(HttpStatus.NOT_FOUND)
+    //    void notFound(NoSuchElementException e) {
+    //    }
 }
