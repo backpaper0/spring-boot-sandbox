@@ -1,13 +1,16 @@
 package study.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import study.entity.Todo;
@@ -30,8 +33,8 @@ public class TodoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "{id}")
-    Optional<Todo> findById(@PathVariable Long id) {
-        return service.findById(id);
+    Todo findById(@PathVariable Long id) {
+        return service.findById(id).get();
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -40,7 +43,12 @@ public class TodoController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "{id}:close")
-    Optional<Todo> close(@PathVariable Long id) {
-        return service.close(id);
+    Todo close(@PathVariable Long id) {
+        return service.close(id).get();
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void notFound(NoSuchElementException e) {
     }
 }
