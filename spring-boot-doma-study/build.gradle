@@ -29,10 +29,10 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.seasar.doma:doma:${domaVersion}")
 	compile("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
-	runtime('org.postgresql:postgresql')
+    compile('com.h2database:h2')
+	compile('org.flywaydb:flyway-core')
 	testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
