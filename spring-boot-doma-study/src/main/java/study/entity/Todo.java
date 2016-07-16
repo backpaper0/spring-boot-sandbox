@@ -26,4 +26,12 @@ public class Todo {
         this.createdAt = createdAt;
         this.doneAt = doneAt;
     }
+
+    public Todo close(LocalDateTime doneAt) {
+        return new Todo(id, content, createdAt, doneAt);
+    }
+
+    public static Todo create(Content content) {
+        return new Todo(null, content, null, null);
+    }
 }

@@ -35,13 +35,13 @@ public class TodoService {
 
     @Transactional
     public Todo create(Content content) {
-        Todo entity = new Todo(null, content, null, null);
+        Todo entity = Todo.create(content);
         return dao.insert(entity).getEntity();
     }
 
     @Transactional
     public Optional<Todo> close(Key<Todo> id) {
-        return dao.selectById(id).map(entity -> new Todo(entity.id, entity.content,
-                entity.createdAt, LocalDateTime.now())).map(dao::update).map(Result::getEntity);
+        return dao.selectById(id).map(entity -> entity.close(LocalDateTime.now())).map(dao::update)
+                .map(Result::getEntity);
     }
 }
