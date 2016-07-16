@@ -10,6 +10,7 @@ import org.seasar.doma.SelectType;
 import org.seasar.doma.Update;
 import org.seasar.doma.boot.ConfigAutowireable;
 
+import study.domain.Key;
 import study.entity.Todo;
 
 @Dao
@@ -20,7 +21,7 @@ public interface TodoDao {
     <R> R selectAll(Collector<Todo, ?, R> collector);
 
     @Select
-    Optional<Todo> selectById(Long id);
+    Optional<Todo> selectById(Key<Todo> id);
 
     @Insert
     int insert(Todo entity);

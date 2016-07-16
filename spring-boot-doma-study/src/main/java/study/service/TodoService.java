@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import study.dao.TodoDao;
+import study.domain.Content;
+import study.domain.Key;
 import study.entity.Todo;
 
 @Service
@@ -26,12 +28,12 @@ public class TodoService {
         return dao.selectAll(Collectors.toList());
     }
 
-    public Optional<Todo> findById(Long id) {
+    public Optional<Todo> findById(Key<Todo> id) {
         return dao.selectById(id);
     }
 
     @Transactional
-    public Todo create(String content) {
+    public Todo create(Content content) {
         Todo entity = new Todo();
         entity.content = content;
         dao.insert(entity);
@@ -39,7 +41,7 @@ public class TodoService {
     }
 
     @Transactional
-    public Optional<Todo> close(Long id) {
+    public Optional<Todo> close(Key<Todo> id) {
         return dao.selectById(id).map(entity -> {
             entity.doneAt = LocalDateTime.now();
             dao.update(entity);

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import study.controller.exception.NotFoundException;
+import study.domain.Content;
+import study.domain.Key;
 import study.entity.Todo;
 import study.service.TodoService;
 
@@ -43,7 +45,7 @@ public class TodoController {
      * @throws NotFoundException
      */
     @RequestMapping(method = RequestMethod.GET, value = "{id}")
-    Todo findById(@PathVariable Long id) {
+    Todo findById(@PathVariable Key<Todo> id) {
         return service.findById(id).orElseThrow(NotFoundException::new);
     }
 
@@ -54,7 +56,7 @@ public class TodoController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    Todo create(@RequestParam String content) {
+    Todo create(@RequestParam Content content) {
         return service.create(content);
     }
 
@@ -67,7 +69,7 @@ public class TodoController {
      * @throws NotFoundException
      */
     @RequestMapping(method = RequestMethod.POST, value = "{id}:close")
-    Todo close(@PathVariable Long id) {
+    Todo close(@PathVariable Key<Todo> id) {
         return service.close(id).orElseThrow(NotFoundException::new);
     }
 

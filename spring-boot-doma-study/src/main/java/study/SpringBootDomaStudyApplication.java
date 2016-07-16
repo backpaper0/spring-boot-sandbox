@@ -14,6 +14,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import study.domain.Content;
+import study.domain.Key;
+
 @SpringBootApplication
 public class SpringBootDomaStudyApplication {
 
@@ -30,6 +33,20 @@ public class SpringBootDomaStudyApplication {
                             SerializerProvider provider)
                             throws IOException, JsonProcessingException {
                         jgen.writeString(value.toString());
+                    }
+                }).serializerByType(Key.class, new JsonSerializer<Key<?>>() {
+                    @Override
+                    public void serialize(Key<?> value, JsonGenerator jgen,
+                            SerializerProvider provider)
+                            throws IOException, JsonProcessingException {
+                        jgen.writeNumber(value.getValue());
+                    }
+                }).serializerByType(Content.class, new JsonSerializer<Content>() {
+                    @Override
+                    public void serialize(Content value, JsonGenerator jgen,
+                            SerializerProvider provider)
+                            throws IOException, JsonProcessingException {
+                        jgen.writeString(value.getValue());
                     }
                 }).build();
     }
