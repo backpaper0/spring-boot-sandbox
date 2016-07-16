@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.seasar.doma.jdbc.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,18 +35,13 @@ public class TodoService {
 
     @Transactional
     public Todo create(Content content) {
-        Todo entity = new Todo();
-        entity.content = content;
-        dao.insert(entity);
-        return entity;
+        Todo entity = new Todo(null, content, null, null);
+        return dao.insert(entity).getEntity();
     }
 
     @Transactional
     public Optional<Todo> close(Key<Todo> id) {
-        return dao.selectById(id).map(entity -> {
-            entity.doneAt = LocalDateTime.now();
-            dao.update(entity);
-            return entity;
-        });
+        return dao.selectById(id).map(entity -> new Todo(entity.id, entity.content,
+                entity.createdAt, LocalDateTime.now())).map(dao::update).map(Result::getEntity);
     }
 }

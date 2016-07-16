@@ -9,6 +9,7 @@ import org.seasar.doma.Select;
 import org.seasar.doma.SelectType;
 import org.seasar.doma.Update;
 import org.seasar.doma.boot.ConfigAutowireable;
+import org.seasar.doma.jdbc.Result;
 
 import study.domain.Key;
 import study.entity.Todo;
@@ -24,8 +25,8 @@ public interface TodoDao {
     Optional<Todo> selectById(Key<Todo> id);
 
     @Insert
-    int insert(Todo entity);
+    Result<Todo> insert(Todo entity);
 
     @Update
-    int update(Todo entity);
+    Result<Todo> update(Todo entity);
 }

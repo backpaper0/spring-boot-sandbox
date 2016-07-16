@@ -11,6 +11,6 @@ public class TodoListener implements EntityListener<Todo> {
 
     @Override
     public void preInsert(Todo entity, PreInsertContext<Todo> context) {
-        entity.createdAt = LocalDateTime.now();
+        context.setNewEntity(new Todo(null, entity.content, LocalDateTime.now(), entity.doneAt));
     }
 }
