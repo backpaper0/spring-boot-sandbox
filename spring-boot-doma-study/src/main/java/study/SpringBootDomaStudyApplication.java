@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -49,5 +50,27 @@ public class SpringBootDomaStudyApplication {
                         jgen.writeString(value.getValue());
                     }
                 }).build();
+    }
+
+    @Bean
+    Converter<String, Key<?>> keyConverter() {
+        return new Converter<String, Key<?>>() {
+
+            @Override
+            public Key<?> convert(String source) {
+                return new Key<>(Long.parseLong(source));
+            }
+        };
+    }
+
+    @Bean
+    Converter<String, Content> contentConverter() {
+        return new Converter<String, Content>() {
+
+            @Override
+            public Content convert(String source) {
+                return new Content(source);
+            }
+        };
     }
 }
