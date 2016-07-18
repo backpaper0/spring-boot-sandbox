@@ -30,6 +30,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-jdbc')
 	compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	compile("org.seasar.doma:doma:${domaVersion}")
 	compile("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
     compile('com.h2database:h2')
