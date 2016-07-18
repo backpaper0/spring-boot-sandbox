@@ -22,6 +22,9 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+compileJava.dependsOn processResources
+processResources.destinationDir = compileJava.destinationDir
+
 repositories {
 	mavenCentral()
 }
