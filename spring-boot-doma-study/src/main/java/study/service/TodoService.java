@@ -1,5 +1,6 @@
 package study.service;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +20,12 @@ import study.entity.Todo;
 public class TodoService {
 
     private final TodoDao dao;
+    private final Clock clock;
 
     @Autowired
-    public TodoService(TodoDao dao) {
+    public TodoService(TodoDao dao, Clock clock) {
         this.dao = dao;
+        this.clock = clock;
     }
 
     public List<Todo> findAll() {
@@ -42,7 +45,7 @@ public class TodoService {
     @Transactional
     public Optional<Todo> close(Key<Todo> id) {
         return dao.selectById(id)
-                .map(entity -> entity.close(LocalDateTime.now()))
+                .map(entity -> entity.close(LocalDateTime.now(clock)))
                 .map(dao::update)
                 .map(Result::getEntity);
     }

@@ -1,9 +1,16 @@
 package study;
 
 import java.io.IOException;
+import java.time.Clock;
+import java.util.function.Supplier;
 
+import org.seasar.doma.boot.autoconfigure.DomaConfigBuilder;
+import org.seasar.doma.jdbc.EntityListenerProvider;
+import org.seasar.doma.jdbc.entity.EntityListener;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 
@@ -21,6 +28,30 @@ public class SpringBootDomaStudyApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootDomaStudyApplication.class, args);
+    }
+
+    @Autowired
+    ApplicationContext context;
+
+    @Bean
+    DomaConfigBuilder domaConfigBuilder() {
+        return new DomaConfigBuilder().entityListenerProvider(entityListenerProvider());
+    }
+
+    @Bean
+    EntityListenerProvider entityListenerProvider() {
+        return new EntityListenerProvider() {
+            @Override
+            public <ENTITY, LISTENER extends EntityListener<ENTITY>> LISTENER get(
+                    Class<LISTENER> listenerClass, Supplier<LISTENER> listenerSupplier) {
+                return context.getBean(listenerClass);
+            }
+        };
+    }
+
+    @Bean
+    Clock clock() {
+        return Clock.systemDefaultZone();
     }
 
     @Bean
