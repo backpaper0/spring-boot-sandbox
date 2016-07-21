@@ -2,6 +2,7 @@ package study;
 
 import java.io.IOException;
 import java.time.Clock;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import org.seasar.doma.boot.autoconfigure.DomaConfigBuilder;
@@ -44,7 +45,8 @@ public class SpringBootDomaStudyApplication {
             @Override
             public <ENTITY, LISTENER extends EntityListener<ENTITY>> LISTENER get(
                     Class<LISTENER> listenerClass, Supplier<LISTENER> listenerSupplier) {
-                return context.getBean(listenerClass);
+                Map<String, LISTENER> beans = context.getBeansOfType(listenerClass);
+                return beans.values().stream().findAny().orElseGet(listenerSupplier);
             }
         };
     }
