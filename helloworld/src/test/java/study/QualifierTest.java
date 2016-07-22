@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 public class QualifierTest {
 
@@ -17,7 +18,7 @@ public class QualifierTest {
     public void test() throws Exception {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Foo.class, Hoge.class, Bar1.class, Bar2.class, Bar3.class, Bar4.class,
-                    Bar5.class);
+                    Bar5.class, QuxFactory.class, Quxx.class);
             context.refresh();
 
             Foo bean = context.getBean(Foo.class);
@@ -33,6 +34,13 @@ public class QualifierTest {
             assertThat(bean2.bar3, instanceOf(Bar3.class));
             assertThat(bean2.bar4, instanceOf(Bar4.class));
             assertThat(bean2.bar5, instanceOf(Bar5.class));
+
+            Quxx bean3 = context.getBean(Quxx.class);
+            assertThat(bean3.qux1.value, is(1));
+            assertThat(bean3.qux2.value, is(2));
+            assertThat(bean3.qux3.value, is(3));
+            assertThat(bean3.qux4.value, is(4));
+            assertThat(bean3.qux5.value, is(5));
         }
     }
 
@@ -118,4 +126,69 @@ public class QualifierTest {
     @Retention(RetentionPolicy.RUNTIME)
     public @interface Bar5Qualifier {
     }
+
+    public static class Qux {
+        final int value;
+
+        public Qux(int value) {
+            this.value = value;
+        }
+    }
+
+    public static class QuxFactory {
+
+        @Bean
+        @Qualifier("1")
+        Qux qux1() {
+            return new Qux(1);
+        }
+
+        @Bean
+        @Qualifier("2")
+        Qux qux2() {
+            return new Qux(2);
+        }
+
+        @Bean
+        @Qualifier("3")
+        Qux qux3() {
+            return new Qux(3);
+        }
+
+        @Bean
+        @Bar4Qualifier
+        Qux qux4() {
+            return new Qux(4);
+        }
+
+        @Bean
+        @Bar5Qualifier
+        Qux qux5() {
+            return new Qux(5);
+        }
+    }
+
+    public static class Quxx {
+
+        @Autowired
+        @Qualifier("1")
+        Qux qux1;
+
+        @Autowired
+        @Qualifier("2")
+        Qux qux2;
+
+        @Autowired
+        @Bar3Qualifier
+        Qux qux3;
+
+        @Autowired
+        @Qualifier("4")
+        Qux qux4;
+
+        @Autowired
+        @Bar5Qualifier
+        Qux qux5;
+    }
+
 }
