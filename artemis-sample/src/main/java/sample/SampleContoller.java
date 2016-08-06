@@ -15,11 +15,16 @@ public class SampleContoller {
 
     @PostMapping
     void post(@RequestParam String text) {
-        template.convertAndSend("sample", text + ":" + Thread.currentThread().getName());
+        Sample sample = new Sample();
+        sample.text = text;
+        sample.threadName = Thread.currentThread().getName();
+        template.convertAndSend("sample", sample);
     }
 
     @JmsListener(destination = "sample")
-    void handle(String text) {
-        System.out.println(text + ":" + Thread.currentThread().getName());
+    void handle(Sample sample) {
+        System.out.println(sample.text);
+        System.out.println(sample.threadName);
+        System.out.println(Thread.currentThread().getName());
     }
 }
