@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.6.RELEASE'
+        springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
         jcenter()
@@ -14,14 +14,15 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
-apply plugin: "findbugs"
-apply plugin: "pmd"
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
 
 [findbugs, pmd, checkstyle]*.ignoreFailures = true
 
@@ -32,9 +33,9 @@ repositories {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-batch:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-batch'
+    compile 'org.springframework.boot:spring-boot-starter-security'
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
