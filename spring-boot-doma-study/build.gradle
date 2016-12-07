@@ -1,17 +1,15 @@
 buildscript {
-	ext {
-		springBootVersion = '1.4.0.RELEASE'
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
         domaVersion = '2.12.0'
         domaSpringBootVersion = '1.1.0'
-	}
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-	}
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
+    }
 }
 
 apply plugin: 'java'
@@ -28,19 +26,17 @@ compileJava.dependsOn processResources
 processResources.destinationDir = compileJava.destinationDir
 
 repositories {
-	mavenCentral()
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
+    jcenter()
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-jdbc')
-	compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
+    compile('org.springframework.boot:spring-boot-starter-web')
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
-	compile("org.seasar.doma:doma:${domaVersion}")
-	compile("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
+    compile("org.seasar.doma:doma:${domaVersion}")
+    compile("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
     compile('com.h2database:h2')
-	compile('org.flywaydb:flyway-core')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+    compile('org.flywaydb:flyway-core')
+    testCompile('org.springframework.boot:spring-boot-starter-test') 
 }
