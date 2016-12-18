@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <title>Simple BBS</title>
+    </head>
+    <body>
+        <p><a href="#" data-th-href="@{'/login'}">Login</a></p>
+        <form method="post" data-th-action="@{'/post'}">
+            <p>
+                <input type="text" name="content"/>
+                <button type="post">Submit</button>
+            </p>
+        </form>
+        <ul>
+            <li data-th-each="post : ${posts}">
+                <span data-th-text="${post.user}">funya</span>
+                :
+                <span data-th-text="${post.content}">ほにゃら〜</span>
+            </li>
+        </ul>
+    </body>
+</html>
