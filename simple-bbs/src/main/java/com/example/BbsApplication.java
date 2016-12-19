@@ -48,8 +48,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .regexMatchers("/", "/login").permitAll()
-                .regexMatchers("/post").authenticated()
+                .antMatchers("/", "/login").permitAll()
+                .antMatchers("/post").authenticated()
                 .and()
                 .formLogin();
     }
@@ -60,14 +60,19 @@ class BbsController {
 
     final List<Post> posts = Collections.synchronizedList(new ArrayList<>());
 
-    @GetMapping
+    public BbsController() {
+        posts.add(new Post("hoge", "ほげほげ〜"));
+        posts.add(new Post("foobar", "フバフバ〜"));
+    }
+
+    @GetMapping("/")
     String home(Principal principal, Model model) {
         model.addAttribute("posts", posts);
         model.addAttribute("principal", principal);
         return "bbs";
     }
 
-    @PostMapping("post")
+    @PostMapping("/post")
     String post(Principal principal, Model model, @RequestParam String content) {
         posts.add(new Post(principal.getName(), content));
         return "redirect:/";

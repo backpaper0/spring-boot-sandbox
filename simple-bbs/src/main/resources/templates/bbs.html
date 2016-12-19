@@ -5,8 +5,15 @@
         <title>Simple BBS</title>
     </head>
     <body>
-        <p><a href="#" data-th-href="@{'/login'}">Login</a></p>
-        <form method="post" data-th-action="@{'/post'}">
+        <p data-th-unless="${principal}">
+            <a href="#" data-th-href="@{'/login'}">Login</a>
+        </p>
+        <!--/*/
+        <p data-th-if="${principal}">
+            <span data-th-text="${principal.name}">user</span>
+        </p>
+        /*/-->
+        <form method="post" data-th-action="@{'/post'}" data-th-if="${principal}">
             <p>
                 <input type="text" name="content"/>
                 <button type="post">Submit</button>
