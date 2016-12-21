@@ -28,6 +28,13 @@ repositories {
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.cloud:spring-cloud-starter-eureka')
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Camden.SR3"
+	}
 }
 
 eclipse.project.name = 'edge-service-frontend'

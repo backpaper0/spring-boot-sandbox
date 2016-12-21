@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 jar {
-	baseName = 'backend2'
+	baseName = 'service-discovery'
 	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
@@ -27,8 +27,9 @@ repositories {
 
 
 dependencies {
-    compile('org.springframework.cloud:spring-cloud-starter-eureka')
-    compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-sleuth-zipkin')
 }
 
 dependencyManagement {
@@ -37,4 +38,4 @@ dependencyManagement {
 	}
 }
 
-eclipse.project.name = 'edge-service-backend2'
+eclipse.project.name = 'edge-service-service-discovery'
