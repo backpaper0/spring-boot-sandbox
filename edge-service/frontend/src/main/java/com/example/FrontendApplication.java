@@ -27,10 +27,8 @@ class FrontController {
 
     final RestTemplate restTemplate;
 
-    @Value("${hello.api}")
-    private URI helloUrl;
-    @Value("${world.api}")
-    private URI worldUrl;
+    @Value("${edge.api}")
+    private URI edgeUrl;
 
     public FrontController(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
@@ -38,8 +36,8 @@ class FrontController {
 
     @GetMapping("/")
     String get() {
-        String hello = restTemplate.getForObject(helloUrl.resolve("/hello"), String.class);
-        String world = restTemplate.getForObject(worldUrl.resolve("/world"), String.class);
+        String hello = restTemplate.getForObject(edgeUrl.resolve("/h/hello"), String.class);
+        String world = restTemplate.getForObject(edgeUrl.resolve("/w/world"), String.class);
         return hello + world;
     }
 }
