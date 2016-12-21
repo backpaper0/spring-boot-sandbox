@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 jar {
-	baseName = 'ui'
+	baseName = 'zipkin'
 	version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
@@ -27,11 +27,9 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.cloud:spring-cloud-starter-eureka')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
-    compile('org.springframework.cloud:spring-cloud-sleuth-zipkin')
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('io.zipkin.java:zipkin-server')
+	runtime('io.zipkin.java:zipkin-autoconfigure-ui')
 }
 
 dependencyManagement {
@@ -40,4 +38,4 @@ dependencyManagement {
 	}
 }
 
-eclipse.project.name = 'service-discovery-ui'
+eclipse.project.name = 'service-discovery-zipkin'

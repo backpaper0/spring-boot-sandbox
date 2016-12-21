@@ -28,6 +28,8 @@ repositories {
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-eureka-server')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+    compile('org.springframework.cloud:spring-cloud-sleuth-zipkin')
 }
 
 dependencyManagement {
