@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.0.RELEASE'
+        springBootVersion = '1.4.3.RELEASE'
         stompVersion = '2.3.3'
         jqueryVersion = '3.0.0'
     }
@@ -13,7 +13,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'eclipse'
 
 tasks.withType(JavaCompile) {
