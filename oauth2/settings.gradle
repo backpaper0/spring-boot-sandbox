@@ -1,1 +1,1 @@
-include 'authorization', 'helloworld'
+include 'authorization', 'helloworld-api', 'helloworld-ui'
