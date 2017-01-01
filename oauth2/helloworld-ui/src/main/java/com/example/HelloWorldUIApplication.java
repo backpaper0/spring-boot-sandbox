@@ -36,9 +36,21 @@ class HelloController {
     }
 
     @GetMapping("/")
-    String hello(Model model) {
+    String home() {
+        return "redirect:/hello-world";
+    }
+
+    @GetMapping("/hello-world")
+    String helloWorld(Model model) {
         model.addAttribute("hello",
-                restTemplate.getForObject("http://localhost:8000/hello", String.class));
-        return "hello";
+                restTemplate.getForObject("http://localhost:8000/hello-world", String.class));
+        return "hello-world";
+    }
+
+    @GetMapping("/hello-user")
+    String helloUser(Model model) {
+        model.addAttribute("hello",
+                restTemplate.getForObject("http://localhost:8000/hello-user", String.class));
+        return "hello-user";
     }
 }

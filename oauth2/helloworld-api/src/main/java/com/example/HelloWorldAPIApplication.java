@@ -16,8 +16,13 @@ public class HelloWorldAPIApplication {
         SpringApplication.run(HelloWorldAPIApplication.class, args);
     }
 
-    @GetMapping("/hello")
-    String hello(Principal principal) {
+    @GetMapping("/hello-world")
+    String helloWorld() {
+        return "Hello, world!";
+    }
+
+    @GetMapping("/hello-user")
+    String helloUser(Principal principal) {
         return String.format("Hello, %s!", principal.getName());
     }
 }
