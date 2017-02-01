@@ -2,6 +2,7 @@ package study.valueobject;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.function.Function;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -30,13 +31,27 @@ public class ValueObjectSample {
 
     @Bean
     ObjectMapper jackson2ObjectMapperBuilder(Jackson2ObjectMapperBuilder builder) {
-        return builder.serializerByType(ValueObject.class, new JsonSerializer<ValueObject>() {
-            @Override
-            public void serialize(ValueObject value, JsonGenerator gen,
-                    SerializerProvider serializers) throws IOException, JsonProcessingException {
-                gen.writeString(value.getValue());
-            }
-        }).build();
+        return builder.serializerByType(ValueObject.class,
+                SerializerWrapper.create(ValueObject::getValue)).build();
+    }
+}
+
+class SerializerWrapper<T> extends JsonSerializer<T> {
+
+    final Function<T, String> f;
+
+    public SerializerWrapper(Function<T, String> f) {
+        this.f = f;
+    }
+
+    @Override
+    public void serialize(T value, JsonGenerator gen, SerializerProvider serializers)
+            throws IOException, JsonProcessingException {
+        gen.writeString(f.apply(value));
+    }
+
+    static <T> SerializerWrapper<T> create(Function<T, String> f) {
+        return new SerializerWrapper<>(f);
     }
 }
 
