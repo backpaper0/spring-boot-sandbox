@@ -21,25 +21,6 @@
         </div>
       </section>
     </div>
-    <script>
-      new Vue({
-        el: '#app',
-        data: {
-          progress: 0
-        },
-        methods: {
-          start () {
-            var es = new EventSource('run')
-              es.onmessage = e => {
-                let value = parseFloat(e.data)
-                this.progress = value * 100
-                if (value >= 1) {
-                  es.close()
-                }
-              }
-          }
-        }
-      })
-    </script>
+    <script src="../static/index.js" data-th-src="@{'/index.js'}"></script>
   </body>
 </html>
