@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
+    <title>Progress Sample</title>
+    <script src="https://unpkg.com/vue@2.1.10/dist/vue.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css"/>
+  </head>
+  <body>
+    <div id="app">
+      <section class="section">
+        <div class="content">
+          <p class="control">
+            <button class="button" v-on:click="start">
+              Submit
+            </button>
+          </p>
+          <progress class="progress is-primary" :value="progress" max="100">
+          </progress>
+        </div>
+      </section>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          progress: 0
+        },
+        methods: {
+          start () {
+            var es = new EventSource('run')
+              es.onmessage = e => {
+                let value = parseFloat(e.data)
+                this.progress = value * 100
+                if (value >= 1) {
+                  es.close()
+                }
+              }
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
