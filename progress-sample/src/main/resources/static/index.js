@@ -13,10 +13,10 @@ new Vue({
       fetch(req)
         .then(res => res.text())
         .then(name => {
-          var es = new EventSource('progress/' + name)
+          let es = new EventSource('progress/' + name)
           es.onmessage = e => {
             let value = parseFloat(e.data)
-            this.progress = value * 100
+            TweenLite.to(this, 1, { progress: value * 100 })
             if (value >= 1) {
               es.close()
             }

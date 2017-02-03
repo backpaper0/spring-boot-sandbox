@@ -2,6 +2,7 @@ package com.example;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -89,10 +90,11 @@ class Progress {
 class SampleService {
     @Async
     public void post(DoubleConsumer consumer) {
-        for (int i = 0; i < 100; i++) {
-            consumer.accept(i * 0.01);
+        Random r = new Random();
+        for (double d = 0; d < 1.0; d += r.nextDouble() * 0.1) {
+            consumer.accept(d);
             try {
-                TimeUnit.MILLISECONDS.sleep(50);
+                TimeUnit.MILLISECONDS.sleep(r.nextInt(1000));
             } catch (InterruptedException e) {
             }
         }
