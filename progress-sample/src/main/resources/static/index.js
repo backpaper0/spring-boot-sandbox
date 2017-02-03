@@ -5,6 +5,7 @@ new Vue({
   },
   methods: {
     start () {
+      this.progress = 0
       //let csrfHeaderName = document.getElementsByName('_csrf_header')[0].getAttribute('content')
       //let csrfToken = document.getElementsByName('_csrf')[0].getAttribute('content')
       //let headers = new Headers()
