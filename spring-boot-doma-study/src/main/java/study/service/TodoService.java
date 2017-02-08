@@ -5,12 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.seasar.doma.jdbc.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import study.dao.TodoDao;
 import study.domain.Content;
 import study.domain.Key;
@@ -22,7 +19,6 @@ public class TodoService {
     private final TodoDao dao;
     private final Clock clock;
 
-    @Autowired
     public TodoService(TodoDao dao, Clock clock) {
         this.dao = dao;
         this.clock = clock;

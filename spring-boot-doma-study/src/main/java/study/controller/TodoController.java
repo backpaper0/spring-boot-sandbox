@@ -1,14 +1,12 @@
 package study.controller;
 
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import study.controller.exception.NotFoundException;
 import study.domain.Content;
 import study.domain.Key;
@@ -21,7 +19,6 @@ public class TodoController {
 
     private final TodoService service;
 
-    @Autowired
     public TodoController(TodoService service) {
         this.service = service;
     }
@@ -31,7 +28,7 @@ public class TodoController {
      * 
      * @return
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     List<Todo> findAll() {
         return service.findAll();
     }
@@ -44,7 +41,7 @@ public class TodoController {
      * @return
      * @throws NotFoundException
      */
-    @RequestMapping(method = RequestMethod.GET, value = "{id}")
+    @GetMapping("{id}")
     Todo findById(@PathVariable Key<Todo> id) {
         return service.findById(id).orElseThrow(NotFoundException::new);
     }
@@ -55,7 +52,7 @@ public class TodoController {
      * @param content
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     Todo create(@RequestParam Content content) {
         return service.create(content);
     }
@@ -68,7 +65,7 @@ public class TodoController {
      * @return
      * @throws NotFoundException
      */
-    @RequestMapping(method = RequestMethod.POST, value = "{id}:close")
+    @PostMapping("{id}:close")
     Todo close(@PathVariable Key<Todo> id) {
         return service.close(id).orElseThrow(NotFoundException::new);
     }
