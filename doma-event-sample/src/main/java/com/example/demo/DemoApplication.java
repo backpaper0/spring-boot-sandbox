@@ -2,6 +2,12 @@ package com.example.demo;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import org.seasar.doma.jdbc.entity.PostDeleteContext;
+import org.seasar.doma.jdbc.entity.PostInsertContext;
+import org.seasar.doma.jdbc.entity.PostUpdateContext;
+import org.seasar.doma.jdbc.entity.PreDeleteContext;
+import org.seasar.doma.jdbc.entity.PreInsertContext;
+import org.seasar.doma.jdbc.entity.PreUpdateContext;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -99,4 +105,35 @@ class Runner implements CommandLineRunner {
     public void postDeleteFoo(final PostDelete<Foo> event) {
         System.out.println("$$$ postDelete Foo $$$");
     }
+
+    @EventListener
+    public void preInsertFoo2(final Foo entity, final PreInsertContext<Foo> context) {
+        System.out.println("+++ preInsert Foo 2 +++");
+    }
+
+    @EventListener
+    public void postInsertFoo2(final Foo entity, final PostInsertContext<Foo> context) {
+        System.out.println("=== postInsert Foo 2 ===");
+    }
+
+    @EventListener
+    public void preUpdateFoo2(final Foo entity, final PreUpdateContext<Foo> context) {
+        System.out.println("@@@ preUpdate Foo 2 @@@");
+    }
+
+    @EventListener
+    public void postUpdateFoo2(final Foo entity, final PostUpdateContext<Foo> context) {
+        System.out.println("%%% postUpdate Foo 2 %%%");
+    }
+
+    @EventListener
+    public void preDeleteFoo2(final Foo entity, final PreDeleteContext<Foo> context) {
+        System.out.println("### preDelete Foo 2 ###");
+    }
+
+    @EventListener
+    public void postDeleteFoo2(final Foo entity, final PostDeleteContext<Foo> context) {
+        System.out.println("$$$ postDelete Foo 2 $$$");
+    }
+
 }

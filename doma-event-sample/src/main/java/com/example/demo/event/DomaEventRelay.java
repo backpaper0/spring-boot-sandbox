@@ -11,6 +11,7 @@ import org.seasar.doma.jdbc.entity.PreUpdateContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
+import com.example.demo.even2.DomaApplicationEvent;
 
 @Component
 public class DomaEventRelay extends NullEntityListener<Object>
@@ -23,6 +24,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PreInsert<?> payload = new PreInsert<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
@@ -30,6 +33,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PreUpdate<?> payload = new PreUpdate<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
@@ -37,6 +42,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PreDelete<?> payload = new PreDelete<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
@@ -44,6 +51,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PostInsert<?> payload = new PostInsert<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
@@ -51,6 +60,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PostUpdate<?> payload = new PostUpdate<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
@@ -58,6 +69,8 @@ public class DomaEventRelay extends NullEntityListener<Object>
         final PostDelete<?> payload = new PostDelete<>(entity, context);
         final EntityEvent<?> event = new EntityEvent<>(payload, entity.getClass());
         publisher.publishEvent(event);
+
+        publisher.publishEvent(new DomaApplicationEvent(entity, context));
     }
 
     @Override
