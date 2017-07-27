@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import org.seasar.doma.jdbc.entity.PostDeleteContext;
 import org.seasar.doma.jdbc.entity.PostInsertContext;
@@ -11,18 +10,17 @@ import org.seasar.doma.jdbc.entity.PreUpdateContext;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import com.example.demo.dao.BarDao;
 import com.example.demo.dao.FooDao;
 import com.example.demo.entity.Bar;
 import com.example.demo.entity.Foo;
-import com.example.demo.event.PostDelete;
-import com.example.demo.event.PostInsert;
-import com.example.demo.event.PostUpdate;
-import com.example.demo.event.PreDelete;
-import com.example.demo.event.PreInsert;
-import com.example.demo.event.PreUpdate;
+import com.example.demo.event.PostDeleteEventListener;
+import com.example.demo.event.PostInsertEventListener;
+import com.example.demo.event.PostUpdateEventListener;
+import com.example.demo.event.PreDeleteEventListener;
+import com.example.demo.event.PreInsertEventListener;
+import com.example.demo.event.PreUpdateEventListener;
 
 @SpringBootApplication
 public class DemoApplication {
@@ -68,72 +66,67 @@ class Runner implements CommandLineRunner {
         barDao.selectById(3).ifPresent(barDao::delete);
     }
 
-    @EventListener
-    public void preInsertFoo(final PreInsert<Foo> event) {
-        System.out.println("*** preInsert Foo ***");
-        event.getEntity().updatedAt = LocalDateTime.now();
+    @PreInsertEventListener
+    public void preInsertFoo(final Foo entity) {
+        log("preInsert Foo");
     }
 
-    @EventListener
-    public void preInsertBar(final PreInsert<Bar> event) {
-        System.out.println("+++ preInsert Bar +++");
-        final Bar a = event.getEntity();
-        event.getContext().setNewEntity(new Bar(a.id, a.value, LocalDateTime.now()));
+    @PostInsertEventListener
+    public void postInsertFoo(final Foo entity) {
+        log("postInsert Foo");
     }
 
-    @EventListener
-    public void postInsertFoo(final PostInsert<Foo> event) {
-        System.out.println("=== postInsert Foo ===");
+    @PreUpdateEventListener
+    public void preUpdateFoo(final Foo entity) {
+        log("preUpdate Foo");
     }
 
-    @EventListener
-    public void preUpdateFoo(final PreUpdate<Foo> event) {
-        System.out.println("@@@ preUpdate Foo @@@");
+    @PostUpdateEventListener
+    public void postUpdateFoo(final Foo entity) {
+        log("postUpdate Foo");
     }
 
-    @EventListener
-    public void postUpdateFoo(final PostUpdate<Foo> event) {
-        System.out.println("%%% postUpdate Foo %%%");
+    @PreDeleteEventListener
+    public void preDeleteFoo(final Foo entity) {
+        log("preDelete Foo");
     }
 
-    @EventListener
-    public void preDeleteFoo(final PreDelete<Foo> event) {
-        System.out.println("### preDelete Foo ###");
+    @PostDeleteEventListener
+    public void postDeleteFoo(final Foo entity) {
+        log("postDelete Foo");
     }
 
-    @EventListener
-    public void postDeleteFoo(final PostDelete<Foo> event) {
-        System.out.println("$$$ postDelete Foo $$$");
+    @PreInsertEventListener
+    public void preInsertFoo(final Foo entity, final PreInsertContext<Foo> context) {
+        log("preInsert Foo, Context");
     }
 
-    @EventListener
-    public void preInsertFoo2(final Foo entity, final PreInsertContext<Foo> context) {
-        System.out.println("+++ preInsert Foo 2 +++");
+    @PostInsertEventListener
+    public void postInsertFoo(final Foo entity, final PostInsertContext<Foo> context) {
+        log("postInsert Foo, Context");
     }
 
-    @EventListener
-    public void postInsertFoo2(final Foo entity, final PostInsertContext<Foo> context) {
-        System.out.println("=== postInsert Foo 2 ===");
+    @PreUpdateEventListener
+    public void preUpdateFoo(final Foo entity, final PreUpdateContext<Foo> context) {
+        log("preUpdate Foo, Context");
     }
 
-    @EventListener
-    public void preUpdateFoo2(final Foo entity, final PreUpdateContext<Foo> context) {
-        System.out.println("@@@ preUpdate Foo 2 @@@");
+    @PostUpdateEventListener
+    public void postUpdateFoo(final Foo entity, final PostUpdateContext<Foo> context) {
+        log("postUpdate Foo, Context");
     }
 
-    @EventListener
-    public void postUpdateFoo2(final Foo entity, final PostUpdateContext<Foo> context) {
-        System.out.println("%%% postUpdate Foo 2 %%%");
+    @PreDeleteEventListener
+    public void preDeleteFoo(final Foo entity, final PreDeleteContext<Foo> context) {
+        log("preDelete Foo, Context");
     }
 
-    @EventListener
-    public void preDeleteFoo2(final Foo entity, final PreDeleteContext<Foo> context) {
-        System.out.println("### preDelete Foo 2 ###");
+    @PostDeleteEventListener
+    public void postDeleteFoo(final Foo entity, final PostDeleteContext<Foo> context) {
+        log("postDelete Foo, Context");
     }
 
-    @EventListener
-    public void postDeleteFoo2(final Foo entity, final PostDeleteContext<Foo> context) {
-        System.out.println("$$$ postDelete Foo 2 $$$");
+    static void log(final String s) {
+        System.out.printf("******** %s ********%n", s);
     }
-
 }
