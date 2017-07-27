@@ -5,11 +5,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.seasar.doma.jdbc.entity.PostUpdateContext;
+import org.seasar.doma.jdbc.entity.PreUpdateContext;
 
-@DomaEventListener(PostUpdateContext.class)
+@DomaEventHandler(PreUpdateContext.class)
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface PostUpdateEventListener {
+public @interface HandlePreUpdate {
 }

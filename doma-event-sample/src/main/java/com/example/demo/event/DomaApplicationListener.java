@@ -4,24 +4,24 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.ReflectionUtils;
 
 public class DomaApplicationListener implements ApplicationListener<DomaEvent> {
 
     private final Class<?> targetContextClass;
-    private final ApplicationContext applicationContext;
+    private final BeanFactory beanFactory;
     private final String beanName;
     private final Class<?> type;
     private final Method method;
 
     public DomaApplicationListener(final Class<?> targetContextClass,
-            final ApplicationContext applicationContext,
+            final BeanFactory beanFactory,
             final String beanName,
             final Class<?> type, final Method method) {
         this.targetContextClass = Objects.requireNonNull(targetContextClass);
-        this.applicationContext = Objects.requireNonNull(applicationContext);
+        this.beanFactory = Objects.requireNonNull(beanFactory);
         this.beanName = Objects.requireNonNull(beanName);
         this.type = Objects.requireNonNull(type);
         this.method = Objects.requireNonNull(method);
@@ -41,7 +41,7 @@ public class DomaApplicationListener implements ApplicationListener<DomaEvent> {
                 args.add(context);
             }
             ReflectionUtils.makeAccessible(method);
-            final Object target = applicationContext.getBean(beanName);
+            final Object target = beanFactory.getBean(beanName);
             ReflectionUtils.invokeMethod(method, target, args.toArray());
         }
     }

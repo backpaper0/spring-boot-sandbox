@@ -5,11 +5,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.seasar.doma.jdbc.entity.PreUpdateContext;
+import org.springframework.context.event.EventListener;
 
-@DomaEventListener(PreUpdateContext.class)
-@Target(ElementType.METHOD)
+@EventListener
+@Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface PreUpdateEventListener {
+public @interface DomaEventHandler {
+    Class<?> value();
 }

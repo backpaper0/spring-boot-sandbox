@@ -5,12 +5,11 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import org.springframework.context.event.EventListener;
+import org.seasar.doma.jdbc.entity.PreDeleteContext;
 
-@EventListener
-@Target(ElementType.ANNOTATION_TYPE)
+@DomaEventHandler(PreDeleteContext.class)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DomaEventListener {
-    Class<?> value();
+public @interface HandlePreDelete {
 }
