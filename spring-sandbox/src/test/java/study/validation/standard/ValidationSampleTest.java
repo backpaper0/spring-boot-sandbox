@@ -1,4 +1,4 @@
-package study.validation;
+package study.validation.standard;
 
 import static org.assertj.core.api.Assertions.*;
 
