@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>traditional file upload download sample</title>
+  </head>
+  <body>
+    <p data-th-if="${errorMessage != null}">
+      <span data-th-text="${errorMessage}">error</span>
+    </p>
+    <form data-th-action="@{'/'}" enctype="multipart/form-data" method="post">
+      <p>
+        <input type="file" id="file" name="file"/>
+        <button type="submit" id="submit">
+          Submit
+        </button>
+      </p>
+    </form>
+  </body>
+</html>
