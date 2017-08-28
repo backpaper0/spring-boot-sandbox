@@ -2,7 +2,6 @@ package com.example.mailsample;
 
 import java.util.Objects;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.mail.MailSender;
@@ -17,7 +16,7 @@ public class MailSampleApplication {
 }
 
 @Component
-class MailSample implements CommandLineRunner {
+class MailSample {
 
     private final MailSender mailSender;
 
@@ -25,8 +24,7 @@ class MailSample implements CommandLineRunner {
         this.mailSender = Objects.requireNonNull(sender);
     }
 
-    @Override
-    public void run(final String... args) throws Exception {
+    public void sendMail() {
         final SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo("foo@example.com");
         msg.setFrom("bar@example.com");

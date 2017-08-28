@@ -6,10 +6,11 @@ import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.subethamail.wiser.Wiser;
@@ -19,10 +20,16 @@ import org.subethamail.wiser.WiserMessage;
 @SpringBootTest
 public class MailSampleApplicationTest {
 
-    private static Wiser wiser;
+    private Wiser wiser;
+
+    @Autowired
+    private MailSample mailSample;
 
     @Test
     public void test() throws Exception {
+
+        mailSample.sendMail();
+
         final List<WiserMessage> messages = wiser.getMessages();
         assertThat(messages.size()).isEqualTo(1);
 
@@ -36,15 +43,15 @@ public class MailSampleApplicationTest {
         assertThat(msg.getContent()).asString().contains("Hello, world!");
     }
 
-    @BeforeClass
-    public static void startSMTPServer() {
+    @Before
+    public void startSMTPServer() {
         wiser = new Wiser();
         wiser.setPort(8025);
         wiser.start();
     }
 
-    @AfterClass
-    public static void stopSMTPServer() {
+    @After
+    public void stopSMTPServer() {
         wiser.stop();
     }
 }
