@@ -1,5 +1,8 @@
 package study.runner.testing;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,4 +29,18 @@ class Runner implements CommandLineRunner {
     public void run(final String... args) throws Exception {
         throw new Exception();
     }
+}
+
+@NotTest
+@Component
+class Runner2 implements CommandLineRunner {
+    @Override
+    public void run(final String... args) throws Exception {
+        throw new Exception();
+    }
+}
+
+@Retention(RetentionPolicy.RUNTIME)
+@Profile("!test")
+@interface NotTest {
 }
