@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS demo_values (
+	id IDENTITY
+	,value VARCHAR(100) NOT NULL
+);
