@@ -1,7 +1,7 @@
 package com.example;
 
 import javax.sql.DataSource;
-import org.seasar.doma.boot.autoconfigure.DomaConfig;
+
 import org.seasar.doma.boot.autoconfigure.DomaConfigBuilder;
 import org.seasar.doma.boot.autoconfigure.DomaProperties;
 import org.seasar.doma.jdbc.Config;
@@ -37,13 +37,11 @@ public class PrimaryConfiguration {
 
     @Bean
     @Primary
-    Config config(EntityListenerProvider entityListenerProvider) {
-        DomaConfigBuilder builder = new DomaConfigBuilder()
+    Config config(final EntityListenerProvider entityListenerProvider) {
+        final DomaConfigBuilder builder = domaProperties()
+                .initializeDomaConfigBuilder()
                 .dataSource(dataSource())
-                .dialect(domaProperties().getDialect().create())
-                .sqlFileRepository(domaProperties().getSqlFileRepository().create())
-                .naming(domaProperties().getNaming().naming())
                 .entityListenerProvider(entityListenerProvider);
-        return new DomaConfig(builder);
+        return builder.build(domaProperties());
     }
 }
