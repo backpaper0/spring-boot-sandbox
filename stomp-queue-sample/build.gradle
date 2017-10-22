@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.3.RELEASE'
+        springBootVersion = '1.5.8.RELEASE'
         stompVersion = '2.3.3'
         jqueryVersion = '3.0.0'
     }
