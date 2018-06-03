@@ -12,7 +12,8 @@ public class FunctionalEndpointsExample {
 
     public static void main(final String[] args) throws Exception {
 
-        final RouterFunction<ServerResponse> routerFunction = HelloHandlers.routerFunction();
+        final RouterFunction<ServerResponse> routerFunction = HelloHandlers.routerFunction()
+                .and(PersonHandlers.routerFunction());
 
         final HttpHandler handler = RouterFunctions.toHttpHandler(routerFunction);
         final ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(handler);
