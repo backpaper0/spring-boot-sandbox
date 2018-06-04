@@ -1,11 +1,12 @@
 package com.example.webfluxexample;
 
-import java.util.Arrays;
-
 import org.junit.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.example.webfluxexample.HelloController.Hello;
+
+import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 public class HelloControllerTest {
 
@@ -29,18 +30,20 @@ public class HelloControllerTest {
 
     @Test
     public void hello3() {
-        client.get().uri("/hello3").exchange()
-                .expectBodyList(Hello.class)
-                .isEqualTo(Arrays.asList(
-                        new Hello("Hello, Flux!!!1"),
-                        new Hello("Hello, Flux!!!2"),
-                        new Hello("Hello, Flux!!!3"),
-                        new Hello("Hello, Flux!!!4"),
-                        new Hello("Hello, Flux!!!5"),
-                        new Hello("Hello, Flux!!!6"),
-                        new Hello("Hello, Flux!!!7"),
-                        new Hello("Hello, Flux!!!8"),
-                        new Hello("Hello, Flux!!!9"),
-                        new Hello("Hello, Flux!!!10")));
+        final Flux<Hello> responseBody = client.get().uri("/hello3").exchange()
+                .returnResult(Hello.class).getResponseBody();
+
+        StepVerifier.create(responseBody)
+                .expectNext(new Hello("Hello, Flux!!!1"))
+                .expectNext(new Hello("Hello, Flux!!!2"))
+                .expectNext(new Hello("Hello, Flux!!!3"))
+                .expectNext(new Hello("Hello, Flux!!!4"))
+                .expectNext(new Hello("Hello, Flux!!!5"))
+                .expectNext(new Hello("Hello, Flux!!!6"))
+                .expectNext(new Hello("Hello, Flux!!!7"))
+                .expectNext(new Hello("Hello, Flux!!!8"))
+                .expectNext(new Hello("Hello, Flux!!!9"))
+                .expectNext(new Hello("Hello, Flux!!!10"))
+                .verifyComplete();
     }
 }
