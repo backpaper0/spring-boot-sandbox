@@ -1,1 +1,0 @@
-include 'backend1', 'backend2', 'edge-service', 'frontend', 'service-discovery'
