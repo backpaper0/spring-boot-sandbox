@@ -1,7 +1,9 @@
 package com.example;
 
+import java.util.Objects;
+
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -18,22 +20,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DemoApplication {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
     @GetMapping("/")
-    String home() {
+    public String home() {
         return "redirect:/hello";
     }
 
     @GetMapping("/hello")
-    String hello() {
+    public String hello() {
         return "hello";
     }
 
     @GetMapping("/login")
-    String login() {
+    public String login() {
         return "login";
     }
 }
@@ -41,11 +43,14 @@ public class DemoApplication {
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+    private final DataSource dataSource;
+
+    public WebSecurityConfig(final DataSource dataSource) {
+        this.dataSource = Objects.requireNonNull(dataSource);
+    }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
                 .passwordEncoder(new BCryptPasswordEncoder())
@@ -64,7 +69,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated()

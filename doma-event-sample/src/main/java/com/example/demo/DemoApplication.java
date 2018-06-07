@@ -1,15 +1,17 @@
 package com.example.demo;
 
+import java.util.Objects;
+
 import org.seasar.doma.jdbc.entity.PostDeleteContext;
 import org.seasar.doma.jdbc.entity.PostInsertContext;
 import org.seasar.doma.jdbc.entity.PostUpdateContext;
 import org.seasar.doma.jdbc.entity.PreDeleteContext;
 import org.seasar.doma.jdbc.entity.PreInsertContext;
 import org.seasar.doma.jdbc.entity.PreUpdateContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import com.example.demo.dao.FooDao;
 import com.example.demo.entity.Foo;
 import com.example.demo.event.HandlePostDelete;
@@ -26,8 +28,11 @@ public class DemoApplication implements CommandLineRunner {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Autowired
-    FooDao fooDao;
+    private final FooDao fooDao;
+
+    public DemoApplication(final FooDao fooDao) {
+        this.fooDao = Objects.requireNonNull(fooDao);
+    }
 
     @Override
     public void run(final String... args) throws Exception {

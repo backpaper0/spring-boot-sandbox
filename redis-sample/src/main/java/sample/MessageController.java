@@ -1,5 +1,6 @@
 package sample;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +14,17 @@ public class MessageController {
     private final MessageRepository repository;
     private final UUID id = UUID.randomUUID();
 
-    public MessageController(MessageRepository template) {
+    public MessageController(final MessageRepository template) {
         this.repository = template;
     }
 
     @GetMapping
-    Message get() {
-        return repository.findOne(id);
+    Optional<Message> get() {
+        return repository.findById(id);
     }
 
     @PostMapping
-    void post(@RequestParam String text) {
+    void post(@RequestParam final String text) {
         repository.save(new Message(id, text));
     }
 }
