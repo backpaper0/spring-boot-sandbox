@@ -11,14 +11,14 @@ import javax.persistence.Converter;
 public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override
-    public Date convertToDatabaseColumn(LocalDate attribute) {
+    public Date convertToDatabaseColumn(final LocalDate attribute) {
         return Optional.ofNullable(attribute)
                 .map(Date::valueOf)
                 .orElse(null);
     }
 
     @Override
-    public LocalDate convertToEntityAttribute(Date dbData) {
+    public LocalDate convertToEntityAttribute(final Date dbData) {
         return Optional.ofNullable(dbData)
                 .map(Date::toLocalDate)
                 .orElse(null);
