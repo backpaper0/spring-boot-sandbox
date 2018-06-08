@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File Upload Example</title>
+</head>
+
+<body>
+    <p>テキストファイルを選んでねヾ(*ΦωΦ)ﾉ</p>
+    <p>Submitするとファイルの内容が表示されるよε٩( º∀º )۶з</p>
+    <form data-th-action="@{/upload}" method="POST" enctype="multipart/form-data">
+        <p>
+            <input type="file" name="hoge" autofocus>
+            <button>Submit</button>
+        </p>
+    </form>
+</body>
+
+</html>
