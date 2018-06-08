@@ -74,17 +74,21 @@ public class FileUploaderControllerTest {
         //--------------------------------------------------------------------------------
         //リクエストを送信する
 
-        //RestTemplateをインスタンス化
+        //RestTemplateをインスタンス化する
+        //プロダクションコードの場合は@Beanでコンポーネント登録すると良い
+        final RestTemplate restTemplate = new RestTemplate();
+
+        //RequestFactoryを設定する(任意)
         //デフォルトだとByteArrayOutputStreamに全て書き出してから実際のレスポンスへコピーするっぽい
         //メモリ大事にしたい場合はbufferRequestBodyをfalseにした方が良さそう
         //その場合はContent-Lengthが事前に分からないのでchunkで送信されることになる
         final SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setBufferRequestBody(false);
-        //プロダクションコードの場合は@Beanでコンポーネント登録すると良い
-        final RestTemplate restTemplate = new RestTemplate(requestFactory);
+        restTemplate.setRequestFactory(requestFactory);
 
         final URI uri = UriComponentsBuilder
-                .fromHttpUrl("http://localhost:{port}/upload")
+                .fromHttpUrl("http://localhost:{port}")
+                .path("/upload")
                 .build(port);
 
         final RequestEntity<?> requestEntity = RequestEntity
