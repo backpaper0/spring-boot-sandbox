@@ -7,8 +7,17 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "example.client")
 public class ClientProperties {
 
+    private String baseUri;
     private String name;
     private String password;
+
+    public String getBaseUri() {
+        return baseUri;
+    }
+
+    public void setBaseUri(final String baseUri) {
+        this.baseUri = baseUri;
+    }
 
     public String getName() {
         return name;
