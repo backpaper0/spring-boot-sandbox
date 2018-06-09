@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
@@ -36,10 +37,7 @@ public class TweetClientImpl implements TweetClient {
 
     @Override
     public List<Tweet> getTweets() {
-        while (true) {
-            if (token.get() == null) {
-                authenticate();
-            }
+        return execute(() -> {
             final RequestEntity<?> requestEntity = RequestEntity
                     .get(URI.create("http://localhost:8888/tweets"))
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get())
@@ -47,26 +45,16 @@ public class TweetClientImpl implements TweetClient {
                     .build();
             final ParameterizedTypeReference<List<Tweet>> responseType = new ParameterizedTypeReference<List<Tweet>>() {
             };
-            try {
-                final ResponseEntity<List<Tweet>> responseEntity = restTemplate.exchange(
-                        requestEntity,
-                        responseType);
-                return responseEntity.getBody();
-            } catch (final HttpClientErrorException e) {
-                if (e.getStatusCode() != HttpStatus.FORBIDDEN) {
-                    throw e;
-                }
-            }
-            authenticate();
-        }
+            final ResponseEntity<List<Tweet>> responseEntity = restTemplate.exchange(
+                    requestEntity,
+                    responseType);
+            return responseEntity.getBody();
+        });
     }
 
     @Override
     public void postTweet(final String text) {
-        while (true) {
-            if (token.get() == null) {
-                authenticate();
-            }
+        execute(() -> {
             final MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             body.add("text", text);
             final RequestEntity<?> requestEntity = RequestEntity
@@ -74,17 +62,9 @@ public class TweetClientImpl implements TweetClient {
                     .header(HttpHeaders.AUTHORIZATION, "Bearer " + token.get())
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                     .body(body);
-            try {
-                restTemplate.exchange(requestEntity, Void.class);
-                return;
-
-            } catch (final HttpClientErrorException e) {
-                if (e.getStatusCode() != HttpStatus.FORBIDDEN) {
-                    throw e;
-                }
-            }
-            authenticate();
-        }
+            restTemplate.exchange(requestEntity, Void.class);
+            return null;
+        });
     }
 
     private void authenticate() {
@@ -99,5 +79,22 @@ public class TweetClientImpl implements TweetClient {
         final ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity,
                 String.class);
         token.set(responseEntity.getBody());
+    }
+
+    private <T> T execute(final Supplier<T> supplier) {
+        while (true) {
+            if (token.get() == null) {
+                authenticate();
+            }
+            try {
+                return supplier.get();
+
+            } catch (final HttpClientErrorException e) {
+                if (e.getStatusCode() != HttpStatus.FORBIDDEN) {
+                    throw e;
+                }
+            }
+            authenticate();
+        }
     }
 }
