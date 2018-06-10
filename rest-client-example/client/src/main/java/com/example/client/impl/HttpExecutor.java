@@ -1,6 +1,5 @@
 package com.example.client.impl;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
@@ -47,9 +46,7 @@ public class HttpExecutor {
                 authenticate();
             }
             try {
-                final UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-                        .fromHttpUrl(clientProperties.getBaseUri());
-                return function.apply(restTemplateForExecution, uriComponentsBuilder);
+                return function.apply(restTemplateForExecution, uriComponentsBuilder());
 
             } catch (final HttpClientErrorException e) {
                 if (e.getStatusCode() != HttpStatus.FORBIDDEN) {
@@ -60,12 +57,17 @@ public class HttpExecutor {
         }
     }
 
+    private UriComponentsBuilder uriComponentsBuilder() {
+        return UriComponentsBuilder
+                .fromHttpUrl(clientProperties.getBaseUri());
+    }
+
     private void authenticate() {
         final MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("username", clientProperties.getName());
         body.add("password", clientProperties.getPassword());
         final RequestEntity<?> requestEntity = RequestEntity
-                .post(URI.create("http://localhost:8888/token"))
+                .post(uriComponentsBuilder().path("/token").build().toUri())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .accept(MediaType.TEXT_PLAIN)
                 .body(body);
