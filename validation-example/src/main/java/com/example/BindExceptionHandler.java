@@ -5,8 +5,10 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
@@ -19,6 +21,7 @@ public class BindExceptionHandler {
     }
 
     @ExceptionHandler(BindException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     List<String> handle(final BindException e) {
         return e.getAllErrors().stream()
                 .map(a -> messageSource.getMessage(a, Locale.getDefault()))
