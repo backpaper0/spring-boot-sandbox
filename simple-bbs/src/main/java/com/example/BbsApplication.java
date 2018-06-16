@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +13,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
 public class BbsApplication {
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(BbsApplication.class, args);
     }
 }
@@ -29,13 +34,16 @@ public class BbsApplication {
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        final Function<String, String> encoder = PasswordEncoderFactories
+                .createDelegatingPasswordEncoder()::encode;
+        final Function<String, UserBuilder> builder = username -> User.withUsername(username)
+                .passwordEncoder(encoder);
+
         auth.inMemoryAuthentication()
-                .withUser("hoge").password("hoge").roles("USER")
-                .and()
-                .withUser("foobar").password("foobar").roles("USER")
-                .and()
-                .withUser("admin").password("admin").roles("USER", "ADMIN");
+                .withUser(builder.apply("hoge").password("hoge").roles("USER"))
+                .withUser(builder.apply("foobar").password("foobar").roles("USER"))
+                .withUser(builder.apply("admin").password("admin").roles("USER", "ADMIN"));
     }
 
     @Bean
@@ -45,7 +53,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(final HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/login").permitAll()
@@ -66,14 +74,14 @@ class BbsController {
     }
 
     @GetMapping("/")
-    String home(Principal principal, Model model) {
+    String home(final Principal principal, final Model model) {
         model.addAttribute("posts", posts);
         model.addAttribute("principal", principal);
         return "bbs";
     }
 
     @PostMapping("/post")
-    String post(Principal principal, Model model, @RequestParam String content) {
+    String post(final Principal principal, final Model model, @RequestParam final String content) {
         posts.add(new Post(principal.getName(), content));
         return "redirect:/";
     }
@@ -82,7 +90,8 @@ class BbsController {
 class Post {
     public final String user;
     public final String content;
-    public Post(String user, String content) {
+
+    public Post(final String user, final String content) {
         this.user = user;
         this.content = content;
     }
