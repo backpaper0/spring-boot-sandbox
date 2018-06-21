@@ -5,7 +5,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.core.annotation.AnnotationUtils;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class CustomValidationExampleController {
 
     @PostMapping
-    public String post1(@Valid final ExampleForm form) {
+    public String post(@Valid final ExampleForm form) {
         return "Valid";
     }
 }
@@ -32,8 +31,7 @@ public class CustomValidationExampleController {
 class ExampleForm {
 
     @Example
-    @NotNull
-    @Size(max = 3)
+    @Size(max = 5)
     private String text;
 
     public String getText() {
@@ -45,7 +43,7 @@ class ExampleForm {
     }
 }
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackageClasses = CustomValidationExampleController.class)
 class ExampleAdvice {
 
     private final Validator validator = new ValidatorImpl();

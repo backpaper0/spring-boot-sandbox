@@ -1,6 +1,5 @@
 package com.example;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -22,9 +21,9 @@ public class BindExceptionHandler {
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    List<String> handle(final BindException e) {
+    String handle(final BindException e) {
         return e.getAllErrors().stream()
                 .map(a -> messageSource.getMessage(a, Locale.getDefault()))
-                .collect(Collectors.toList());
+                .collect(Collectors.joining("\n"));
     }
 }
