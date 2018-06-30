@@ -20,7 +20,7 @@ public class FileStreamReader implements ItemStreamReader<String> {
 
     private final Resource resource;
 
-    BufferedReader reader;
+    private BufferedReader reader;
 
     public FileStreamReader(@Value("classpath:/input.txt") final Resource resource) {
         this.resource = resource;
