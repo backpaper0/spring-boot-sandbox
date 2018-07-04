@@ -18,6 +18,8 @@ public class ExceptionThrownInTheMiddleStreamReader implements ItemStreamReader<
 
     private final Function<String, Exception> exception;
 
+    private boolean opened;
+
     public ExceptionThrownInTheMiddleStreamReader(final Function<String, Exception> exception) {
         this.exception = exception;
     }
@@ -25,6 +27,7 @@ public class ExceptionThrownInTheMiddleStreamReader implements ItemStreamReader<
     @Override
     public void open(final ExecutionContext executionContext) throws ItemStreamException {
         System.out.println("*** open ***");
+        opened = true;
     }
 
     @Override
@@ -34,7 +37,10 @@ public class ExceptionThrownInTheMiddleStreamReader implements ItemStreamReader<
 
     @Override
     public void close() throws ItemStreamException {
-        System.out.println("*** close ***");
+        if (opened) {
+            System.out.println("*** close ***");
+            opened = false;
+        }
     }
 
     @Override
