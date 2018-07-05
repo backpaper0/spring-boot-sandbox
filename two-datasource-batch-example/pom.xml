@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example</groupId>
-	<artifactId>two-datasource-batch-sample</artifactId>
+	<artifactId>two-datasource-batch-example</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>two-datasource-batch-sample</name>
+	<name>two-datasource-batch-example</name>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>

@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableBatchProcessing
-public class TwoDatasourceBatchSampleApplication {
+public class TwoDatasourceBatchExampleApplication {
 
     public static void main(final String[] args) {
-        SpringApplication.run(TwoDatasourceBatchSampleApplication.class, args);
+        SpringApplication.run(TwoDatasourceBatchExampleApplication.class, args);
     }
 }
