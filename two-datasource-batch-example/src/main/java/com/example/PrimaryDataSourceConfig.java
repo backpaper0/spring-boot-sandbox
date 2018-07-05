@@ -7,9 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-public class DataSourceConfig {
+public class PrimaryDataSourceConfig {
 
     //DataSource 1
 
@@ -26,18 +28,9 @@ public class DataSourceConfig {
         return dataSourceProperties().initializeDataSourceBuilder().build();
     }
 
-    //DataSource 2
-
     @Bean
-    @Secondary
-    @ConfigurationProperties(prefix = "my-datasource.secondary")
-    public DataSourceProperties secondaryDataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
-    @Bean
-    @Secondary
-    public DataSource secondaryDataSource() {
-        return secondaryDataSourceProperties().initializeDataSourceBuilder().build();
+    @Primary
+    public PlatformTransactionManager platformTransactionManager() {
+        return new DataSourceTransactionManager(dataSource());
     }
 }
