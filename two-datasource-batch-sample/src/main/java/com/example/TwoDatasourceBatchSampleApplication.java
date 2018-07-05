@@ -78,7 +78,7 @@ public class TwoDatasourceBatchSampleApplication {
 
     @Bean
     @Secondary
-    @ConfigurationProperties(prefix = "my-datasource.primary")
+    @ConfigurationProperties(prefix = "my-datasource.secondary")
     DataSourceProperties secondaryDataSourceProperties() {
         return new DataSourceProperties();
     }
@@ -86,7 +86,7 @@ public class TwoDatasourceBatchSampleApplication {
     @Bean
     @Secondary
     DataSource secondaryDataSource() {
-        return dataSourceProperties().initializeDataSourceBuilder().build();
+        return secondaryDataSourceProperties().initializeDataSourceBuilder().build();
     }
 
     @Retention(RetentionPolicy.RUNTIME)
