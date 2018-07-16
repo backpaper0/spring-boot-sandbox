@@ -26,4 +26,13 @@ public class Bar {
         foo.method2();
         logger.info("end method2");
     }
+
+    public void method3() {
+        logger.info("begin method3");
+        try {
+            foo.method3();
+        } catch (final Exception ignore) {
+        }
+        logger.info("end method3");
+    }
 }

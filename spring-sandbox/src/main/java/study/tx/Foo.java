@@ -17,4 +17,9 @@ public class Foo {
         logger.info("method2");
         throw new RuntimeException();
     }
+
+    public void method3() {
+        logger.info("method3");
+        throw new RuntimeException();
+    }
 }

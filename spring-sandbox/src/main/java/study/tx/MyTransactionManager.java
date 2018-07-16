@@ -6,23 +6,24 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 import org.springframework.transaction.support.DefaultTransactionStatus;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 public class MyTransactionManager extends AbstractPlatformTransactionManager {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final ThreadLocal<MyTransaction> values = new ThreadLocal<MyTransaction>() {
-        @Override
-        protected MyTransaction initialValue() {
-            return MyTransaction.CREATED;
-        }
-    };
-
     @Override
     protected Object doGetTransaction() throws TransactionException {
-        final Object transaction = values.get();
+        final Object transaction = TransactionSynchronizationManager.hasResource(this)
+                ? TransactionSynchronizationManager.getResource(this)
+                : MyTransaction.CREATED;
         logger.info("doGetTransaction: {}", transaction);
         return transaction;
+    }
+
+    @Override
+    protected boolean isExistingTransaction(final Object transaction) throws TransactionException {
+        return transaction == MyTransaction.BEGAN;
     }
 
     @Override
@@ -30,8 +31,9 @@ public class MyTransactionManager extends AbstractPlatformTransactionManager {
             throws TransactionException {
         if (transaction == MyTransaction.CREATED) {
             logger.info("doBegin");
-            values.set(MyTransaction.BEGAN);
+            TransactionSynchronizationManager.bindResource(this, MyTransaction.BEGAN);
         } else if (transaction == MyTransaction.BEGAN) {
+            //nop
         } else {
             throw new RuntimeException();
         }
@@ -39,20 +41,14 @@ public class MyTransactionManager extends AbstractPlatformTransactionManager {
 
     @Override
     protected void doCommit(final DefaultTransactionStatus status) throws TransactionException {
-        final Object transaction = status.getTransaction();
-        if (transaction == MyTransaction.BEGAN) {
-            values.remove();
-            logger.info("doCommit");
-        }
+        TransactionSynchronizationManager.unbindResource(this);
+        logger.info("doCommit");
     }
 
     @Override
     protected void doRollback(final DefaultTransactionStatus status) throws TransactionException {
-        final Object transaction = status.getTransaction();
-        if (transaction == MyTransaction.BEGAN) {
-            values.remove();
-            logger.info("doRollback");
-        }
+        TransactionSynchronizationManager.unbindResource(this);
+        logger.info("doRollback");
     }
 
     private enum MyTransaction {
