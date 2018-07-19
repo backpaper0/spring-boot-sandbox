@@ -19,5 +19,6 @@ public class MyPropsExampleRunner implements CommandLineRunner {
         System.out.printf("prop1=%s%n", properties.getProp1());
         System.out.printf("prop2=%s%n", properties.getProp2());
         System.out.printf("prop3=%s%n", properties.getProp3());
+        System.out.printf("list=%s%n", properties.getListProp());
     }
 }
