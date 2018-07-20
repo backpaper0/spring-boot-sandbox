@@ -56,7 +56,7 @@ public class AggregatorFlow {
     @Bean
     public CorrelationStrategy correlationStrategy() {
         return message -> {
-            final int payload = (int) message.getPayload();
+            final int payload = (Integer) message.getPayload();
             return payload % 4;
         };
     }

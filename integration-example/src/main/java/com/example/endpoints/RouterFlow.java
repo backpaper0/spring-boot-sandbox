@@ -66,7 +66,7 @@ public class RouterFlow {
         @Override
         protected Collection<MessageChannel> determineTargetChannels(final Message<?> message) {
             final Collection<MessageChannel> channels = new ArrayList<>();
-            final int value = (int) message.getPayload();
+            final int value = (Integer) message.getPayload();
             if (value % 2 == 0) {
                 channels.add(output1);
             }
