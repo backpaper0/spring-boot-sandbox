@@ -13,29 +13,28 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.router.AbstractMessageRouter;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
 
 @Configuration
 @EnableIntegration
 public class RouterFlow {
 
     @Bean
-    public MessageChannel input() {
+    public DirectChannel input() {
         return new DirectChannel();
     }
 
     @Bean
-    public PollableChannel output0() {
+    public QueueChannel output0() {
         return new QueueChannel();
     }
 
     @Bean
-    public PollableChannel output1() {
+    public QueueChannel output1() {
         return new QueueChannel();
     }
 
     @Bean
-    public PollableChannel output2() {
+    public QueueChannel output2() {
         return new QueueChannel();
     }
 

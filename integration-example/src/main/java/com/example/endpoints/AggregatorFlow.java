@@ -9,20 +9,18 @@ import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
 
 @Configuration
 @EnableIntegration
 public class AggregatorFlow {
 
     @Bean
-    public MessageChannel input1() {
+    public DirectChannel input1() {
         return new DirectChannel();
     }
 
     @Bean
-    public PollableChannel output1() {
+    public QueueChannel output1() {
         return new QueueChannel();
     }
 
@@ -35,12 +33,12 @@ public class AggregatorFlow {
     }
 
     @Bean
-    public MessageChannel input2() {
+    public DirectChannel input2() {
         return new DirectChannel();
     }
 
     @Bean
-    public PollableChannel output2() {
+    public QueueChannel output2() {
         return new QueueChannel();
     }
 

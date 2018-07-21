@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,7 +18,7 @@ public class FilterFlowTest {
     @Autowired
     private MessageChannel input;
     @Autowired
-    private PollableChannel output;
+    private QueueChannel output;
 
     @Test
     public void test() {
@@ -31,6 +31,6 @@ public class FilterFlowTest {
         assertEquals(5, output.receive().getPayload());
         assertEquals(7, output.receive().getPayload());
         assertEquals(9, output.receive().getPayload());
-        assertNull(output.receive(0));
+        assertEquals(0, output.getQueueSize());
     }
 }

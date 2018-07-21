@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,7 +18,7 @@ public class TransformerFlowTest {
     @Autowired
     private MessageChannel input;
     @Autowired
-    private PollableChannel output;
+    private QueueChannel output;
 
     @Test
     public void test() {
@@ -29,6 +29,6 @@ public class TransformerFlowTest {
         assertEquals("FOO", output.receive().getPayload());
         assertEquals("BAR", output.receive().getPayload());
         assertEquals("BAZ", output.receive().getPayload());
-        assertNull(output.receive(0));
+        assertEquals(0, output.getQueueSize());
     }
 }

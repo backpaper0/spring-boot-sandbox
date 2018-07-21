@@ -5,9 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ServiceActivatorFlowTest {
 
     @Autowired
-    private DirectChannel input;
+    private MessageChannel input;
     @Autowired
     private QueueChannel output;
 

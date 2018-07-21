@@ -11,20 +11,18 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.splitter.AbstractMessageSplitter;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.PollableChannel;
 
 @Configuration
 @EnableIntegration
 public class SplitterFlow {
 
     @Bean
-    public MessageChannel input() {
+    public DirectChannel input() {
         return new DirectChannel();
     }
 
     @Bean
-    public PollableChannel output() {
+    public QueueChannel output() {
         return new QueueChannel();
     }
 
