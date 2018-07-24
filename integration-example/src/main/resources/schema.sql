@@ -1,0 +1,5 @@
+CREATE TABLE messages (
+    id BIGINT PRIMARY KEY,
+    content VARCHAR(100) NOT NULL,
+    sent INT NOT NULL DEFAULT(0)
+);
