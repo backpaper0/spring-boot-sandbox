@@ -18,3 +18,4 @@
 /output/*
 !/output/.gitkeep
 
+/input/hoge/*
