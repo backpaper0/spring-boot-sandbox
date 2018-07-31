@@ -3,16 +3,13 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.hello.Hello;
 import com.example.hello.HelloConfiguration;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = HelloConfiguration.class)
+@SpringJUnitConfig(HelloConfiguration.class)
 public class SimpleTest {
 
     @Autowired

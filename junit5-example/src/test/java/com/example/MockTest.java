@@ -4,18 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.hello.Hello;
 import com.example.hello.HelloConfiguration;
 import com.example.hello.impl.MessageFormatter;
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = HelloConfiguration.class)
+@SpringJUnitConfig(HelloConfiguration.class)
 public class MockTest {
 
     @Autowired
