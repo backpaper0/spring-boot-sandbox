@@ -15,26 +15,26 @@ import reactor.core.publisher.Mono;
 public class HelloController {
 
     @GetMapping("/hello")
-    Mono<String> getHello() {
+    public Mono<String> getHello() {
         // curl -v localhost:8080/hello"
         return Mono.just("Hello, world!");
     }
 
     @GetMapping("/hello2")
-    Mono<Hello> getHello2() {
+    public Mono<Hello> getHello2() {
         // curl -v localhost:8080/hello2"
         return Mono.just(new Hello("Hello, JSON!!"));
     }
 
     @GetMapping("/hello3")
-    Flux<Hello> getHello3() {
+    public Flux<Hello> getHello3() {
         // curl -v localhost:8080/hello3"
         return Flux.range(1, 10)
                 .map(i -> new Hello("Hello, Flux!!!" + i));
     }
 
     @GetMapping("/hello4")
-    Flux<Hello> getHello4() {
+    public Flux<Hello> getHello4() {
         // https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html#webflux-codecs-streaming
         // JSON Streaming
         //   curl -v localhost:8080/hello4 -H "Accept: application/stream+json"

@@ -27,7 +27,7 @@ public class FunctionalEndpoints {
         // curl localhost:8080/add -d a=2 -d b=3
 
         final Mono<String> s = request.formData()
-                .flatMapMany(a -> Flux.just("a", "b").map(a::getFirst))
+                .flatMapMany(form -> Flux.just("a", "b").map(form::getFirst))
                 .map(Integer::parseInt)
                 .reduce(Integer::sum)
                 .map(Objects::toString);

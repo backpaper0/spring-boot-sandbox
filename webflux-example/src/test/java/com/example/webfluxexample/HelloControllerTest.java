@@ -1,6 +1,6 @@
 package com.example.webfluxexample;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import com.example.webfluxexample.HelloController.Hello;
@@ -8,28 +8,28 @@ import com.example.webfluxexample.HelloController.Hello;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-public class HelloControllerTest {
+class HelloControllerTest {
 
     private final WebTestClient client = WebTestClient
             .bindToController(new HelloController())
             .build();
 
     @Test
-    public void hello() {
+    void hello() {
         client.get().uri("/hello").exchange()
                 .expectBody(String.class)
                 .isEqualTo("Hello, world!");
     }
 
     @Test
-    public void hello2() {
+    void hello2() {
         client.get().uri("/hello2").exchange()
                 .expectBody(Hello.class)
                 .isEqualTo(new Hello("Hello, JSON!!"));
     }
 
     @Test
-    public void hello3() {
+    void hello3() {
         final Flux<Hello> responseBody = client.get().uri("/hello3").exchange()
                 .returnResult(Hello.class).getResponseBody();
 
