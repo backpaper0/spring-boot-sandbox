@@ -1,14 +1,14 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
-public class StepVerifierTest {
+class StepVerifierTest {
 
     @Test
-    public void expectErrorMessage() throws Exception {
+    void expectErrorMessage() throws Exception {
 
         final Flux<String> stream = Flux.<String> create(emitter -> {
             emitter.next("foo");

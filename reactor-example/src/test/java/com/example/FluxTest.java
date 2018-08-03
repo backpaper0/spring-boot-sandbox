@@ -1,15 +1,15 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-public class FluxTest {
+class FluxTest {
 
     @Test
-    public void range() throws Exception {
+    void range() throws Exception {
 
         final Flux<Integer> actual1 = Flux.range(1, 10);
 
@@ -25,7 +25,7 @@ public class FluxTest {
     }
 
     @Test
-    public void filter() throws Exception {
+    void filter() throws Exception {
 
         final Flux<Integer> actual = Flux.range(1, 10)
                 .filter(a -> a % 2 == 0);
@@ -36,7 +36,7 @@ public class FluxTest {
     }
 
     @Test
-    public void map() throws Exception {
+    void map() throws Exception {
 
         final Flux<String> actual = Flux.just("hello", "world")
                 //.map(String::toUpperCase)
@@ -48,7 +48,7 @@ public class FluxTest {
     }
 
     @Test
-    public void reduce() throws Exception {
+    void reduce() throws Exception {
 
         //----------------------------------------------------------------
         // 1
