@@ -14,6 +14,6 @@ public class HelloRunner implements CommandLineRunner {
 
     @Override
     public void run(final String... args) throws Exception {
-        hello.say();
+        System.out.println(hello.say());
     }
 }

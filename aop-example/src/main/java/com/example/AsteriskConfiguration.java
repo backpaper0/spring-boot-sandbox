@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class LoggingConfiguration {
+public class AsteriskConfiguration {
 
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
@@ -17,8 +17,8 @@ public class LoggingConfiguration {
     @Bean
     public DefaultPointcutAdvisor loggingPointcutAdvisor() {
         final DefaultPointcutAdvisor pointcutAdvisor = new DefaultPointcutAdvisor();
-        pointcutAdvisor.setAdvice(new LoggingInterceptor());
-        pointcutAdvisor.setPointcut(AnnotationMatchingPointcut.forMethodAnnotation(Logging.class));
+        pointcutAdvisor.setAdvice(new AsteriskInterceptor());
+        pointcutAdvisor.setPointcut(AnnotationMatchingPointcut.forMethodAnnotation(Asterisk.class));
         return pointcutAdvisor;
     }
 }
