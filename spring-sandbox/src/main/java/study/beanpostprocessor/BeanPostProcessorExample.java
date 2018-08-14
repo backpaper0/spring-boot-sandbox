@@ -1,11 +1,9 @@
 package study.beanpostprocessor;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
+@Configuration
+@ComponentScan
 public class BeanPostProcessorExample {
-    public static void main(final String[] args) {
-        SpringApplication.run(BeanPostProcessorExample.class, args);
-    }
 }

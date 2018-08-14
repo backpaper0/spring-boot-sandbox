@@ -1,22 +1,21 @@
 package study.customautowire;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = CustomAutowireConfigurerExample.class,
-        webEnvironment = WebEnvironment.NONE)
-public class CustomAutowireConfigurerExampleTest {
+import java.util.Arrays;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+@SpringJUnitConfig(CustomAutowireConfigurerExample.class)
+class CustomAutowireConfigurerExampleTest {
 
     @Autowired
     private Bar bar;
 
     @Test
-    public void test() {
-        bar.run();
+    void test() {
+        assertEquals(Arrays.asList("foo 1", "foo 2"), bar.get());
     }
 }

@@ -3,20 +3,17 @@ package study.beanpostprocessor;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = BeanPostProcessorExample.class)
-public class BeanPostProcessorExampleTest {
+@SpringJUnitConfig(BeanPostProcessorExample.class)
+class BeanPostProcessorExampleTest {
 
     @Autowired
     private Bar bar;
 
     @Test
-    public void get() throws Exception {
+    void get() throws Exception {
         final String s = bar.get();
         assertEquals("ABhelloBA", s);
     }

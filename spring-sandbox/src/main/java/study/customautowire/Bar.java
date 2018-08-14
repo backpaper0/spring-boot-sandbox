@@ -1,5 +1,10 @@
 package study.customautowire;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -13,8 +18,7 @@ public class Bar {
         this.foo2 = foo2;
     }
 
-    public void run() {
-        System.out.println(foo1);
-        System.out.println(foo2);
+    public List<String> get() {
+        return Stream.of(foo1, foo2).map(Objects::toString).collect(Collectors.toList());
     }
 }
