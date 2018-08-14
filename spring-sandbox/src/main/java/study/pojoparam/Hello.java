@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")
 public class Hello {
     @GetMapping
-    public String say(@RequestParam Name name) {
+    public String say(@RequestParam final Name name) {
         return "Hello, " + name.value + "!";
     }
 
     public static class Name {
         public final String value;
-        public Name(String value) {
+
+        public Name(final String value) {
             this.value = value;
             new Throwable().printStackTrace(System.out);
         }

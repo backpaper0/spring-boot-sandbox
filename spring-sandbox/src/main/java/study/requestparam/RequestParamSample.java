@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -78,9 +79,11 @@ interface From {
 
 class Constructor {
     private final String s;
+
     public Constructor(final String s) {
         this.s = s;
     }
+
     @Override
     public String toString() {
         return s;
@@ -92,6 +95,7 @@ enum EnumValueOf {
     public static EnumValueOf of(final String s) {
         return xxx;
     }
+
     public static EnumValueOf from(final String s) {
         return yyy;
     }
@@ -105,13 +109,16 @@ enum EnumValueOf {
 enum EnumOf {
     SINGLETON("fff");
     private final String s;
+
     EnumOf(final String s) {
         this.s = s;
     }
+
     @Override
     public String toString() {
         return s;
     }
+
     public static EnumOf of(final String s) {
         return Arrays.stream(values())
                 .filter(a -> Objects.equals(s, a.s))

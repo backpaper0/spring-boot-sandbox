@@ -10,21 +10,22 @@ import org.springframework.context.ApplicationContextAware;
 @SpringBootApplication
 public class FactoryStudy implements CommandLineRunner, ApplicationContextAware {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         SpringApplication.run(FactoryStudy.class, args);
     }
 
     private ApplicationContext ac;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(final String... args) throws Exception {
         System.out.println(ac.getBean(Hello.class));
         System.out.println(ac.getBean(Hello.class));
         System.out.println(ac.getBean(Hello.class));
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext)
+            throws BeansException {
         this.ac = applicationContext;
     }
 }

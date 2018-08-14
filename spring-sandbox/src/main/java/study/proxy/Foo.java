@@ -11,6 +11,7 @@ import org.springframework.web.context.annotation.RequestScope;
 public class Foo {
     private static final AtomicInteger counter = new AtomicInteger();
     private final int count = counter.incrementAndGet();
+
     public String doMethod() {
         return "Foo(" + count + ")";
     }

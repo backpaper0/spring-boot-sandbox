@@ -9,7 +9,7 @@ public class Bar {
 
     private final Foo foo;
 
-    public Bar(Foo foo) {
+    public Bar(final Foo foo) {
         this.foo = Objects.requireNonNull(foo);
     }
 

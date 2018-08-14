@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/hello")
 public class Hello {
     @GetMapping
-    public String say(@RequestParam String name) {
+    public String say(@RequestParam final String name) {
         return "[GET]Hello, " + name + "!";
     }
+
     @PostMapping
-    public String say2(@RequestParam String name) {
+    public String say2(@RequestParam final String name) {
         return "[POST]Hello, " + name + "!";
     }
 }

@@ -3,6 +3,7 @@ package study.event.sample1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
@@ -12,7 +13,7 @@ public class EventSample1 implements CommandLineRunner {
 
     public static void main(final String[] args) {
         final SpringApplication sa = new SpringApplication(EventSample1.class);
-        sa.setWebEnvironment(false);
+        sa.setWebApplicationType(WebApplicationType.NONE);
         sa.run(args);
     }
 

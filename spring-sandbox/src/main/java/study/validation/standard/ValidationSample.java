@@ -21,7 +21,7 @@ public class ValidationSample {
      * ModelAttributeMethodProcessorの処理中にバリデーションが行われる。
      * 例外を投げるかメソッドパラメーターにErrorsを渡すかは
      * isBindExceptionRequiredメソッドで決まる。
-     * 
+     *
      */
     @GetMapping("/1")
     String get1(@Validated final Sample sample, final Errors errors) {

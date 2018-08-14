@@ -14,7 +14,8 @@ public class Hello {
 
     public static class Message {
         public final String text;
-        public Message(String text) {
+
+        public Message(final String text) {
             this.text = text;
         }
     }

@@ -11,9 +11,11 @@ public class Bar {
     private static final AtomicInteger counter = new AtomicInteger();
     private final int count = counter.incrementAndGet();
     private final Foo foo;
-    public Bar(Foo foo) {
+
+    public Bar(final Foo foo) {
         this.foo = Objects.requireNonNull(foo);
     }
+
     @GetMapping("/sample")
     public String doMethod() {
         return "Bar(" + count + ") " + foo + " " + System.identityHashCode(foo) + " "

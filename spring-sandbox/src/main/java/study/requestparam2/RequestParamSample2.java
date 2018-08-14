@@ -12,14 +12,14 @@ public class RequestParamSample2 {
 
     /*
      * @RequestParamが無くてもバリューオブジェクトで受け取れるっぽいので検証。
-     * 
+     *
      * 選択されるHandlerMethodArgumentResolverの実装が異なり、
      * たまたまModelAttributeMethodProcessorで上手く受け取れていた様子。
      *
      */
 
     /**
-     * 
+     *
      * @param foo
      * @return
      * @see org.springframework.web.method.annotation.ModelAttributeMethodProcessor
@@ -34,7 +34,7 @@ public class RequestParamSample2 {
     }
 
     /**
-     * 
+     *
      * @param foo
      * @return
      * @see org.springframework.web.method.annotation.RequestParamMethodArgumentResolver

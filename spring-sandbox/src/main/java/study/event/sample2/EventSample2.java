@@ -5,10 +5,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -26,7 +28,7 @@ public class EventSample2 implements CommandLineRunner {
 
     public static void main(final String[] args) {
         final SpringApplication sa = new SpringApplication(EventSample2.class);
-        sa.setWebEnvironment(false);
+        sa.setWebApplicationType(WebApplicationType.NONE);
         sa.run(args);
     }
 

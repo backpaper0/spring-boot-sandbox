@@ -16,7 +16,7 @@ public class RequestBodySample {
     }
 
     /**
-     * 
+     *
      * @param foo
      * @return
      * @see org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor

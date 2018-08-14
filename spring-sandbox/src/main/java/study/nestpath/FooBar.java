@@ -11,6 +11,7 @@ public class FooBar {
     public String foo() {
         return "foo";
     }
+
     @GetMapping("/bar")
     public String bar() {
         return "foo/bar";

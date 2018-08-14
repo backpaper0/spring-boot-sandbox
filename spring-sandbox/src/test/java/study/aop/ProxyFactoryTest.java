@@ -1,9 +1,9 @@
 package study.aop;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.aopalliance.intercept.MethodInterceptor;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 
 public class ProxyFactoryTest {
@@ -11,17 +11,17 @@ public class ProxyFactoryTest {
     @Test
     public void test() throws Exception {
 
-        MethodInterceptor interceptor = inv -> {
+        final MethodInterceptor interceptor = inv -> {
             if (inv.getMethod().getName().equals("say")) {
                 return "World";
             }
             return inv.proceed();
         };
 
-        ProxyFactory proxyFactory = new ProxyFactory();
+        final ProxyFactory proxyFactory = new ProxyFactory();
         proxyFactory.setTarget(new Hello());
         proxyFactory.addAdvice(interceptor);
-        Hello proxy = (Hello) proxyFactory.getProxy();
+        final Hello proxy = (Hello) proxyFactory.getProxy();
         assertEquals("World", proxy.say());
     }
 
