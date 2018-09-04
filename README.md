@@ -1,17 +1,18 @@
 # Sprint Boot Sandbox
 
+## めも( ・ิω・ิ)
 
+一括でバージョンアップする。
 
+```console
+git grep -l 2.0.3|xargs sed -i '' -e 's/2\.0\.3/2.0.4/g'
+```
 
+`pom.xml`を変更したプロジェクトを全部ビルドする。
 
-
-
-
-git grep -l 2.0.3|xargs sed -i -e 's/2\.0\.3/2.0.4/g'
-
-
-
-for i in `git st -s|grep "^M"|cut -c 4-`; do mvn -f $i clean package -DskipTests; done
+```
+for i in `git status -s -- **/pom.xml|grep ^M|cut -c 4-`; do mvn -f $i clean package; done
+```
 
 ## License
 
