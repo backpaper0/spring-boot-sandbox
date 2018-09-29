@@ -1,8 +1,12 @@
 package com.example;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.r2dbc.client.R2dbc;
 import io.r2dbc.spi.ConnectionFactory;
@@ -36,5 +40,24 @@ public class MessageController {
         return r2dbc.withHandle(handle -> handle
                 .select("SELECT id, text FROM messages ORDER BY id")
                 .mapRow(mapper::map));
+    }
+
+    @PostMapping("/by_client")
+    public Mono<Void> postByClient(@RequestBody final Text message) {
+        return r2dbc.useTransaction(handle -> handle
+                .execute("INSERT INTO messages (text) VALUES ($1)", message.getText()));
+    }
+
+    static final class Text {
+
+        private final String text;
+
+        public Text(@JsonProperty("text") final String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return text;
+        }
     }
 }

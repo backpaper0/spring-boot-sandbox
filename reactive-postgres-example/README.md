@@ -42,6 +42,8 @@ java -jar target/reactive-postgres-example-0.0.1-SNAPSHOT.jar
 
 ## Try curl
 
+### SELECT
+
 JSON
 
 ```
@@ -61,4 +63,10 @@ Server-Sent Events
 ```
 curl -v -H "Accept: text/event-stream" localhost:8080/messages
 curl -v -H "Accept: text/event-stream" localhost:8080/messages/by_client
+```
+
+### INSERT
+
+```
+curl -v -H "Content-Type: application/json" localhost:8080/messages/by_client -d '{"text":"hoge"}'
 ```
