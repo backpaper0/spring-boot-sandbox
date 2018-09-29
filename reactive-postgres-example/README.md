@@ -44,16 +44,19 @@ JSON
 
 ```
 curl -v localhost:8080/messages
+curl -v localhost:8080/messages/by_client
 ```
 
 JSON Stream
 
 ```
-curl -v -H "Accept: application/stream+json" localhost:8080/messages 
+curl -v -H "Accept: application/stream+json" localhost:8080/messages
+curl -v -H "Accept: application/stream+json" localhost:8080/messages/by_client
 ```
 
 Server-Sent Events
 
 ```
-curl -v -H "Accept: text/event-stream" localhost:8080/messages 
+curl -v -H "Accept: text/event-stream" localhost:8080/messages
+curl -v -H "Accept: text/event-stream" localhost:8080/messages/by_client
 ```
