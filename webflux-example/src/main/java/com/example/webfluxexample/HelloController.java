@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Objects;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,19 +17,19 @@ public class HelloController {
 
     @GetMapping("/hello")
     public Mono<String> getHello() {
-        // curl -v localhost:8080/hello"
+        // curl -v localhost:8080/hello
         return Mono.just("Hello, world!");
     }
 
     @GetMapping("/hello2")
     public Mono<Hello> getHello2() {
-        // curl -v localhost:8080/hello2"
+        // curl -v localhost:8080/hello2
         return Mono.just(new Hello("Hello, JSON!!"));
     }
 
     @GetMapping("/hello3")
     public Flux<Hello> getHello3() {
-        // curl -v localhost:8080/hello3"
+        // curl -v localhost:8080/hello3
         return Flux.range(1, 10)
                 .map(i -> new Hello("Hello, Flux!!!" + i));
     }
@@ -43,6 +44,12 @@ public class HelloController {
         return Flux.range(1, 10)
                 .map(i -> new Hello("Hello, HTTP Streaming!!!" + i))
                 .delayElements(Duration.ofSeconds(1));
+    }
+
+    @GetMapping("/hello5")
+    public Flux<Hello> getHello5(@RequestParam final String name) {
+        // curl -v "localhost:8080/hello5?name=world"
+        return Flux.just(new Hello("Hello, " + name + "!!!"));
     }
 
     public static final class Hello {
