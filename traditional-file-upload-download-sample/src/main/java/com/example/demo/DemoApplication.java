@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import javax.xml.bind.ValidationException;
+import javax.validation.ValidationException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,12 +1,14 @@
 package com.example;
 
+import java.time.Duration;
+
 import org.springframework.http.server.reactive.HttpHandler;
 import org.springframework.http.server.reactive.ReactorHttpHandlerAdapter;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import reactor.ipc.netty.http.server.HttpServer;
+import reactor.netty.http.server.HttpServer;
 
 public class FunctionalEndpointsExample {
 
@@ -17,8 +19,11 @@ public class FunctionalEndpointsExample {
 
         final HttpHandler handler = RouterFunctions.toHttpHandler(routerFunction);
         final ReactorHttpHandlerAdapter adapter = new ReactorHttpHandlerAdapter(handler);
-        HttpServer.create("localhost", 8080).newHandler(adapter).block();
-
-        Thread.sleep(Long.MAX_VALUE);
+        HttpServer.create()
+                .host("localhost")
+                .port(8080)
+                .handle(adapter)
+                .bindUntilJavaShutdown(Duration.ofDays(1), server -> {
+                });
     }
 }
