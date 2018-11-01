@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>spring-boot-sandbox</artifactId>
+    <version>noversion</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>aop-example</module>
+        <module>basic-form-login-sample</module>
+        <module>batch-example</module>
+        <module>batch-without-boot-example</module>
+        <module>circuit-breaker/backend</module>
+        <module>circuit-breaker/frontend</module>
+        <module>compare-to-cdi</module>
+        <module>distributed-tracing/service1</module>
+        <module>distributed-tracing/service2</module>
+        <module>distributed-tracing/service3</module>
+        <module>doma-event-sample</module>
+        <module>doma-test-example</module>
+        <module>doma-two-config-sample</module>
+        <module>edge-service/backend1</module>
+        <module>edge-service/backend2</module>
+        <module>edge-service/edge-service</module>
+        <module>edge-service/frontend</module>
+        <module>edge-service/service-discovery</module>
+        <module>environment-example</module>
+        <module>fn</module>
+        <module>functional-endpoints-example</module>
+        <module>global-method-security-example</module>
+        <module>header-detail-sample</module>
+        <module>helloworld</module>
+        <module>integration-example</module>
+        <module>jpa-stream-example</module>
+        <module>junit5-example</module>
+        <module>mail-sample</module>
+        <module>mybatis-example</module>
+        <module>progress-sample</module>
+        <module>property-source-example</module>
+        <module>qualifier-example</module>
+        <module>reactive-doma-sample</module>
+        <module>reactive-postgres-example</module>
+        <module>reactor-example</module>
+        <module>redis-sample</module>
+        <module>request-injection-experiment</module>
+        <module>rest-client-example/api</module>
+        <module>rest-client-example/client</module>
+        <module>rest-template-example</module>
+        <module>retry-example</module>
+        <module>security-example</module>
+        <module>security-test-example</module>
+        <module>service-discovery/backend</module>
+        <module>service-discovery/service-discovery</module>
+        <module>service-discovery/ui</module>
+        <module>simple-bbs</module>
+        <module>simple-crud</module>
+        <module>snakecase</module>
+        <module>spring-boot-doma-study</module>
+        <module>spring-sandbox</module>
+        <module>spring-security-jdbc-login-sample</module>
+        <module>test-sample</module>
+        <module>traditional-file-upload-download-sample</module>
+        <module>transaction-example</module>
+        <module>try-spring-boot</module>
+        <module>two-datasource-batch-example</module>
+        <module>two-datasource-transaction-example</module>
+        <module>vaadin-sample</module>
+        <module>validation-example</module>
+        <module>web-test-example</module>
+        <module>webflux-example</module>
+    </modules>
+
+</project>
