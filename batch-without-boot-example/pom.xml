@@ -22,12 +22,12 @@
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>4.1.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-test</artifactId>
-            <version>4.0.1.RELEASE</version>
+            <version>4.1.1.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
