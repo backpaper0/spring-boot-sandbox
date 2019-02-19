@@ -1,0 +1,58 @@
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+
+resources:
+- name: src
+  type: git
+  source:
+    uri: https://github.com/backpaper0/spring-boot-sandbox.git
+- name: slack-alert
+  type: slack-notification
+  source:
+    url: ((slack.url))
+
+jobs:
+- name: build
+  plan:
+  - get: src
+    trigger: true
+  - task: build
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: maven, tag: 3.6.0-jdk-11}
+      inputs:
+        - name: src
+      caches:
+        - path: m2
+      run:
+        path: sh
+        args:
+          - -c
+          - |-
+            set -eux
+            cd src
+            ./makepom.sh
+            mvn -Dmaven.repo.local=../m2 package -DskipTests
+    on_success:
+      put: slack-alert
+      params:
+        icon_emoji: ":herb:"
+        channel: "#ci"
+        username: "spring-boot-sandbox"
+        text: |-
+              BUILD SUCCESS :sparkles:
+              $ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+    on_failure:
+      put: slack-alert
+      params:
+        icon_emoji: ":herb:"
+        channel: "#ci"
+        username: "spring-boot-sandbox"
+        text: |-
+              BUILD FAILURE :fearful:
+              $ATC_EXTERNAL_URL/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
