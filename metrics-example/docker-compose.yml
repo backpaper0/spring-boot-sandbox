@@ -1,8 +1,16 @@
 version: '3'
 
 services:
+  app:
+    image: openjdk:11
+    entrypoint: java -jar /app/app.jar
+    ports: ["8080:8080"]
+    volumes:
+      - "./target:/app"
+
   prometheus:
-    image: prom/prometheus
+    build: docker/prometheus
+    ports: ["9090:9090"]
 
   grafana:
     image: grafana/grafana
