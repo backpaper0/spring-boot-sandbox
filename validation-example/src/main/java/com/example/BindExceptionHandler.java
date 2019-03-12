@@ -21,9 +21,9 @@ public class BindExceptionHandler {
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    String handle(final BindException e) {
+    String handle(final BindException e, final Locale locale) {
         return e.getAllErrors().stream()
-                .map(a -> messageSource.getMessage(a, Locale.getDefault()))
+                .map(a -> messageSource.getMessage(a, locale))
                 .collect(Collectors.joining("\n"));
     }
 }
