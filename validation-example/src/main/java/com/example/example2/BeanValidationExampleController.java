@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 
+ * @see org.springframework.validation.beanvalidation.SpringValidatorAdapter
+ */
 @RestController
 @RequestMapping("/2")
 public class BeanValidationExampleController {
