@@ -1,0 +1,5 @@
+CREATE TABLE example (
+	id IDENTITY,
+	txt VARCHAR(100),
+	dt DATETIME
+);
