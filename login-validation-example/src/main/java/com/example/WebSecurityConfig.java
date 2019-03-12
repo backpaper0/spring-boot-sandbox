@@ -9,10 +9,18 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private Validator validator;
+    private final Validator validator;
+    private final ObjectMapper objectMapper;
+
+    public WebSecurityConfig(final Validator validator, final ObjectMapper objectMapper) {
+        this.validator = validator;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
@@ -21,7 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/csrfToken").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new LoginValidationFilter(validator, "/login", LoginForm.class),
+                .addFilterBefore(
+                        new LoginValidationFilter(validator, objectMapper, "/login",
+                                LoginForm.class),
                         UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginProcessingUrl("/login")

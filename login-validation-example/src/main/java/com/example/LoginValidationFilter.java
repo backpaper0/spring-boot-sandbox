@@ -16,15 +16,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class LoginValidationFilter extends OncePerRequestFilter {
 
     private final Validator validator;
+    private final ObjectMapper objectMapper;
     private final RequestMatcher requestMatcher;
     private final Class<?> beanType;
 
-    public LoginValidationFilter(final Validator validator, final String loginProcessingUrl,
+    public LoginValidationFilter(final Validator validator, final ObjectMapper objectMapper,
+            final String loginProcessingUrl,
             final Class<?> beanType) {
         this.validator = validator;
+        this.objectMapper = objectMapper;
         this.requestMatcher = new AntPathRequestMatcher(loginProcessingUrl, "POST");
         this.beanType = beanType;
     }
