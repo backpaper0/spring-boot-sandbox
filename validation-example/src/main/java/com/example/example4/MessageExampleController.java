@@ -27,10 +27,10 @@ public class MessageExampleController {
 
     @PostMapping
     public List<String> post(@Valid final MessageExampleForm form,
-            final BindingResult bindingResult) {
+            final BindingResult bindingResult, final Locale locale) {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors().stream()
-                    .map(a -> messageSource.getMessage(a, Locale.getDefault()))
+                    .map(a -> messageSource.getMessage(a, locale))
                     .collect(Collectors.toList());
         }
         return Collections.singletonList("Valid");

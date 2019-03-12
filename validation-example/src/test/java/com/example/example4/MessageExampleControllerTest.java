@@ -40,6 +40,6 @@ public class MessageExampleControllerTest {
                 .andExpect(jsonPath("$[0]").value("num item must be int"))
                 .andExpect(jsonPath("$[1]")
                         .value("value object must be text that size is between 1 and 3"))
-                .andExpect(jsonPath("$[2]").value("text item size must be between 1 and 3"));
+                .andExpect(jsonPath("$[2]").value("テキスト項目 size must be between 1 and 3"));
     }
 }
