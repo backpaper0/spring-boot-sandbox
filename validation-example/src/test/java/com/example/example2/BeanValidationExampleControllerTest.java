@@ -42,7 +42,7 @@ public class BeanValidationExampleControllerTest {
         mvc.perform(post("/2")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("must not be null"));
+                .andExpect(content().string("必須です"));
     }
 
     @Test
