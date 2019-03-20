@@ -37,7 +37,7 @@ jobs:
             set -eux
             cd src
             ./makepom.sh
-            mvn -Dmaven.repo.local=../m2 package -DskipTests
+            mvn -Dmaven.repo.local=../m2 -e -q package -DskipTests
     on_success:
       put: slack-alert
       params:
