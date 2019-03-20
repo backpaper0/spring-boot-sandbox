@@ -41,7 +41,7 @@ jobs:
     on_success:
       put: slack-alert
       params:
-        icon_emoji: ":herb:"
+        icon_emoji: ":spring-boot:"
         channel: "#ci"
         username: "spring-boot-sandbox"
         text: |-
@@ -50,7 +50,7 @@ jobs:
     on_failure:
       put: slack-alert
       params:
-        icon_emoji: ":herb:"
+        icon_emoji: ":spring-boot:"
         channel: "#ci"
         username: "spring-boot-sandbox"
         text: |-
