@@ -1,6 +1,5 @@
 package study.event.sample1;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -17,8 +16,11 @@ public class EventSample1 implements CommandLineRunner {
         sa.run(args);
     }
 
-    @Autowired
-    ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
+
+    public EventSample1(final ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     @Override
     public void run(final String... args) throws Exception {

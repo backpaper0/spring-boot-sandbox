@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -32,8 +31,11 @@ public class EventSample2 implements CommandLineRunner {
         sa.run(args);
     }
 
-    @Autowired
-    ApplicationEventPublisher publisher;
+    private final ApplicationEventPublisher publisher;
+
+    public EventSample2(final ApplicationEventPublisher publisher) {
+        this.publisher = publisher;
+    }
 
     @Override
     public void run(final String... args) throws Exception {
