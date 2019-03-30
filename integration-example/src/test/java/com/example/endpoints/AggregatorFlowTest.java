@@ -1,11 +1,10 @@
 package com.example.endpoints;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.IntegrationMessageHeaderAccessor;
 import org.springframework.integration.channel.QueueChannel;
@@ -13,11 +12,11 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @ContextConfiguration(classes = AggregatorFlow.class)
-public class AggregatorFlowTest {
+class AggregatorFlowTest {
 
     @Autowired
     private MessageChannel input1;
@@ -25,7 +24,7 @@ public class AggregatorFlowTest {
     private QueueChannel output1;
 
     @Test
-    public void test1() {
+    void test1() {
         input1.send(message("foo1", "foo", 3));
         input1.send(message("bar1", "bar", 2));
         input1.send(message("foo2", "foo", 3));
@@ -45,7 +44,7 @@ public class AggregatorFlowTest {
     private QueueChannel output2;
 
     @Test
-    public void test2() {
+    void test2() {
         for (int i = 0; i < 12; i++) {
             final Message<Integer> message = MessageBuilder.withPayload(i).build();
             input2.send(message);

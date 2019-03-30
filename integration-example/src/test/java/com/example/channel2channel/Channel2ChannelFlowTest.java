@@ -1,21 +1,18 @@
 package com.example.channel2channel;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.channel2channel.Channel2ChannelFlow;
-
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @ContextConfiguration(classes = Channel2ChannelFlow.class)
-public class Channel2ChannelFlowTest {
+class Channel2ChannelFlowTest {
 
     @Autowired
     private MessageChannel input;
@@ -23,7 +20,7 @@ public class Channel2ChannelFlowTest {
     private QueueChannel output;
 
     @Test
-    public void test() {
+    void test() {
         input.send(MessageBuilder.withPayload("foobar").build());
 
         assertEquals("foobar", output.receive().getPayload());

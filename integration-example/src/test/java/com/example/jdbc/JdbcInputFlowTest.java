@@ -1,24 +1,22 @@
 package com.example.jdbc;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @ContextConfiguration(classes = JdbcInputFlow.class)
-public class JdbcInputFlowTest {
+class JdbcInputFlowTest {
 
     @Autowired
     private QueueChannel output;
@@ -26,7 +24,7 @@ public class JdbcInputFlowTest {
     private DataSource dataSource;
 
     @Test
-    public void test() {
+    void test() {
 
         final List<MyMessage> list = (List<MyMessage>) output.receive()
                 .getPayload();
@@ -42,6 +40,6 @@ public class JdbcInputFlowTest {
         final Long count = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM messages WHERE sent = 0",
                 Long.class);
-        assertThat(count, is(0L));
+        assertEquals((Long) 0L, count);
     }
 }

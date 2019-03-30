@@ -1,6 +1,6 @@
 package com.example.ftp;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -11,24 +11,23 @@ import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.Message;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @ContextConfiguration(classes = FtpOutputFlow.class)
-public class FtpOutputFlowTest {
+class FtpOutputFlowTest {
 
     @Autowired
     private DirectChannel input;
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
 
         final Message<String> foo = MessageBuilder.withPayload("foo").build();
         input.send(foo);

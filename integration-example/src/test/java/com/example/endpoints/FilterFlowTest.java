@@ -1,19 +1,18 @@
 package com.example.endpoints;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @ContextConfiguration(classes = FilterFlow.class)
-public class FilterFlowTest {
+class FilterFlowTest {
 
     @Autowired
     private MessageChannel input;
@@ -21,7 +20,7 @@ public class FilterFlowTest {
     private QueueChannel output;
 
     @Test
-    public void test() {
+    void test() {
         for (int i = 0; i < 10; i++) {
             input.send(MessageBuilder.withPayload(i).build());
         }
