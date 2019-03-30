@@ -5,21 +5,20 @@ import static org.mockito.BDDMockito.*;
 
 import java.time.LocalDateTime;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @SpringBootTest
-public class TimeSignalTest {
+class TimeSignalTest {
 
     @MockBean
     private TimeSignal timeSignal;
 
     @Test
-    public void currentDateTime() throws Exception {
+    void currentDateTime() throws Exception {
 
         final LocalDateTime value = LocalDateTime.of(2017, 1, 2, 3, 4, 5);
 

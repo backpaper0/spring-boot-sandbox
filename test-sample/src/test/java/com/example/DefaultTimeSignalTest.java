@@ -6,23 +6,22 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true")
-public class DefaultTimeSignalTest {
+class DefaultTimeSignalTest {
 
     @Autowired
     private DefaultTimeSignal timeSignal;
 
     @Test
-    public void currentDateTime() throws Exception {
+    void currentDateTime() throws Exception {
         assertThat(timeSignal.currentDateTime())
                 .isEqualTo("2017-11-01T09:00:00");
     }
