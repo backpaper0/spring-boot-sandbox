@@ -3,33 +3,33 @@ package study;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-public class BeanNameTest {
+class BeanNameTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Foo.class, Bar.class, Factory.class);
             context.refresh();
 
-            String[] fooNames = context.getBeanNamesForType(Foo.class);
+            final String[] fooNames = context.getBeanNamesForType(Foo.class);
             assertThat(fooNames.length, is(1));
             assertThat(fooNames[0], is("beanNameTest.Foo"));
 
-            String[] barNames = context.getBeanNamesForType(Bar.class);
+            final String[] barNames = context.getBeanNamesForType(Bar.class);
             assertThat(barNames.length, is(1));
             assertThat(barNames[0], is("bbaarr"));
 
-            String[] bazNames = context.getBeanNamesForType(Baz.class);
+            final String[] bazNames = context.getBeanNamesForType(Baz.class);
             assertThat(bazNames.length, is(1));
             assertThat(bazNames[0], is("createBaz"));
 
-            String[] quxNames = context.getBeanNamesForType(Qux.class);
+            final String[] quxNames = context.getBeanNamesForType(Qux.class);
             assertThat(quxNames.length, is(1));
             assertThat(quxNames[0], is("qquuxx"));
         }

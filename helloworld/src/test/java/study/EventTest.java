@@ -3,21 +3,21 @@ package study;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.event.EventListener;
 
-public class EventTest {
+class EventTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Foo.class);
             context.refresh();
 
-            Foo bean = context.getBean(Foo.class);
+            final Foo bean = context.getBean(Foo.class);
 
-            FooEvent event = new FooEvent();
+            final FooEvent event = new FooEvent();
             context.publishEvent(event);
 
             assertThat(bean.event, sameInstance(event));
@@ -29,7 +29,7 @@ public class EventTest {
         FooEvent event;
 
         @EventListener
-        public void handle(FooEvent event) {
+        public void handle(final FooEvent event) {
             this.event = event;
         }
     }
