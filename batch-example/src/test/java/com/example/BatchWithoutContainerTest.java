@@ -1,6 +1,6 @@
 package com.example;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -17,10 +17,10 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 
-public class BatchWithoutContainerTest {
+class BatchWithoutContainerTest {
 
     @Test
-    public void withoutContainer() throws Exception {
+    void withoutContainer() throws Exception {
 
         final MapJobRepositoryFactoryBean factoryBean = new MapJobRepositoryFactoryBean();
         final JobRepository jobRepository = factoryBean.getObject();

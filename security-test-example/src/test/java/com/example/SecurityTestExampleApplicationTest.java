@@ -5,35 +5,34 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @SpringBootTest
-public class SecurityTestExampleApplicationTest {
+class SecurityTestExampleApplicationTest {
 
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mvc;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
     }
 
     @Test
-    public void foo() throws Exception {
+    void foo() throws Exception {
         mvc.perform(get("/foo"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(":foo"));
@@ -41,7 +40,7 @@ public class SecurityTestExampleApplicationTest {
 
     @Test
     @WithMockUser(username = "hoge")
-    public void foo_with_login() throws Exception {
+    void foo_with_login() throws Exception {
         mvc.perform(get("/foo"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string("hoge:foo"));
@@ -49,7 +48,7 @@ public class SecurityTestExampleApplicationTest {
 
     @Test
     @WithMockUser(username = "hoge", roles = "BAR")
-    public void bar() throws Exception {
+    void bar() throws Exception {
         mvc.perform(get("/bar"))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string("hoge:bar"));
@@ -57,13 +56,13 @@ public class SecurityTestExampleApplicationTest {
 
     @Test
     @WithMockUser(username = "hoge", roles = "FOO")
-    public void bar_NG() throws Exception {
+    void bar_NG() throws Exception {
         mvc.perform(get("/bar"))
                 .andExpect(status().is4xxClientError());
     }
 
     @Test
-    public void bar_without_annotation() throws Exception {
+    void bar_without_annotation() throws Exception {
         mvc.perform(get("/bar").with(user("fuga").roles("BAR")))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(content().string("fuga:bar"));
