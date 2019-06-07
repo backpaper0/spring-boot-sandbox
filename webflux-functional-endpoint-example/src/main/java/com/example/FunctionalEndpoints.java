@@ -16,7 +16,8 @@ public final class FunctionalEndpoints {
         return RouterFunctions.route()
                 .GET("/simple", this::simple)
                 .GET("/sse", this::sse)
-                .build();
+                .build()
+                .filter(new AddHeaderFilter());
     }
 
     Mono<ServerResponse> simple(final ServerRequest request) {
