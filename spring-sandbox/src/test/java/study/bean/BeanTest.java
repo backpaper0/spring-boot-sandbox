@@ -16,21 +16,11 @@ class BeanTest {
     void test() throws Exception {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Ddd.class);
+            context.register(Hhh.class);
             context.refresh();
 
-            final Aaa aaa = context.getBean(Aaa.class);
-            final Bbb bbb = context.getBean(Bbb.class);
-            final Ccc ccc = context.getBean(Ccc.class);
-            final Ddd ddd = context.getBean(Ddd.class);
-
-            assertNotNull(aaa);
-            assertNotNull(bbb);
-            assertNotNull(ccc);
-            assertNotNull(ddd);
-
-            assertTrue(aaa == bbb);
-            assertTrue(aaa == ccc);
-            assertTrue(aaa == ddd);
+            final Hhh hhh = context.getBean(Hhh.class);
+            hhh.assertBeans();
         }
     }
 
@@ -50,33 +40,17 @@ class BeanTest {
     void testQualifier() throws Exception {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(Ggg.class);
-            context.register(Hhh.class);
             context.register(Iii.class);
+            context.register(Jjj.class);
             context.refresh();
 
-            final Hhh hhh = context.getBean(Hhh.class);
-
-            assertNotNull(hhh.aaa);
-            assertNotNull(hhh.bbb);
-            assertNotNull(hhh.ccc);
-            assertNotNull(hhh.ddd);
-
-            assertTrue(hhh.aaa == hhh.bbb);
-            assertTrue(hhh.aaa == hhh.ccc);
-            assertTrue(hhh.aaa == hhh.ddd);
-
             final Iii iii = context.getBean(Iii.class);
+            iii.assertBeans();
 
-            assertNotNull(iii.aaa);
-            assertNotNull(iii.bbb);
-            assertNotNull(iii.ccc);
-            assertNotNull(iii.ddd);
+            final Jjj jjj = context.getBean(Jjj.class);
+            jjj.assertBeans();
 
-            assertTrue(iii.aaa == iii.bbb);
-            assertTrue(iii.aaa == iii.ccc);
-            assertTrue(iii.aaa == iii.ddd);
-
-            assertTrue(hhh.aaa != iii.aaa);
+            assertTrue(iii.aaa != jjj.aaa);
         }
     }
 
@@ -112,26 +86,34 @@ class BeanTest {
         Ccc ccc;
         Ddd ddd;
 
-        Hhh(@Eee final Aaa aaa, @Eee final Bbb bbb, @Eee final Ccc ccc, @Eee final Ddd ddd) {
+        Hhh(final Aaa aaa, final Bbb bbb, final Ccc ccc, final Ddd ddd) {
             this.aaa = aaa;
             this.bbb = bbb;
             this.ccc = ccc;
             this.ddd = ddd;
         }
+
+        void assertBeans() {
+            assertNotNull(aaa);
+            assertNotNull(bbb);
+            assertNotNull(ccc);
+            assertNotNull(ddd);
+
+            assertTrue(aaa == bbb);
+            assertTrue(aaa == ccc);
+            assertTrue(aaa == ddd);
+        }
     }
 
-    static class Iii {
+    static class Iii extends Hhh {
+        Iii(@Eee final Aaa aaa, @Eee final Bbb bbb, @Eee final Ccc ccc, @Eee final Ddd ddd) {
+            super(aaa, bbb, ccc, ddd);
+        }
+    }
 
-        Aaa aaa;
-        Bbb bbb;
-        Ccc ccc;
-        Ddd ddd;
-
-        Iii(@Fff final Aaa aaa, @Fff final Bbb bbb, @Fff final Ccc ccc, @Fff final Ddd ddd) {
-            this.aaa = aaa;
-            this.bbb = bbb;
-            this.ccc = ccc;
-            this.ddd = ddd;
+    static class Jjj extends Hhh {
+        Jjj(@Fff final Aaa aaa, @Fff final Bbb bbb, @Fff final Ccc ccc, @Fff final Ddd ddd) {
+            super(aaa, bbb, ccc, ddd);
         }
     }
 }
