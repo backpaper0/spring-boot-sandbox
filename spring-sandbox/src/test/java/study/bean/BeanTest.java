@@ -68,7 +68,7 @@ class BeanTest {
 
         @Bean
         @Eee
-        Ddd ggg() {
+        Ddd eee() {
             return new Ddd();
         }
 
