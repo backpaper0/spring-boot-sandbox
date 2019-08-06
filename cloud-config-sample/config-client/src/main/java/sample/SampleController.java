@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SampleController {
-    @GetMapping
+    @GetMapping("/")
     public String get(@Value("${info.foo}") String foo) {
         return foo;
     }
