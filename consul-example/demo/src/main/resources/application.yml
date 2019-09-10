@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    consul:
+#      host: localhost
+#      port: 8500
+      discovery:
+        preferIpAddress: true
+  application:
+    name: demo
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health
