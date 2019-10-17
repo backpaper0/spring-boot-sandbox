@@ -51,5 +51,10 @@ public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, Se
         public Mono<Void> writeTo(final ServerWebExchange exchange, final Context context) {
             return response.writeTo(exchange, context);
         }
+
+        @Override
+        public int rawStatusCode() {
+            return response.rawStatusCode();
+        }
     }
 }
