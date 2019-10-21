@@ -1,4 +1,4 @@
-package com.example;
+package com.example.testing;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+
+import com.example.testing.DefaultTimeSignal;
 
 @SpringJUnitConfig
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true")
