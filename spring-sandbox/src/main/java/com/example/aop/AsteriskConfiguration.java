@@ -1,4 +1,4 @@
-package com.example;
+package com.example.aop;
 
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;

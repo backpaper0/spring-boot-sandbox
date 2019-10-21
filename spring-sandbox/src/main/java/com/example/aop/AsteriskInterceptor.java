@@ -1,4 +1,4 @@
-package com.example;
+package com.example.aop;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
