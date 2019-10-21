@@ -9,7 +9,7 @@ import org.springframework.transaction.IllegalTransactionStateException;
 public class MyTransactionTest {
 
     @Test
-    public void method1() {
+    void method1() {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(MyTransactionConfig.class);
             context.refresh();
@@ -20,7 +20,7 @@ public class MyTransactionTest {
     }
 
     @Test
-    public void method2() {
+    void method2() {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(MyTransactionConfig.class);
             context.refresh();
@@ -33,7 +33,7 @@ public class MyTransactionTest {
     }
 
     @Test
-    public void method3() {
+    void method3() {
         try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(MyTransactionConfig.class);
             context.refresh();

@@ -13,7 +13,7 @@ import com.example.junit5.hello.HelloConfiguration;
 import com.example.junit5.hello.impl.MessageFormatter;
 
 @SpringJUnitConfig(HelloConfiguration.class)
-public class MockTest {
+class MockTest {
 
     @Autowired
     private Hello hello;

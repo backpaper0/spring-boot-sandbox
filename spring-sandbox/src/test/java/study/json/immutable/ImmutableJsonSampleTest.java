@@ -3,7 +3,7 @@ package study.json.immutable;
 import java.net.URI;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -12,12 +12,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class ImmutableJsonSampleTest {
+class ImmutableJsonSampleTest {
 
     @LocalServerPort
     private int port;
@@ -26,7 +24,7 @@ public class ImmutableJsonSampleTest {
     private TestRestTemplate template;
 
     @Test
-    public void test() {
+    void test() throws Exception {
         final URI uri = UriComponentsBuilder.fromHttpUrl("http://localhost:" + port + "/emp")
                 .build()
                 .toUri();
@@ -38,7 +36,7 @@ public class ImmutableJsonSampleTest {
 
         final ResponseEntity<String> response = template.exchange(request, String.class);
 
-        System.out.println(response.getBody());
+        JSONAssert.assertEquals(body, response.getBody(), true);
     }
 
 }

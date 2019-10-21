@@ -6,10 +6,10 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactory;
 
-public class ProxyFactoryTest {
+class ProxyFactoryTest {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
 
         final MethodInterceptor interceptor = inv -> {
             if (inv.getMethod().getName().equals("say")) {

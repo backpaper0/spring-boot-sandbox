@@ -10,7 +10,7 @@ import com.example.junit5.hello.Hello;
 import com.example.junit5.hello.HelloConfiguration;
 
 @SpringJUnitConfig(HelloConfiguration.class)
-public class SimpleTest {
+class SimpleTest {
 
     @Autowired
     private Hello hello;

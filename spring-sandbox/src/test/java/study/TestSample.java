@@ -10,7 +10,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class TestSample {
 
     @Test
-    public void test() throws Exception {
+    void test() throws Exception {
         try (final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
             context.register(BarImpl.class);
             context.register(Foo.class);
