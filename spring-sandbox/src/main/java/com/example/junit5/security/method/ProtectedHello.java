@@ -1,4 +1,4 @@
-package com.example.security.method;
+package com.example.junit5.security.method;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

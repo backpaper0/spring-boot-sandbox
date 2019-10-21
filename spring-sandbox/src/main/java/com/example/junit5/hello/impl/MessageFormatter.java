@@ -1,4 +1,4 @@
-package com.example.hello.impl;
+package com.example.junit5.hello.impl;
 
 import org.springframework.stereotype.Component;
 

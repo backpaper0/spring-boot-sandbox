@@ -1,4 +1,4 @@
-package com.example;
+package com.example.junit5;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.hello.Hello;
-import com.example.hello.HelloConfiguration;
-import com.example.hello.impl.MessageFormatter;
+import com.example.junit5.hello.Hello;
+import com.example.junit5.hello.HelloConfiguration;
+import com.example.junit5.hello.impl.MessageFormatter;
 
 @SpringJUnitConfig(HelloConfiguration.class)
 public class MockTest {

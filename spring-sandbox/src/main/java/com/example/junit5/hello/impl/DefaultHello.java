@@ -1,8 +1,8 @@
-package com.example.hello.impl;
+package com.example.junit5.hello.impl;
 
 import java.util.Objects;
 
-import com.example.hello.Hello;
+import com.example.junit5.hello.Hello;
 
 public class DefaultHello implements Hello {
 

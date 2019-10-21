@@ -1,4 +1,4 @@
-package com.example.hello;
+package com.example.junit5.hello;
 
 import java.util.Objects;
 
@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import com.example.hello.impl.DefaultHello;
-import com.example.hello.impl.MessageFormatter;
+import com.example.junit5.hello.impl.DefaultHello;
+import com.example.junit5.hello.impl.MessageFormatter;
 
 @Configuration
 @ComponentScan
