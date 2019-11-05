@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-		<spring-batch.version>4.2.0.RELEASE</spring-batch.version>
+        <spring-batch.version>4.2.0.RELEASE</spring-batch.version>
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <exec.mainClass>org.springframework.batch.core.launch.support.CommandLineJobRunner</exec.mainClass>
         <exec.args>com.example.ExampleConfig exampleJob</exec.args>
@@ -22,18 +22,18 @@
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-core</artifactId>
-			<version>${spring-batch.version}</version>
+            <version>${spring-batch.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.batch</groupId>
             <artifactId>spring-batch-test</artifactId>
-			<version>${spring-batch.version}</version>
+            <version>${spring-batch.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-			<version>${junit-jupiter.version}</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
