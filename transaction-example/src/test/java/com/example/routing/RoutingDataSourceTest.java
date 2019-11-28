@@ -1,17 +1,16 @@
 package com.example.routing;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.routing.component.Bar;
 import com.example.routing.component.Foo;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @SpringBootTest(classes = RoutingDataSourceApplication.class)
-public class RoutingDataSourceTest {
+class RoutingDataSourceTest {
 
     @Autowired
     private Foo foo;
@@ -19,17 +18,17 @@ public class RoutingDataSourceTest {
     private Bar bar;
 
     @Test
-    public void foo() {
+    void foo() {
         foo.foo();
     }
 
     @Test
-    public void bar() {
+    void bar() {
         bar.bar();
     }
 
     @Test
-    public void nest() {
+    void nest() {
         bar.nest();
     }
 }

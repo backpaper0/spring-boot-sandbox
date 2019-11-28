@@ -7,18 +7,17 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.connection.component.Foo;
 
-@RunWith(SpringRunner.class)
+@SpringJUnitConfig
 @SpringBootTest(classes = ConnectionApplication.class)
-public class ConnectionTest {
+class ConnectionTest {
 
     @Autowired
     private Foo foo;
@@ -26,7 +25,7 @@ public class ConnectionTest {
     private DataSource dataSource;
 
     @Test
-    public void fooWillCommit() throws Exception {
+    void fooWillCommit() throws Exception {
 
         final Connection con = mock(Connection.class);
         //        doAnswer(i -> {
@@ -43,7 +42,7 @@ public class ConnectionTest {
     }
 
     @Test
-    public void fooWillRollback() throws Exception {
+    void fooWillRollback() throws Exception {
 
         final Connection con = mock(Connection.class);
 
