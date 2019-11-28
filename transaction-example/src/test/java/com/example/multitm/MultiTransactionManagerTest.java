@@ -3,12 +3,10 @@ package com.example.multitm;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.multitm.component.Bar;
 import com.example.multitm.component.Foo;
 
-@SpringJUnitConfig
 @SpringBootTest(classes = MultiTransactionManagerApplication.class)
 class MultiTransactionManagerTest {
 
