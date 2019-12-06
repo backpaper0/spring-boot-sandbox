@@ -7,13 +7,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@SpringJUnitConfig
 @SpringBootTest
 class SpringValidatorExampleControllerTest {
 
@@ -31,6 +30,7 @@ class SpringValidatorExampleControllerTest {
     void valid() throws Exception {
         mvc.perform(post("/1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
                 .param("text", "hello"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Valid"));
@@ -39,7 +39,8 @@ class SpringValidatorExampleControllerTest {
     @Test
     void invalid_null() throws Exception {
         mvc.perform(post("/1")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Required"));
     }
@@ -48,6 +49,7 @@ class SpringValidatorExampleControllerTest {
     void invalid_empty() throws Exception {
         mvc.perform(post("/3")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
                 .param("text", ""))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Required"));
