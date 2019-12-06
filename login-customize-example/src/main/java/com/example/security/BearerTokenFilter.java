@@ -28,6 +28,7 @@ public class BearerTokenFilter extends OncePerRequestFilter {
                 final BearerToken authentication = new BearerToken("testuser");
                 authentication.setAuthenticated(true);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                filterChain.doFilter(request, response);
             } else {
                 authenticationEntryPoint.commence(request, response,
                         new BadCredentialsException(""));
