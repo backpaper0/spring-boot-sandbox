@@ -3,7 +3,7 @@ name: web-test-example
 on:
   push:
     paths:
-    - web-test-example
+    - 'web-test-example/**'
 
 jobs:
   build:

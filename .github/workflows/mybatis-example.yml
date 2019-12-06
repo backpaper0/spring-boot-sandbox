@@ -3,7 +3,7 @@ name: mybatis-example
 on:
   push:
     paths:
-    - mybatis-example
+    - 'mybatis-example/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: simple-crud
 on:
   push:
     paths:
-    - simple-crud
+    - 'simple-crud/**'
 
 jobs:
   build:

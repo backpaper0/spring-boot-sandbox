@@ -3,7 +3,7 @@ name: spring-boot-doma-study
 on:
   push:
     paths:
-    - spring-boot-doma-study
+    - 'spring-boot-doma-study/**'
 
 jobs:
   build:

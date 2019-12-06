@@ -3,7 +3,7 @@ name: basic-auth-disabled-example
 on:
   push:
     paths:
-    - basic-auth-disabled-example
+    - 'basic-auth-disabled-example/**'
 
 jobs:
   build:

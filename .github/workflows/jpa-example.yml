@@ -3,7 +3,7 @@ name: jpa-example
 on:
   push:
     paths:
-    - jpa-example
+    - 'jpa-example/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: doma-event-sample
 on:
   push:
     paths:
-    - doma-event-sample
+    - 'doma-event-sample/**'
 
 jobs:
   build:

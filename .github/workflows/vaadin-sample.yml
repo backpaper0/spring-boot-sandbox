@@ -3,7 +3,7 @@ name: vaadin-sample
 on:
   push:
     paths:
-    - vaadin-sample
+    - 'vaadin-sample/**'
 
 jobs:
   build:

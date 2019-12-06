@@ -3,7 +3,7 @@ name: accesslog-standard-output-example
 on:
   push:
     paths:
-    - accesslog-standard-output-example
+    - 'accesslog-standard-output-example/**'
 
 jobs:
   build:

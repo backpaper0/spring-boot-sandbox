@@ -3,7 +3,7 @@ name: transaction-example
 on:
   push:
     paths:
-    - transaction-example
+    - 'transaction-example/**'
 
 jobs:
   build:

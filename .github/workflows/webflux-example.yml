@@ -3,7 +3,7 @@ name: webflux-example
 on:
   push:
     paths:
-    - webflux-example
+    - 'webflux-example/**'
 
 jobs:
   build:

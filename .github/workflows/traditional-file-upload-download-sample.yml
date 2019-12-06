@@ -3,7 +3,7 @@ name: traditional-file-upload-download-sample
 on:
   push:
     paths:
-    - traditional-file-upload-download-sample
+    - 'traditional-file-upload-download-sample/**'
 
 jobs:
   build:

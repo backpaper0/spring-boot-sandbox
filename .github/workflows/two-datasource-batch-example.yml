@@ -3,7 +3,7 @@ name: two-datasource-batch-example
 on:
   push:
     paths:
-    - two-datasource-batch-example
+    - 'two-datasource-batch-example/**'
 
 jobs:
   build:

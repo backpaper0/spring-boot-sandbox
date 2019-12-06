@@ -3,7 +3,7 @@ name: two-datasource-transaction-example
 on:
   push:
     paths:
-    - two-datasource-transaction-example
+    - 'two-datasource-transaction-example/**'
 
 jobs:
   build:

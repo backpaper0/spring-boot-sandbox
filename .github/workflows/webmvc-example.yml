@@ -3,7 +3,7 @@ name: webmvc-example
 on:
   push:
     paths:
-    - webmvc-example
+    - 'webmvc-example/**'
 
 jobs:
   build:

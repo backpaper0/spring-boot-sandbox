@@ -3,7 +3,7 @@ name: simple-bbs
 on:
   push:
     paths:
-    - simple-bbs
+    - 'simple-bbs/**'
 
 jobs:
   build:

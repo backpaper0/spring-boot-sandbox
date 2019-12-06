@@ -3,7 +3,7 @@ name: metrics-example
 on:
   push:
     paths:
-    - metrics-example
+    - 'metrics-example/**'
 
 jobs:
   build:

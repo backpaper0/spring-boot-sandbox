@@ -17,7 +17,7 @@ name: #{pj}
 on:
   push:
     paths:
-    - #{pj}
+    - '#{pj}/**'
 
 jobs:
   build:

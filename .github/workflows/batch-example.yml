@@ -3,7 +3,7 @@ name: batch-example
 on:
   push:
     paths:
-    - batch-example
+    - 'batch-example/**'
 
 jobs:
   build:

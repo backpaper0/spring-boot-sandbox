@@ -3,7 +3,7 @@ name: artemis-sample
 on:
   push:
     paths:
-    - artemis-sample
+    - 'artemis-sample/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: reactive-doma-sample
 on:
   push:
     paths:
-    - reactive-doma-sample
+    - 'reactive-doma-sample/**'
 
 jobs:
   build:

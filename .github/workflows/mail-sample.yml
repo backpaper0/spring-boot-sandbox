@@ -3,7 +3,7 @@ name: mail-sample
 on:
   push:
     paths:
-    - mail-sample
+    - 'mail-sample/**'
 
 jobs:
   build:

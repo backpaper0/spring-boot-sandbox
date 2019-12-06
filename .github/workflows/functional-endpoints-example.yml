@@ -3,7 +3,7 @@ name: functional-endpoints-example
 on:
   push:
     paths:
-    - functional-endpoints-example
+    - 'functional-endpoints-example/**'
 
 jobs:
   build:

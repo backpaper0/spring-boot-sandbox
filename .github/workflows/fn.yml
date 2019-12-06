@@ -3,7 +3,7 @@ name: fn
 on:
   push:
     paths:
-    - fn
+    - 'fn/**'
 
 jobs:
   build:

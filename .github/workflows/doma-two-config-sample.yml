@@ -3,7 +3,7 @@ name: doma-two-config-sample
 on:
   push:
     paths:
-    - doma-two-config-sample
+    - 'doma-two-config-sample/**'
 
 jobs:
   build:

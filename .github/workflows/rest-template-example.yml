@@ -3,7 +3,7 @@ name: rest-template-example
 on:
   push:
     paths:
-    - rest-template-example
+    - 'rest-template-example/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: reactor-example
 on:
   push:
     paths:
-    - reactor-example
+    - 'reactor-example/**'
 
 jobs:
   build:

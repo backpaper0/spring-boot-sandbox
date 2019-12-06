@@ -3,7 +3,7 @@ name: webflux-functional-endpoint-example
 on:
   push:
     paths:
-    - webflux-functional-endpoint-example
+    - 'webflux-functional-endpoint-example/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: validation-example
 on:
   push:
     paths:
-    - validation-example
+    - 'validation-example/**'
 
 jobs:
   build:

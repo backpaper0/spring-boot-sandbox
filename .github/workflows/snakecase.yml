@@ -3,7 +3,7 @@ name: snakecase
 on:
   push:
     paths:
-    - snakecase
+    - 'snakecase/**'
 
 jobs:
   build:

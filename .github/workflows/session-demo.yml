@@ -3,7 +3,7 @@ name: session-demo
 on:
   push:
     paths:
-    - session-demo
+    - 'session-demo/**'
 
 jobs:
   build:

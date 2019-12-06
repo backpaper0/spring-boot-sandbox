@@ -3,7 +3,7 @@ name: spa-indexhtml-example
 on:
   push:
     paths:
-    - spa-indexhtml-example
+    - 'spa-indexhtml-example/**'
 
 jobs:
   build:

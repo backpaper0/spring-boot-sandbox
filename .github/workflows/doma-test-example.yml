@@ -3,7 +3,7 @@ name: doma-test-example
 on:
   push:
     paths:
-    - doma-test-example
+    - 'doma-test-example/**'
 
 jobs:
   build:

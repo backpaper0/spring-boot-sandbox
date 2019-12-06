@@ -3,7 +3,7 @@ name: property-source-example
 on:
   push:
     paths:
-    - property-source-example
+    - 'property-source-example/**'
 
 jobs:
   build:

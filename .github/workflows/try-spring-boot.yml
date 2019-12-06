@@ -3,7 +3,7 @@ name: try-spring-boot
 on:
   push:
     paths:
-    - try-spring-boot
+    - 'try-spring-boot/**'
 
 jobs:
   build:

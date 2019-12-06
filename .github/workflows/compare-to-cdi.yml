@@ -3,7 +3,7 @@ name: compare-to-cdi
 on:
   push:
     paths:
-    - compare-to-cdi
+    - 'compare-to-cdi/**'
 
 jobs:
   build:

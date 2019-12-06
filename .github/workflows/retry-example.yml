@@ -3,7 +3,7 @@ name: retry-example
 on:
   push:
     paths:
-    - retry-example
+    - 'retry-example/**'
 
 jobs:
   build:

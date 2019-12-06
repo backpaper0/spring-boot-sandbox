@@ -3,7 +3,7 @@ name: header-detail-sample
 on:
   push:
     paths:
-    - header-detail-sample
+    - 'header-detail-sample/**'
 
 jobs:
   build:

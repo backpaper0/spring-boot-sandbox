@@ -3,7 +3,7 @@ name: redis-sample
 on:
   push:
     paths:
-    - redis-sample
+    - 'redis-sample/**'
 
 jobs:
   build:

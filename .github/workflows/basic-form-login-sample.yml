@@ -3,7 +3,7 @@ name: basic-form-login-sample
 on:
   push:
     paths:
-    - basic-form-login-sample
+    - 'basic-form-login-sample/**'
 
 jobs:
   build:

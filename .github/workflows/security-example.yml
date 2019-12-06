@@ -3,7 +3,7 @@ name: security-example
 on:
   push:
     paths:
-    - security-example
+    - 'security-example/**'
 
 jobs:
   build:

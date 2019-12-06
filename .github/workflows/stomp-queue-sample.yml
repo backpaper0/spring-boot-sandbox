@@ -3,7 +3,7 @@ name: stomp-queue-sample
 on:
   push:
     paths:
-    - stomp-queue-sample
+    - 'stomp-queue-sample/**'
 
 jobs:
   build:

@@ -3,7 +3,7 @@ name: batch-without-boot-example
 on:
   push:
     paths:
-    - batch-without-boot-example
+    - 'batch-without-boot-example/**'
 
 jobs:
   build:

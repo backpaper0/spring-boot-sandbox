@@ -3,7 +3,7 @@ name: progress-sample
 on:
   push:
     paths:
-    - progress-sample
+    - 'progress-sample/**'
 
 jobs:
   build:
