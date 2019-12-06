@@ -3,6 +3,7 @@
 !/.gitattributes
 !/.mvn/
 !/.babelrc
+!/.github
 /bin/
 /build/
 /target/
