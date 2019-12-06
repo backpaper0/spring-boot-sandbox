@@ -5,7 +5,7 @@
 一括でバージョンアップする。
 
 ```console
-git ls-files|grep pom\.xml|xargs sed -i '' -e 's/2\.0\..*\.RELEASE/2.1.3.RELEASE/g'
+ruby bump_spring_boot.rb
 ```
 
 `pom.xml`を変更したプロジェクトを全部ビルドする。
