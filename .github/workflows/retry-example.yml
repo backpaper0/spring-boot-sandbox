@@ -2,7 +2,8 @@ name: retry-example
 
 on:
   push:
-  - retry-example
+    paths:
+    - retry-example
 
 jobs:
   build:

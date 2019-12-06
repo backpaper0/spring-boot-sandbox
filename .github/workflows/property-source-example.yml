@@ -2,7 +2,8 @@ name: property-source-example
 
 on:
   push:
-  - property-source-example
+    paths:
+    - property-source-example
 
 jobs:
   build:

@@ -2,7 +2,8 @@ name: global-method-security-example
 
 on:
   push:
-  - global-method-security-example
+    paths:
+    - global-method-security-example
 
 jobs:
   build:

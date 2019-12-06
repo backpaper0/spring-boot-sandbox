@@ -2,7 +2,8 @@ name: basic-auth-disabled-example
 
 on:
   push:
-  - basic-auth-disabled-example
+    paths:
+    - basic-auth-disabled-example
 
 jobs:
   build:

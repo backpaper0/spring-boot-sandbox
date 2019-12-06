@@ -2,7 +2,8 @@ name: spring-sandbox
 
 on:
   push:
-  - spring-sandbox
+    paths:
+    - spring-sandbox
 
 jobs:
   build:

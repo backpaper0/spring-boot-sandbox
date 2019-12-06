@@ -2,7 +2,8 @@ name: webflux-example
 
 on:
   push:
-  - webflux-example
+    paths:
+    - webflux-example
 
 jobs:
   build:

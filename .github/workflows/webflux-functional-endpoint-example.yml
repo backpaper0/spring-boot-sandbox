@@ -2,7 +2,8 @@ name: webflux-functional-endpoint-example
 
 on:
   push:
-  - webflux-functional-endpoint-example
+    paths:
+    - webflux-functional-endpoint-example
 
 jobs:
   build:

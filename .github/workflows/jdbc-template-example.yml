@@ -2,7 +2,8 @@ name: jdbc-template-example
 
 on:
   push:
-  - jdbc-template-example
+    paths:
+    - jdbc-template-example
 
 jobs:
   build:

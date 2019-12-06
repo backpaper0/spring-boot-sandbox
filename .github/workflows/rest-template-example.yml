@@ -2,7 +2,8 @@ name: rest-template-example
 
 on:
   push:
-  - rest-template-example
+    paths:
+    - rest-template-example
 
 jobs:
   build:

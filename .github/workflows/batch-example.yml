@@ -2,7 +2,8 @@ name: batch-example
 
 on:
   push:
-  - batch-example
+    paths:
+    - batch-example
 
 jobs:
   build:

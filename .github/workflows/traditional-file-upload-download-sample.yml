@@ -2,7 +2,8 @@ name: traditional-file-upload-download-sample
 
 on:
   push:
-  - traditional-file-upload-download-sample
+    paths:
+    - traditional-file-upload-download-sample
 
 jobs:
   build:

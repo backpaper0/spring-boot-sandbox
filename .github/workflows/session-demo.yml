@@ -2,7 +2,8 @@ name: session-demo
 
 on:
   push:
-  - session-demo
+    paths:
+    - session-demo
 
 jobs:
   build:

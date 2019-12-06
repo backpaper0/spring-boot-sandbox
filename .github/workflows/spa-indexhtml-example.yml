@@ -2,7 +2,8 @@ name: spa-indexhtml-example
 
 on:
   push:
-  - spa-indexhtml-example
+    paths:
+    - spa-indexhtml-example
 
 jobs:
   build:

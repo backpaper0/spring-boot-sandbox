@@ -2,7 +2,8 @@ name: fn
 
 on:
   push:
-  - fn
+    paths:
+    - fn
 
 jobs:
   build:

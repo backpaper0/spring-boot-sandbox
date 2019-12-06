@@ -2,7 +2,8 @@ name: login-customize-example
 
 on:
   push:
-  - login-customize-example
+    paths:
+    - login-customize-example
 
 jobs:
   build:

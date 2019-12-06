@@ -2,7 +2,8 @@ name: integration-example
 
 on:
   push:
-  - integration-example
+    paths:
+    - integration-example
 
 jobs:
   build:

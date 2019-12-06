@@ -2,7 +2,8 @@ name: snakecase
 
 on:
   push:
-  - snakecase
+    paths:
+    - snakecase
 
 jobs:
   build:

@@ -16,7 +16,8 @@ name: #{pj}
 
 on:
   push:
-  - #{pj}
+    paths:
+    - #{pj}
 
 jobs:
   build:

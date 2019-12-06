@@ -2,7 +2,8 @@ name: validation-example
 
 on:
   push:
-  - validation-example
+    paths:
+    - validation-example
 
 jobs:
   build:

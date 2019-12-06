@@ -2,7 +2,8 @@ name: metrics-example
 
 on:
   push:
-  - metrics-example
+    paths:
+    - metrics-example
 
 jobs:
   build:

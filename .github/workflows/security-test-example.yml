@@ -2,7 +2,8 @@ name: security-test-example
 
 on:
   push:
-  - security-test-example
+    paths:
+    - security-test-example
 
 jobs:
   build:

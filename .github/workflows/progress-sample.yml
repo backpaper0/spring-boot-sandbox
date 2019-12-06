@@ -2,7 +2,8 @@ name: progress-sample
 
 on:
   push:
-  - progress-sample
+    paths:
+    - progress-sample
 
 jobs:
   build:

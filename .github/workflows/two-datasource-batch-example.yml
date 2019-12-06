@@ -2,7 +2,8 @@ name: two-datasource-batch-example
 
 on:
   push:
-  - two-datasource-batch-example
+    paths:
+    - two-datasource-batch-example
 
 jobs:
   build:

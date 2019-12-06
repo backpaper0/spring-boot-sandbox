@@ -2,7 +2,8 @@ name: accesslog-standard-output-example
 
 on:
   push:
-  - accesslog-standard-output-example
+    paths:
+    - accesslog-standard-output-example
 
 jobs:
   build:

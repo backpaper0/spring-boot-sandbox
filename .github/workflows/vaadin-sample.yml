@@ -2,7 +2,8 @@ name: vaadin-sample
 
 on:
   push:
-  - vaadin-sample
+    paths:
+    - vaadin-sample
 
 jobs:
   build:

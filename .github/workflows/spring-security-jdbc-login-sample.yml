@@ -2,7 +2,8 @@ name: spring-security-jdbc-login-sample
 
 on:
   push:
-  - spring-security-jdbc-login-sample
+    paths:
+    - spring-security-jdbc-login-sample
 
 jobs:
   build:

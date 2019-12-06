@@ -2,7 +2,8 @@ name: mybatis-example
 
 on:
   push:
-  - mybatis-example
+    paths:
+    - mybatis-example
 
 jobs:
   build:

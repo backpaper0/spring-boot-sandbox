@@ -2,7 +2,8 @@ name: doma-event-sample
 
 on:
   push:
-  - doma-event-sample
+    paths:
+    - doma-event-sample
 
 jobs:
   build:

@@ -2,7 +2,8 @@ name: webmvc-example
 
 on:
   push:
-  - webmvc-example
+    paths:
+    - webmvc-example
 
 jobs:
   build:

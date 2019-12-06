@@ -2,7 +2,8 @@ name: simple-crud
 
 on:
   push:
-  - simple-crud
+    paths:
+    - simple-crud
 
 jobs:
   build:

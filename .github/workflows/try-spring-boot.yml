@@ -2,7 +2,8 @@ name: try-spring-boot
 
 on:
   push:
-  - try-spring-boot
+    paths:
+    - try-spring-boot
 
 jobs:
   build:

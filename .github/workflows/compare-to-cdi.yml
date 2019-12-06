@@ -2,7 +2,8 @@ name: compare-to-cdi
 
 on:
   push:
-  - compare-to-cdi
+    paths:
+    - compare-to-cdi
 
 jobs:
   build:

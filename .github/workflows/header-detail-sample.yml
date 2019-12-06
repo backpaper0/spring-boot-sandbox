@@ -2,7 +2,8 @@ name: header-detail-sample
 
 on:
   push:
-  - header-detail-sample
+    paths:
+    - header-detail-sample
 
 jobs:
   build:

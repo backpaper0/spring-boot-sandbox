@@ -2,7 +2,8 @@ name: simple-bbs
 
 on:
   push:
-  - simple-bbs
+    paths:
+    - simple-bbs
 
 jobs:
   build:

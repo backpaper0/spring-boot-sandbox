@@ -2,7 +2,8 @@ name: mail-sample
 
 on:
   push:
-  - mail-sample
+    paths:
+    - mail-sample
 
 jobs:
   build:

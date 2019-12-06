@@ -2,7 +2,8 @@ name: basic-form-login-sample
 
 on:
   push:
-  - basic-form-login-sample
+    paths:
+    - basic-form-login-sample
 
 jobs:
   build:

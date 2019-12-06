@@ -2,7 +2,8 @@ name: stomp-queue-sample
 
 on:
   push:
-  - stomp-queue-sample
+    paths:
+    - stomp-queue-sample
 
 jobs:
   build:

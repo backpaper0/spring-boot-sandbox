@@ -2,7 +2,8 @@ name: functional-endpoints-example
 
 on:
   push:
-  - functional-endpoints-example
+    paths:
+    - functional-endpoints-example
 
 jobs:
   build:

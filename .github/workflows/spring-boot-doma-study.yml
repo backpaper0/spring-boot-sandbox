@@ -2,7 +2,8 @@ name: spring-boot-doma-study
 
 on:
   push:
-  - spring-boot-doma-study
+    paths:
+    - spring-boot-doma-study
 
 jobs:
   build:

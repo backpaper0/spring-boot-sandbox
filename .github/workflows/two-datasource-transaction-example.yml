@@ -2,7 +2,8 @@ name: two-datasource-transaction-example
 
 on:
   push:
-  - two-datasource-transaction-example
+    paths:
+    - two-datasource-transaction-example
 
 jobs:
   build:

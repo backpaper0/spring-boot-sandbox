@@ -2,7 +2,8 @@ name: reactive-postgres-example
 
 on:
   push:
-  - reactive-postgres-example
+    paths:
+    - reactive-postgres-example
 
 jobs:
   build:

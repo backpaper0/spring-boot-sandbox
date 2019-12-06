@@ -2,7 +2,8 @@ name: web-test-example
 
 on:
   push:
-  - web-test-example
+    paths:
+    - web-test-example
 
 jobs:
   build:

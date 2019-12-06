@@ -2,7 +2,8 @@ name: doma-two-config-sample
 
 on:
   push:
-  - doma-two-config-sample
+    paths:
+    - doma-two-config-sample
 
 jobs:
   build:

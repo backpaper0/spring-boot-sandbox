@@ -2,7 +2,8 @@ name: jpa-stream-example
 
 on:
   push:
-  - jpa-stream-example
+    paths:
+    - jpa-stream-example
 
 jobs:
   build:

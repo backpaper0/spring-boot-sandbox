@@ -2,7 +2,8 @@ name: reactor-example
 
 on:
   push:
-  - reactor-example
+    paths:
+    - reactor-example
 
 jobs:
   build:
