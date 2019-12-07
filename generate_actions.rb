@@ -36,3 +36,14 @@ _EOF_
 
   end
 end
+
+File.open("workflow-status.md", "w") do |out|
+  out.puts "# workflow-status"
+  out.puts ""
+  pjs.each do |pj|
+    badge_url = "https://github.com/backpaper0/spring-boot-sandbox/workflows/#{pj}/badge.svg"
+    workflow_url = "https://github.com/backpaper0/spring-boot-sandbox/actions?query=workflow:#{pj}"
+    out.puts "- [![](#{badge_url})](#{workflow_url})"
+  end
+end
+
