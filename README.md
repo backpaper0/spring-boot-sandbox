@@ -6,8 +6,14 @@
 
 一括でバージョンアップする。
 
-```console
+```
 ruby bump_spring_boot.rb
+```
+
+GitHub Actionsの定義ファイルを出力する。ステータスバッジも。
+
+```
+ruby generate_actions.rb
 ```
 
 `pom.xml`を変更したプロジェクトを全部ビルドする。
