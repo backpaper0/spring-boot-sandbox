@@ -26,6 +26,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/cache@v1
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('#{pj}/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
     - name: Set up JDK #{ver}
       uses: actions/setup-java@v1
       with:
