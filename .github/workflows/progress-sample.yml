@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'progress-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

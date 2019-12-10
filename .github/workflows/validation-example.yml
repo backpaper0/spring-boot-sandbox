@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'validation-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

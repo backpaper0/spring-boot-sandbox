@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'spring-security-jdbc-login-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

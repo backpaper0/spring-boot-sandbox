@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'spring-boot-doma-study/**'
+    - 'pom.xml'
 
 jobs:
   build:

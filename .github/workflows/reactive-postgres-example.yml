@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'reactive-postgres-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

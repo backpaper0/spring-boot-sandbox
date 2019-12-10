@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'compare-to-cdi/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'fn/**'
+    - 'pom.xml'
 
 jobs:
   build:

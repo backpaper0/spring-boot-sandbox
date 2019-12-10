@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'property-source-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'rest-template-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

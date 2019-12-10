@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'batch-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'doma-event-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'snakecase/**'
+    - 'pom.xml'
 
 jobs:
   build:

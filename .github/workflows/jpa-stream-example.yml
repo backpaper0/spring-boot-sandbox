@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'jpa-stream-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'try-spring-boot/**'
+    - 'pom.xml'
 
 jobs:
   build:

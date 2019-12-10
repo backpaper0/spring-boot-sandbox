@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'global-method-security-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

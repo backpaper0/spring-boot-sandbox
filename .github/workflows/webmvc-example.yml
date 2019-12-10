@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'webmvc-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

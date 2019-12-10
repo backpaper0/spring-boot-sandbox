@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'traditional-file-upload-download-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

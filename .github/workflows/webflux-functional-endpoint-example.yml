@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'webflux-functional-endpoint-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

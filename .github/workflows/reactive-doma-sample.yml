@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'reactive-doma-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

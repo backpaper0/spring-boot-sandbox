@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'integration-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'functional-endpoints-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

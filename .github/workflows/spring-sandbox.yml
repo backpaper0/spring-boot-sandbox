@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'spring-sandbox/**'
+    - 'pom.xml'
 
 jobs:
   build:

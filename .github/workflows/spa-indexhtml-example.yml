@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'spa-indexhtml-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

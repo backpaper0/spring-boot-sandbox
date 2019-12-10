@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'security-test-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

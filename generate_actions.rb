@@ -1,14 +1,11 @@
 require "rexml/document"
 
-pjs = `git ls-files -- **/pom.xml`.split("\n").map { |pom| pom.split("/")[0] }
+pjs = `git ls-files | grep /pom\.xml$`.split("\n").map { |pom| pom.split("/")[0] }
 
 pjs.each do |pj|
   puts pj
 
-  doc = REXML::Document.new(File.new("#{pj}/pom.xml"))
-  ver_elem = doc.elements["project/properties/java.version"]
-  ver_elem = doc.elements["project/properties/maven.compiler.target"] unless ver_elem
-  ver = ver_elem.get_text
+  version = '11'
 
   File.open(".github/workflows/#{pj}.yml", "w") do |out|
     out.puts <<_EOF_
@@ -18,6 +15,7 @@ on:
   push:
     paths:
     - '#{pj}/**'
+    - 'pom.xml'
 
 jobs:
   build:
@@ -32,10 +30,10 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('#{pj}/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Set up JDK #{ver}
+    - name: Set up JDK #{version}
       uses: actions/setup-java@v1
       with:
-        java-version: #{ver}
+        java-version: #{version}
     - name: Build with Maven
       run: mvn -B test --file #{pj}/pom.xml
 _EOF_

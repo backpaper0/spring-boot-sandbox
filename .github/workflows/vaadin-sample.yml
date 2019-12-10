@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'vaadin-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

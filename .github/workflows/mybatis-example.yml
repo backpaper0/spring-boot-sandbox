@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'mybatis-example/**'
+    - 'pom.xml'
 
 jobs:
   build:

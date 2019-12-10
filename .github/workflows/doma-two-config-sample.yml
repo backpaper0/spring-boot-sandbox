@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'doma-two-config-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

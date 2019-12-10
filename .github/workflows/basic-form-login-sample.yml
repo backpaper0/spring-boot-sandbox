@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'basic-form-login-sample/**'
+    - 'pom.xml'
 
 jobs:
   build:

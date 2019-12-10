@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'transaction-example/**'
+    - 'pom.xml'
 
 jobs:
   build:
