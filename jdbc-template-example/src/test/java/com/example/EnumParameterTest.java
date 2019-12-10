@@ -3,7 +3,6 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Types;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,11 @@ class EnumParameterTest {
             }
         };
 
-        final Map<String, Object> result = jdbcTemplate
-                .queryForMap("SELECT id, txt, dt FROM example WHERE txt = ?", txt);
+        final String result = jdbcTemplate
+                .queryForObject("SELECT txt FROM example WHERE txt = ?", new Object[] { txt },
+                        String.class);
 
-        assertEquals("foo", result.get("txt"));
+        assertEquals("foo", result);
     }
 
     enum Txt {
