@@ -1,9 +1,10 @@
-name: rest-client-example
+name: spring-boot-sandbox
 
 on:
   push:
     paths:
-    - 'rest-client-example/**'
+    - '**/src/**'
+    - '**/pom.xml'
     - 'pom.xml'
 
 jobs:
@@ -16,7 +17,7 @@ jobs:
     - uses: actions/cache@v1
       with:
         path: ~/.m2/repository
-        key: ${{ runner.os }}-maven-${{ hashFiles('rest-client-example/pom.xml') }}
+        key: ${{ runner.os }}-maven-${{ hashFiles('pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
     - name: Set up JDK 11
@@ -24,4 +25,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B test --file rest-client-example/pom.xml
+      run: mvn -B test

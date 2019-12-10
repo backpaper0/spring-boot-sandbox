@@ -1,6 +1,6 @@
 # Sprint Boot Sandbox
 
-[workflow-status](./workflow-status.md)
+- [![](https://github.com/backpaper0/spring-boot-sandbox/workflows/spring-boot-sandbox/badge.svg)](https://github.com/backpaper0/spring-boot-sandbox/actions?query=workflow:spring-boot-sandbox)
 
 ## めも( ・ิω・ิ)
 
