@@ -24,6 +24,7 @@ File.open("pom.xml", "w") { |out|
 
 	<properties>
 		<java.version>11</java.version>
+		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
 	</properties>
 
     <modules>
@@ -37,6 +38,18 @@ _EOS_
 
   out.puts <<_EOS_
     </modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>
 _EOS_
