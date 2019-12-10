@@ -5,7 +5,7 @@
 ## プロジェクトの追加 or Spring Bootのバージョンアップ
 
 ```
-ruby generate_parent_pom.xml
+ruby generate_parent_pom.rb
 ```
 
 ## License
