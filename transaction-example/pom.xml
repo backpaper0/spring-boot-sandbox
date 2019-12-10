@@ -10,11 +10,11 @@
 	
 	<artifactId>transaction-example</artifactId>
 	
-	<name>transaction-example</name>
-	<description>Demo project for Spring Boot</description>
+	
+	
 
 	<properties>
-		<java.version>11</java.version>
+		
 	</properties>
 
 	<dependencies>
