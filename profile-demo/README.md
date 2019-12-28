@@ -4,8 +4,9 @@
 
 このリポジトリは次のプロパティファイルがある状態。
 
-- `default.properties`
-- `production.properties`
+- `properties.properties`
+- `properties-default.properties`
+- `properties-production.properties`
 
 この状態で次のプロファイル指定を試してみた。
 
