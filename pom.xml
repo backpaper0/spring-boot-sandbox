@@ -19,6 +19,7 @@
 
     <modules>
         <module>accesslog-standard-output-example</module>
+        <module>api-example</module>
         <module>artemis-sample</module>
         <module>basic-auth-disabled-example</module>
         <module>basic-form-login-sample</module>
@@ -53,6 +54,7 @@
         <module>mail-sample</module>
         <module>metrics-example</module>
         <module>mybatis-example</module>
+        <module>profile-demo</module>
         <module>progress-sample</module>
         <module>property-source-example</module>
         <module>reactive-doma-sample</module>
