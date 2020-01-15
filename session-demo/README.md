@@ -1,14 +1,31 @@
 # session-demo
 
+## Startup
+
+Default store-type is JDBC(H2 database).
+
+```
+mvn spring-boot:run
+```
+
+Redis store also available via 'redis' profile.
+
+```
+docker-compose up -d
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=redis"
+```
+
+## Operation
+
 Set
 
 ```
-curl -c cookie.txt -b cookie.txt -v localhost:8080/hello -d value='Hello world'
+curl -c target/cookie.txt -b target/cookie.txt -v localhost:8080/hello -d value='Hello world'
 ```
 
 Get
 
 ```
-curl -c cookie.txt -b cookie.txt -v localhost:8080/hello
+curl -c target/cookie.txt -b target/cookie.txt -v localhost:8080/hello
 ```
 
