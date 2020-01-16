@@ -65,6 +65,7 @@
         <module>rest-client-example/client</module>
         <module>rest-template-example</module>
         <module>retry-example</module>
+        <module>samesite-cookie-demo</module>
         <module>security-example</module>
         <module>security-test-example</module>
         <module>service-discovery/backend</module>
