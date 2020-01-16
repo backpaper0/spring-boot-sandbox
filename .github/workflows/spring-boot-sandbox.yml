@@ -6,6 +6,7 @@ on:
     - '**/src/**'
     - '**/pom.xml'
     - 'pom.xml'
+    - '.github/workflows/spring-boot-sandbox.yml'
 
 jobs:
   build:
