@@ -1,9 +1,10 @@
 require "rexml/document"
-require "net/http"
+require "net/https"
 
-http = Net::HTTP.new("repo.maven.apache.org")
+http = Net::HTTP.new("repo.maven.apache.org", 443)
+http.use_ssl = true
 
-response = http.get("http://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot/maven-metadata.xml")
+response = http.get("/maven2/org/springframework/boot/spring-boot/maven-metadata.xml")
 spring_boot_version = REXML::Document.new(response.body).elements["metadata/versioning/latest"].get_text
 
 File.open("pom.xml", "w") { |out|
