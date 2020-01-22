@@ -45,11 +45,13 @@
         <module>fn</module>
         <module>functional-endpoints-example</module>
         <module>global-method-security-example</module>
+        <module>graphql-example</module>
         <module>header-detail-sample</module>
         <module>integration-example</module>
         <module>jdbc-template-example</module>
         <module>jpa-example</module>
         <module>jpa-stream-example</module>
+        <module>localdatetime-format-example</module>
         <module>login-customize-example</module>
         <module>mail-sample</module>
         <module>metrics-example</module>
