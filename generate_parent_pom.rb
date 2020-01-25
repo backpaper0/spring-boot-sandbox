@@ -21,24 +21,24 @@ File.open("pom.xml", "w") { |out|
 	<groupId>com.example</groupId>
 	<artifactId>spring-boot-sandbox-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+	<packaging>pom</packaging>
 
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
 	</properties>
 
-    <modules>
+	<modules>
 _EOS_
 
   poms = `git ls-files | grep /pom\.xml$`.split("\n")
   poms.each do |pom|
     mod = pom[0, pom.size - "/pom.xml".size]
-    out.puts "        <module>#{mod}</module>"
+    out.puts "		<module>#{mod}</module>"
   end
 
   out.puts <<_EOS_
-    </modules>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
