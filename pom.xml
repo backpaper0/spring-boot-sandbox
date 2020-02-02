@@ -25,6 +25,7 @@
 		<module>basic-form-login-sample</module>
 		<module>batch-example</module>
 		<module>batch-without-boot-example</module>
+		<module>cache-example</module>
 		<module>circuit-breaker/backend</module>
 		<module>circuit-breaker/frontend</module>
 		<module>cloud-config-sample/config-client</module>
