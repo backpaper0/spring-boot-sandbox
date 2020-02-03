@@ -1,13 +1,19 @@
 type Query {
-	category(id: ID): Category
-	categories: [Category]
+	book(id: ID): Book
+	books: [Book]
 }
 
-type Category {
+type Book {
+  id: ID
+  title: String
+  author: Author
+}
+
+type Author {
   id: ID
   name: String
 }
 
-type Mutation {
-	category(name: String): Category
-}
+#type Mutation {
+#	category(name: String): Category
+#}
