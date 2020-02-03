@@ -5,7 +5,13 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
+import org.dataloader.BatchLoader;
+import org.dataloader.DataLoader;
+import org.dataloader.DataLoaderRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +42,12 @@ public class GraphQLConfig {
                     runtimeWiring);
             return GraphQL.newGraphQL(graphQLSchema).build();
         }
+    }
+
+    @Bean
+    public DataLoaderRegistry dataLoaderRegistry() {
+        return new DataLoaderRegistry()
+                .register("author", authorDataLoader());
     }
 
     private RuntimeWiring buildWiring() {
@@ -78,12 +90,23 @@ public class GraphQLConfig {
         };
     }
 
-    DataFetcher<Author> authorByBook() {
+    DataFetcher<CompletionStage<Author>> authorByBook() {
         return env -> {
             System.out.println("authorByBook");
             final Book book = env.getSource();
             final int id = book.getAuthorId();
-            return authors.stream().filter(a -> a.getId() == id).findAny().orElse(null);
+            final DataLoader<Integer, Author> dataLoader = env.getDataLoader("author");
+            return dataLoader.load(id);
         };
+    }
+
+    DataLoader<Integer, Author> authorDataLoader() {
+        final BatchLoader<Integer, Author> batchLoadFunction = keys -> {
+            System.out.println("authorDataLoader");
+            return CompletableFuture.completedStage(keys.stream().map(
+                    key -> authors.stream().filter(a -> a.getId() == key).findAny().orElse(null))
+                    .collect(Collectors.toList()));
+        };
+        return DataLoader.newDataLoader(batchLoadFunction);
     }
 }
