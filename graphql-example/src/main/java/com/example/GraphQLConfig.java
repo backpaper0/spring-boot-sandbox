@@ -5,17 +5,23 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import graphql.GraphQL;
 import graphql.schema.DataFetcher;
@@ -31,6 +37,8 @@ public class GraphQLConfig {
 
     @Value("classpath:/schema.graphqls")
     private Resource resource;
+    @Autowired
+    private NamedParameterJdbcTemplate jdbc;
 
     @Bean
     public GraphQL graphQL() throws IOException {
@@ -63,22 +71,10 @@ public class GraphQLConfig {
                 .build();
     }
 
-    List<Book> books = List.of(
-            new Book(1, "重力ピエロ", 3),
-            new Book(2, "容疑者Xの献身", 2),
-            new Book(3, "天使の耳", 2),
-            new Book(4, "陽気なギャングが地球を回す", 3),
-            new Book(5, "砂糖菓子の弾丸は撃ちぬけない", 1));
-
-    List<Author> authors = List.of(
-            new Author(1, "桜庭一樹"),
-            new Author(2, "東野圭吾"),
-            new Author(3, "伊坂幸太郎"));
-
     DataFetcher<List<Book>> books() {
         return env -> {
             System.out.println("books");
-            return books;
+            return jdbc.query("SELECT * FROM books", BeanPropertyRowMapper.newInstance(Book.class));
         };
     }
 
@@ -86,7 +82,9 @@ public class GraphQLConfig {
         return env -> {
             System.out.println("book");
             final int id = Integer.parseInt(env.<String> getArgument("id"));
-            return books.stream().filter(a -> a.getId() == id).findAny().orElse(null);
+            return jdbc.queryForObject("SELECT * FROM books WHERE id = :id",
+                    new MapSqlParameterSource().addValue("id", id),
+                    BeanPropertyRowMapper.newInstance(Book.class));
         };
     }
 
@@ -103,9 +101,13 @@ public class GraphQLConfig {
     DataLoader<Integer, Author> authorDataLoader() {
         final BatchLoader<Integer, Author> batchLoadFunction = keys -> {
             System.out.println("authorDataLoader");
-            return CompletableFuture.completedStage(keys.stream().map(
-                    key -> authors.stream().filter(a -> a.getId() == key).findAny().orElse(null))
-                    .collect(Collectors.toList()));
+            final Map<Integer, Author> authors = jdbc
+                    .query("SELECT * FROM authors WHERE id IN (:ids)",
+                            new MapSqlParameterSource().addValue("ids", keys),
+                            BeanPropertyRowMapper.newInstance(Author.class))
+                    .stream().collect(Collectors.toMap(Author::getId, Function.identity()));
+            return CompletableFuture
+                    .completedStage(keys.stream().map(authors::get).collect(Collectors.toList()));
         };
         return DataLoader.newDataLoader(batchLoadFunction);
     }

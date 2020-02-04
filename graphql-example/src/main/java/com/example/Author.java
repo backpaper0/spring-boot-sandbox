@@ -2,8 +2,11 @@ package com.example;
 
 public class Author {
 
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
+
+    public Author() {
+    }
 
     public Author(final int id, final String name) {
         this.id = id;
@@ -14,7 +17,15 @@ public class Author {
         return id;
     }
 
+    public void setId(final int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 }

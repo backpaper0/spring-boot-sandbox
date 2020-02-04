@@ -2,9 +2,12 @@ package com.example;
 
 public class Book {
 
-    private final int id;
-    private final String title;
-    private final int authorId;
+    private int id;
+    private String title;
+    private int authorId;
+
+    public Book() {
+    }
 
     public Book(final int id, final String title, final int authorId) {
         this.id = id;
@@ -16,11 +19,23 @@ public class Book {
         return id;
     }
 
+    public void setId(final int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
     public int getAuthorId() {
         return authorId;
+    }
+
+    public void setAuthorId(final int authorId) {
+        this.authorId = authorId;
     }
 }
