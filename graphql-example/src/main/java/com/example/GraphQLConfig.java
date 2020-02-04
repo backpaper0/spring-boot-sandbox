@@ -5,13 +5,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import org.dataloader.BatchLoader;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +14,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.web.context.annotation.RequestScope;
+
+import com.example.datafetcher.AuthorByRelationFetcher;
+import com.example.datafetcher.BookFetcher;
+import com.example.datafetcher.BooksFetcher;
+import com.example.dataloader.AuthorLoader;
 
 import graphql.GraphQL;
 import graphql.schema.DataFetcher;
@@ -74,43 +72,18 @@ public class GraphQLConfig {
     }
 
     DataFetcher<List<Book>> books() {
-        return env -> {
-            System.out.println("books");
-            return jdbc.query("SELECT * FROM books", BeanPropertyRowMapper.newInstance(Book.class));
-        };
+        return new BooksFetcher(jdbc);
     }
 
     DataFetcher<Book> book() {
-        return env -> {
-            System.out.println("book");
-            final int id = Integer.parseInt(env.<String> getArgument("id"));
-            return jdbc.queryForObject("SELECT * FROM books WHERE id = :id",
-                    new MapSqlParameterSource().addValue("id", id),
-                    BeanPropertyRowMapper.newInstance(Book.class));
-        };
+        return new BookFetcher(jdbc);
     }
 
     DataFetcher<CompletionStage<Author>> authorByBook() {
-        return env -> {
-            System.out.println("authorByBook");
-            final Book book = env.getSource();
-            final int id = book.getAuthorId();
-            final DataLoader<Integer, Author> dataLoader = env.getDataLoader("author");
-            return dataLoader.load(id);
-        };
+        return new AuthorByRelationFetcher<>(Book::getAuthorId);
     }
 
     DataLoader<Integer, Author> authorDataLoader() {
-        final BatchLoader<Integer, Author> batchLoadFunction = keys -> {
-            System.out.println("authorDataLoader");
-            final Map<Integer, Author> authors = jdbc
-                    .query("SELECT * FROM authors WHERE id IN (:ids)",
-                            new MapSqlParameterSource().addValue("ids", keys),
-                            BeanPropertyRowMapper.newInstance(Author.class))
-                    .stream().collect(Collectors.toMap(Author::getId, Function.identity()));
-            return CompletableFuture
-                    .completedStage(keys.stream().map(authors::get).collect(Collectors.toList()));
-        };
-        return DataLoader.newDataLoader(batchLoadFunction);
+        return DataLoader.newDataLoader(new AuthorLoader(jdbc));
     }
 }
