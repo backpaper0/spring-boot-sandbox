@@ -4,36 +4,27 @@ import java.util.concurrent.CompletableFuture;
 
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.context.request.WebRequest;
+
+import com.example.GraphQLWebMvcConfig.GraphQLInvocationImpl;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
-import graphql.spring.web.servlet.ExecutionResultHandler;
 import graphql.spring.web.servlet.GraphQLInvocation;
 import graphql.spring.web.servlet.GraphQLInvocationData;
 import graphql.spring.web.servlet.components.DefaultExecutionResultHandler;
 import graphql.spring.web.servlet.components.GraphQLController;
 
 @Configuration
+@Import({
+        DefaultExecutionResultHandler.class,
+        GraphQLInvocationImpl.class,
+        GraphQLController.class
+})
 public class GraphQLWebMvcConfig {
-
-    @Bean
-    public ExecutionResultHandler executionResultHandler() {
-        return new DefaultExecutionResultHandler();
-    }
-
-    @Bean
-    public GraphQLInvocation graphQLInvocation() {
-        return new GraphQLInvocationImpl();
-    }
-
-    @Bean
-    public GraphQLController graphQLController() {
-        return new GraphQLController();
-    }
 
     public static class GraphQLInvocationImpl implements GraphQLInvocation {
 
