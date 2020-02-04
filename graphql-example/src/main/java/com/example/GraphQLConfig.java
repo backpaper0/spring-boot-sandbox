@@ -22,6 +22,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.web.context.annotation.RequestScope;
 
 import graphql.GraphQL;
 import graphql.schema.DataFetcher;
@@ -53,6 +54,7 @@ public class GraphQLConfig {
     }
 
     @Bean
+    @RequestScope //HashMapでキャッシュされちゃうのでRequestScopeにした方が良い気がする
     public DataLoaderRegistry dataLoaderRegistry() {
         return new DataLoaderRegistry()
                 .register("author", authorDataLoader());
