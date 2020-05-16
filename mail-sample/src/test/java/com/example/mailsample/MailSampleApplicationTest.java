@@ -6,52 +6,49 @@ import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
-public class MailSampleApplicationTest {
+class MailSampleApplicationTest {
 
-    private Wiser wiser;
+	private Wiser wiser;
 
-    @Autowired
-    private MailSample mailSample;
+	@Autowired
+	private MailSample mailSample;
 
-    @Test
-    public void test() throws Exception {
+	@Test
+	void test() throws Exception {
 
-        mailSample.sendMail();
+		mailSample.sendMail();
 
-        final List<WiserMessage> messages = wiser.getMessages();
-        assertThat(messages.size()).isEqualTo(1);
+		final List<WiserMessage> messages = wiser.getMessages();
+		assertThat(messages.size()).isEqualTo(1);
 
-        final WiserMessage message = messages.get(0);
+		final WiserMessage message = messages.get(0);
 
-        assertThat(message.getEnvelopeReceiver()).isEqualTo("foo@example.com");
-        assertThat(message.getEnvelopeSender()).isEqualTo("bar@example.com");
+		assertThat(message.getEnvelopeReceiver()).isEqualTo("foo@example.com");
+		assertThat(message.getEnvelopeSender()).isEqualTo("bar@example.com");
 
-        final MimeMessage msg = message.getMimeMessage();
-        assertThat(msg.getSubject()).isEqualTo("HELLO");
-        assertThat(msg.getContent()).asString().contains("Hello, world!");
-    }
+		final MimeMessage msg = message.getMimeMessage();
+		assertThat(msg.getSubject()).isEqualTo("HELLO");
+		assertThat(msg.getContent()).asString().contains("Hello, world!");
+	}
 
-    @Before
-    public void startSMTPServer() {
-        wiser = new Wiser();
-        wiser.setPort(8025);
-        wiser.start();
-    }
+	@BeforeEach
+	void startSMTPServer() {
+		wiser = new Wiser();
+		wiser.setPort(8025);
+		wiser.start();
+	}
 
-    @After
-    public void stopSMTPServer() {
-        wiser.stop();
-    }
+	@AfterEach
+	void stopSMTPServer() {
+		wiser.stop();
+	}
 }
