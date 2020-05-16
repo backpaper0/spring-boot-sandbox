@@ -16,43 +16,43 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 class CustomValidationExampleControllerTest {
 
-    @Autowired
-    private WebApplicationContext context;
+	@Autowired
+	private WebApplicationContext context;
 
-    private MockMvc mvc;
+	private MockMvc mvc;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		mvc = MockMvcBuilders.webAppContextSetup(context).build();
+	}
 
-    @Test
-    void valid() throws Exception {
-        mvc.perform(post("/3")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", "hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Valid"));
-    }
+	@Test
+	void valid() throws Exception {
+		mvc.perform(post("/3")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", "hello"))
+				.andExpect(status().isOk())
+				.andExpect(content().string("Valid"));
+	}
 
-    @Test
-    void invalid_required() throws Exception {
-        mvc.perform(post("/3")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", ""))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Required"));
-    }
+	@Test
+	void invalid_required() throws Exception {
+		mvc.perform(post("/3")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", ""))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string("Required"));
+	}
 
-    @Test
-    void invalid_size() throws Exception {
-        mvc.perform(post("/3")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", "123456"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("size must be between 0 and 5"));
-    }
+	@Test
+	void invalid_size() throws Exception {
+		mvc.perform(post("/3")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", "123456"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string("0〜5にしてください"));
+	}
 }
