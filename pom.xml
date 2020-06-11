@@ -50,6 +50,7 @@
 		<module>header-detail-sample</module>
 		<module>integration-example</module>
 		<module>jdbc-template-example</module>
+		<module>jersey-example</module>
 		<module>jpa-example</module>
 		<module>jpa-stream-example</module>
 		<module>localdatetime-format-example</module>
