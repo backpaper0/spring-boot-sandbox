@@ -1,0 +1,22 @@
+
+example:
+  issuer-uri: http://localhost:8000/auth/realms/spring-boot-oidc-example
+
+spring.security.oauth2.client:
+  registration.example:
+    client-id: example
+    client-secret: 43b2f153-4b58-4e1b-a0fc-37bae6895950
+    client-authentication-method: basic
+    authorization-grant-type: authorization_code
+    redirect-uri: http://localhost:8080/login/oauth2/code/example
+    scope: openid
+    client-name: Example Client
+    provider: example
+  provider.example:
+    authorization-uri: ${example.issuer-uri}/protocol/openid-connect/auth
+    token-uri: ${example.issuer-uri}/protocol/openid-connect/token
+    user-info-uri: ${example.issuer-uri}/protocol/openid-connect/userinfo
+    user-info-authentication-method: basic
+    user-name-attribute: name
+    jwk-set-uri: ${example.issuer-uri}/protocol/openid-connect/certs
+    issuer-uri: ${example.issuer-uri}

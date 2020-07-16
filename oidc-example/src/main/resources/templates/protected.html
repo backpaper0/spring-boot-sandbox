@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OpenID Example</title>
+  </head>
+  <body>
+    <h1>Protected</h1>
+    <table border="1">
+      <tr data-th-each="claim : ${claims}">
+        <th data-th-text="${claim.key}"></th>
+        <td data-th-text="${claim.value}"></td>
+      </tr>
+    </table>
+    <p><a href="/">Home</a></p>
+  </body>
+</html>
