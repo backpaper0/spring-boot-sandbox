@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
+		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -71,6 +71,7 @@
 		<module>rest-template-example</module>
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
+		<module>scheduling-example</module>
 		<module>security-example</module>
 		<module>security-test-example</module>
 		<module>service-discovery/backend</module>
