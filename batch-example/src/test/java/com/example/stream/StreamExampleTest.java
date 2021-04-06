@@ -17,12 +17,11 @@ class StreamExampleTest {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private StreamExample example;
+    private Job job;
 
     @Test
     void streamExampleJob() throws Exception {
-        final Job job = example.streamExampleJob();
-        final JobParameters jobParameters = new JobParameters();
+        JobParameters jobParameters = new JobParameters();
         jobLauncher.run(job, jobParameters);
     }
 }

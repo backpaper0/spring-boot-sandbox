@@ -17,12 +17,11 @@ class FlowExampleTest {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private FlowExample example;
+    private Job job;
 
     @Test
     void flowExampleJob() throws Exception {
-        final Job job = example.flowExampleJob();
-        final JobParameters jobParameters = new JobParameters();
+        JobParameters jobParameters = new JobParameters();
         jobLauncher.run(job, jobParameters);
     }
 }

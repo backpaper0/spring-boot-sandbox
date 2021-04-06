@@ -13,16 +13,15 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class PallarelExampleTest {
 
-	@Autowired
-	private JobLauncher jobLauncher;
+    @Autowired
+    private JobLauncher jobLauncher;
 
-	@Autowired
-	private PallarelExample example;
+    @Autowired
+    private Job job;
 
-	@Test
-	void pallarelExampleJob() throws Exception {
-		Job job = example.pallarelJob();
-		JobParameters jobParameters = new JobParameters();
-		jobLauncher.run(job, jobParameters);
-	}
+    @Test
+    void pallarelExampleJob() throws Exception {
+        JobParameters jobParameters = new JobParameters();
+        jobLauncher.run(job, jobParameters);
+    }
 }

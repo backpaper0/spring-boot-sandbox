@@ -17,12 +17,11 @@ class TransactionExampleTest {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private TransactionExample example;
+    private Job job;
 
     @Test
     void transactionExampleJob() throws Exception {
-        final Job job = example.transactionExampleJob();
-        final JobParameters jobParameters = new JobParameters();
+        JobParameters jobParameters = new JobParameters();
         jobLauncher.run(job, jobParameters);
     }
 }

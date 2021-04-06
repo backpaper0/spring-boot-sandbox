@@ -10,6 +10,7 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -36,6 +37,7 @@ public class ExceptionExample {
     //ParseException
 
     @Bean
+    @Qualifier("job1")
     public Job exceptionExampleJob1() {
         return jobs.get("exceptionExampleJob1").start(exceptionExampleStep1()).build();
     }
@@ -55,6 +57,7 @@ public class ExceptionExample {
     // UnexpectedInputException
 
     @Bean
+    @Qualifier("job2")
     public Job exceptionExampleJob2() {
         return jobs.get("exceptionExampleJob2").start(exceptionExampleStep2()).build();
     }
@@ -74,6 +77,7 @@ public class ExceptionExample {
     // NonTransientResourceException
 
     @Bean
+    @Qualifier("job3")
     public Job exceptionExampleJob3() {
         return jobs.get("exceptionExampleJob3").start(exceptionExampleStep3()).build();
     }
@@ -93,6 +97,7 @@ public class ExceptionExample {
     // Exception
 
     @Bean
+    @Qualifier("job4")
     public Job exceptionExampleJob4() {
         return jobs.get("exceptionExampleJob4").start(exceptionExampleStep4()).build();
     }

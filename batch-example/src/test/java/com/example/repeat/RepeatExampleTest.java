@@ -17,12 +17,11 @@ class RepeatExampleTest {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private RepeatExample example;
+    private Job job;
 
     @Test
     void simpleRepeatJob() throws Exception {
-        final Job job = example.simpleRepeatJob();
-        final JobParameters jobParameters = new JobParameters();
+        JobParameters jobParameters = new JobParameters();
         jobLauncher.run(job, jobParameters);
     }
 }

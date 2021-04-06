@@ -17,12 +17,11 @@ class TaskletExampleTest {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private TaskletExample example;
+    private Job job;
 
     @Test
     void taskletExampleJob() throws Exception {
-        final Job job = example.taskletExampleJob();
-        final JobParameters jobParameters = new JobParameters();
+        JobParameters jobParameters = new JobParameters();
         jobLauncher.run(job, jobParameters);
     }
 }
