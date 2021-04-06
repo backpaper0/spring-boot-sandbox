@@ -2,15 +2,19 @@ package com.example.stream;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Import;
 
 import com.example.chunk.PrintlnItemWriter;
 import com.example.chunk.TwoRepeatItemProcessor;
 
-@Component
+@SpringBootApplication
+@EnableBatchProcessing
+@Import({ TwoRepeatItemProcessor.class, PrintlnItemWriter.class })
 public class StreamExample {
 
     private final JobBuilderFactory jobs;

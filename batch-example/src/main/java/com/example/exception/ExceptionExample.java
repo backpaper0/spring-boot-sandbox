@@ -4,17 +4,21 @@ import java.util.function.Function;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Import;
 
 import com.example.chunk.PrintlnItemWriter;
 
-@Component
+@SpringBootApplication
+@EnableBatchProcessing
+@Import(PrintlnItemWriter.class)
 public class ExceptionExample {
 
     private final JobBuilderFactory jobs;
