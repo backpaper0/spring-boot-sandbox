@@ -6,14 +6,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class AopExampleApplicationTest {
+@SpringBootTest(classes = AopApplication.class)
+public class AopTest {
 
-    @Autowired
-    private Hello hello;
+	@Autowired
+	private Hello sut;
 
-    @Test
-    void say() throws Exception {
-        assertEquals("*hello*", hello.say());
-    }
+	@Test
+	void test() {
+		assertEquals("*Hello AOP*", sut.say());
+	}
 }
