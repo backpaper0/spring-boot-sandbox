@@ -13,27 +13,27 @@ import org.springframework.jdbc.core.SqlParameterValue;
 @SpringBootTest
 class EnumParameterTest {
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
-    @Test
-    void test() throws Exception {
+	@Test
+	void test() throws Exception {
 
-        final Object txt = new SqlParameterValue(Types.VARCHAR, Txt.FOO) {
-            @Override
-            public Object getValue() {
-                return ((Txt) super.getValue()).name().toLowerCase();
-            }
-        };
+		final Object txt = new SqlParameterValue(Types.VARCHAR, Txt.FOO) {
+			@Override
+			public Object getValue() {
+				return ((Txt) super.getValue()).name().toLowerCase();
+			}
+		};
 
-        final String result = jdbcTemplate
-                .queryForObject("SELECT txt FROM example WHERE txt = ?", new Object[] { txt },
-                        String.class);
+		final String result = jdbcTemplate
+				.queryForObject("SELECT txt FROM example WHERE txt = ?",
+						String.class, txt);
 
-        assertEquals("foo", result);
-    }
+		assertEquals("foo", result);
+	}
 
-    enum Txt {
-        FOO, BAR, BAZ
-    }
+	enum Txt {
+		FOO, BAR, BAZ
+	}
 }
