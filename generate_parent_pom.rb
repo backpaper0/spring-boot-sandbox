@@ -1,11 +1,16 @@
 require "rexml/document"
 require "net/https"
 
-http = Net::HTTP.new("repo.maven.apache.org", 443)
-http.use_ssl = true
+def get_latest_version(name)
+  http = Net::HTTP.new("repo.maven.apache.org", 443)
+  http.use_ssl = true
+  response = http.get("/maven2/#{name}/maven-metadata.xml")
+  REXML::Document.new(response.body).elements["metadata/versioning/latest"].get_text
+end
 
-response = http.get("/maven2/org/springframework/boot/spring-boot/maven-metadata.xml")
-spring_boot_version = REXML::Document.new(response.body).elements["metadata/versioning/latest"].get_text
+spring_boot_version = get_latest_version("org/springframework/boot/spring-boot")
+doma_version = get_latest_version("org/seasar/doma/doma-core")
+doma_spring_boot_version = get_latest_version("org/seasar/doma/boot/doma-spring-boot-starter")
 
 File.open("pom.xml", "w") { |out|
   out.puts <<_EOS_
@@ -26,6 +31,8 @@ File.open("pom.xml", "w") { |out|
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
+		<doma.version>#{doma_version}</doma.version>
+		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
 	</properties>
 
 	<modules>

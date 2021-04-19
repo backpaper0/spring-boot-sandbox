@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
-		<doma.version>2.44.3</doma.version>
+		<doma.version>2.46.0</doma.version>
 		<doma.boot.version>1.5.0</doma.boot.version>
 	</properties>
 
@@ -100,6 +100,7 @@
 		<module>webflux-example</module>
 		<module>webflux-functional-endpoint-example</module>
 		<module>webmvc-example</module>
+		<module>wrap-datasource-example</module>
 	</modules>
 
 	<dependencyManagement>
