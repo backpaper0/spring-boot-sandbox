@@ -10,7 +10,7 @@
 	<artifactId>vaadin-sample</artifactId>
 
 	<properties>
-		<vaadin.version>8.4.1</vaadin.version>
+		<vaadin.version>8.12.3</vaadin.version>
 	</properties>
 
 	<dependencies>
