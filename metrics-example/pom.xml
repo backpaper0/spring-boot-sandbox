@@ -5,42 +5,34 @@
 		<groupId>com.example</groupId>
 		<artifactId>spring-boot-sandbox-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-			<relativePath>../</relativePath> <!-- lookup parent from repository -->
-		</parent>
-		
-		<artifactId>metrics-example</artifactId>
-		
-		
-		
+		<relativePath>../</relativePath> <!-- lookup parent from repository -->
+	</parent>
+	<artifactId>metrics-example</artifactId>
 
-		<properties>
-			
-		</properties>
+	<dependencies>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+	</dependencies>
 
-		<dependencies>
-			<dependency>
-				<groupId>io.micrometer</groupId>
-				<artifactId>micrometer-registry-prometheus</artifactId>
-				<scope>runtime</scope>
-			</dependency>
-			<dependency>
+	<build>
+		<finalName>app</finalName>
+		<plugins>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-actuator</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-web</artifactId>
-			</dependency>
-		</dependencies>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
-		<build>
-			<finalName>app</finalName>
-			<plugins>
-				<plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-				</plugin>
-			</plugins>
-		</build>
-
-	</project>
+</project>

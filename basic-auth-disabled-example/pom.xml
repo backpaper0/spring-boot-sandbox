@@ -7,16 +7,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath> <!-- lookup parent from repository -->
 	</parent>
-	
 	<artifactId>basic-auth-disabled-example</artifactId>
 	
-	
-	
-
-	<properties>
-		
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,12 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

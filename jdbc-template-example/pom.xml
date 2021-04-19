@@ -8,7 +8,6 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath> <!-- lookup parent from repository -->
 	</parent>
-
 	<artifactId>jdbc-template-example</artifactId>
 
 	<dependencies>
