@@ -10,19 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class MessageExample implements CommandLineRunner {
 
-    private final MessageMapper mapper;
+	private final MessageMapper mapper;
 
-    public MessageExample(final MessageMapper mapper) {
-        this.mapper = Objects.requireNonNull(mapper);
-    }
+	public MessageExample(final MessageMapper mapper) {
+		this.mapper = Objects.requireNonNull(mapper);
+	}
 
-    @Override
-    @Transactional
-    public void run(final String... args) throws Exception {
-        try (Cursor<Message> messages = mapper.selectAll()) {
-            for (final Message message : messages) {
-                System.out.println(message);
-            }
-        }
-    }
+	@Override
+	@Transactional
+	public void run(final String... args) throws Exception {
+		System.out.println(mapper.getClass());
+		try (Cursor<Message> messages = mapper.selectAll()) {
+			for (final Message message : messages) {
+				System.out.println(message);
+			}
+		}
+	}
 }
