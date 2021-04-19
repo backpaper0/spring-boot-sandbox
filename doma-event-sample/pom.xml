@@ -9,11 +9,6 @@
 	</parent>
 	<artifactId>doma-event-sample</artifactId>
 
-	<properties>
-		<doma.version>2.44.3</doma.version>
-		<doma.boot.version>1.5.0</doma.boot.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.seasar.doma</groupId>
