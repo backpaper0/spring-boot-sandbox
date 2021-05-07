@@ -1,0 +1,3 @@
+app:
+  foo: "Hello, world!"
+  bar:  123

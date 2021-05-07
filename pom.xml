@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
-		<doma.version>2.46.0</doma.version>
+		<doma.version>2.46.1</doma.version>
 		<doma.boot.version>1.5.0</doma.boot.version>
 	</properties>
 
@@ -34,6 +34,7 @@
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
 		<module>compare-to-cdi</module>
+		<module>configuration-properties-example</module>
 		<module>consul-example/demo</module>
 		<module>distributed-tracing/service1</module>
 		<module>distributed-tracing/service2</module>
