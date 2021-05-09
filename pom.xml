@@ -23,6 +23,7 @@
 		<module>accesslog-standard-output-example</module>
 		<module>aop-example</module>
 		<module>api-example</module>
+		<module>api-token-authentication-example</module>
 		<module>artemis-sample</module>
 		<module>basic-auth-disabled-example</module>
 		<module>basic-form-login-sample</module>
