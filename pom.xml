@@ -60,6 +60,7 @@
 		<module>jpa-stream-example</module>
 		<module>localdatetime-format-example</module>
 		<module>login-customize-example</module>
+		<module>mail-freemarker-demo</module>
 		<module>mail-sample</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
