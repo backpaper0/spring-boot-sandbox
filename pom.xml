@@ -25,8 +25,6 @@
 		<module>api-example</module>
 		<module>api-token-authentication-example</module>
 		<module>artemis-sample</module>
-		<module>basic-auth-disabled-example</module>
-		<module>basic-form-login-sample</module>
 		<module>batch-example</module>
 		<module>batch-without-boot-example</module>
 		<module>cache-example</module>
@@ -34,15 +32,11 @@
 		<module>circuit-breaker/frontend</module>
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
-		<module>compare-to-cdi</module>
 		<module>configuration-properties-example</module>
 		<module>consul-example/demo</module>
 		<module>distributed-tracing/service1</module>
 		<module>distributed-tracing/service2</module>
 		<module>distributed-tracing/service3</module>
-		<module>doma-event-sample</module>
-		<module>doma-test-example</module>
-		<module>doma-two-config-sample</module>
 		<module>edge-service/backend1</module>
 		<module>edge-service/backend2</module>
 		<module>edge-service/edge-service</module>
@@ -52,7 +46,6 @@
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>graphql-example</module>
-		<module>header-detail-sample</module>
 		<module>integration-example</module>
 		<module>jdbc-template-example</module>
 		<module>jersey-example</module>
@@ -61,7 +54,6 @@
 		<module>localdatetime-format-example</module>
 		<module>login-customize-example</module>
 		<module>mail-freemarker-demo</module>
-		<module>mail-sample</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
 		<module>oidc-example</module>
@@ -78,23 +70,18 @@
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
-		<module>security-example</module>
 		<module>security-test-example</module>
 		<module>service-discovery/backend</module>
 		<module>service-discovery/service-discovery</module>
 		<module>service-discovery/ui</module>
 		<module>session-demo</module>
-		<module>simple-bbs</module>
-		<module>simple-crud</module>
 		<module>snakecase</module>
 		<module>spa-indexhtml-example</module>
-		<module>spring-boot-doma-study</module>
 		<module>spring-sandbox</module>
 		<module>spring-security-jdbc-login-sample</module>
 		<module>stomp-queue-sample</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
-		<module>try-spring-boot</module>
 		<module>two-datasource-batch-example</module>
 		<module>two-datasource-transaction-example</module>
 		<module>vaadin-sample</module>
