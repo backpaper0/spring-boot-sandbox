@@ -30,7 +30,7 @@ File.open("pom.xml", "w") { |out|
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.2</spring-cloud.version>
+		<spring-cloud.version>2020.0.3-SNAPSHOT</spring-cloud.version>
 		<doma.version>#{doma_version}</doma.version>
 		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
 	</properties>
@@ -58,6 +58,25 @@ _EOS_
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Snapshots</name>
+			<url>https://repo.spring.io/snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>
 _EOS_
