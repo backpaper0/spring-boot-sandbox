@@ -1,0 +1,1 @@
+insert into secondary_table (bar) values ('It is secondary.');

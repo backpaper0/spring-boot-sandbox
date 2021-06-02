@@ -1,0 +1,1 @@
+insert into primary_table (foo) values ('It is primary.');
