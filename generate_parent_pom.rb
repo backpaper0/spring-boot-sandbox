@@ -38,9 +38,8 @@ File.open("pom.xml", "w") { |out|
 	<modules>
 _EOS_
 
-  poms = `git ls-files | grep /pom\.xml$`.split("\n")
-  poms.each do |pom|
-    mod = pom[0, pom.size - "/pom.xml".size]
+  poms = `git ls-files | grep /pom\.xml | xargs -I {} dirname {}$`.split("\n")
+  poms.each do |mod|
     out.puts "		<module>#{mod}</module>"
   end
 
