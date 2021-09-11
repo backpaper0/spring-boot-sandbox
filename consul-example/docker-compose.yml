@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  consul:
+    image: consul
+    ports: ["8500:8500"]
+    environment:
+      CONSUL_BIND_INTERFACE: eth0
+
+  service1:
+    image: consul-demo-service1:0.0.1-SNAPSHOT
+    ports: ["8080:8080"]
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+
+  service2a:
+    image: consul-demo-service2:0.0.1-SNAPSHOT
+    command: --spring.application.instance_id=foo
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MYAPP_ID: foo
+
+  service2b:
+    image: consul-demo-service2:0.0.1-SNAPSHOT
+    command: --spring.application.instance_id=bar
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MYAPP_ID: bar
+
+  service2c:
+    image: consul-demo-service2:0.0.1-SNAPSHOT
+    command: --spring.application.instance_id=baz
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      MYAPP_ID: baz
+
