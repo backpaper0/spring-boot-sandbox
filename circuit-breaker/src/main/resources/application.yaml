@@ -1,0 +1,14 @@
+hello:
+  backend-api: http://localhost:8000/hello.txt
+
+resilience4j.circuitbreaker:
+  instances:
+    hello:
+    # 直近10回で50%失敗したらOPENへ移行する
+      sliding-window-type: count-based
+      sliding-window-size: 10
+      failure-rate-threshold: 50
+      # OPENから10秒経過したらHALF_OPENへ移行する
+      wait-duration-in-open-state: 10s
+      # HALF_OPEN状態で10回処理したらOPENまたはCLOSEDへ移行する
+      permitted-number-of-calls-in-half-open-state: 10
