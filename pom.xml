@@ -28,8 +28,7 @@
 		<module>batch-example</module>
 		<module>batch-without-boot-example</module>
 		<module>cache-example</module>
-		<module>circuit-breaker/backend</module>
-		<module>circuit-breaker/frontend</module>
+		<module>circuit-breaker</module>
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
 		<module>configuration-properties-example</module>
@@ -48,7 +47,6 @@
 		<module>graphql-example</module>
 		<module>integration-example</module>
 		<module>jdbc-template-example</module>
-		<module>jersey-example</module>
 		<module>jpa-example</module>
 		<module>jpa-stream-example</module>
 		<module>localdatetime-format-example</module>
@@ -87,7 +85,6 @@
 		<module>two-datasource-batch-example</module>
 		<module>two-datasource-example</module>
 		<module>two-datasource-transaction-example</module>
-		<module>vaadin-sample</module>
 		<module>validation-example</module>
 		<module>web-test-example</module>
 		<module>webflux-example</module>
