@@ -15,22 +15,19 @@ services:
 
   service2a:
     image: consul-demo-service2:0.0.1-SNAPSHOT
-    command: --spring.application.instance_id=foo
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
-      MYAPP_ID: foo
+      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: foo
 
   service2b:
     image: consul-demo-service2:0.0.1-SNAPSHOT
-    command: --spring.application.instance_id=bar
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
-      MYAPP_ID: bar
+      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: bar
 
   service2c:
     image: consul-demo-service2:0.0.1-SNAPSHOT
-    command: --spring.application.instance_id=baz
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
-      MYAPP_ID: baz
+      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: baz
 
