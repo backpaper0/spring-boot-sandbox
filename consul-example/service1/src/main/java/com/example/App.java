@@ -16,7 +16,7 @@ public class App {
 
 	@Bean
 	@LoadBalanced
-	public RestTemplate loadBalancedRestTemplate() {
-		return new RestTemplateBuilder().build();
+	public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
+		return builder.build();
 	}
 }
