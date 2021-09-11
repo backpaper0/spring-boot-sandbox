@@ -15,7 +15,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.3</spring-cloud.version>
-		<doma.version>2.47.1</doma.version>
+		<doma.version>2.48.0</doma.version>
 		<doma.boot.version>1.5.0</doma.boot.version>
 	</properties>
 
@@ -32,15 +32,11 @@
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
 		<module>configuration-properties-example</module>
-		<module>consul-example/demo</module>
+		<module>consul-example/service1</module>
+		<module>consul-example/service2</module>
 		<module>distributed-tracing/service1</module>
 		<module>distributed-tracing/service2</module>
 		<module>distributed-tracing/service3</module>
-		<module>edge-service/backend1</module>
-		<module>edge-service/backend2</module>
-		<module>edge-service/edge-service</module>
-		<module>edge-service/frontend</module>
-		<module>edge-service/service-discovery</module>
 		<module>fn</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
@@ -69,9 +65,6 @@
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
 		<module>security-test-example</module>
-		<module>service-discovery/backend</module>
-		<module>service-discovery/service-discovery</module>
-		<module>service-discovery/ui</module>
 		<module>session-demo</module>
 		<module>snakecase</module>
 		<module>spa-indexhtml-example</module>
