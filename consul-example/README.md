@@ -5,7 +5,7 @@ ls | grep service | xargs -t -I {} mvn -f {} spring-boot:build-image
 ```
 
 ```sh
-docker compose up -d
+docker compose up -d --scale service2=3
 ```
 
 http://localhost:8500
@@ -15,48 +15,49 @@ while true; do curl -s localhost:8080/id; echo ""; sleep 1; done
 ```
 
 ```
-{"id":"foo"}
-{"id":"bar"}
-{"id":"baz"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"baz"}
+{"id":"service2-1a0e6c258b9589cca1dfdbcc9bb7adec"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-1a0e6c258b9589cca1dfdbcc9bb7adec"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
 ```
 
 ```sh
-docker compose stop service2c
+docker stop consul-example_service2_3
 ```
 
 ```
-{"id":"foo"}
-{"id":"bar"}
-{"timestamp":"2021-09-11T06:13:08.847+00:00","status":500,"error":"Internal Server Error","path":"/id"}
-{"id":"bar"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"foo"}
-{"id":"bar"}
+{"id":"service2-1a0e6c258b9589cca1dfdbcc9bb7adec"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"timestamp":"2021-09-11T13:22:08.134+00:00","status":500,"error":"Internal Server Error","path":"/id"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
 ```
 
 ```sh
-docker compose start service2c
+docker start consul-example_service2_3
 ```
 
 ```
-{"id":"foo"}
-{"id":"bar"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"baz"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"baz"}
-{"id":"foo"}
-{"id":"bar"}
-{"id":"baz"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-836c50b812bdcb584a27f99372b1c95d"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-836c50b812bdcb584a27f99372b1c95d"}
+{"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
+{"id":"service2-2f56b081b401c02e50fbf77d86998523"}
+{"id":"service2-836c50b812bdcb584a27f99372b1c95d"}
 ```
 

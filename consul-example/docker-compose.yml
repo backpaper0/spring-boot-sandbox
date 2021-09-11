@@ -13,21 +13,7 @@ services:
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
 
-  service2a:
+  service2:
     image: consul-demo-service2:0.0.1-SNAPSHOT
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
-      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: foo
-
-  service2b:
-    image: consul-demo-service2:0.0.1-SNAPSHOT
-    environment:
-      SPRING_CLOUD_CONSUL_HOST: consul
-      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: bar
-
-  service2c:
-    image: consul-demo-service2:0.0.1-SNAPSHOT
-    environment:
-      SPRING_CLOUD_CONSUL_HOST: consul
-      SPRING_CLOUD_CONSUL_DISCOVERY_INSTANCEID: baz
-
