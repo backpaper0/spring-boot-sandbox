@@ -9,7 +9,7 @@
 		<relativePath>../../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
-	<artifactId>consul-demo-service2</artifactId>
+	<artifactId>service-discovery-demo_service2</artifactId>
 
 	<dependencies>
 		<!-- Consulが行うヘルスチェックのために必要(独自でヘルスチェックエンドポイントを用意しても大丈夫だけども) -->

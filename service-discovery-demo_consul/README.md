@@ -2,7 +2,7 @@
 
 [Consul](https://www.consul.io/)によるService Discovery/Client Side Load Balancingの例。
 
-![](./docs/service-diagram.svg)
+![](./assets/service-diagram.svg)
 
 ## 動作確認
 
@@ -22,6 +22,10 @@ docker compose up -d --scale service2=3
 Consulの管理画面が次のURLで確認できる。
 
 - http://localhost:8500
+
+サービスのHealth Statusがグリーンになれば準備完了。
+
+![](./assets/services.png)
 
 新しいターミナルを開いて次のコマンドで1秒毎にリクエストを送信し続ける。
 
@@ -44,7 +48,7 @@ while true; do curl -s localhost:8080/id; echo ""; sleep 1; done
 なおDocker Composeではスケールを変更してもエラーになって反映されなかったため`docker`コマンドで停止している。
 
 ```sh
-docker stop consul-example_service2_3
+docker stop service-discovery-demo_consul_service2_3
 ```
 
 `service2`のインスタンスが1つ減っていることがわかる。
@@ -64,7 +68,7 @@ docker stop consul-example_service2_3
 `service_3`を再開してみる。
 
 ```sh
-docker start consul-example_service2_3
+docker start service-discovery-demo_consul_service2_3
 ```
 
 インスタンスが3つに戻ったことがわかる。

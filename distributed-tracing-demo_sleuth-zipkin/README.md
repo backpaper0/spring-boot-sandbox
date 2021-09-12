@@ -1,8 +1,8 @@
-# distributed-tracing
+# Distributed Tracing DEMO (Spring Cloud Sleuth, Zipkin)
 
 [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth)と[Zipkin](https://zipkin.io/)を使った分散トレーシングのデモ。
 
-![](./docs/service-diagram.svg)
+![](./assets/service-diagram.svg)
 
 ## 動作確認
 
@@ -59,11 +59,11 @@ FizzBuzz
 
 トレースを確認する。
 
-![](./docs/trace.png)
+![](./assets/trace.png)
 
 サービスの依存関係も見られる。
 
-![](./docs/dependencies.png)
+![](./assets/dependencies.png)
 
 ### Docker Composeで確認する
 

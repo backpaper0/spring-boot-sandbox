@@ -10,7 +10,7 @@
 		<relativePath>../../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
-	<artifactId>distributed-tracing-front-service</artifactId>
+	<artifactId>distributed-tracing-demo_front-service</artifactId>
 
 	<dependencies>
 		<dependency>

@@ -8,12 +8,12 @@ services:
       CONSUL_BIND_INTERFACE: eth0
 
   service1:
-    image: consul-demo-service1:0.0.1-SNAPSHOT
+    image: service-discovery-demo_service1:0.0.1-SNAPSHOT
     ports: ["8080:8080"]
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul
 
   service2:
-    image: consul-demo-service2:0.0.1-SNAPSHOT
+    image: service-discovery-demo_service2:0.0.1-SNAPSHOT
     environment:
       SPRING_CLOUD_CONSUL_HOST: consul

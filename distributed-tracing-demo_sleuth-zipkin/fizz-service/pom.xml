@@ -10,7 +10,7 @@
 		<relativePath>../../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 
-	<artifactId>distributed-tracing-fizz-service</artifactId>
+	<artifactId>distributed-tracing-demo_fizz-service</artifactId>
 
 	<dependencies>
 		<dependency>
