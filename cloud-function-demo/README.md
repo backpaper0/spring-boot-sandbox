@@ -1,23 +1,35 @@
-# Spring Cloud Functionを試す
+# Cloud Function DEMO
 
-## ビルドと起動
+[Spring Cloud Function](https://spring.io/projects/spring-cloud-function)を試す。
 
-```console
-mvn package
+## 動作確認
 
-java -jar target/cloud-function-example-0.0.1-SNAPSHOT.jar
+WIP
+
+### WIP
+
+[Standalone Web Applicationsセクション](https://docs.spring.io/spring-cloud-function/docs/3.1.3/reference/html/spring-cloud-function.html#_standalone_web_applications)
+
+```sh
+curl -v localhost:8080/helloSupplier
 ```
 
-## 関数呼び出し
-
-関数はリクエストURLで指定する。
-`,`で区切ってチェーンできるっぽい。
-
-```console
-curl -H "content-type:text/plain" localhost:8080/hello -d "world"
-
-curl -H "content-type:text/plain" localhost:8080/upper -d "world"
-
-curl -H "content-type:text/plain" localhost:8080/hello,upper -d "world"
+```sh
+curl -v localhost:8080/helloConsumer -H "Content-Type: text/plain" -d 'foobar'
 ```
 
+```sh
+curl -v localhost:8080/helloConsumer -H "Content-Type: application/json" -d '["foo", "bar", "baz"]'
+```
+
+```sh
+curl -v localhost:8080/helloFunction -H "Content-Type: text/plain" -d 'foobar'
+```
+
+```sh
+curl -v localhost:8080/helloFunction -H "Content-Type: application/json" -d '["foo", "bar", "baz"]'
+```
+
+```sh
+curl -v localhost:8080/helloFunction/foobar
+```
