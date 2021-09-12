@@ -31,14 +31,12 @@
 		<module>circuit-breaker</module>
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
+		<module>cloud-function-demo</module>
 		<module>configuration-properties-example</module>
-		<module>consul-example/service1</module>
-		<module>consul-example/service2</module>
-		<module>distributed-tracing/buzz-service</module>
-		<module>distributed-tracing/fizz-service</module>
-		<module>distributed-tracing/fizzbuzz-service</module>
-		<module>distributed-tracing/front-service</module>
-		<module>fn</module>
+		<module>distributed-tracing-demo_sleuth-zipkin/buzz-service</module>
+		<module>distributed-tracing-demo_sleuth-zipkin/fizz-service</module>
+		<module>distributed-tracing-demo_sleuth-zipkin/fizzbuzz-service</module>
+		<module>distributed-tracing-demo_sleuth-zipkin/front-service</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>graphql-example</module>
@@ -67,6 +65,8 @@
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
 		<module>security-test-example</module>
+		<module>service-discovery-demo_consul/service1</module>
+		<module>service-discovery-demo_consul/service2</module>
 		<module>session-demo</module>
 		<module>snakecase</module>
 		<module>spa-indexhtml-example</module>
