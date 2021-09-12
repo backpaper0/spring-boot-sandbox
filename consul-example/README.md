@@ -31,7 +31,6 @@ docker stop consul-example_service2_3
 {"id":"service2-1a0e6c258b9589cca1dfdbcc9bb7adec"}
 {"id":"service2-2f56b081b401c02e50fbf77d86998523"}
 {"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
-{"timestamp":"2021-09-11T13:22:08.134+00:00","status":500,"error":"Internal Server Error","path":"/id"}
 {"id":"service2-2f56b081b401c02e50fbf77d86998523"}
 {"id":"service2-a457d5fd491cb485f93e4b9baface35b"}
 {"id":"service2-2f56b081b401c02e50fbf77d86998523"}
