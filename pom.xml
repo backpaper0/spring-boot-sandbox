@@ -34,9 +34,10 @@
 		<module>configuration-properties-example</module>
 		<module>consul-example/service1</module>
 		<module>consul-example/service2</module>
-		<module>distributed-tracing/service1</module>
-		<module>distributed-tracing/service2</module>
-		<module>distributed-tracing/service3</module>
+		<module>distributed-tracing/buzz-service</module>
+		<module>distributed-tracing/fizz-service</module>
+		<module>distributed-tracing/fizzbuzz-service</module>
+		<module>distributed-tracing/front-service</module>
 		<module>fn</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
