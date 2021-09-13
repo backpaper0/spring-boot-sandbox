@@ -36,6 +36,22 @@ curl -v localhost:8080/helloFunction/foobar
 
 ### WIP
 
+[Function Mapping rulesセクション](https://docs.spring.io/spring-cloud-function/docs/3.1.3/reference/html/spring-cloud-function.html#_function_mapping_rules)
+
+```sh
+curl -s localhost:8080/uppercase/foobar
+```
+
+```sh
+curl -s localhost:8080/reverse/foobar
+```
+
+```sh
+curl -s localhost:8080/uppercase,reverse/foobar
+```
+
+### WIP
+
 [Type conversion (Content-Type negotiation)](https://docs.spring.io/spring-cloud-function/docs/3.1.3/reference/html/spring-cloud-function.html#_type_conversion_content_type_negotiation)
 
 ```sh
