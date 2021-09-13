@@ -33,3 +33,19 @@ curl -v localhost:8080/helloFunction -H "Content-Type: application/json" -d '["f
 ```sh
 curl -v localhost:8080/helloFunction/foobar
 ```
+
+### WIP
+
+[Type conversion (Content-Type negotiation)](https://docs.spring.io/spring-cloud-function/docs/3.1.3/reference/html/spring-cloud-function.html#_type_conversion_content_type_negotiation)
+
+```sh
+curl -s localhost:8080/person -H "Content-Type: application/json" -d '{"name": "Alice"}' | jq
+```
+
+```sh
+curl -s localhost:8080/person -H "Content-Type: application/json" -d '[{"name": "Alice"}, {"name": "Bob"}]' | jq
+```
+
+```sh
+curl -s localhost:8080/person/%7B%22name%22%3A%20%22Alice%22%7D | jq
+```
