@@ -28,7 +28,7 @@
 		<module>batch-example</module>
 		<module>batch-without-boot-example</module>
 		<module>cache-example</module>
-		<module>circuit-breaker</module>
+		<module>circuit-breaker-demo</module>
 		<module>cloud-config-sample/config-client</module>
 		<module>cloud-config-sample/config-server</module>
 		<module>cloud-function-demo</module>
