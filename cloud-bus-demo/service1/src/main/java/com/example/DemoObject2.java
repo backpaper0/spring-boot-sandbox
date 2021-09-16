@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RefreshScope
-public class DemoObject {
+public class DemoObject2 {
 
-	private static final Logger logger = LoggerFactory.getLogger(DemoObject.class);
+	private static final Logger logger = LoggerFactory.getLogger(DemoObject2.class);
 
 	private final String value = LocalDateTime.now().toString();
 
 	public String getValue() {
-		logger.info("demoObject: class={}, hashCode={}", getClass(), System.identityHashCode(this));
+		logger.info("demoObject2: class={}, hashCode={}", getClass(), System.identityHashCode(this));
 		return value;
 	}
 }
