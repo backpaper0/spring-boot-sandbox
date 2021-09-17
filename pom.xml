@@ -29,8 +29,10 @@
 		<module>batch-without-boot-example</module>
 		<module>cache-example</module>
 		<module>circuit-breaker-demo</module>
-		<module>cloud-config-sample/config-client</module>
-		<module>cloud-config-sample/config-server</module>
+		<module>cloud-bus-demo/service1</module>
+		<module>cloud-bus-demo/service2</module>
+		<module>cloud-config-demo/client</module>
+		<module>cloud-config-demo/server</module>
 		<module>cloud-function-demo</module>
 		<module>configuration-properties-example</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/buzz-service</module>
@@ -64,6 +66,7 @@
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
+		<module>security-expression-example</module>
 		<module>security-test-example</module>
 		<module>service-discovery-demo_consul/service1</module>
 		<module>service-discovery-demo_consul/service2</module>
