@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineFactory;
 
 import reactor.core.publisher.Mono;
 
@@ -17,15 +17,21 @@ public class App implements ApplicationRunner {
 		SpringApplication.run(App.class, args);
 	}
 
-	private final StateMachine<States, Events> stateMachine;
+	private final StateMachineFactory<States, Events> stateMachineFactory;
 
-	public App(StateMachine<States, Events> stateMachine) {
-		this.stateMachine = stateMachine;
+	public App(StateMachineFactory<States, Events> stateMachineFactory) {
+		this.stateMachineFactory = stateMachineFactory;
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Message<Events> message = MessageBuilder.withPayload(Events.CREDIT_RESERVED).build();
-		stateMachine.sendEvent(Mono.just(message)).subscribe();
+		{
+			Message<Events> message = MessageBuilder.withPayload(Events.CREDIT_RESERVED).build();
+			stateMachineFactory.getStateMachine("foo").sendEvent(Mono.just(message)).subscribe();
+		}
+		{
+			Message<Events> message = MessageBuilder.withPayload(Events.FAILURE_CREDIT_RESERVATION).build();
+			stateMachineFactory.getStateMachine("bar").sendEvent(Mono.just(message)).subscribe();
+		}
 	}
 }
