@@ -77,6 +77,7 @@
 		<module>spring-security-jdbc-login-sample</module>
 		<module>spring-webmvc-fn-demo</module>
 		<module>sqs-messaging-demo</module>
+		<module>statemachine-demo</module>
 		<module>stomp-queue-sample</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
