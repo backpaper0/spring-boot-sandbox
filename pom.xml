@@ -14,7 +14,7 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<doma.version>2.49.0</doma.version>
 		<doma.boot.version>1.5.0</doma.boot.version>
 	</properties>
@@ -39,6 +39,7 @@
 		<module>distributed-tracing-demo_sleuth-zipkin/fizz-service</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/fizzbuzz-service</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/front-service</module>
+		<module>distributed-tracing-demo_sleuth-zipkin_cloud-stream</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>graphql-example</module>

@@ -30,7 +30,7 @@ File.open("pom.xml", "w") { |out|
 
 	<properties>
 		<java.version>11</java.version>
-		<spring-cloud.version>2020.0.3</spring-cloud.version>
+		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<doma.version>#{doma_version}</doma.version>
 		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
 	</properties>
