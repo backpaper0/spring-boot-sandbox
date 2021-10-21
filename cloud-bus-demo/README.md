@@ -42,7 +42,7 @@ curl -s localhost:8080/demo | jq -S
 }
 ```
 
-`foo`と`bar`は`application.property`で設定した値。
+`foo`と`bar`は`application.properties`で設定した値。
 
 `value1`と`value2`はそれぞれ`DemoObject1`、`DemoObject2`がインスタンス化された日時。
 これは`RefreshScope`のコンポーネントがリフレッシュされることを確認するために出力している。
