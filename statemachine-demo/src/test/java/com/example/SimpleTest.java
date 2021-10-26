@@ -36,6 +36,7 @@ public class SimpleTest {
 	void testApproved() {
 		Message<Events> message = MessageBuilder.withPayload(Events.CREDIT_RESERVED).build();
 		StateMachine<States, Events> sm = stateMachineFactory.getStateMachine("foo");
+		sm.startReactively().subscribe();
 		assertEquals(States.PENDING, sm.getState().getId());
 		sm.sendEvent(Mono.just(message)).subscribe();
 		assertEquals(States.APPROVED, sm.getState().getId());
@@ -45,6 +46,7 @@ public class SimpleTest {
 	void testReject() {
 		Message<Events> message = MessageBuilder.withPayload(Events.FAILURE_CREDIT_RESERVATION).build();
 		StateMachine<States, Events> sm = stateMachineFactory.getStateMachine("bar");
+		sm.startReactively().subscribe();
 		assertEquals(States.PENDING, sm.getState().getId());
 		sm.sendEvent(Mono.just(message)).subscribe();
 		assertEquals(States.REJECTED, sm.getState().getId());
@@ -76,7 +78,7 @@ public class SimpleTest {
 					}
 				}
 			};
-			config.withConfiguration().autoStartup(true).listener(listener);
+			config.withConfiguration().autoStartup(false).listener(listener);
 		}
 
 		@Override
@@ -87,8 +89,7 @@ public class SimpleTest {
 		}
 
 		@Override
-		public void configure(
-				StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
+		public void configure(StateMachineTransitionConfigurer<States, Events> transitions) throws Exception {
 			transitions
 					.withExternal()
 					.source(States.PENDING)
