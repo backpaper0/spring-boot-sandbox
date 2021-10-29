@@ -23,8 +23,18 @@ jobs:
     - name: Build with Maven
       run: mvn -B -e test
       env:
-        logging_level_root: WARN
-        logging_level_org_hibernate_SQL: WARN
-        logging_level_org_hibernate_type_descriptor_sql_BasicBinder: WARN
-        logging_level_org_springframework_jdbc_core_JdbcTemplate: WARN
-        logging_level_org_springframework_jdbc_datasource_DataSourceTransactionManager: WARN
+        LOGGING_LEVEL_ROOT: WARN
+        LOGGING_LEVEL_ORG_HIBERNATE_SQL: WARN
+        LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL_BASICBINDER: WARN
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JDBC_CORE_JDBCTEMPLATE: WARN
+        LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JDBC_DATASOURCE_DATASOURCETRANSACTIONMANAGER: WARN
+        SPRING_REDIS_URL: redis://redis:6379
+
+    services:
+      redis:
+        image: redis
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
