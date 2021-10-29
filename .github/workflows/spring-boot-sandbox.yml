@@ -28,7 +28,6 @@ jobs:
         LOGGING_LEVEL_ORG_HIBERNATE_TYPE_DESCRIPTOR_SQL_BASICBINDER: WARN
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JDBC_CORE_JDBCTEMPLATE: WARN
         LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_JDBC_DATASOURCE_DATASOURCETRANSACTIONMANAGER: WARN
-        SPRING_REDIS_URL: "redis://redis:6379"
 
     services:
       redis:
@@ -38,3 +37,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 6379:6379
+
