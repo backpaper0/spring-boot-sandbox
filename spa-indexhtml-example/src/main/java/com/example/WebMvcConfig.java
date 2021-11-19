@@ -14,42 +14,39 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final WebProperties.Resources resourceProperties;
+	private final WebProperties.Resources resources;
 
-    public WebMvcConfig(final WebProperties resourceProperties) {
-        this.resourceProperties = resourceProperties.getResources();
-    }
+	public WebMvcConfig(WebProperties webProperties) {
+		this.resources = webProperties.getResources();
+	}
 
-    @Override
-    public void addViewControllers(final ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("/index.html");
-    }
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("/index.html");
+	}
 
-    @Override
-    public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/")
-                .setCachePeriod(getSeconds(resourceProperties.getCache().getPeriod()))
-                .setCacheControl(
-                        resourceProperties.getCache().getCachecontrol().toHttpCacheControl())
-                .resourceChain(true)
-                .addResolver(new IndexHtmlResourceResolver());
-    }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/**")
+				.addResourceLocations("classpath:/static/")
+				.setCachePeriod(getSeconds(resources.getCache().getPeriod()))
+				.setCacheControl(resources.getCache().getCachecontrol().toHttpCacheControl())
+				.resourceChain(true)
+				.addResolver(new IndexHtmlResourceResolver());
+	}
 
-    private static Integer getSeconds(final Duration cachePeriod) {
-        return (cachePeriod != null) ? (int) cachePeriod.getSeconds() : null;
-    }
+	private static Integer getSeconds(Duration cachePeriod) {
+		return (cachePeriod != null) ? (int) cachePeriod.getSeconds() : null;
+	}
 
-    private static class IndexHtmlResourceResolver extends PathResourceResolver {
-        @Override
-        protected Resource getResource(final String resourcePath,
-                final Resource location)
-                throws IOException {
-            final Resource resource = super.getResource(resourcePath, location);
-            if (resource != null) {
-                return resource;
-            }
-            return super.getResource("index.html", location);
-        }
-    }
+	private static class IndexHtmlResourceResolver extends PathResourceResolver {
+		@Override
+		protected Resource getResource(String resourcePath, Resource location) throws IOException {
+			Resource resource = super.getResource(resourcePath, location);
+			if (resource != null) {
+				return resource;
+			}
+			return super.getResource("index.html", location);
+		}
+	}
 }

@@ -6,7 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpaIndexhtmlExampleApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(SpaIndexhtmlExampleApplication.class, args);
-    }
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
+		SpringApplication.run(SpaIndexhtmlExampleApplication.class, args);
+	}
 }
