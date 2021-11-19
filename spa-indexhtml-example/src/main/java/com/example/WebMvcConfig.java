@@ -3,7 +3,7 @@ package com.example;
 import java.io.IOException;
 import java.time.Duration;
 
-import org.springframework.boot.autoconfigure.web.ResourceProperties;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,10 +14,10 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final ResourceProperties resourceProperties;
+    private final WebProperties.Resources resourceProperties;
 
-    public WebMvcConfig(final ResourceProperties resourceProperties) {
-        this.resourceProperties = resourceProperties;
+    public WebMvcConfig(final WebProperties resourceProperties) {
+        this.resourceProperties = resourceProperties.getResources();
     }
 
     @Override
