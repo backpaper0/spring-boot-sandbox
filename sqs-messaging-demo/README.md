@@ -5,14 +5,13 @@
 LocalStackを起動する。
 
 ```
-docker run -d --name localstack -p 4566:4566 -p 4571:4571 localstack/localstack
+docker compose up -d
 ```
 
 キューを作っておく。
-キューの名前は`demo-queue`。
 
 ```
-awslocal sqs create-queue --queue-name demo-queue
+awslocal cloudformation create-stack --stack-name demo --template-body file://template.yml 
 ```
 
 クレデンシャルとリージョンを設定しておく。

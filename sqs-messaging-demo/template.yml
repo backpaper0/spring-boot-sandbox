@@ -1,0 +1,6 @@
+Resources:
+  DemoQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: demo-queue
+
