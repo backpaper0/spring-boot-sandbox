@@ -11,7 +11,7 @@ docker compose up -d
 キューを作る。
 
 ```
-docker compose up cfn
+docker compose run cfn
 ```
 
 クレデンシャルとリージョンを設定する。
@@ -32,5 +32,9 @@ mvn spring-boot:run
 
 ```
 docker compose down -v
+```
+
+```
+docker compose --profile cfn down -v
 ```
 
