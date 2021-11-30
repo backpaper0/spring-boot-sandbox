@@ -8,13 +8,13 @@ LocalStackを起動する。
 docker compose up -d
 ```
 
-キューを作っておく。
+キューを作る。
 
 ```
-awslocal cloudformation create-stack --stack-name demo --template-body file://template.yml 
+docker compose up cfn
 ```
 
-クレデンシャルとリージョンを設定しておく。
+クレデンシャルとリージョンを設定する。
 
 ```
 export AWS_ACCESS_KEY_ID=test
@@ -26,5 +26,11 @@ export AWS_REGION=ap-northeast-1
 
 ```
 mvn spring-boot:run
+```
+
+後始末をする。
+
+```
+docker compose down -v
 ```
 

@@ -3,8 +3,20 @@ version: "3"
 services:
 
   localstack:
-    image: localstack/localstack
+    image: localstack/localstack:0.12.11
     ports:
       - 4566:4566
       - 4571:4571
+
+  cfn:
+    image: amazon/aws-cli
+    command: cloudformation create-stack --stack-name demo --template-body file:///template.yml --endpoint-url http://localstack:4566
+    volumes:
+      - "./template.yml:/template.yml"
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_REGION: ap-northeast-1
+    profiles:
+      - cfn
 
