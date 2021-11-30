@@ -1,27 +1,26 @@
 # sqs-messaging-demo
 
-## localstackを使った動作確認
+## LocalStackを使った動作確認
 
-`latest`(`0.12.17`かな？)だとアプリケーション実行時、SQSに繋ぐときに`The specified queue does not exist for this wsdl version.`というエラーが発生するため、バージョンを`0.12.11`に落とす。
-`localstack start`すると`latest`のコンテナイメージを使おうとするため、`0.12.11`に`latest`タグを付ける。
-
-```
-# workaround
-docker pull localstack/localstack:0.12.11
-docker tag localstack/localstack:0.12.11 localstack/localstack:latest
-```
-
-上記のワークアラウンドができたら`localstack start`する。
+LocalStackを起動する。
 
 ```
-localstack start
+docker run -d --name localstack -p 4566:4566 -p 4571:4571 localstack/localstack
 ```
 
 キューを作っておく。
 キューの名前は`demo-queue`。
 
 ```
-aws sqs create-queue --queue-name demo-queue --endpoint-url http://localhost:4566
+awslocal sqs create-queue --queue-name demo-queue
+```
+
+クレデンシャルとリージョンを設定しておく。
+
+```
+export AWS_ACCESS_KEY_ID=test
+export AWS_SECRET_ACCESS_KEY=test
+export AWS_REGION=ap-northeast-1
 ```
 
 アプリケーションを起動する。
