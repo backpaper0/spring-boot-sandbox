@@ -9,9 +9,6 @@
 		<relativePath>../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>statemachine-demo</artifactId>
-	<properties>
-		<java.version>11</java.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

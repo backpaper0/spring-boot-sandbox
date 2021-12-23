@@ -9,9 +9,6 @@
 		<relativePath>../</relativePath> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>test-mock-example</artifactId>
-	<properties>
-		<java.version>17</java.version>
-	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
