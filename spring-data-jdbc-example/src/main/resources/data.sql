@@ -1,10 +1,12 @@
-insert into singer (id, name) values
-(1, 'LUNA SEA'),
-(2, 'THEE MICHELLE GUN ELEPHANT');
+insert into singer (id, name, version) values
+(1, 'LUNA SEA', 1),
+(2, 'THEE MICHELLE GUN ELEPHANT', 1),
+(3, 'ミスチル', 1);
 
 insert into song (id, title, singer) values
 (1, 'Limit', 1),
 (2, 'Unlikelihood', 1),
 (3, 'MECHANICAL DANCE', 1),
 (4, '暴かれた世界', 2),
-(5, 'G.W.D', 2);
+(5, 'G.W.D', 2),
+(6, 'デルモ', 3);

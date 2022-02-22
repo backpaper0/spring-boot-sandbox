@@ -5,7 +5,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 
 import com.example.entity.Singer;
 import com.example.entity.Song;
@@ -26,6 +28,7 @@ public class SpringDataJdbcTest {
 		assertAll(
 				() -> assertEquals(1, singer.getId()),
 				() -> assertEquals("LUNA SEA", singer.getName()),
+				() -> assertEquals(1, singer.getVersion()),
 				() -> assertEquals(3, singer.getSongs().size()));
 	}
 
@@ -35,6 +38,7 @@ public class SpringDataJdbcTest {
 		assertAll(
 				() -> assertEquals(2, singer.getId()),
 				() -> assertEquals("THEE MICHELLE GUN ELEPHANT", singer.getName()),
+				() -> assertEquals(1, singer.getVersion()),
 				() -> assertEquals(2, singer.getSongs().size()));
 	}
 
@@ -50,5 +54,23 @@ public class SpringDataJdbcTest {
 		Song song = songs.findById(4).get();
 		Song expected = new Song(4, "暴かれた世界", AggregateReference.to(2));
 		assertEquals(expected, song);
+	}
+
+	@Test
+	void update1() {
+		Singer singer = singers.findById(3).get();
+		singer = singer.withName("Mr.Children");
+		singer = singers.save(singer);
+		assertEquals(3, singer.getId());
+		assertEquals("Mr.Children", singer.getName());
+		assertEquals(2, singer.getVersion());
+	}
+
+	@Test
+	void update2() {
+		Singer singer = singers.findById(3).get()
+				.withVersion(0);
+		DbActionExecutionException e = assertThrows(DbActionExecutionException.class, () -> singers.save(singer));
+		assertEquals(OptimisticLockingFailureException.class, e.getCause().getClass());
 	}
 }
