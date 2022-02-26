@@ -17,39 +17,39 @@ import com.example.client.TweetClient;
 @Component
 public class TweetClientImpl implements TweetClient {
 
-    private final HttpExecutor httpExecutor;
+	private final HttpExecutor httpExecutor;
 
-    public TweetClientImpl(final HttpExecutor httpExecutor) {
-        this.httpExecutor = Objects.requireNonNull(httpExecutor);
-    }
+	public TweetClientImpl(final HttpExecutor httpExecutor) {
+		this.httpExecutor = Objects.requireNonNull(httpExecutor);
+	}
 
-    @Override
-    public List<Tweet> getTweets() {
-        return httpExecutor.execute((restTemplate, uriComponentsBuilder) -> {
-            final RequestEntity<?> requestEntity = RequestEntity
-                    .get(uriComponentsBuilder.path("/tweets").build().toUri())
-                    .accept(MediaType.APPLICATION_JSON)
-                    .build();
-            final ParameterizedTypeReference<List<Tweet>> responseType = new ParameterizedTypeReference<List<Tweet>>() {
-            };
-            final ResponseEntity<List<Tweet>> responseEntity = restTemplate.exchange(
-                    requestEntity,
-                    responseType);
-            return responseEntity.getBody();
-        });
-    }
+	@Override
+	public List<Tweet> getTweets() {
+		return httpExecutor.execute((restTemplate, uriComponentsBuilder) -> {
+			final RequestEntity<?> requestEntity = RequestEntity
+					.get(uriComponentsBuilder.path("/tweets").build().toUri())
+					.accept(MediaType.APPLICATION_JSON)
+					.build();
+			final ParameterizedTypeReference<List<Tweet>> responseType = new ParameterizedTypeReference<>() {
+			};
+			final ResponseEntity<List<Tweet>> responseEntity = restTemplate.exchange(
+					requestEntity,
+					responseType);
+			return responseEntity.getBody();
+		});
+	}
 
-    @Override
-    public void postTweet(final String text) {
-        httpExecutor.execute((restTemplate, uriComponentsBuilder) -> {
-            final MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-            body.add("text", text);
-            final RequestEntity<?> requestEntity = RequestEntity
-                    .post(uriComponentsBuilder.path("/tweets").build().toUri())
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .body(body);
-            restTemplate.exchange(requestEntity, Void.class);
-            return null;
-        });
-    }
+	@Override
+	public void postTweet(final String text) {
+		httpExecutor.execute((restTemplate, uriComponentsBuilder) -> {
+			final MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+			body.add("text", text);
+			final RequestEntity<?> requestEntity = RequestEntity
+					.post(uriComponentsBuilder.path("/tweets").build().toUri())
+					.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+					.body(body);
+			restTemplate.exchange(requestEntity, Void.class);
+			return null;
+		});
+	}
 }
