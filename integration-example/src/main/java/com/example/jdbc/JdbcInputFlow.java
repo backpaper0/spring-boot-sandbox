@@ -3,6 +3,7 @@ package com.example.jdbc;
 import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -16,7 +17,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 @Configuration
 @EnableIntegration
-@Import(DataSourceAutoConfiguration.class)
+@Import({ DataSourceAutoConfiguration.class, SqlInitializationAutoConfiguration.class })
 public class JdbcInputFlow {
 
 	private final DataSource dataSource;
