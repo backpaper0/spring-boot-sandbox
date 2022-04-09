@@ -1,43 +1,42 @@
 package study.beanpostprocessor;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
+
+import com.example.misc.Foo;
 
 @Component
 public class FooPostProcessor implements BeanPostProcessor {
 
-    @Override
-    public Object postProcessBeforeInitialization(final Object bean, final String beanName)
-            throws BeansException {
-        if (bean instanceof Foo) {
-            return new FooWrapper((Foo) bean, "B");
-        }
-        return BeanPostProcessor.super.postProcessBeforeInitialization(bean, beanName);
-    }
+	@Override
+	public Object postProcessBeforeInitialization(Object bean, String beanName) {
+		if (bean instanceof Foo) {
+			return new FooWrapper((Foo) bean, "Before");
+		}
+		return bean;
+	}
 
-    @Override
-    public Object postProcessAfterInitialization(final Object bean, final String beanName)
-            throws BeansException {
-        if (bean instanceof Foo) {
-            return new FooWrapper((Foo) bean, "A");
-        }
-        return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
-    }
+	@Override
+	public Object postProcessAfterInitialization(Object bean, String beanName) {
+		if (bean instanceof Foo) {
+			return new FooWrapper((Foo) bean, "After");
+		}
+		return bean;
+	}
 
-    private static class FooWrapper extends Foo {
+	private static class FooWrapper extends Foo {
 
-        private final Foo foo;
-        private final String added;
+		private final Foo foo;
+		private final String added;
 
-        public FooWrapper(final Foo foo, final String added) {
-            this.foo = foo;
-            this.added = added;
-        }
+		public FooWrapper(Foo foo, String added) {
+			this.foo = foo;
+			this.added = added;
+		}
 
-        @Override
-        public String get() {
-            return String.format("%2$s%1$s%2$s", foo.get(), added);
-        }
-    }
+		@Override
+		public String toString() {
+			return added + "(" + foo.toString() + ")";
+		}
+	}
 }

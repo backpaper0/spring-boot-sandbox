@@ -1,4 +1,4 @@
-package study.beanpostprocessor;
+package study.customautowire;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,16 +6,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.misc.Baz;
-
 @SpringBootTest
-public class BeanPostProcessorExampleTest {
+public class CustomAutowireTest {
 
 	@Autowired
-	private Baz baz;
+	private Foos foos;
 
 	@Test
 	void test() {
-		assertEquals("Baz(After(Before(Foo())))", baz.toString());
+		assertEquals("Foo(1)", foos.getFoo1().toString());
+		assertEquals("Foo(2)", foos.getFoo2().toString());
 	}
 }
