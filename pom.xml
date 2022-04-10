@@ -85,6 +85,7 @@
 		<module>test-mock-example</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
+		<module>transaction-read-replica-example</module>
 		<module>two-datasource-batch-example</module>
 		<module>two-datasource-example</module>
 		<module>two-datasource-transaction-example</module>
