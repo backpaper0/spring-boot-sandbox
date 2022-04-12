@@ -1,7 +1,5 @@
 package com.example.handlingexception.controller;
 
-import java.util.Locale;
-
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -39,13 +37,12 @@ public class HandlingExceptionDemoController {
 		try {
 			if (form.getContent().equals("x")) {
 				throw new BusinessException("ERR0001");
-			}
-			if (form.getContent().equals("y")) {
+			} else if (form.getContent().equals("y")) {
 				throw new BusinessException("ERR0002", "content");
+			} else if (form.getContent().equals("z")) {
+				throw new RuntimeException();
 			}
-			redirectAttributes.addFlashAttribute("message", messageSource.getMessage("MSG0001", new Object[] {
-					form.getContent()
-			}, Locale.getDefault()));
+			redirectAttributes.addFlashAttribute("message", "MSG0001");
 			return "redirect:/handlingexception";
 		} catch (BusinessException exception) {
 			exception.rejectTo(bindingResult, messageSource);

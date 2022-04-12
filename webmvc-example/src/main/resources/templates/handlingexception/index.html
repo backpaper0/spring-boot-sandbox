@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Handling Exception Demo</h1>
-    <p th:if="${message}" th:text="${message}"></p>
+    <p th:if="${message}" th:text="#{${message}}"></p>
     <form th:action="@{/handlingexception}" method="POST" th:object="${handlingExceptionForm}">
       <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
       <p>
