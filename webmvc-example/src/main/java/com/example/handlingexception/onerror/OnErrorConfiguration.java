@@ -1,9 +1,8 @@
 package com.example.handlingexception.onerror;
 
 import org.springframework.aop.Pointcut;
-import org.springframework.aop.support.ComposablePointcut;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
-import org.springframework.aop.support.annotation.AnnotationMethodMatcher;
+import org.springframework.aop.support.annotation.AnnotationMatchingPointcut;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +18,7 @@ public class OnErrorConfiguration {
 	@Bean
 	public DefaultPointcutAdvisor onErrorPointcutAdvisor() {
 		DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-		Pointcut pointcut = new ComposablePointcut(new AnnotationMethodMatcher(OnError.class));
+		Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(OnError.class);
 		advisor.setPointcut(pointcut);
 		advisor.setAdvice(onErrorInterceptor);
 		return advisor;
