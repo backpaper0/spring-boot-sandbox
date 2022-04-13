@@ -10,7 +10,7 @@ public class Helper {
 	private final AtomicInteger counter = new AtomicInteger();
 
 	public boolean helperMethod() throws Exception {
-		if (counter.getAndIncrement() % 2 == 0) {
+		if (counter.getAndIncrement() % 2 == 1) {
 			throw new Exception();
 		}
 		return true;

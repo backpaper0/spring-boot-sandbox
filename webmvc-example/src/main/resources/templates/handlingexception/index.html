@@ -11,12 +11,18 @@
     <form th:action="@{/handlingexception}" method="POST" th:object="${handlingExceptionForm}">
       <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
       <p>
-        <input type="text" th:field="*{content}"/>
+        <input type="text" th:field="*{content}" autofocus="autofocus"/>
         <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
       </p>
       <p>
         <button>Submit</button>
       </p>
+      <ul>
+        <li>何も入力しなければバリデーションエラー</li>
+        <li><code>x</code>を入力すると業務エラー</li>
+        <li><code>y</code>を入力するとフィールドに関連付いた業務エラー</li>
+        <li><code>z</code>を入力するとシステムエラーで、2回に1回はHTMLテンプレートで例外スローする</li>
+      </ul>
     </form>
   </body>
 </html>

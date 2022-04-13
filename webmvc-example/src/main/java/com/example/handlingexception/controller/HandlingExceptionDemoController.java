@@ -1,6 +1,5 @@
 package com.example.handlingexception.controller;
 
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -12,16 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.handlingexception.exception.BusinessException;
 import com.example.handlingexception.form.HandlingExceptionForm;
+import com.example.handlingexception.onerror.OnError;
 
 @Controller
 @RequestMapping("handlingexception")
 public class HandlingExceptionDemoController {
-
-	private final MessageSource messageSource;
-
-	public HandlingExceptionDemoController(MessageSource messageSource) {
-		this.messageSource = messageSource;
-	}
 
 	@GetMapping
 	public String index() {
@@ -29,25 +23,23 @@ public class HandlingExceptionDemoController {
 	}
 
 	@PostMapping
+	@OnError("handlingexception/index")
 	public String post(@Validated @ModelAttribute("handlingExceptionForm") HandlingExceptionForm form,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			return "handlingexception/index";
 		}
-		try {
-			if (form.getContent().equals("x")) {
-				throw new BusinessException("ERR0001");
-			} else if (form.getContent().equals("y")) {
-				throw new BusinessException("ERR0002", "content");
-			} else if (form.getContent().equals("z")) {
-				throw new RuntimeException();
-			}
-			redirectAttributes.addFlashAttribute("message", "MSG0001");
-			return "redirect:/handlingexception";
-		} catch (BusinessException exception) {
-			exception.rejectTo(bindingResult, messageSource);
-			return "handlingexception/index";
+
+		if (form.getContent().equals("x")) {
+			throw new BusinessException("ERR0001");
+		} else if (form.getContent().equals("y")) {
+			throw new BusinessException("ERR0002", "content");
+		} else if (form.getContent().equals("z")) {
+			throw new RuntimeException();
 		}
+
+		redirectAttributes.addFlashAttribute("message", "MSG0001");
+		return "redirect:/handlingexception";
 	}
 
 	@ModelAttribute("handlingExceptionForm")
