@@ -29,3 +29,9 @@ Get
 curl -c target/cookie.txt -b target/cookie.txt -v localhost:8080/hello
 ```
 
+## Secure Cookie
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.servlet.session.cookie.secure=true"
+```
+
