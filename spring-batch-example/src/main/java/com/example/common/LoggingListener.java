@@ -1,16 +1,36 @@
 package com.example.common;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.annotation.AfterRead;
+import org.springframework.batch.core.annotation.BeforeProcess;
+import org.springframework.batch.core.annotation.BeforeWrite;
 import org.springframework.batch.core.annotation.OnSkipInProcess;
 import org.springframework.batch.core.annotation.OnSkipInRead;
 import org.springframework.batch.core.annotation.OnSkipInWrite;
 import org.springframework.stereotype.Component;
 
 @Component
-public class WarningLoggingListener {
+public class LoggingListener {
 
-	private static final Logger logger = LoggerFactory.getLogger(WarningLoggingListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoggingListener.class);
+
+	@AfterRead
+	public void afterRead(Object item) {
+		logger.info("read: {}", item);
+	}
+
+	@BeforeProcess
+	public void beforeProcess(Object item) {
+		logger.info("process: {}", item);
+	}
+
+	@BeforeWrite
+	public void beforeWrite(List<Object> items) {
+		logger.info("write: {}", items);
+	}
 
 	@OnSkipInRead
 	public void onSkipInRead(Throwable t) {

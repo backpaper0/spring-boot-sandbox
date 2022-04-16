@@ -3,7 +3,7 @@
 ## Fileを読み込んでDBへ保存するバッチ
 
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb"
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=inputs/input-valid.csv"
 ```
 
 invalidな行を含むファイルを読み込む(`Application finished with exit code: 6`)。
