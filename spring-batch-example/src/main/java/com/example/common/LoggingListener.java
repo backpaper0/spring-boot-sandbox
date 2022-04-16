@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.annotation.AfterProcess;
 import org.springframework.batch.core.annotation.AfterRead;
 import org.springframework.batch.core.annotation.BeforeProcess;
 import org.springframework.batch.core.annotation.BeforeWrite;
@@ -24,7 +25,12 @@ public class LoggingListener {
 
 	@BeforeProcess
 	public void beforeProcess(Object item) {
-		logger.info("process: {}", item);
+		logger.info("before process: {}", item);
+	}
+
+	@AfterProcess
+	public void afterProcess(Object item, Object result) {
+		logger.info("after process: {} -> {}", item, result);
 	}
 
 	@BeforeWrite

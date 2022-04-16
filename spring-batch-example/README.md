@@ -18,3 +18,9 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileTo
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=input-not-exists.csv"
 ```
 
+## DBからレコードを読み込んで1件ずつ悲観ロックを取って更新するバッチ
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=DbToDb"
+```
+
