@@ -15,7 +15,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileTo
 入力ファイルが存在しない場合(`Application finished with exit code: 5`)。
 
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=input-not-exists.csv"
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=inputs/input-not-exists.csv"
 ```
 
 ## DBからレコードを読み込んで1件ずつ悲観ロックを取って更新するバッチ

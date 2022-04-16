@@ -26,7 +26,6 @@ import org.springframework.core.io.PathResource;
 
 import com.example.common.ExitCodeGeneratorImpl;
 import com.example.common.LoggingListener;
-import com.example.common.Task;
 
 @Configuration
 public class FileToDbBatch {
@@ -51,39 +50,39 @@ public class FileToDbBatch {
 
 	@Bean
 	@StepScope
-	public FlatFileItemReader<Task> fileToDbItemReader(
+	public FlatFileItemReader<Demo1> fileToDbItemReader(
 			@Value("#{jobParameters['input.file'] ?: 'inputs/input-invalid.csv'}") String file) {
-		return new FlatFileItemReaderBuilder<Task>()
+		return new FlatFileItemReaderBuilder<Demo1>()
 				.resource(new PathResource(file))
 				.encoding("UTF-8")
 				.linesToSkip(1)
-				.targetType(Task.class)
-				.delimited().names("id", "content", "done")
+				.targetType(Demo1.class)
+				.delimited().names("id", "content")
 				.saveState(false)
 				.build();
 	}
 
 	@Bean
-	public CompositeItemProcessor<Task, Task> fileToDbItemProcessor() {
-		CompositeItemProcessor<Task, Task> processor = new CompositeItemProcessor<>();
+	public CompositeItemProcessor<Demo1, Demo1> fileToDbItemProcessor() {
+		CompositeItemProcessor<Demo1, Demo1> processor = new CompositeItemProcessor<>();
 		processor.setDelegates(List.of(beanValidatingItemProcessor));
 		return processor;
 	}
 
 	@Bean
 	@StepScope
-	public JdbcBatchItemWriter<Task> fileToDbItemWriter() {
-		return new JdbcBatchItemWriterBuilder<Task>()
+	public JdbcBatchItemWriter<Demo1> fileToDbItemWriter() {
+		return new JdbcBatchItemWriterBuilder<Demo1>()
 				.dataSource(dataSource)
-				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Task>())
-				.sql("insert into tasks (id, content, done) values (:id, :content, :done)")
+				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Demo1>())
+				.sql("insert into demo1 (id, content) values (:id, :content)")
 				.build();
 	}
 
 	@Bean
 	public Step fileToDbStep() {
 		return steps.get("FileToDb")
-				.<Task, Task> chunk(2)
+				.<Demo1, Demo1> chunk(2)
 
 				.reader(fileToDbItemReader(null))
 				.processor(fileToDbItemProcessor())

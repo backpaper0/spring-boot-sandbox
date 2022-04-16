@@ -1,15 +1,14 @@
-package com.example.common;
+package com.example.file2db;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class Task {
+public class Demo1 {
 
 	private Integer id;
 	@NotNull
 	@Size(min = 1)
 	private String content;
-	private boolean done;
 
 	public Integer getId() {
 		return id;
@@ -27,16 +26,8 @@ public class Task {
 		this.content = content;
 	}
 
-	public boolean isDone() {
-		return done;
-	}
-
-	public void setDone(boolean done) {
-		this.done = done;
-	}
-
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", content=" + content + ", done=" + done + "]";
+		return "Demo1 [id=" + id + ", content=" + content + "]";
 	}
 }
