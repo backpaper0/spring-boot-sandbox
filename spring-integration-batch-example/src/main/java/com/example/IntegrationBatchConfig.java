@@ -15,13 +15,13 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.endpoint.MethodInvokingMessageSource;
 
 @Configuration
-public class IntegrationConfig {
+public class IntegrationBatchConfig {
 
 	private final JobRepository jobRepository;
 	private final List<Job> jobs;
 	private final BatchProperties batchProperties;
 
-	public IntegrationConfig(JobRepository jobRepository, List<Job> jobs, BatchProperties batchProperties) {
+	public IntegrationBatchConfig(JobRepository jobRepository, List<Job> jobs, BatchProperties batchProperties) {
 		this.jobRepository = jobRepository;
 		this.jobs = jobs;
 		this.batchProperties = batchProperties;
@@ -48,7 +48,7 @@ public class IntegrationConfig {
 	public MethodInvokingMessageSource countMessageSource() {
 		MethodInvokingMessageSource messageSource = new MethodInvokingMessageSource();
 		messageSource.setObject(new AtomicLong());
-		messageSource.setMethodName("getAndIncrement");
+		messageSource.setMethodName("incrementAndGet");
 		return messageSource;
 	}
 

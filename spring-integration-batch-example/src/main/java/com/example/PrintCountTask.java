@@ -11,6 +11,11 @@ public class PrintCountTask implements Tasklet {
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 		Long count = contribution.getStepExecution().getJobParameters().getLong("run.id");
 		System.out.println(count);
+
+		if (count % 10 == 0) {
+			throw new RuntimeException();
+		}
+
 		return RepeatStatus.FINISHED;
 	}
 }
