@@ -1,7 +1,5 @@
 package com.example;
 
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -11,7 +9,6 @@ public class PrintCountTask implements Tasklet {
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		TimeUnit.SECONDS.sleep(5);
 		Long count = contribution.getStepExecution().getJobParameters().getLong("run.id");
 		System.out.println(count);
 		return RepeatStatus.FINISHED;

@@ -1,15 +1,13 @@
 package com.example;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.integration.launch.JobLaunchingGateway;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
@@ -17,37 +15,21 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.endpoint.MethodInvokingMessageSource;
 
 @Configuration
-public class CountConfig {
+public class IntegrationConfig {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
 	private final JobRepository jobRepository;
+	private final List<Job> jobs;
+	private final BatchProperties batchProperties;
 
-	public CountConfig(StepBuilderFactory steps, JobBuilderFactory jobs, JobRepository jobRepository) {
-		this.steps = steps;
-		this.jobs = jobs;
+	public IntegrationConfig(JobRepository jobRepository, List<Job> jobs, BatchProperties batchProperties) {
 		this.jobRepository = jobRepository;
-	}
-
-	@Bean
-	@StepScope
-	public PrintCountTask printCountTask() {
-		return new PrintCountTask();
-	}
-
-	@Bean
-	public Step printCountStep() {
-		return steps.get("PrintCount").tasklet(printCountTask()).build();
-	}
-
-	@Bean
-	public Job printCountJob() {
-		return jobs.get("PrintCount").start(printCountStep()).build();
+		this.jobs = jobs;
+		this.batchProperties = batchProperties;
 	}
 
 	@Bean
 	public CountToJobLaunchRequestTransformer countToJobLaunchRequestTransformer() {
-		return new CountToJobLaunchRequestTransformer(printCountJob());
+		return new CountToJobLaunchRequestTransformer(jobs, batchProperties.getJob().getNames());
 	}
 
 	@Bean
