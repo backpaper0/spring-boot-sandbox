@@ -22,6 +22,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import com.example.common.ExitCodeGeneratorImpl;
+import com.example.common.Task;
+import com.example.common.WarningLoggingListener;
+
 @Configuration
 public class FileToDbBatch {
 
@@ -29,13 +33,18 @@ public class FileToDbBatch {
 	private final JobBuilderFactory jobs;
 	private final DataSource dataSource;
 	private final LocalValidatorFactoryBean localValidatorFactoryBean;
+	private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
+	private final WarningLoggingListener warningLoggingListener;
 
 	public FileToDbBatch(StepBuilderFactory steps, JobBuilderFactory jobs, DataSource dataSource,
-			LocalValidatorFactoryBean localValidatorFactoryBean) {
+			LocalValidatorFactoryBean localValidatorFactoryBean, ExitCodeGeneratorImpl exitCodeGeneratorImpl,
+			WarningLoggingListener warningLoggingListener) {
 		this.steps = steps;
 		this.jobs = jobs;
 		this.dataSource = dataSource;
 		this.localValidatorFactoryBean = localValidatorFactoryBean;
+		this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
+		this.warningLoggingListener = warningLoggingListener;
 	}
 
 	@Bean
@@ -68,17 +77,6 @@ public class FileToDbBatch {
 	}
 
 	@Bean
-	@StepScope
-	public WarningLoggingListener<Task, Task> skipListener() {
-		return new WarningLoggingListener<>();
-	}
-
-	@Bean
-	public ExitCodeGeneratorImpl<Task, Task> exitCodeGeneratorImpl() {
-		return new ExitCodeGeneratorImpl<>();
-	}
-
-	@Bean
 	public Step fileToDbStep() {
 		return steps.get("FileToDb")
 				.<Task, Task> chunk(1)
@@ -89,8 +87,8 @@ public class FileToDbBatch {
 				.skip(FlatFileParseException.class)
 				.skip(ValidationException.class)
 				.skipLimit(10)
-				.listener(skipListener())
-				.listener(exitCodeGeneratorImpl())
+				.listener(warningLoggingListener)
+				.listener(exitCodeGeneratorImpl)
 				.build();
 	}
 

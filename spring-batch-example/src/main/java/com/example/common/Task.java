@@ -1,4 +1,4 @@
-package com.example.file2db;
+package com.example.common;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
