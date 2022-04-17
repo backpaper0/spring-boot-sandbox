@@ -27,6 +27,12 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=DbToDb
 ## chunkの処理順序を確認するバッチ
 
 ```
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=ChunkDemo"
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=ChunkDemo --logging.level.org.springframework.jdbc.datasource.DataSourceTransactionManager=debug"
+```
+
+## taskletの処理順序を確認するバッチ
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=TaskletDemo --logging.level.org.springframework.jdbc.datasource.DataSourceTransactionManager=debug"
 ```
 
