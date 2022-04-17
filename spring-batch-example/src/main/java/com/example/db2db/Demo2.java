@@ -1,4 +1,4 @@
-package com.example.db2.db;
+package com.example.db2db;
 
 public class Demo2 {
 

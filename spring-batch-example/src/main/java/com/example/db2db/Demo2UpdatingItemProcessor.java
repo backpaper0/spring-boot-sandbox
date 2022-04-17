@@ -1,4 +1,4 @@
-package com.example.db2.db;
+package com.example.db2db;
 
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
