@@ -24,3 +24,9 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileTo
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=DbToDb"
 ```
 
+## chunkの処理順序を確認するバッチ
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=ChunkDemo"
+```
+
