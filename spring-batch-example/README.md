@@ -36,3 +36,15 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=ChunkD
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=TaskletDemo --logging.level.org.springframework.jdbc.datasource.DataSourceTransactionManager=debug"
 ```
 
+## マルチスレッドで処理を行うバッチ
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=MultiThreadDemo"
+```
+
+シングルスレッドで処理を行う場合。
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=MultiThreadDemo --app.multithread.enabled=false"
+```
+
