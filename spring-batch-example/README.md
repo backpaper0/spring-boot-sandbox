@@ -1,6 +1,6 @@
 # Spring Batch Example
 
-## Fileを読み込んでDBへ保存するバッチ
+## ファイルを読み込んでDBへ保存するバッチ
 
 ```
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=inputs/input-valid.csv"
@@ -16,6 +16,12 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileTo
 
 ```
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileToDb input.file=inputs/input-not-exists.csv"
+```
+
+固定長ファイルを読み込む場合。
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FixedFileToDb input.file=inputs/input-fixed.txt"
 ```
 
 ## DBからレコードを読み込んで1件ずつ悲観ロックを取って更新するバッチ
