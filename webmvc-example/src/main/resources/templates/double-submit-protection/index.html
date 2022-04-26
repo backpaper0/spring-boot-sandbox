@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Double Submit Protection</title>
+  </head>
+  <body>
+    <h1>Double Submit Protection</h1>
+    <form id="exampleForm" th:action="@{/double-submit-protection}" method="POST">
+      <p>
+        <button name="submit1">Submit 1</button>
+        <button name="submit2">Submit 2</button>
+      </p>
+      <script>
+        let submitted = false;
+        const form = document.querySelector('#exampleForm');
+        form.addEventListener('submit', function(event) {
+          if (submitted) {
+            event.preventDefault();
+            return;
+          }
+          submitted = true;
+        });
+      </script>
+    </form>
+  </body>
+</html>
