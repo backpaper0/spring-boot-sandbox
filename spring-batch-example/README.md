@@ -24,6 +24,12 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FileTo
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FixedFileToDb input.file=inputs/input-fixed.txt"
 ```
 
+`Shift_JIS`でバイト数区切りの場合。
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=FixedByBytesFileToDb input.file=inputs/input-fixed-sjis.txt"
+```
+
 ## DBからレコードを読み込んで1件ずつ悲観ロックを取って更新するバッチ
 
 ```
