@@ -1,0 +1,15 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Use assets example</title>
+    <link rel="stylesheet" href="../../static/use-assets/style.css" th:href="@{/use-assets/style.css}"/>
+  </head>
+  <body>
+    <h1>../../static/use-assets/style.css</h1>
+    <script>
+      document.querySelector('h1').innerHTML = document.querySelector('link[rel=stylesheet]').getAttribute('href');
+    </script>
+  </body>
+</html>
