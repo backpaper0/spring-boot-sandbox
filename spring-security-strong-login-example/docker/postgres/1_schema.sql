@@ -1,4 +1,4 @@
-create table if not exists accounts (
+create table accounts (
 	-- ユーザー名
 	username varchar(100) not null,
 	-- パスワード
