@@ -22,10 +22,10 @@ public class WebSecurityConfig {
 					password,
 					true,
 					locked,
-					case when current_timestamp between active_from and active_to then false else true end,
-					case when password_expire > current_timestamp then false else true end
+					case when current_timestamp between validity_from and validity_to then false else true end,
+					case when password_expiration > current_timestamp then false else true end
 				from
-					users
+					accounts
 				where
 					username = ?
 				""");
@@ -34,7 +34,7 @@ public class WebSecurityConfig {
 					username,
 					authority
 				from
-					users
+					authorities
 				where
 					username = ?
 				""");
@@ -45,13 +45,25 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.authorizeHttpRequests()
-				.antMatchers("/login").permitAll()
-				.anyRequest().authenticated()
-				.and().formLogin()
+				.authorizeHttpRequests(c -> c
+						.antMatchers("/login").permitAll()
+						.antMatchers("/page1").hasAuthority("AUTH1")
+						.antMatchers("/page2").hasAuthority("AUTH2")
+						.antMatchers("/admin").hasAuthority("ADMIN")
+						.anyRequest().authenticated())
+
+				.formLogin(c -> c
+						.loginPage("/login")
+						.defaultSuccessUrl("/", true))
+				.logout(c -> c
+						.logoutUrl("/logout"))
+
 				// 二重ログインを禁止する
-				.and().sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry(null)).and()
-				.and().build();
+				.sessionManagement(c -> c
+						.maximumSessions(1)
+						.sessionRegistry(sessionRegistry(null)))
+
+				.build();
 	}
 
 	@Bean

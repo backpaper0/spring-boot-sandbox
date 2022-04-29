@@ -29,7 +29,7 @@ public class LoginFailureCountUpdater {
 	@EventListener(AuthenticationSuccessEvent.class)
 	public void resetLoginFailure(AuthenticationSuccessEvent event) {
 		String username = event.getAuthentication().getName();
-		jdbc.update("update users set login_failure_count = 0 where username = ?", username);
+		jdbc.update("update accounts set login_failure_count = 0 where username = ?", username);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class LoginFailureCountUpdater {
 		String username = event.getAuthentication().getName();
 
 		List<Integer> loginFailureCounts = jdbc.queryForList(
-				"select login_failure_count from users where username = ? for update",
+				"select login_failure_count from accounts where username = ? for update",
 				Integer.class, username);
 
 		if (loginFailureCounts.isEmpty()) {
@@ -55,9 +55,10 @@ public class LoginFailureCountUpdater {
 		int loginFailureCount = loginFailureCounts.get(0);
 
 		if (loginFailureCount < maxLoginFailureCount) {
-			jdbc.update("update users set login_failure_count = ? where username = ?", loginFailureCount + 1, username);
+			jdbc.update("update accounts set login_failure_count = ? where username = ?", loginFailureCount + 1,
+					username);
 		} else {
-			jdbc.update("update users set locked = true where username = ?", username);
+			jdbc.update("update accounts set locked = true where username = ?", username);
 		}
 	}
 

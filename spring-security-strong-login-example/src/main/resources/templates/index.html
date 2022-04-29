@@ -7,5 +7,26 @@
   </head>
   <body>
     <h1>Example</h1>
+    <form th:action="@{/logout}" method="POST">
+      <p><button type="submit">Logout</button></p>
+    </form>
+    <p>ユーザー名：<span sec:authentication="name"></span></p>
+    <p>最終ログイン日時：<span th:text="${#temporals.format(@loggedinUser.lastLoggedin, 'yyyy/MM/dd HH:mm')}"></span></p>
+    <ul>
+      <li sec:authorize="hasAuthority('AUTH1')">権限1を持っている</li>
+      <li sec:authorize="hasAuthority('AUTH2')">権限2を持っている</li>
+      <li sec:authorize="hasAuthority('AUTH1') && hasAuthority('AUTH2')">権限1と権限2を持っている</li>
+      <li sec:authorize="hasAnyAuthority('AUTH1', 'AUTH2')">権限1または権限2を持っている</li>
+    </ul>
+    <ul>
+      <li><a th:href="@{/login}">/login</a> <span sec:authorize-url="/login">*</span></li>
+      <li><a th:href="@{/logout}">/logout</a> <span sec:authorize-url="/logout">*</span></li>
+      <li><a th:href="@{/page1}">/page1(AUTH1)</a> <span sec:authorize-url="/page1">*</span></li>
+      <li><a th:href="@{/page2}">/page2(AUTH2)</a> <span sec:authorize-url="/page2">*</span></li>
+      <li><a th:href="@{/page3}">/page3</a> <span sec:authorize-url="/page3">*</span></li>
+      <li><a th:href="@{/page4}">/page4(404 Not Found)</a> <span sec:authorize-url="/page4">*</span></li>
+      <li><a th:href="@{/page5}">/page5(Throw exception)</a> <span sec:authorize-url="/page5">*</span></li>
+    </ul>
+    <p sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}">ユーザー管理</a></p>
   </body>
 </html>

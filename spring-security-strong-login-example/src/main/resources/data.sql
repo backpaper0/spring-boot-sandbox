@@ -1,16 +1,37 @@
 
-insert into users (username, password, locked, password_expire, login_failure_count, active_from, active_to, last_loggedin_at, authority) values
+-- パスワードはいずれのアカウントも pass
+set @pass = '{bcrypt}$2a$10$Blf7Ko0OBpcZty4aucOUfun41lKCkhimnYABhE/qXlee6PSM/46Ma';
 
--- パスワードは pass1234
+insert into accounts (username, password, locked, password_expiration, login_failure_count, validity_from, validity_to, last_loggedin) values
 
-('user1', '{bcrypt}$2a$10$NJxwtj7hAEeETtHUt1EpsestoPfej9DSv1xHVRBZcCr03Mn0agSW.', false, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00', 'USER')
+-- ログインできる
+ ('user01', @pass, false, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('user02', @pass, false, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('user03', @pass, false, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('admin', @pass, false, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
 -- ロックされている
-,('user2', '{bcrypt}$2a$10$NJxwtj7hAEeETtHUt1EpsestoPfej9DSv1xHVRBZcCr03Mn0agSW.', true, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00', 'USER')
+,('user20', @pass, true, date'2100-01-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
 -- パスワードの期限切れ
-,('user3', '{bcrypt}$2a$10$NJxwtj7hAEeETtHUt1EpsestoPfej9DSv1xHVRBZcCr03Mn0agSW.', false, date'2022-04-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00', 'USER')
--- 有効期間外(1)
-,('user4', '{bcrypt}$2a$10$NJxwtj7hAEeETtHUt1EpsestoPfej9DSv1xHVRBZcCr03Mn0agSW.', false, date'2100-01-01', 0, date'2099-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00', 'USER')
--- 有効期間外(2)
-,('user5', '{bcrypt}$2a$10$NJxwtj7hAEeETtHUt1EpsestoPfej9DSv1xHVRBZcCr03Mn0agSW.', false, date'2100-01-01', 0, date'2022-01-01', date'2022-04-01', timestamp'2022-01-01 00:00:00', 'USER')
+,('user30', @pass, false, date'2022-04-01', 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+-- 有効期間外(現在日時がfromよりも前)
+,('user40', @pass, false, date'2100-01-01', 0, date'2099-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+-- 有効期間外(現在日時がtoよりも後)
+,('user50', @pass, false, date'2100-01-01', 0, date'2022-01-01', date'2022-04-01', timestamp'2022-01-01 00:00:00')
 ;
 
+insert into authorities (username, authority) values
+-- 権限1
+ ('user01', 'AUTH1')
+-- 権限2
+,('user02', 'AUTH2')
+-- 複数の権限
+,('user03', 'AUTH1')
+,('user03', 'AUTH2')
+-- 管理権限(のつもり)
+,('admin', 'ADMIN')
+-- 以下、ログインできないアカウントたち
+,('user20', 'GENERAL')
+,('user30', 'GENERAL')
+,('user40', 'GENERAL')
+,('user50', 'GENERAL')
+;

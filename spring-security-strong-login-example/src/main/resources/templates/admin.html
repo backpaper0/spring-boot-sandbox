@@ -1,0 +1,32 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Example</title>
+  </head>
+  <body>
+    <h1>ユーザー管理</h1>
+    <p><a th:href="@{/}">戻る</a></p>
+    <table border="1">
+      <tr>
+        <th>ユーザー名</th>
+        <th>アカウントロック</th>
+        <th>パスワード有効期限</th>
+        <th>ログイン失敗回数</th>
+        <th>有効期間(from)</th>
+        <th>有効期間(to)</th>
+        <th>最終ログイン日時</th>
+      </tr>
+      <tr th:each="account : ${accounts}" th:object="${account}">
+        <td th:text="*{username}"></td>
+        <td th:text="*{locked}"></td>
+        <td th:text="*{passwordExpiration}"></td>
+        <td th:text="*{loginFailureCount}"></td>
+        <td th:text="${#temporals.format(account.validityFrom, 'uuuu/MM/dd')}"></td>
+        <td th:text="${#temporals.format(account.validityTo, 'uuuu/MM/dd')}"></td>
+        <td th:text="${#temporals.format(account.lastLoggedin, 'uuuu/MM/dd HH:mm')}"></td>
+      </tr>
+    </table>
+  </body>
+</html>

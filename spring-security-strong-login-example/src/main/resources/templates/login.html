@@ -1,0 +1,18 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Example</title>
+  </head>
+  <body>
+    <h1>Login</h1>
+    <p th:if="${#request.getParameter('error') != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+      th:text="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></p>
+    <form th:action="@{/login}" method="POST">
+      <p><input name="username" type="text" placeholder="username" autofocus/></p>
+      <p><input name="password" type="password" placeholder="password"/></p>
+      <p><button type="submit">Login</button></p>
+    </form>
+  </body>
+</html>
