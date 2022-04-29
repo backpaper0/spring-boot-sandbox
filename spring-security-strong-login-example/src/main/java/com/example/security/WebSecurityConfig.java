@@ -22,7 +22,10 @@ public class WebSecurityConfig {
 					password,
 					true,
 					locked,
-					case when current_timestamp between validity_from and validity_to then false else true end,
+					case
+						when validity_from <= current_timestamp and validity_to >= current_timestamp then false
+						when validity_from <= current_timestamp and validity_to is null then false
+						else true end,
 					case when password_expiration > current_timestamp then false else true end
 				from
 					accounts

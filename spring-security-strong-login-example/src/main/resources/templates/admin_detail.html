@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Example</title>
+  </head>
+  <body>
+    <h1>ユーザー管理</h1>
+    <p><a th:href="@{/admin}">戻る</a></p>
+
+    <table border="1">
+      <tr>
+        <th>ユーザー名</th>
+        <td th:text="${account.username}"></td>
+      </tr>
+      <tr>
+        <th>ログイン失敗回数</th>
+        <td th:text="${account.loginFailureCount}"></td>
+      </tr>
+      <tr>
+        <th>最終ログイン日時</th>
+        <td th:text="${#temporals.format(account.lastLoggedin, 'uuuu/MM/dd HH:mm')}"></td>
+      </tr>
+      <tr>
+        <th>パスワード有効期限</th>
+        <td th:text="${#temporals.format(account.passwordExpiration, 'yyyy/MM/dd')}"></td>
+      </tr>
+      <tr>
+        <th>有効期間</th>
+        <td>
+          <form th:object="${adminForm}" method="POST" th:action="@{/admin(username=${account.username})}">
+            <input type="date" th:field="*{validityFrom}"/>
+            <span th:if="${#fields.hasErrors('validityFrom')}" th:errors="*{validityFrom}"></span>
+            <input type="date" th:field="*{validityTo}"/>
+            <span th:if="${#fields.hasErrors('validityTo')}" th:errors="*{validityTo}"></span>
+            <button type="submit" name="updateValidity">有効期間を更新する</button>
+          </form>
+        </td>
+      </tr>
+      <tr th:if="${account.locked}">
+        <td colspan="2">
+          <form method="POST" th:action="@{/admin(username=${account.username})}">
+            <button type="submit" name="unlock">アカウントロックを解除する</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>

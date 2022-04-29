@@ -21,7 +21,7 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
       - ./docker/pgadmin/servers.json:/pgadmin4/servers.json:ro
-      - ./docker/pgadmin/pgpass:/pgpass:ro
+      - ./docker/pgadmin/pgpass:/pgpass
     depends_on:
       - postgres
 

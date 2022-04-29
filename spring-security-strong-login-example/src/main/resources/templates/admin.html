@@ -19,7 +19,7 @@
         <th>最終ログイン日時</th>
       </tr>
       <tr th:each="account : ${accounts}" th:object="${account}">
-        <td th:text="*{username}"></td>
+        <td><a th:text="*{username}" th:href="@{/admin(username=*{username})}"></a></td>
         <td th:text="*{locked}"></td>
         <td th:text="*{passwordExpiration}"></td>
         <td th:text="*{loginFailureCount}"></td>
