@@ -23,19 +23,23 @@ public class WebSecurityConfig {
 
 		users.setUsersByUsernameQuery("""
 				select
-					username,
-					password,
+					a.username,
+					p.password,
 					true,
-					locked,
+					a.locked,
 					case
-						when validity_from <= current_timestamp and validity_to >= current_timestamp then false
-						when validity_from <= current_timestamp and validity_to is null then false
+						when a.validity_from <= current_timestamp and a.validity_to >= current_timestamp then false
+						when a.validity_from <= current_timestamp and a.validity_to is null then false
 						else true end,
-					case when password_expiration > current_timestamp then false else true end
+					case when p.password_expiration > current_timestamp then false else true end
 				from
-					accounts
+					accounts a
+				inner join
+					account_passwords p
+				on
+					a.username = p.username
 				where
-					username = ?
+					a.username = ?
 				""");
 		users.setAuthoritiesByUsernameQuery("""
 				select
@@ -50,7 +54,7 @@ public class WebSecurityConfig {
 
 		users.setChangePasswordSql("""
 				update
-					accounts
+					account_passwords
 				set
 					password = ?
 				where

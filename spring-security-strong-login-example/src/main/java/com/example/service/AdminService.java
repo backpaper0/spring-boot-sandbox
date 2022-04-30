@@ -30,7 +30,6 @@ public class AdminService {
 				select
 					username,
 					locked,
-					password_expiration,
 					login_failure_count,
 					validity_from,
 					validity_to,
@@ -51,7 +50,6 @@ public class AdminService {
 				select
 					username,
 					locked,
-					password_expiration,
 					login_failure_count,
 					validity_from,
 					validity_to,

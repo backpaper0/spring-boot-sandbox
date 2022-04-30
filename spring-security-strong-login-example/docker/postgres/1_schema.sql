@@ -1,12 +1,8 @@
 create table accounts (
 	-- ユーザー名
 	username varchar(100) not null,
-	-- パスワード
-	password varchar(500) not null,
 	-- ロックされていることを表すフラグ
 	locked boolean not null default(false),
-	-- パスワードの有効期限
-	password_expiration date not null,
 	-- ログイン失敗回数
 	login_failure_count int not null default(0),
 	-- 有効期間(from)
@@ -18,8 +14,20 @@ create table accounts (
 	primary key (username)
 );
 
-create table authorities (
+create table account_passwords (
+	-- ユーザー名
 	username varchar(100) not null,
+	-- パスワード
+	password varchar(500) not null,
+	-- パスワードの有効期限
+	password_expiration date not null,
+	primary key (username)
+);
+
+create table authorities (
+	-- ユーザー名
+	username varchar(100) not null,
+	-- 権限
 	authority varchar(100) not null,
 	primary key (username, authority)
 );

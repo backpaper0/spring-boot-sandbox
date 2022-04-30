@@ -23,10 +23,6 @@
         <td th:text="${#temporals.format(account.lastLoggedin, 'uuuu/MM/dd HH:mm')}"></td>
       </tr>
       <tr>
-        <th>パスワード有効期限</th>
-        <td th:text="${#temporals.format(account.passwordExpiration, 'yyyy/MM/dd')}"></td>
-      </tr>
-      <tr>
         <th>有効期間</th>
         <td>
           <form th:object="${adminForm}" method="POST" th:action="@{/admin(username=${account.username})}">

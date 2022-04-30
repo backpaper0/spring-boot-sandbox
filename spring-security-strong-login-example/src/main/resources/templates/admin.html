@@ -12,7 +12,6 @@
       <tr>
         <th>ユーザー名</th>
         <th>アカウントロック</th>
-        <th>パスワード有効期限</th>
         <th>ログイン失敗回数</th>
         <th>有効期間(from)</th>
         <th>有効期間(to)</th>
@@ -21,7 +20,6 @@
       <tr th:each="account : ${accounts}" th:object="${account}">
         <td><a th:text="*{username}" th:href="@{/admin(username=*{username})}"></a></td>
         <td th:text="*{locked}"></td>
-        <td th:text="*{passwordExpiration}"></td>
         <td th:text="*{loginFailureCount}"></td>
         <td th:text="${#temporals.format(account.validityFrom, 'uuuu/MM/dd')}"></td>
         <td th:text="${#temporals.format(account.validityTo, 'uuuu/MM/dd')}"></td>
