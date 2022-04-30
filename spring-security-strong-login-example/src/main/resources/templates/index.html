@@ -12,6 +12,7 @@
     </form>
     <p>ユーザー名：<span sec:authentication="name"></span></p>
     <p>最終ログイン日時：<span th:text="${#temporals.format(@loggedinUser.lastLoggedin, 'yyyy/MM/dd HH:mm')}"></span></p>
+    <p><a th:href="@{/password}">パスワード変更</a></p>
     <ul>
       <li sec:authorize="hasAuthority('AUTH1')">権限1を持っている</li>
       <li sec:authorize="hasAuthority('AUTH2')">権限2を持っている</li>

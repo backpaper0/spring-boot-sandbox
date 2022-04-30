@@ -2,9 +2,14 @@ package com.example.security;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
@@ -16,6 +21,7 @@ public class WebSecurityConfig {
 	@Bean
 	public JdbcUserDetailsManager userDetailsService(DataSource dataSource) {
 		JdbcUserDetailsManager users = new JdbcUserDetailsManager(dataSource);
+
 		users.setUsersByUsernameQuery("""
 				select
 					username,
@@ -42,11 +48,41 @@ public class WebSecurityConfig {
 					username = ?
 				""");
 		users.setEnableGroups(false);
+
+		users.setChangePasswordSql("""
+				update
+					accounts
+				set
+					password = ?
+				where
+					username = ?
+				""");
+
 		return users;
 	}
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public ProviderManager authenticationManager(UserDetailsService uds) {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(uds);
+		//		provider.setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+		return new ProviderManager(provider);
+	}
+
+	@Bean
+	public InitializingBean jdbcUserDetailsManagerInitializer(ProviderManager am, JdbcUserDetailsManager uds) {
+		return new InitializingBean() {
+			@Override
+			public void afterPropertiesSet() {
+				// パスワード変更時、現在のパスワードをチェックするために使用する
+				uds.setAuthenticationManager(am);
+			}
+		};
+	}
+
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
+			throws Exception {
 		return http
 				.authorizeHttpRequests(c -> c
 						.antMatchers("/login").permitAll()
@@ -65,6 +101,8 @@ public class WebSecurityConfig {
 				.sessionManagement(c -> c
 						.maximumSessions(1)
 						.sessionRegistry(sessionRegistry(null)))
+
+				.authenticationManager(authenticationManager)
 
 				.build();
 	}

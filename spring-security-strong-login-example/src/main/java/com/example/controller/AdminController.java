@@ -51,8 +51,6 @@ public class AdminController {
 			@ModelAttribute("adminForm") @Validated AdminForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 
-			bindingResult.getAllErrors().forEach(a -> System.out.println(a));
-
 			Account account = adminService.findAccountById(username);
 			model.addAttribute("account", account);
 

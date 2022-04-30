@@ -10,7 +10,16 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class LoggedinUser implements Serializable {
 
+	private String username;
 	private LocalDateTime lastLoggedin;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public LocalDateTime getLastLoggedin() {
 		return lastLoggedin;
