@@ -5,11 +5,10 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
@@ -62,27 +61,31 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public ProviderManager authenticationManager(UserDetailsService uds) {
+	public Pbkdf2PasswordEncoder passwordEncoder() {
+		return new Pbkdf2PasswordEncoder();
+	}
+
+	@Bean
+	public ProviderManager authenticationManager() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(uds);
-		//		provider.setPasswordEncoder(PasswordEncoderFactories.createDelegatingPasswordEncoder());
+		provider.setUserDetailsService(userDetailsService(null));
+		provider.setPasswordEncoder(passwordEncoder());
 		return new ProviderManager(provider);
 	}
 
 	@Bean
-	public InitializingBean jdbcUserDetailsManagerInitializer(ProviderManager am, JdbcUserDetailsManager uds) {
+	public InitializingBean jdbcUserDetailsManagerInitializer() {
 		return new InitializingBean() {
 			@Override
 			public void afterPropertiesSet() {
 				// パスワード変更時、現在のパスワードをチェックするために使用する
-				uds.setAuthenticationManager(am);
+				userDetailsService(null).setAuthenticationManager(authenticationManager());
 			}
 		};
 	}
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
-			throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(c -> c
 						.antMatchers("/login").permitAll()
@@ -102,7 +105,7 @@ public class WebSecurityConfig {
 						.maximumSessions(1)
 						.sessionRegistry(sessionRegistry(null)))
 
-				.authenticationManager(authenticationManager)
+				.authenticationManager(authenticationManager())
 
 				.build();
 	}
