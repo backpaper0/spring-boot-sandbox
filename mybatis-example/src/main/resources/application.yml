@@ -1,7 +1,0 @@
-app.database-id.properties:
-  "H2": h2
-  "PostgreSQL": postgres
-  "MySQL": mysql
-  "MariaDB": mysql
-  "Microsoft SQL Server": mssql
-  "Oracle": oracle

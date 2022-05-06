@@ -1,0 +1,30 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.parameter.ParameterMapper">
+
+	<sql id="base1">
+		select name from table5
+	</sql>
+
+	<sql id="base2">
+		order by id asc
+	</sql>
+
+	<select id="select1Param" resultType="string">
+		<include refid="base1" />
+		where id = #{value}
+		<include refid="base2" />
+	</select>
+
+	<select id="select2ParamsWithName" resultType="string">
+		<include refid="base1" />
+		where id = #{p1} or id = #{p2}
+		<include refid="base2" />
+	</select>
+
+	<select id="select2ParamsWithIndex" resultType="string">
+		<include refid="base1" />
+		where id = #{param1} or id = #{param2}
+		<include refid="base2" />
+	</select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.resultmaps.ResultMapsMapper">
+
+	<resultMap id="table1" type="com.example.resultmaps.Model1">
+		<result property="id" column="t1_id"/>
+		<result property="name" column="t1_name"/>
+		<association property="model2" javaType="com.example.resultmaps.Model2">
+			<result property="id" column="t2_id"/>
+			<result property="name" column="t2_name"/>
+		</association>
+		<collection property="model3List" ofType="com.example.resultmaps.Model3">
+			<result property="id" column="t3_id"/>
+			<result property="name" column="t3_name"/>
+		</collection>
+	</resultMap>
+
+	<select id="selectAll" resultMap="table1">
+		select
+			t1.id as t1_id,
+			t1.name as t1_name,
+			t2.id as t2_id,
+			t2.name as t2_name,
+			t3.id as t3_id,
+			t3.name as t3_name
+		from
+			table1 t1
+		left outer join
+			table2 t2
+		on
+			t2.table1_id = t1.id
+		left outer join
+			table3 t3
+		on
+			t3.table1_id = t1.id
+	</select>
+
+</mapper>
