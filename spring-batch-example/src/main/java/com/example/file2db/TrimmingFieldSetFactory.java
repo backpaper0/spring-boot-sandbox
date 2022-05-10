@@ -60,8 +60,9 @@ public class TrimmingFieldSetFactory implements FieldSetFactory {
 					index--;
 				}
 				return value.substring(0, index + 1);
+			default:
+				return value;
 			}
-			return value;
 		}
 	}
 }
