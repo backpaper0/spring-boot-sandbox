@@ -4,25 +4,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>アクセスログを標準出力へ出す例</title>
+<title>ロギングをカスタマイズする例</title>
 </head>
 
 <body>
-	<form th:action="@{/post}" method="POST" th:object="${exampleForm}">
+	<form th:action="@{/}" method="POST" th:object="${exampleForm}">
 		<p>
-			<input type="text" th:field="*{name}" />
+			<input type="text" th:field="*{name}" placeholder="セッションで保持する名前" size="30"/>
 			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
 			<button type="submit">送信</button>
 		</p>
 		<p>
-			<button type="submit" name="clear">セッションへ格納された名前をクリア</button>
+			セッションへ格納された名前：<span th:text="${@nameKeeper.name}"></span>
+			<button type="submit" name="clear">クリア</button>
+		</p>
+		<hr/>
+		<p>
+			<label id="delay">外部APIの処理にかかる時間(秒)</label>
+			<input type="number" th:field="*{delay}" min="1" max="10"/>
+			<span th:if="${#fields.hasErrors('delay')}" th:errors="*{delay}"></span>
 		</p>
 		<p>
 			<button type="submit" name="api">外部APIを呼び出す</button>
 		</p>
 		<p th:if="${apiResponse}" th:text="${apiResponse}"></p>
-		<p>セッションへ格納された名前：<span th:text="${@nameKeeper.name}"></span></p>
-		<p><a th:href="@{/}">GET /</a></p>
+		<hr/>
+		<p><a th:href="@{/other}">他の画面へ行く</a></p>
 	</form>
 </body>
 

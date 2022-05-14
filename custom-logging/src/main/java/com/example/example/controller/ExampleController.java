@@ -3,7 +3,6 @@ package com.example.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.common.session.NameKeeper;
 import com.example.example.dto.Greeting;
@@ -32,32 +32,35 @@ public class ExampleController {
 		return "index";
 	}
 
-	@PostMapping("post")
+	@PostMapping
 	public String post(@Validated ExampleForm form, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 			return "index";
 		}
 		exampleBean.setName(form.getName());
-		return "index";
+		return "redirect:/";
 	}
 
-	@PostMapping(path = "post", params = "clear")
+	@PostMapping(params = "clear")
 	public String clear() {
 		exampleBean.clear();
-		return "index";
+		return "redirect:/";
 	}
 
-	@PostMapping(path = "post", params = "api")
-	public String api(Model model) {
+	@PostMapping(params = "api")
+	public String api(ExampleForm form, RedirectAttributes redirectAttributes) {
 
 		Greeting request = new Greeting();
 		request.setMessage("Hello World");
 
-		HttpBinResponse response = http.postForObject("/delay/3", request, HttpBinResponse.class);
+		int delay = form.getDelay();
+		delay = Math.max(delay, 1);
+		delay = Math.min(delay, 10);
+		HttpBinResponse response = http.postForObject("/delay/" + delay, request, HttpBinResponse.class);
 
-		model.addAttribute("apiResponse", response.toString());
+		redirectAttributes.addFlashAttribute("apiResponse", response.toString());
 
-		return "index";
+		return "redirect:/";
 	}
 
 	@ModelAttribute
