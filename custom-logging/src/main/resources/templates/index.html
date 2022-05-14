@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>アクセスログを標準出力へ出す例</title>
+</head>
+
+<body>
+	<form th:action="@{/post}" method="POST" th:object="${exampleForm}">
+		<p>
+			<input type="text" th:field="*{name}" />
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+			<button type="submit">送信</button>
+		</p>
+		<p>
+			<button type="submit" name="clear">セッションへ格納された名前をクリア</button>
+		</p>
+		<p>
+			<button type="submit" name="api">外部APIを呼び出す</button>
+		</p>
+		<p th:if="${apiResponse}" th:text="${apiResponse}"></p>
+		<p>セッションへ格納された名前：<span th:text="${@nameKeeper.name}"></span></p>
+		<p><a th:href="@{/}">GET /</a></p>
+	</form>
+</body>
+
+</html>
