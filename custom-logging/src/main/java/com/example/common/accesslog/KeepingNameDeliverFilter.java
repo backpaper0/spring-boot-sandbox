@@ -28,7 +28,10 @@ public class KeepingNameDeliverFilter implements Filter {
 		try {
 			chain.doFilter(request, response);
 		} finally {
-			request.setAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME, nameKeeper.getName());
+			String name = nameKeeper.getName();
+			if (name != null) {
+				request.setAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME, name);
+			}
 		}
 	}
 }

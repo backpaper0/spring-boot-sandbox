@@ -12,12 +12,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.session.SessionProperties;
 import org.springframework.boot.web.servlet.filter.OrderedFilter;
-import org.springframework.core.annotation.Order;
-import org.springframework.session.web.http.SessionRepositoryFilter;
 import org.springframework.stereotype.Component;
 
 @Component
-@Order(SessionRepositoryFilter.DEFAULT_ORDER + 1)
 public class SessionIdDeliverFilter implements OrderedFilter {
 
 	@Autowired
@@ -31,7 +28,8 @@ public class SessionIdDeliverFilter implements OrderedFilter {
 		} finally {
 			HttpSession session = ((HttpServletRequest) request).getSession(false);
 			if (session != null) {
-				request.setAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME, session.getId());
+				String id = session.getId();
+				request.setAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME, id);
 			}
 		}
 	}
