@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ページング例</title>
+</head>
+<body>
+	<h1>ページング例</h1>
+	<form method="GET" th:action="@{/search}" th:object="${exampleForm}">
+		<p>
+			<input type="text" th:field="*{content}" />
+		</p>
+		<p>
+			<button type="submit" name="page" value="0">検索</button>
+		</p>
+		<div th:if="${page != null}">
+			<p th:if="${page.totalElements == 0}">検索結果なし</p>
+			<div th:if="${page.totalElements > 0}">
+				<div th:replace="common/paging :: navigation(${page})"></div>
+				<table>
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>内容</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="row : ${page.content}">
+							<td th:text="${row.id}"></td>
+							<td th:text="${row.content}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
