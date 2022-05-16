@@ -16,7 +16,7 @@
 				th:disabled="${!page.hasPrevious()}">&lt;</button>
 			<button th:each="pageNumber : ${@pagingViewHelper.pageNumbers(page)}"
 				type="submit" name="page" th:value="${pageNumber}"
-				th:text="${pageNumber}" th:disabled="${pageNumber == page.number}"></button>
+				th:text="${pageNumber + 1}" th:disabled="${pageNumber == page.number}"></button>
 			<button type="submit" name="page"
 				th:value="${page.nextOrLastPageable().pageNumber}"
 				th:disabled="${!page.hasNext()}">&gt;</button>

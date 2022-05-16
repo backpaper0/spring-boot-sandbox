@@ -12,7 +12,7 @@
 			<input type="text" th:field="*{content}" />
 		</p>
 		<p>
-			<button type="submit" name="page" value="0">検索</button>
+			<button type="submit">検索</button>
 		</p>
 		<div th:if="${page != null}">
 			<p th:if="${page.totalElements == 0}">検索結果なし</p>
