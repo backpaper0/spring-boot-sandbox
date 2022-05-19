@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.7</version>
+		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -14,7 +14,7 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2021.0.1</spring-cloud.version>
+		<spring-cloud.version>2021.0.3-SNAPSHOT</spring-cloud.version>
 		<doma.version>2.51.1</doma.version>
 		<doma.boot.version>1.6.0</doma.boot.version>
 	</properties>
@@ -36,6 +36,7 @@
 		<module>cloud-config-demo/server</module>
 		<module>cloud-function-demo</module>
 		<module>configuration-properties-example</module>
+		<module>custom-logging</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/buzz-service</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/fizz-service</module>
 		<module>distributed-tracing-demo_sleuth-zipkin/fizzbuzz-service</module>
@@ -55,6 +56,7 @@
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
 		<module>oidc-example</module>
+		<module>paging-example</module>
 		<module>profile-demo</module>
 		<module>progress-sample</module>
 		<module>property-source-example</module>
@@ -89,6 +91,7 @@
 		<module>statemachine-demo</module>
 		<module>stomp-queue-sample</module>
 		<module>test-mock-example</module>
+		<module>test-with-database-example</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
 		<module>transaction-read-replica-example</module>
