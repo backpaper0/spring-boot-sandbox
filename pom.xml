@@ -79,6 +79,7 @@
 		<module>snakecase</module>
 		<module>spa-indexhtml-example</module>
 		<module>spring-batch-example</module>
+		<module>spring-boot-excludefilter-example</module>
 		<module>spring-cloud-sleuth-example</module>
 		<module>spring-data-jdbc-example</module>
 		<module>spring-integration-batch-example</module>
