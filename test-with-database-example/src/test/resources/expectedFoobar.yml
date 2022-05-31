@@ -1,0 +1,9 @@
+foobar:
+  - id: "regex:\\d+"
+    content: foo
+  - id: "regex:\\d+"
+    content: bar
+  - id: "regex:\\d+"
+    content: baz
+  - id: "regex:\\d+"
+    content: qux
