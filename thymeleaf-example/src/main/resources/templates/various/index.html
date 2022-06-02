@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>いろいろ</title>
+</head>
+<body>
+	<ul>
+		<li><a href="../home/index.html" th:href="@{/}">戻る</a>
+	</ul>
+	<h1>いろいろ</h1>
+	<h2>オブジェクト</h2>
+	<p th:text="${rootObj.foo}"></p>
+	<p th:text="${rootObj.bar}"></p>
+	<p th:text="${#temporals.format(rootObj.bar, 'uuuu/MM/dd')}"></p>
+	<p th:text="${rootObj.nested.baz}"></p>
+	<h3>th:object</h3>
+	<th:block th:object="${rootObj}">
+		<p th:text="*{foo}"></p>
+		<p th:text="*{bar}"></p>
+		<p th:text="*{#temporals.format(bar, 'uuuu/MM/dd')}"></p>
+		<p th:text="*{nested.baz}"></p>
+	</th:block>
+	<h3>インライン</h3>
+	<p>インラインで書き出す：[[${rootObj.foo}]]</p>
+	<p>インラインで書き出す：[[${rootObj.bar}]]</p>
+	<p>インラインで書き出す：[[${#temporals.format(rootObj.bar, 'uuuu/MM/dd')}]]</p>
+	<p>インラインで書き出す：[[${rootObj.nested.baz}]]</p>
+	<h2>メッセージ</h2>
+	<p th:text="#{various.message}"></p>
+</body>
+</html>
