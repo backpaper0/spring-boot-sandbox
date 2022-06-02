@@ -1,0 +1,27 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WebMVC error handling example</title>
+</head>
+<body>
+  <h1>WebMVC error handling example</h1>
+  <form method="POST" th:action="@{/}" th:object="${indexForm}">
+    <p th:if="${message}" th:text="#{${message}}"></p>
+    <p>
+      <input type="text" th:field="*{field1}" />
+      <span th:errors="*{field1}"></span>
+    </p>
+    <p>
+      <button type="submit">送信</button>
+      入力なし、または6文字以上入力するとバリデーションエラーになる。
+    </p>
+  </form>
+  <ul>
+    <li><a th:href="@{/notFound}">404 Not Found</a></li>
+    <li><a th:href="@{/handlingException}">ハンドリングされた例外</a></li>
+    <li><a th:href="@{/unhandlingException}">ハンドリングされない例外</a></li>
+  </ul>
+</body>
+</html>
