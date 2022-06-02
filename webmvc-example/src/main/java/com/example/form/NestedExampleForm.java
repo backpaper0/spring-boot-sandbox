@@ -1,5 +1,6 @@
 package com.example.form;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -12,7 +13,7 @@ import lombok.Data;
 public class NestedExampleForm {
 
 	@Valid
-	private List<NestedExampleSubForm> subs;
+	private List<NestedExampleSubForm> subs = new ArrayList<>();
 
 	@Data
 	public static class NestedExampleSubForm {
