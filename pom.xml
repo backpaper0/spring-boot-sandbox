@@ -53,6 +53,7 @@
 		<module>login-customize-example</module>
 		<module>mail-freemarker-demo</module>
 		<module>messages-example</module>
+		<module>method-validation-example</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
 		<module>oidc-example</module>
@@ -73,6 +74,7 @@
 		<module>scheduling-example</module>
 		<module>security-expression-example</module>
 		<module>security-test-example</module>
+		<module>security-two-authn-api-example</module>
 		<module>service-discovery-demo_consul/service1</module>
 		<module>service-discovery-demo_consul/service2</module>
 		<module>session-demo</module>
@@ -92,6 +94,7 @@
 		<module>statemachine-demo</module>
 		<module>stomp-queue-sample</module>
 		<module>test-mock-example</module>
+		<module>thymeleaf-example</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
 		<module>transaction-read-replica-example</module>
@@ -102,6 +105,7 @@
 		<module>web-test-example</module>
 		<module>webflux-example</module>
 		<module>webflux-functional-endpoint-example</module>
+		<module>webmvc-error-handling-example</module>
 		<module>webmvc-example</module>
 		<module>wrap-datasource-example</module>
 	</modules>
