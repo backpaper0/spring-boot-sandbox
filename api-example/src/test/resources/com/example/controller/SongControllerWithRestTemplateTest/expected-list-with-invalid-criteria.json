@@ -1,0 +1,6 @@
+{
+  "globalErrors": [],
+  "fieldErrors": {
+    "singer": ["1 以上の値にしてください"]
+  }
+}

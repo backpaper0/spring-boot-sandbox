@@ -1,0 +1,28 @@
+{
+  "songs": [
+    {
+      "id": 1,
+      "title": "Limit",
+      "singer": {
+        "id": 1,
+        "name": "LUNA SEA"
+      }
+    },
+    {
+      "id": 2,
+      "title": "MECHANICAL DANCE",
+      "singer": {
+        "id": 1,
+        "name": "LUNA SEA"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Unlikelihood",
+      "singer": {
+        "id": 1,
+        "name": "LUNA SEA"
+      }
+    }
+  ]
+}
