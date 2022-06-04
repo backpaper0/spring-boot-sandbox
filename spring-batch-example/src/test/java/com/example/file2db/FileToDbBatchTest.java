@@ -22,8 +22,8 @@ public class FileToDbBatchTest {
 	FileToDbBatch config;
 
 	@Test
-	@DataSet("datasets/FileToDb/dataset/demo1.csv")
-	@ExpectedDataSet("datasets/FileToDb/expected/demo1.csv")
+	@DataSet("FileToDb/dataset/demo1.csv")
+	@ExpectedDataSet("FileToDb/expected/demo1.csv")
 	void test() throws Exception {
 		JobParameters jobParameters = new JobParametersBuilder()
 				.addString("input.file", "inputs/input-valid.csv")
