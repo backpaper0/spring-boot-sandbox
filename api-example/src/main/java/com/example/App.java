@@ -4,9 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ApiExampleApplication {
+public class App {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(ApiExampleApplication.class, args);
-    }
+	@SuppressWarnings("resource")
+	public static void main(final String[] args) {
+		SpringApplication.run(App.class, args);
+	}
 }
