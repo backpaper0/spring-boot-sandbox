@@ -41,4 +41,9 @@ public class SongController {
 		var author1 = new Singer(request.singer(), "LUNA SEA");
 		return new Song(10, request.title(), author1);
 	}
+
+	@GetMapping("simulate-bug")
+	public Object simulateBug() {
+		throw new NullPointerException();
+	}
 }
