@@ -1,0 +1,40 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.interceptor.InterceptorExampleMapper">
+
+	<insert id="insert">
+		insert into table6 (
+			id,
+			name,
+			created_at,
+			updated_at
+		) values (
+			#{id},
+			#{name},
+			#{createdAt},
+			#{updatedAt}
+		)
+	</insert>
+
+	<update id="update">
+		update
+			table6
+		set
+			name = #{name},
+			updated_at = #{updatedAt}
+		where
+			id = #{id}
+	</update>
+
+	<select id="selectAll" resultType="com.example.interceptor.Table6">
+		select
+			id,
+			name,
+			created_at,
+			updated_at
+		from
+			table6
+		order by
+			id asc
+	</select>
+
+</mapper>

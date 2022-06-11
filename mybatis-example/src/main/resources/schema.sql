@@ -37,3 +37,12 @@ create table table5 (
 	id int primary key,
 	name varchar(100)
 );
+
+
+
+create table table6 (
+	id int primary key,
+	name varchar(100),
+	created_at timestamp,
+	updated_at timestamp
+);
