@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -25,10 +24,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class FileUploaderControllerTest {
+public class UploadFileTest {
 
 	@LocalServerPort
-	private int port;
+	int port;
 
 	@Test
 	void multiPart() {
@@ -37,9 +36,9 @@ class FileUploaderControllerTest {
 		//マルチパートに含めるファイルのエンティティを組み立てる
 
 		//ヘッダ
-		final HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 
-		final ContentDisposition cd = ContentDisposition.builder("form-data")
+		ContentDisposition cd = ContentDisposition.builder("form-data")
 				.name("hoge")
 				.filename("hoge.txt", StandardCharsets.UTF_8)
 				.build();
@@ -51,15 +50,15 @@ class FileUploaderControllerTest {
 		//ファイルから読み込むならPathResource(、FileSystemResource)
 		//InputStreamから読み込むならInputStreamResource
 		//クラスパスから読み込むならClassPathResource
-		final Resource resource = new ByteArrayResource("Hello, world!".getBytes());
-		final HttpEntity<?> hoge = new HttpEntity<>(resource, headers);
+		Resource resource = new ByteArrayResource("Hello, world!".getBytes());
+		HttpEntity<?> hoge = new HttpEntity<>(resource, headers);
 
 		//--------------------------------------------------------------------------------
 		//リクエストボディを組み立てる
 
 		//マルチパートも通常(URLエンコード)のフォームもMultiValueMapで良さげ
 		//どちらでもFormHttpMessageConverterに処理される
-		final MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 		//組み立てたファイルのエンティティを追加する
 		body.add("hoge", hoge);
 
@@ -68,37 +67,36 @@ class FileUploaderControllerTest {
 
 		//RestTemplateをインスタンス化する
 		//プロダクションコードの場合は@Beanでコンポーネント登録すると良い
-		final RestTemplate restTemplate = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 
 		//RequestFactoryを設定する(任意)
 		//デフォルトだとByteArrayOutputStreamに全て書き出してから実際のレスポンスへコピーするっぽい
 		//メモリ大事にしたい場合はbufferRequestBodyをfalseにした方が良さそう
 		//その場合はContent-Lengthが事前に分からないのでchunkで送信されることになる
-		final SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
 		requestFactory.setBufferRequestBody(false);
 		restTemplate.setRequestFactory(requestFactory);
 
-		final URI uri = UriComponentsBuilder
+		URI uri = UriComponentsBuilder
 				.fromHttpUrl("http://localhost:{port}")
 				.path("/upload")
 				.build(port);
 
-		final RequestEntity<?> requestEntity = RequestEntity
+		RequestEntity<?> requestEntity = RequestEntity
 				.post(uri)
 				.contentType(MediaType.MULTIPART_FORM_DATA)
 				.body(body);
 
-		final ResponseEntity<Map> responseEntity = restTemplate
+		var responseEntity = restTemplate
 				.exchange(requestEntity, Map.class);
 
 		//--------------------------------------------------------------------------------
 		//Assertion
 
-		final Map entityBody = responseEntity.getBody();
+		var entityBody = responseEntity.getBody();
 		assertEquals("hoge", entityBody.get("name"));
 		assertEquals("hoge.txt", entityBody.get("filename"));
 		assertEquals("text/plain", entityBody.get("content-type"));
 		assertEquals("Hello, world!", entityBody.get("body"));
 	}
-
 }
