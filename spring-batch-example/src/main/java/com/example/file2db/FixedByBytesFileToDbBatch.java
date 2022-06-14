@@ -34,85 +34,85 @@ import com.example.file2db.FixedByteLengthLineTokenizer.DataType;
 @Configuration
 public class FixedByBytesFileToDbBatch {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
-	private final DataSource dataSource;
-	private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
-	private final LoggingListener loggingListener;
-	private final BeanValidatingItemProcessor<?> beanValidatingItemProcessor;
+    private final StepBuilderFactory steps;
+    private final JobBuilderFactory jobs;
+    private final DataSource dataSource;
+    private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
+    private final LoggingListener loggingListener;
+    private final BeanValidatingItemProcessor<?> beanValidatingItemProcessor;
 
-	public FixedByBytesFileToDbBatch(StepBuilderFactory steps, JobBuilderFactory jobs, DataSource dataSource,
-			ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener,
-			BeanValidatingItemProcessor<?> beanValidatingItemProcessor) {
-		this.steps = steps;
-		this.jobs = jobs;
-		this.dataSource = dataSource;
-		this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
-		this.loggingListener = loggingListener;
-		this.beanValidatingItemProcessor = beanValidatingItemProcessor;
-	}
+    public FixedByBytesFileToDbBatch(StepBuilderFactory steps, JobBuilderFactory jobs, DataSource dataSource,
+            ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener,
+            BeanValidatingItemProcessor<?> beanValidatingItemProcessor) {
+        this.steps = steps;
+        this.jobs = jobs;
+        this.dataSource = dataSource;
+        this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
+        this.loggingListener = loggingListener;
+        this.beanValidatingItemProcessor = beanValidatingItemProcessor;
+    }
 
-	@Bean
-	@StepScope
-	public FlatFileItemReader<Demo1> fixedByBytesFileToDbItemReader(
-			@Value("#{jobParameters['input.file'] ?: 'inputs/input-fixed-sjis.txt'}") String file) {
+    @Bean
+    @StepScope
+    public FlatFileItemReader<Demo1> fixedByBytesFileToDbItemReader(
+            @Value("#{jobParameters['input.file'] ?: 'inputs/input-fixed-sjis.txt'}") String file) {
 
-		List<Column> columns = new ArrayList<>();
-		columns.add(new Column("content", 20, DataType.STRING));
-		columns.add(new Column("id", 4, DataType.NUMBER));
-		LineTokenizer tokenizer = new FixedByteLengthLineTokenizer(columns);
+        List<Column> columns = new ArrayList<>();
+        columns.add(new Column("content", 20, DataType.STRING));
+        columns.add(new Column("id", 4, DataType.NUMBER));
+        LineTokenizer tokenizer = new FixedByteLengthLineTokenizer(columns, FixedByteLengthLineTokenizer.SHIFT_JIS);
 
-		return new FlatFileItemReaderBuilder<Demo1>()
-				.resource(new PathResource(file))
-				.encoding("Windows-31J")
-				.linesToSkip(1)
-				.targetType(Demo1.class)
-				.lineTokenizer(tokenizer)
-				.saveState(false)
-				.build();
-	}
+        return new FlatFileItemReaderBuilder<Demo1>()
+                .resource(new PathResource(file))
+                .encoding("Windows-31J")
+                .linesToSkip(1)
+                .targetType(Demo1.class)
+                .lineTokenizer(tokenizer)
+                .saveState(false)
+                .build();
+    }
 
-	@Bean
-	public CompositeItemProcessor<Demo1, Demo1> fixedByBytesFileToDbItemProcessor() {
-		CompositeItemProcessor<Demo1, Demo1> processor = new CompositeItemProcessor<>();
-		processor.setDelegates(List.of(beanValidatingItemProcessor));
-		return processor;
-	}
+    @Bean
+    public CompositeItemProcessor<Demo1, Demo1> fixedByBytesFileToDbItemProcessor() {
+        CompositeItemProcessor<Demo1, Demo1> processor = new CompositeItemProcessor<>();
+        processor.setDelegates(List.of(beanValidatingItemProcessor));
+        return processor;
+    }
 
-	@Bean
-	@StepScope
-	public JdbcBatchItemWriter<Demo1> fixedByBytesFileToDbItemWriter() {
-		return new JdbcBatchItemWriterBuilder<Demo1>()
-				.dataSource(dataSource)
-				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Demo1>())
-				.sql("insert into demo1 (id, content) values (:id, :content)")
-				.build();
-	}
+    @Bean
+    @StepScope
+    public JdbcBatchItemWriter<Demo1> fixedByBytesFileToDbItemWriter() {
+        return new JdbcBatchItemWriterBuilder<Demo1>()
+                .dataSource(dataSource)
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Demo1>())
+                .sql("insert into demo1 (id, content) values (:id, :content)")
+                .build();
+    }
 
-	@Bean
-	public Step fixedByBytesFileToDbStep() {
-		return steps.get("FixedByBytesFileToDb")
-				.<Demo1, Demo1> chunk(2)
+    @Bean
+    public Step fixedByBytesFileToDbStep() {
+        return steps.get("FixedByBytesFileToDb")
+                .<Demo1, Demo1> chunk(2)
 
-				.reader(fixedByBytesFileToDbItemReader(null))
-				.processor(fixedByBytesFileToDbItemProcessor())
-				.writer(fixedByBytesFileToDbItemWriter())
+                .reader(fixedByBytesFileToDbItemReader(null))
+                .processor(fixedByBytesFileToDbItemProcessor())
+                .writer(fixedByBytesFileToDbItemWriter())
 
-				.faultTolerant()
-				.skip(FlatFileParseException.class)
-				.skip(ValidationException.class)
-				.skipLimit(10)
+                .faultTolerant()
+                .skip(FlatFileParseException.class)
+                .skip(ValidationException.class)
+                .skipLimit(10)
 
-				.listener(loggingListener)
-				.listener(exitCodeGeneratorImpl)
-				.build();
-	}
+                .listener(loggingListener)
+                .listener(exitCodeGeneratorImpl)
+                .build();
+    }
 
-	@Bean
-	public Job fixedByBytesFileToDbJob() {
-		return jobs.get("FixedByBytesFileToDb")
-				.start(fixedByBytesFileToDbStep())
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
+    @Bean
+    public Job fixedByBytesFileToDbJob() {
+        return jobs.get("FixedByBytesFileToDb")
+                .start(fixedByBytesFileToDbStep())
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 }
