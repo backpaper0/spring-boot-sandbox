@@ -1,4 +1,4 @@
-package com.example;
+package com.example.security;
 
 import java.io.IOException;
 
@@ -13,10 +13,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class ApiTokenAuthenticationProcessingFilter extends UsernamePasswordAuthenticationFilter {
 
+	private String headerName;
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request,
 			HttpServletResponse response) throws AuthenticationException {
-		String apiToken = request.getHeader("X-Api-Token");
+		String apiToken = request.getHeader(headerName);
 		Authentication authentication = new ApiTokenAuthenticationToken(null, apiToken);
 		return getAuthenticationManager().authenticate(authentication);
 	}
@@ -27,5 +29,9 @@ public class ApiTokenAuthenticationProcessingFilter extends UsernamePasswordAuth
 			throws IOException, ServletException {
 		super.successfulAuthentication(request, response, chain, authResult);
 		chain.doFilter(request, response);
+	}
+
+	public void setHeaderName(String headerName) {
+		this.headerName = headerName;
 	}
 }
