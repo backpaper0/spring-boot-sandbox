@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,11 +15,9 @@ import com.example.model.Account;
 public class AdminService {
 
 	private final JdbcTemplate jdbc;
-	private final UserDetailsManager users;
 
-	public AdminService(JdbcTemplate jdbc, UserDetailsManager users) {
+	public AdminService(JdbcTemplate jdbc) {
 		this.jdbc = jdbc;
-		this.users = users;
 	}
 
 	@Transactional(readOnly = true)
