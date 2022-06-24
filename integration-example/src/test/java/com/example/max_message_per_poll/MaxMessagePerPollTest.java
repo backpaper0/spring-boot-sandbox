@@ -22,11 +22,11 @@ public class MaxMessagePerPollTest {
 		assertEquals(3, output.receive(100).getPayload());
 		assertNull(output.receive(100));
 
-		TimeUnit.SECONDS.sleep(1);
+		TimeUnit.SECONDS.sleep(2);
 
-		assertEquals(4, output.receive(100).getPayload());
-		assertEquals(5, output.receive(100).getPayload());
-		assertEquals(6, output.receive(100).getPayload());
-		assertNull(output.receive(100));
+		assertEquals(4, output.receive(1000).getPayload());
+		assertEquals(5, output.receive(1000).getPayload());
+		assertEquals(6, output.receive(1000).getPayload());
+		assertNull(output.receive(1000));
 	}
 }

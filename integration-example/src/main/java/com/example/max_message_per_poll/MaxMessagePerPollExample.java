@@ -35,7 +35,7 @@ public class MaxMessagePerPollExample {
 	}
 
 	private void configurePoller(SourcePollingChannelAdapterSpec c) {
-		c.poller(Pollers.fixedRate(1, TimeUnit.SECONDS).maxMessagesPerPoll(3));
+		c.poller(Pollers.fixedRate(2, TimeUnit.SECONDS).maxMessagesPerPoll(3));
 	}
 
 	static class CounterMessageSource extends AbstractMessageSource<Integer> {
