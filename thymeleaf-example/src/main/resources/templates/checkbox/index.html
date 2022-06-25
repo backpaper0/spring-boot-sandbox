@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>チェックボックス</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="../home/index.html" th:href="@{/}">戻る</a>
+	</ul>
+	<h1>チェックボックス</h1>
+	<form method="POST" th:action="@{/checkbox}" th:object="${checkboxForm}">
+		<p>単一のチェックボックス</p>
+		<ul>
+			<li>
+				<input type="checkbox" th:field="*{singleCheckbox}" />
+				<label th:for="${#ids.prev('singleCheckbox')}">foobar</label>
+			</li>
+		</ul>
+		<p>グループ化されたチェックボックス</p>
+		<ul>
+			<li th:each="value : ${values}">
+				<input type="checkbox" th:field="*{multiCheckboxes}" th:value="${value}" />
+				<label th:text="${value}" th:for="${#ids.prev('multiCheckboxes')}"></label>
+			</li>
+		</ul>
+		<p>
+			<input type="submit" value="送信" />
+		</p>
+	</form>
+</body>
+</html>

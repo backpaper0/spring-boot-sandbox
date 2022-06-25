@@ -1,0 +1,29 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>セレクトボックス</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="../home/index.html" th:href="@{/}">戻る</a>
+	</ul>
+	<h1>セレクトボックス</h1>
+	<form method="POST" th:action="@{/select}" th:object="${selectForm}">
+		<p>
+			<label for="mySelect">セレクトボックス</label>
+		</p>
+		<p>
+			<select th:field="*{mySelect}">
+				<option value=""></option>
+				<option th:each="option : ${options}" th:value="${option.value}" th:text="${option.text}">...</option>
+			</select>
+		</p>
+		<p>
+			<input type="submit" value="送信" />
+		</p>
+	</form>
+</body>
+</html>

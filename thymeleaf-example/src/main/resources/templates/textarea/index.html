@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>テキストエリア</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="../home/index.html" th:href="@{/}">戻る</a>
+	</ul>
+	<h1>テキストエリア</h1>
+	<form method="POST" th:action="@{/textarea}" th:object="${textareaForm}">
+		<p>
+			<label for="myTextarea">テキストエリア</label>
+		</p>
+		<p>
+			<textarea th:field="*{myTextarea}"></textarea>
+		</p>
+		<p>
+			<input type="submit" value="送信" />
+		</p>
+	</form>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ネストしたフォーム</title>
+</head>
+<body>
+	<ul>
+		<li>
+			<a href="../home/index.html" th:href="@{/}">戻る</a>
+	</ul>
+	<h1>ネストしたフォーム</h1>
+	<form method="POST" th:action="@{/nested-form}" th:object="${nestedFormForm}">
+		<div th:each="subForm, stat : *{subForms}">
+			<label th:for="${'subForms' + stat.index + '.foo'}">foo</label>
+			<input type="text" th:field="*{subForms[__${stat.index}__].foo}" />
+			<span th:if="${#fields.hasErrors('subForms[' + stat.index + '].foo')}"
+				th:errors="*{subForms[__${stat.index}__].foo}"></span>
+			<label th:for="${'subForms' + stat.index + '.bar'}">bar</label>
+			<input type="text" th:field="*{subForms[__${stat.index}__].bar}" />
+			<span th:if="${#fields.hasErrors('subForms[' + stat.index + '].bar')}"
+				th:errors="*{subForms[__${stat.index}__].bar}"></span>
+		</div>
+		<p>
+			<input type="submit" value="送信" />
+		</p>
+	</form>
+</body>
+</html>
