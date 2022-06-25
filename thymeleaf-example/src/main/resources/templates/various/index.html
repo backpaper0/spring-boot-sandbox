@@ -14,6 +14,12 @@
 	<p th:text="${rootObj.foo}"></p>
 	<p th:text="${rootObj.bar}"></p>
 	<p th:text="${#temporals.format(rootObj.bar, 'uuuu/MM/dd')}"></p>
+	<p th:text="${#temporals.format(rootObj.bar2, 'uuuu/MM/dd HH:mm')}"></p>
+	<p th:text="${#temporals.format(rootObj.bar3, 'HH:mm')}"></p>
+	<p th:text="${#numbers.formatInteger(rootObj.qux1, 0, 'COMMA')}"></p>
+	<p th:text="${#numbers.formatDecimal(rootObj.qux1, 0, 'COMMA', 2, 'POINT')}"></p>
+	<p th:text="${#numbers.formatInteger(rootObj.qux2, 0, 'COMMA')}"></p>
+	<p th:text="${#numbers.formatDecimal(rootObj.qux2, 0, 'COMMA', 2, 'POINT')}"></p>
 	<p th:text="${rootObj.nested.baz}"></p>
 	<h3>th:object</h3>
 	<th:block th:object="${rootObj}">
