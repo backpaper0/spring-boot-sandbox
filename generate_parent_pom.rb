@@ -33,6 +33,7 @@ File.open("pom.xml", "w") { |out|
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
 		<doma.version>#{doma_version}</doma.version>
 		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
+		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
 
 	<modules>
