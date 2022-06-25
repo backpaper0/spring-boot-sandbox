@@ -3,19 +3,31 @@ package com.example.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 @Configuration
-public class WebSecurityConfig {
+public class WebSecurityConfig implements ApplicationContextAware {
+
+	private ApplicationContext applicationContext;
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
 	@Bean
 	public JdbcUserDetailsManager userDetailsService(DataSource dataSource) {
@@ -66,15 +78,22 @@ public class WebSecurityConfig {
 
 	@Bean
 	public Pbkdf2PasswordEncoder passwordEncoder() {
-		return new Pbkdf2PasswordEncoder();
+		// NIST Special Publication 800-63Bを参考にPasswordEncoderを設定する
+		// https://pages.nist.gov/800-63-3/sp800-63b.html
+		Pbkdf2PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder("", 16, 10000, 256);
+		passwordEncoder.setAlgorithm(SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+		passwordEncoder.setEncodeHashAsBase64(true);
+		return passwordEncoder;
 	}
 
 	@Bean
-	public ProviderManager authenticationManager() {
+	public ProviderManager authenticationManager(AuthenticationEventPublisher eventPublisher) {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(userDetailsService(null));
 		provider.setPasswordEncoder(passwordEncoder());
-		return new ProviderManager(provider);
+		ProviderManager providerManager = new ProviderManager(provider);
+		providerManager.setAuthenticationEventPublisher(eventPublisher);
+		return providerManager;
 	}
 
 	@Bean
@@ -83,7 +102,7 @@ public class WebSecurityConfig {
 			@Override
 			public void afterPropertiesSet() {
 				// パスワード変更時、現在のパスワードをチェックするために使用する
-				userDetailsService(null).setAuthenticationManager(authenticationManager());
+				userDetailsService(null).setAuthenticationManager(authenticationManager(null));
 			}
 		};
 	}
@@ -105,16 +124,21 @@ public class WebSecurityConfig {
 						.logoutUrl("/logout"))
 
 				// 二重ログインを禁止する
-				.sessionManagement(c -> c
-						.maximumSessions(1)
-						.sessionRegistry(sessionRegistry(null)))
+				.sessionManagement(c -> {
+					var maximumSessions = c
+							.maximumSessions(1);
+					if (applicationContext.getBeanNamesForType(JdbcIndexedSessionRepository.class).length > 0) {
+						maximumSessions.sessionRegistry(sessionRegistry(null));
+					}
+				})
 
-				.authenticationManager(authenticationManager())
+				.authenticationManager(authenticationManager(null))
 
 				.build();
 	}
 
 	@Bean
+	@ConditionalOnBean(JdbcIndexedSessionRepository.class)
 	public SpringSessionBackedSessionRegistry<?> sessionRegistry(
 			JdbcIndexedSessionRepository jdbcIndexedSessionRepository) {
 		return new SpringSessionBackedSessionRegistry<>(

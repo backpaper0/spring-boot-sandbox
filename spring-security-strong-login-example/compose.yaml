@@ -24,6 +24,8 @@ services:
       - ./docker/pgadmin/pgpass:/pgpass
     depends_on:
       - postgres
+    profiles:
+      - gui
 
 volumes:
   pgdata: {}

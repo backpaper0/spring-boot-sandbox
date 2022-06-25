@@ -1,31 +1,31 @@
 
 -- パスワードはいずれのアカウントも pass
-insert into accounts (username, locked, login_failure_count, validity_from, validity_to, last_loggedin) values
+insert into accounts (username, locked, login_failure_count, validity_from, validity_to) values
 
 -- ログインできる
- ('user01', false, 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
-,('user02', false, 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
-,('user03', false, 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
-,('admin',  false, 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+ ('user01', false, 0, date'2022-01-01', null)
+,('user02', false, 0, date'2022-01-01', null)
+,('user03', false, 0, date'2022-01-01', null)
+,('admin',  false, 0, date'2022-01-01', null)
 -- ロックされている
-,('user20', true,  0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('user20', true,  0, date'2022-01-01', date'2100-01-01')
 -- パスワードの期限切れ
-,('user30', false, 0, date'2022-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('user30', false, 0, date'2022-01-01', date'2100-01-01')
 -- 有効期間外(現在日時がfromよりも前)
-,('user40', false, 0, date'2099-01-01', date'2100-01-01', timestamp'2022-01-01 00:00:00')
+,('user40', false, 0, date'2099-01-01', date'2100-01-01')
 -- 有効期間外(現在日時がtoよりも後)
-,('user50', false, 0, date'2022-01-01', date'2022-04-01', timestamp'2022-01-01 00:00:00')
+,('user50', false, 0, date'2022-01-01', date'2022-04-01')
 ;
 
 insert into account_passwords (username, password, password_expiration) values
- ('user01', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('user02', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('user03', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('admin',  '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('user20', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('user30', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2022-04-01')
-,('user40', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
-,('user50', '7e8cd1bf381b4ee0b87445d2479a6bd95e1c52ed4b7694cfd304e87b8c8c574e908c53cfa7e9c053', date'2100-01-01')
+ ('user01', 'n2RC5Ml7Xc/e0AMIC18SB9BouiF0XmLOjAiyhUqjzKkSFyyseW5DkZafvBbD1uGs', date'2100-01-01')
+,('user02', 'YXFgyChWY+C+KsBAqT1chO0CO+c7bOklCToJ/z5+41ZFIflYHc1Vsz6lEYdjfI98', date'2100-01-01')
+,('user03', 'pwQg/3vzcL+MOC924eaOSgGy4OduCsYQA5Ge9whJbYhPpo3xrlwuxd2G8ozlFPqK', date'2100-01-01')
+,('admin',  'oMJkJgLaSSyodTr+iALXBFEieeIpmmsLPaOfq0MuWgIzmSMdVkQfAkTyOpUdk2TN', date'2100-01-01')
+,('user20', '85Q5XT5vTn7ylmLQOCiz8RUIiQlg3iW6Q/zEZFUYvpzlin4x8LeUfg6bNiBdACEh', date'2100-01-01')
+,('user30', 'ZwyGv1UFA5YF+dfJfbmyHZ/n9GsnkvKA7PWUztUnORdLgQWylOkRgdbcirX3OaiI', date'2022-04-01')
+,('user40', 'JrIKSoaroToJrCa0aTQBFnK8QkltWN5pYED05AKrJvLwMH1PfezQHYVC3P5v7axh', date'2100-01-01')
+,('user50', 'vSlqhAEbcBUE574bM01rYQgttVpL+64uRcYZtkhDjUGkD1ryNIfEo40bUigtGCHR', date'2100-01-01')
 ;
 
 insert into authorities (username, authority) values

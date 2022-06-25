@@ -10,7 +10,7 @@ create table accounts (
 	-- 有効期間(to)
 	validity_to date,
 	-- 最終ログイン日時
-	last_loggedin timestamp not null,
+	last_loggedin timestamp,
 	primary key (username)
 );
 
