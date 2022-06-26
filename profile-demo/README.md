@@ -110,3 +110,8 @@ $ java -jar target/demo-0.0.1-SNAPSHOT.jar --spring.profiles.active=production,d
 2019-12-29 07:25:13.094  INFO 52697 --- [           main] com.example.demo.DemoApplication         : Started DemoApplication in 1.447 seconds (JVM running for 2.04)
 HELLO DEFAULT!!!!!
 ```
+
+## プロファイル別にコンポーネントを切り替える例
+
+`com.example.demo.component`パッケージを参照。
+
