@@ -60,3 +60,12 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=MultiT
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=MultiThreadDemo --app.multithread.enabled=false"
 ```
 
+## プロファイルによってリスナーを切り替える例
+
+```
+mvn spring-boot:run -Dspring-boot.run.arguments="--spring.batch.job.names=SwitchListenerByProfileExample"
+```
+
+```
+mvn spring-boot:run -Dspring-boot.run.profiles=production -Dspring-boot.run.arguments="--spring.batch.job.names=SwitchListenerByProfileExample"
+```
