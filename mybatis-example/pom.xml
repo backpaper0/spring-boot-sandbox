@@ -89,6 +89,17 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.4.1</version>
+				<configuration>
+					<jdbcDriver>org.h2.Driver</jdbcDriver>
+					<jdbcURL>jdbc:h2:mem:test</jdbcURL>
+					<jdbcUserId>sa</jdbcUserId>
+					<jdbcPassword>secret</jdbcPassword>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

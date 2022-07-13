@@ -43,6 +43,8 @@ create table table5 (
 create table table6 (
 	id int primary key,
 	name varchar(100),
+	created_by varchar(100),
 	created_at timestamp,
+	updated_by varchar(100),
 	updated_at timestamp
 );

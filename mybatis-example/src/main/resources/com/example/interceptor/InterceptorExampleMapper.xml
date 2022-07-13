@@ -5,12 +5,16 @@
 		insert into table6 (
 			id,
 			name,
+			created_by,
 			created_at,
+			updated_by,
 			updated_at
 		) values (
 			#{id},
 			#{name},
+			#{createdBy},
 			#{createdAt},
+			#{updatedBy},
 			#{updatedAt}
 		)
 	</insert>
@@ -20,6 +24,7 @@
 			table6
 		set
 			name = #{name},
+			updated_by = #{updatedBy},
 			updated_at = #{updatedAt}
 		where
 			id = #{id}
@@ -29,7 +34,9 @@
 		select
 			id,
 			name,
+			created_by,
 			created_at,
+			updated_by,
 			updated_at
 		from
 			table6
