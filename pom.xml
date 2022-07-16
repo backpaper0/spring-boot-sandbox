@@ -95,6 +95,7 @@
 		<module>statemachine-demo</module>
 		<module>stomp-queue-sample</module>
 		<module>test-mock-example</module>
+		<module>test-with-database-example</module>
 		<module>thymeleaf-example</module>
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
