@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.core.annotation.ReadOnly;
+import com.example.core.annotation.ReadOnlyTransaction;
 import com.example.model.Example;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class Example2Service {
 		return jdbc.query("select id, name from leader_names", new BeanPropertyRowMapper<>(Example.class));
 	}
 
-	@ReadOnly
+	@ReadOnlyTransaction
 	public List<Example> findAllFromLeader3() {
 		return jdbc.query("select id, name from leader_names", new BeanPropertyRowMapper<>(Example.class));
 	}

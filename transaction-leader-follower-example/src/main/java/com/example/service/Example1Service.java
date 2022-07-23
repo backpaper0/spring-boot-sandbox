@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.core.annotation.ReadOnly;
+import com.example.core.annotation.ReadOnlyTransaction;
 import com.example.model.Example;
 
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class Example1Service {
 		return jdbc.query("select id, name from follower_names", new BeanPropertyRowMapper<>(Example.class));
 	}
 
-	@ReadOnly
+	@ReadOnlyTransaction
 	public List<Example> findAllFromFollower2() {
 		return jdbc.query("select id, name from follower_names", new BeanPropertyRowMapper<>(Example.class));
 	}

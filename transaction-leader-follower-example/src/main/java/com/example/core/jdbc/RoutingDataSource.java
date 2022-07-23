@@ -2,24 +2,46 @@ package com.example.core.jdbc;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
+/**
+ * ルーティングデータソース。
+ * このデータソースは論理的なものであり、スレッドローカルに保持している値に応じて実際のデータソースを返す。
+ *
+ */
 public class RoutingDataSource extends AbstractRoutingDataSource {
 
-	private final ThreadLocal<Routing> routing = new ThreadLocal<>();
+	/**
+	 * データソースのタイプを保持するスレッドローカル
+	 */
+	private final ThreadLocal<DataSourceType> dataSourceType = new ThreadLocal<>();
 
 	@Override
 	protected Object determineCurrentLookupKey() {
-		return routing.get();
+		return dataSourceType.get();
 	}
 
-	public boolean routeIsNull() {
-		return routing.get() == null;
+	/**
+	 * スレッドローカルへデータソースのタイプが設定されているかどうかを返す。
+	 * 
+	 * @return データソースのタイプが設定されていればtrue
+	 */
+	public boolean dataSourceTypeIsSet() {
+		return dataSourceType.get() != null;
 	}
 
-	public void setRouting(Routing routing) {
-		this.routing.set(routing);
+	/**
+	 * スレッドローカルへデータソースのタイプを設定する。
+	 * 
+	 * @param dataSourceType データソースのタイプ
+	 */
+	public void setDataSourceType(DataSourceType dataSourceType) {
+		this.dataSourceType.set(dataSourceType);
 	}
 
-	public void clearRouting() {
-		routing.remove();
+	/**
+	 * スレッドローカルからデータソースのタイプをクリアする。
+	 * 
+	 */
+	public void clearDataSourceType() {
+		dataSourceType.remove();
 	}
 }
