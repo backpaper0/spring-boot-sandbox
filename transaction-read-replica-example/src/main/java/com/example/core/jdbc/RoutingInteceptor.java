@@ -19,18 +19,21 @@ public class RoutingInteceptor implements MethodInterceptor {
 
 	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
+		if (!routingDataSource.routeIsNull()) {
+			return invocation.proceed();
+		}
 		Method method = invocation.getMethod();
 		Class<?> targetClass = invocation.getThis().getClass();
 		TransactionAttribute txAttr = tas.getTransactionAttribute(method, targetClass);
 		try {
 			if (txAttr.isReadOnly()) {
-				routingDataSource.useReadReplica();
+				routingDataSource.setRouting(Routing.FOLLOWER);
 			} else {
-				routingDataSource.usePrimary();
+				routingDataSource.setRouting(Routing.LEADER);
 			}
 			return invocation.proceed();
 		} finally {
-			routingDataSource.clear();
+			routingDataSource.clearRouting();
 		}
 	}
 }

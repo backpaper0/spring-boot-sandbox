@@ -1,0 +1,13 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Handling Exception Demo</title>
+  </head>
+  <body>
+    <h1>Exception Occurred</h1>
+    <p th:if="${@helper.helperMethod()}" th:text="#{ERR9000}"></p>
+    <p><a th:href="@{/handlingexception}">戻る</a></p>
+  </body>
+</html>

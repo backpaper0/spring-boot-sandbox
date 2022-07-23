@@ -12,24 +12,25 @@ import org.springframework.context.annotation.Role;
 import org.springframework.transaction.interceptor.BeanFactoryTransactionAttributeSourceAdvisor;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
-import com.example.core.annotation.PrimaryDataSource;
-import com.example.core.annotation.ReadReplicaDataSource;
+import com.example.core.annotation.FollowerDataSource;
+import com.example.core.annotation.LeaderDataSource;
+import com.example.core.jdbc.Routing;
 import com.example.core.jdbc.RoutingDataSource;
 import com.example.core.jdbc.RoutingInteceptor;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
 public class RoutingDataSourceConfiguration {
 
-	private final DataSource primaryDataSource;
-	private final DataSource readReplicaDataSource;
+	private final DataSource leaderDataSource;
+	private final DataSource followerDataSource;
 	private final TransactionAttributeSource tas;
 
 	public RoutingDataSourceConfiguration(
-			@PrimaryDataSource DataSource primaryDataSource,
-			@ReadReplicaDataSource DataSource readReplicaDataSource,
+			@LeaderDataSource DataSource leaderDataSource,
+			@FollowerDataSource DataSource followerDataSource,
 			TransactionAttributeSource tas) {
-		this.primaryDataSource = primaryDataSource;
-		this.readReplicaDataSource = readReplicaDataSource;
+		this.leaderDataSource = leaderDataSource;
+		this.followerDataSource = followerDataSource;
 		this.tas = tas;
 	}
 
@@ -38,23 +39,22 @@ public class RoutingDataSourceConfiguration {
 	public RoutingDataSource routingDataSource() {
 		RoutingDataSource dataSource = new RoutingDataSource();
 		dataSource.setTargetDataSources(Map.of(
-				Boolean.FALSE, primaryDataSource,
-				Boolean.TRUE, readReplicaDataSource));
+				Routing.LEADER, leaderDataSource,
+				Routing.FOLLOWER, followerDataSource));
 		return dataSource;
 	}
 
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-	public BeanFactoryTransactionAttributeSourceAdvisor routingDataSourcePointcutAdvisor(
-			RoutingInteceptor inteceptor) {
+	public BeanFactoryTransactionAttributeSourceAdvisor routingDataSourcePointcutAdvisor() {
 		BeanFactoryTransactionAttributeSourceAdvisor pointcutAdvisor = new BeanFactoryTransactionAttributeSourceAdvisor();
 		pointcutAdvisor.setTransactionAttributeSource(tas);
-		pointcutAdvisor.setAdvice(inteceptor);
+		pointcutAdvisor.setAdvice(routingInteceptor());
 		return pointcutAdvisor;
 	}
 
 	@Bean
-	public RoutingInteceptor routingInteceptor(RoutingDataSource routingDataSource) {
-		return new RoutingInteceptor(routingDataSource, tas);
+	public RoutingInteceptor routingInteceptor() {
+		return new RoutingInteceptor(routingDataSource(), tas);
 	}
 }

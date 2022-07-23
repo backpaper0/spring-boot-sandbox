@@ -4,22 +4,22 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 public class RoutingDataSource extends AbstractRoutingDataSource {
 
-	private final ThreadLocal<Boolean> readReplica = new ThreadLocal<>();
+	private final ThreadLocal<Routing> routing = new ThreadLocal<>();
 
 	@Override
 	protected Object determineCurrentLookupKey() {
-		return readReplica.get();
+		return routing.get();
 	}
 
-	public void usePrimary() {
-		readReplica.set(Boolean.FALSE);
+	public boolean routeIsNull() {
+		return routing.get() == null;
 	}
 
-	public void useReadReplica() {
-		readReplica.set(Boolean.TRUE);
+	public void setRouting(Routing routing) {
+		this.routing.set(routing);
 	}
 
-	public void clear() {
-		readReplica.remove();
+	public void clearRouting() {
+		routing.remove();
 	}
 }
