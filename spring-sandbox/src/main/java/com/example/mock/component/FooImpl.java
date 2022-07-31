@@ -1,10 +1,11 @@
 package com.example.mock.component;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
+import com.example.mock.annotation.MyComponentImpl;
+
 @Component
-@ConditionalOnProperty(name = "com.example.mock.component.Foo", havingValue = "impl")
+@MyComponentImpl(name = "com.example.mock.component.Foo", havingValue = "impl")
 public class FooImpl implements Foo {
 
 	@Override
