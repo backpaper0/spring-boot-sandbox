@@ -3,6 +3,8 @@ package com.example.date;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,16 +37,26 @@ public class LocalDateProviderTest {
 	 * 固定値の提供をテストする。
 	 *
 	 */
-	@SpringBootTest(properties = "example.date.fixed-value=19990102")
+	@SpringBootTest(properties = {
+			"example.datetime.fixed-value=20220805120000",
+			"example.date.fixed-value=20220805",
+			"example.time.fixed-value=120000"
+	})
 	static class FixedValueTest {
 
 		@Autowired
+		LocalDateTimeProvider sut1;
+		@Autowired
 		LocalDateProvider sut;
+		@Autowired
+		LocalTimeProvider sut3;
 
 		@Test
 		void testFixedValue() {
 			LocalDate actual = sut.now();
-			assertThat(actual).isEqualTo(LocalDate.parse("1999-01-02"));
+			assertThat(actual).isEqualTo(LocalDate.parse("2022-08-05"));
+			assertThat(sut1.now()).isEqualTo(LocalDateTime.parse("2022-08-05T12:00:00"));
+			assertThat(sut3.now()).isEqualTo(LocalTime.parse("12:00:00"));
 		}
 	}
 }
