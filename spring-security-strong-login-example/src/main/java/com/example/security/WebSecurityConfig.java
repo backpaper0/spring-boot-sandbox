@@ -4,8 +4,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationEventPublisher;
@@ -19,17 +17,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 @Configuration
-public class WebSecurityConfig implements ApplicationContextAware {
-
-	private ApplicationContext applicationContext;
+public class WebSecurityConfig {
 
 	@Autowired(required = false)
 	private SpringSessionBackedSessionRegistry<?> sessionRegistry;
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
 
 	@Bean
 	public JdbcUserDetailsManager userDetailsService(DataSource dataSource) {
