@@ -3,7 +3,7 @@ package com.example.security;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
@@ -16,13 +16,15 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder.SecretKeyFactoryAlgorithm;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 @Configuration
 public class WebSecurityConfig implements ApplicationContextAware {
 
 	private ApplicationContext applicationContext;
+
+	@Autowired(required = false)
+	private SpringSessionBackedSessionRegistry<?> sessionRegistry;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
@@ -127,21 +129,13 @@ public class WebSecurityConfig implements ApplicationContextAware {
 				.sessionManagement(c -> {
 					var maximumSessions = c
 							.maximumSessions(1);
-					if (applicationContext.getBeanNamesForType(JdbcIndexedSessionRepository.class).length > 0) {
-						maximumSessions.sessionRegistry(sessionRegistry(null));
+					if (sessionRegistry != null) {
+						maximumSessions.sessionRegistry(sessionRegistry);
 					}
 				})
 
 				.authenticationManager(authenticationManager(null))
 
 				.build();
-	}
-
-	@Bean
-	@ConditionalOnBean(JdbcIndexedSessionRepository.class)
-	public SpringSessionBackedSessionRegistry<?> sessionRegistry(
-			JdbcIndexedSessionRepository jdbcIndexedSessionRepository) {
-		return new SpringSessionBackedSessionRegistry<>(
-				jdbcIndexedSessionRepository);
 	}
 }
