@@ -7,7 +7,7 @@ docker compose up -d
 ```
 
 ```
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 - [アプリケーション](http://localhost:8080)
