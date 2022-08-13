@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WebmvcExampleApplication {
+public class App {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		SpringApplication.run(WebmvcExampleApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
-
 }
