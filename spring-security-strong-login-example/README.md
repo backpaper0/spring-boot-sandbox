@@ -37,8 +37,3 @@ TODO コードの説明
 
 TODO エラー時のメッセージをカスタマイズしたい場合はどうする？
 
-## UserDetailsServiceのモックを使う
-
-```bash
-mvn spring-boot:run -Dspring-boot.run.arguments="-Dapp.user-details-service.mock.enabled=true"
-```
