@@ -11,9 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
-import org.springframework.util.LinkedMultiValueMap;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "example.api-token=0000000000")
 public class ApiTokenAuthenticationTest {
 
 	@Autowired
@@ -22,18 +21,23 @@ public class ApiTokenAuthenticationTest {
 	@Test
 	void unauthorized() {
 		var responseEntity = http.getForEntity("/demo", Map.class);
-		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+		assertEquals(HttpStatus.FORBIDDEN, responseEntity.getStatusCode());
 	}
 
 	@Test
 	void ok() {
-		var form = new LinkedMultiValueMap<>();
-		form.add("username", "test");
-		var response = http.postForObject("/login", form, Map.class);
-		var token = response.get("apiToken").toString();
-		var requestEntity = RequestEntity.get("/demo").header("X-Api-Token", token).build();
+		var token = "0000000000";
+		var requestEntity = RequestEntity.get("/demo").header("Authorization", "Bearer " + token).build();
 		var responseEntity = http.exchange(requestEntity, Map.class);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 		assertEquals("test", responseEntity.getBody().get("name"));
+	}
+
+	@Test
+	void mistakeApiToken() {
+		var token = "mistake";
+		var requestEntity = RequestEntity.get("/demo").header("Authorization", "Bearer " + token).build();
+		var responseEntity = http.exchange(requestEntity, Map.class);
+		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 	}
 }

@@ -2,33 +2,35 @@ package com.example.security;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@ConfigurationProperties(prefix = "example")
 public class WebSecurityConfig {
+
+	private String apiToken;
+
+	public void setApiToken(String apiToken) {
+		this.apiToken = apiToken;
+	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.authorizeRequests(c -> c.antMatchers("/login").not().authenticated()
-						.anyRequest().authenticated())
+				.authorizeHttpRequests(c -> c.anyRequest().authenticated())
 
-				.apply(new ApiTokenAuthenticationConfigurer<>())
-				.successHandler((req, resp, auth) -> {
-				})
-				.failureHandler((req, resp, e) -> {
-					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-				})
-				.and()
+				.addFilterAfter(new ApiTokenFilter(apiToken), UsernamePasswordAuthenticationFilter.class)
 
 				.exceptionHandling(c -> c
 						.authenticationEntryPoint((request, response, authException) -> {
 							if (response.getStatus() == HttpServletResponse.SC_OK) {
-								response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+								response.sendError(HttpServletResponse.SC_FORBIDDEN);
 							}
 						})
 						.accessDeniedHandler(
