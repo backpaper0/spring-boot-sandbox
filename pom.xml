@@ -50,6 +50,7 @@
 		<module>jdbc-template-example</module>
 		<module>jpa-example</module>
 		<module>jpa-stream-example</module>
+		<module>language-country-timezone-encoding-example</module>
 		<module>localdatetime-format-example</module>
 		<module>login-customize-example</module>
 		<module>mail-freemarker-demo</module>
@@ -92,6 +93,7 @@
 		<module>spring-security-jdbc-login-sample</module>
 		<module>spring-security-strong-login-example</module>
 		<module>spring-webmvc-fn-demo</module>
+		<module>springdoc-openapi-example</module>
 		<module>sqs-messaging-demo</module>
 		<module>statemachine-demo</module>
 		<module>stomp-queue-sample</module>
