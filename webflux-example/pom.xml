@@ -5,7 +5,7 @@
 		<groupId>com.example</groupId>
 		<artifactId>spring-boot-sandbox-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../</relativePath> <!-- lookup parent from repository -->
+		<relativePath>../</relativePath>
 	</parent>
 	<artifactId>webflux-example</artifactId>
 
