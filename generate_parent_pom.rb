@@ -9,8 +9,11 @@ def get_latest_version(name)
 end
 
 spring_boot_version = get_latest_version("org/springframework/boot/spring-boot")
+# 3.0.0-M2のようなバージョンが取って来られるのは困る
+awspring_version = "2.4.2" # get_latest_version("io/awspring/cloud/spring-cloud-aws-dependencies")
 doma_version = get_latest_version("org/seasar/doma/doma-core")
 doma_spring_boot_version = get_latest_version("org/seasar/doma/boot/doma-spring-boot-starter")
+testcontainers_version = get_latest_version("org/testcontainers/testcontainers-bom")
 
 File.open("pom.xml", "w") { |out|
   out.puts <<_EOS_
@@ -30,9 +33,11 @@ File.open("pom.xml", "w") { |out|
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2021.0.3</spring-cloud.version>
+		<spring-cloud.version>2021.0.4</spring-cloud.version>
+		<spring-cloud-aws.version>#{awspring_version}</spring-cloud-aws.version>
 		<doma.version>#{doma_version}</doma.version>
 		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
+        <testcontainers.version>#{testcontainers_version}</testcontainers.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
 
@@ -53,6 +58,27 @@ _EOS_
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.15.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+			<dependency>
+				<groupId>io.awspring.cloud</groupId>
+				<artifactId>spring-cloud-aws-dependencies</artifactId>
+				<version>${spring-cloud-aws.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.statemachine</groupId>
+				<artifactId>spring-statemachine-bom</artifactId>
+				<version>3.0.1</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
