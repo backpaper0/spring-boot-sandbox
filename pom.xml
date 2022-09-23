@@ -45,42 +45,34 @@
 		<module>distributed-tracing-demo_sleuth-zipkin_cloud-stream</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
-		<module>graphql-example</module>
 		<module>integration-example</module>
 		<module>jdbc-template-example</module>
 		<module>jpa-example</module>
 		<module>jpa-stream-example</module>
 		<module>language-country-timezone-encoding-example</module>
 		<module>localdatetime-format-example</module>
-		<module>login-customize-example</module>
 		<module>mail-freemarker-demo</module>
 		<module>messages-example</module>
 		<module>method-validation-example</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
 		<module>oidc-example</module>
-		<module>paging-example</module>
 		<module>profile-demo</module>
 		<module>progress-sample</module>
 		<module>property-source-example</module>
 		<module>random-value-property-demo</module>
-		<module>reactive-doma-sample</module>
 		<module>reactive-postgres-example</module>
 		<module>reactor-example</module>
 		<module>redis-sample</module>
-		<module>rest-client-example/api</module>
-		<module>rest-client-example/client</module>
 		<module>rest-template-example</module>
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
 		<module>security-expression-example</module>
-		<module>security-test-example</module>
 		<module>security-two-authn-api-example</module>
 		<module>service-discovery-demo_consul/service1</module>
 		<module>service-discovery-demo_consul/service2</module>
 		<module>session-demo</module>
-		<module>snakecase</module>
 		<module>spa-indexhtml-example</module>
 		<module>spring-batch-example</module>
 		<module>spring-batch-separate-datasources-example</module>
@@ -90,7 +82,6 @@
 		<module>spring-integration-batch-example</module>
 		<module>spring-no-boot-example</module>
 		<module>spring-sandbox</module>
-		<module>spring-security-jdbc-login-sample</module>
 		<module>spring-security-strong-login-example</module>
 		<module>spring-webmvc-fn-demo</module>
 		<module>springdoc-openapi-example</module>
@@ -103,17 +94,13 @@
 		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
 		<module>transaction-leader-follower-example</module>
-		<module>two-datasource-batch-example</module>
-		<module>two-datasource-example</module>
 		<module>two-datasource-transaction-example</module>
 		<module>validation-example</module>
-		<module>web-test-example</module>
 		<module>webflux-example</module>
 		<module>webflux-functional-endpoint-example</module>
 		<module>webmvc-api-error-handling-example</module>
 		<module>webmvc-error-handling-example</module>
 		<module>webmvc-example</module>
-		<module>wrap-datasource-example</module>
 	</modules>
 
 	<dependencyManagement>
