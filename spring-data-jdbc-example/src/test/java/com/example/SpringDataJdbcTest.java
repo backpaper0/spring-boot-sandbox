@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 
 import com.example.entity.Singer;
 import com.example.entity.Song;
@@ -70,7 +69,6 @@ public class SpringDataJdbcTest {
 	void update2() {
 		Singer singer = singers.findById(3).get()
 				.withVersion(0);
-		DbActionExecutionException e = assertThrows(DbActionExecutionException.class, () -> singers.save(singer));
-		assertEquals(OptimisticLockingFailureException.class, e.getCause().getClass());
+		assertThrows(OptimisticLockingFailureException.class, () -> singers.save(singer));
 	}
 }
