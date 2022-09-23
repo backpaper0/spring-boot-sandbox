@@ -16,6 +16,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.example.entity.Example;
 import com.example.processor.ExampleItemProcessor;
@@ -30,6 +31,9 @@ public class ExampleBatchConfig {
 	private StepBuilderFactory steps;
 	@Autowired
 	private JobBuilderFactory jobs;
+	@Autowired
+	@AppDataSource
+	private PlatformTransactionManager transactionManager;
 	@Autowired
 	private DataSource dataSource;
 	@Autowired
@@ -65,6 +69,9 @@ public class ExampleBatchConfig {
 				.reader(exampleItemReader())
 				.processor(exampleItemProcessor)
 				.writer(exampleItemWriter())
+				// BeanPostProcessorを使用してTaskletStep#setTransactionManagerで
+				// 設定した方が漏れがなくて良い気がする。
+				.transactionManager(transactionManager)
 				.build();
 	}
 
