@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   front-service:
     image: distributed-tracing-demo_front-service:0.0.1-SNAPSHOT
