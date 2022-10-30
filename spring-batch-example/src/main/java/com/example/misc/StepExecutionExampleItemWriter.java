@@ -1,8 +1,7 @@
 package com.example.misc;
 
-import java.util.List;
-
 import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -15,8 +14,8 @@ public class StepExecutionExampleItemWriter implements ItemWriter<Integer> {
 	private StepExecution stepExecution;
 
 	@Override
-	public void write(List<? extends Integer> items) throws Exception {
+	public void write(Chunk<? extends Integer> chunk) throws Exception {
 		log.info("{}", stepExecution);
-		log.info("{}", items);
+		log.info("{}", chunk);
 	}
 }

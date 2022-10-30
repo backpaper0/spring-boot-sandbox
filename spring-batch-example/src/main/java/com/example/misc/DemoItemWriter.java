@@ -1,9 +1,8 @@
 package com.example.misc;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamWriter;
 
@@ -27,7 +26,7 @@ public class DemoItemWriter implements ItemStreamWriter<Integer> {
 	}
 
 	@Override
-	public void write(List<? extends Integer> items) {
-		logger.info("writer#write: {}", items);
+	public void write(Chunk<? extends Integer> chunk) {
+		logger.info("writer#write: {}", chunk);
 	}
 }

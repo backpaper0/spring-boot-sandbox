@@ -17,10 +17,10 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(c -> c
-						.mvcMatchers("/foo").hasAuthority("FOO")
-						.mvcMatchers("/bar/**").hasAnyAuthority("BAR")
-						.mvcMatchers("/baz").hasAnyAuthority("BAZ1", "BAZ2")
-						.mvcMatchers("/qux").permitAll()
+						.requestMatchers("/foo").hasAuthority("FOO")
+						.requestMatchers("/bar/**").hasAnyAuthority("BAR")
+						.requestMatchers("/baz").hasAnyAuthority("BAZ1", "BAZ2")
+						.requestMatchers("/qux").permitAll()
 						.anyRequest().denyAll())
 				.build();
 	}

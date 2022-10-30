@@ -2,7 +2,7 @@ package com.example.resttemplateexample;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Size;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,8 +4,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.constraints.Size;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;

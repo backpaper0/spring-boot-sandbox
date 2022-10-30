@@ -14,47 +14,47 @@ import reactor.core.publisher.Mono;
 
 public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, ServerResponse> {
 
-    @Override
-    public Mono<ServerResponse> filter(final ServerRequest request,
-            final HandlerFunction<ServerResponse> next) {
-        return next.handle(request).map(AddHeaderResponse::new);
-    }
+	@Override
+	public Mono<ServerResponse> filter(final ServerRequest request,
+			final HandlerFunction<ServerResponse> next) {
+		return next.handle(request).map(AddHeaderResponse::new);
+	}
 
-    static class AddHeaderResponse implements ServerResponse {
+	static class AddHeaderResponse implements ServerResponse {
 
-        final ServerResponse response;
-        final HttpHeaders headers;
+		final ServerResponse response;
+		final HttpHeaders headers;
 
-        public AddHeaderResponse(final ServerResponse response) {
-            this.response = response;
-            final HttpHeaders headers = HttpHeaders.writableHttpHeaders(response.headers());
-            headers.add("X-Hoge", "FooBarBaz");
-            this.headers = HttpHeaders.readOnlyHttpHeaders(headers);
-        }
+		public AddHeaderResponse(final ServerResponse response) {
+			this.response = response;
+			final HttpHeaders headers = HttpHeaders.writableHttpHeaders(response.headers());
+			headers.add("X-Hoge", "FooBarBaz");
+			this.headers = HttpHeaders.readOnlyHttpHeaders(headers);
+		}
 
-        @Override
-        public HttpStatus statusCode() {
-            return response.statusCode();
-        }
+		@Override
+		public HttpStatus statusCode() {
+			return HttpStatus.valueOf(response.statusCode().value());
+		}
 
-        @Override
-        public HttpHeaders headers() {
-            return headers;
-        }
+		@Override
+		public HttpHeaders headers() {
+			return headers;
+		}
 
-        @Override
-        public MultiValueMap<String, ResponseCookie> cookies() {
-            return response.cookies();
-        }
+		@Override
+		public MultiValueMap<String, ResponseCookie> cookies() {
+			return response.cookies();
+		}
 
-        @Override
-        public Mono<Void> writeTo(final ServerWebExchange exchange, final Context context) {
-            return response.writeTo(exchange, context);
-        }
+		@Override
+		public Mono<Void> writeTo(final ServerWebExchange exchange, final Context context) {
+			return response.writeTo(exchange, context);
+		}
 
-        @Override
-        public int rawStatusCode() {
-            return response.rawStatusCode();
-        }
-    }
+		@Override
+		public int rawStatusCode() {
+			return response.rawStatusCode();
+		}
+	}
 }

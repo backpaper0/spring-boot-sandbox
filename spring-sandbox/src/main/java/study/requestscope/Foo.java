@@ -1,6 +1,6 @@
 package study.requestscope;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

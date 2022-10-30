@@ -27,7 +27,6 @@
 		<dependency>
 			<groupId>com.icegreen</groupId>
 			<artifactId>greenmail-junit5</artifactId>
-			<version>1.6.3</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

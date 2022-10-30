@@ -29,7 +29,7 @@ public class IntegrationBatchConfig {
 
 	@Bean
 	public CountToJobLaunchRequestTransformer countToJobLaunchRequestTransformer() {
-		return new CountToJobLaunchRequestTransformer(jobs, batchProperties.getJob().getNames());
+		return new CountToJobLaunchRequestTransformer(jobs, batchProperties.getJob().getName());
 	}
 
 	@Bean

@@ -1,17 +1,16 @@
 package com.example.chunk;
 
-import java.util.List;
-
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PrintlnItemWriter implements ItemWriter<String> {
 
-    @Override
-    public void write(final List<? extends String> items) throws Exception {
-        for (final String item : items) {
-            System.out.println(item);
-        }
-    }
+	@Override
+	public void write(Chunk<? extends String> chunk) throws Exception {
+		for (String item : chunk) {
+			System.out.println(item);
+		}
+	}
 }

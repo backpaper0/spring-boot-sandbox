@@ -29,7 +29,7 @@ public class ClientHttpResponseWrapper implements ClientHttpResponse {
 
 	@Override
 	public HttpStatus getStatusCode() throws IOException {
-		return response.getStatusCode();
+		return HttpStatus.valueOf(response.getStatusCode().value());
 	}
 
 	@Override

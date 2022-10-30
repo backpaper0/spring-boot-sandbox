@@ -31,7 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.PathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.core.io.WritableResource;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,7 +49,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
 	@Autowired
 	TestConfig config;
 
-	static final Resource resource = new PathResource("target/output.txt");
+	static final WritableResource resource = new PathResource("target/output.txt");
 
 	@Test
 	void test() throws Exception {
@@ -97,7 +97,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
 	static class WriteCountToHeaderStepExecutionListener extends StepExecutionListenerSupport {
 		@Override
 		public ExitStatus afterStep(StepExecution stepExecution) {
-			int count = stepExecution.getWriteCount();
+			long count = stepExecution.getWriteCount();
 			String s = String.format("%04d", count);
 			try (RandomAccessFile raf = new RandomAccessFile(resource.getFile(), "rw")) {
 				raf.seek(0L);

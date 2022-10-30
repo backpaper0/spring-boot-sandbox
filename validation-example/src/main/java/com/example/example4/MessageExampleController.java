@@ -6,8 +6,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;

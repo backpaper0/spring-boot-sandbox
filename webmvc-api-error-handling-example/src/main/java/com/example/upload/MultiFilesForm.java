@@ -2,8 +2,8 @@ package com.example.upload;
 
 import java.util.List;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Size;
 
 import org.springframework.web.multipart.MultipartFile;
 

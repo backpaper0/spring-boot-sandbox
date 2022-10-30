@@ -1,9 +1,8 @@
 package com.example.misc;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.ItemStreamWriter;
@@ -46,8 +45,8 @@ public class SleepItemWriter<T> implements ItemStreamWriter<T> {
 	}
 
 	@Override
-	public void write(List<? extends T> items) throws Exception {
-		delegate.write(items);
+	public void write(Chunk<? extends T> chunk) throws Exception {
+		delegate.write(chunk);
 		sleep();
 	}
 }

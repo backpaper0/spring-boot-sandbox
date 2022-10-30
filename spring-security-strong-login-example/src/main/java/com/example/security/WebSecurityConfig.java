@@ -51,10 +51,10 @@ public class WebSecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(c -> c
-						.antMatchers("/login").permitAll()
-						.antMatchers("/page1").hasAuthority("AUTH1")
-						.antMatchers("/page2").hasAuthority("AUTH2")
-						.antMatchers("/admin").hasAuthority("ADMIN")
+						.requestMatchers("/login").permitAll()
+						.requestMatchers("/page1").hasAuthority("AUTH1")
+						.requestMatchers("/page2").hasAuthority("AUTH2")
+						.requestMatchers("/admin").hasAuthority("ADMIN")
 						.anyRequest().authenticated())
 
 				.formLogin(c -> c

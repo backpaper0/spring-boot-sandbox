@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.5</version>
+		<version>3.0.0-RC1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -14,11 +14,17 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<spring-cloud.version>2021.0.4</spring-cloud.version>
+		<spring-cloud.version>2022.0.0-M5</spring-cloud.version>
 		<spring-cloud-aws.version>2.4.2</spring-cloud-aws.version>
 		<doma.version>2.53.1</doma.version>
 		<doma.boot.version>1.6.0</doma.boot.version>
-        <testcontainers.version>1.17.5</testcontainers.version>
+		<testcontainers.version>1.17.5</testcontainers.version>
+		<database-rider.version>1.35.0</database-rider.version>
+		<springdoc.version>1.6.12</springdoc.version>
+		<mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
+		<mybatis-generator-maven-plugin.version>1.4.1</mybatis-generator-maven-plugin.version>
+		<greenmail.version>2.0.0-alpha-2</greenmail.version>
+		<r2dbc.version>1.0.0.M7</r2dbc.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
 
@@ -27,9 +33,7 @@
 		<module>aop-example</module>
 		<module>api-example</module>
 		<module>api-token-authentication-example</module>
-		<module>artemis-sample</module>
 		<module>batch-example</module>
-		<module>batch-without-boot-example</module>
 		<module>cache-example</module>
 		<module>character-replacement-example</module>
 		<module>circuit-breaker-demo</module>
@@ -40,11 +44,6 @@
 		<module>cloud-function-demo</module>
 		<module>configuration-properties-example</module>
 		<module>custom-logging</module>
-		<module>distributed-tracing-demo_sleuth-zipkin/buzz-service</module>
-		<module>distributed-tracing-demo_sleuth-zipkin/fizz-service</module>
-		<module>distributed-tracing-demo_sleuth-zipkin/fizzbuzz-service</module>
-		<module>distributed-tracing-demo_sleuth-zipkin/front-service</module>
-		<module>distributed-tracing-demo_sleuth-zipkin_cloud-stream</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>integration-example</module>
@@ -79,7 +78,6 @@
 		<module>spring-batch-example</module>
 		<module>spring-batch-separate-datasources-example</module>
 		<module>spring-boot-excludefilter-example</module>
-		<module>spring-cloud-sleuth-example</module>
 		<module>spring-data-jdbc-example</module>
 		<module>spring-integration-batch-example</module>
 		<module>spring-no-boot-example</module>
@@ -88,8 +86,6 @@
 		<module>spring-webmvc-fn-demo</module>
 		<module>springdoc-openapi-example</module>
 		<module>sqs-messaging-demo</module>
-		<module>statemachine-demo</module>
-		<module>stomp-queue-sample</module>
 		<module>test-mock-example</module>
 		<module>test-with-database-example</module>
 		<module>thymeleaf-example</module>
@@ -114,13 +110,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>1.15.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>${testcontainers.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<dependency>
 				<groupId>io.awspring.cloud</groupId>
 				<artifactId>spring-cloud-aws-dependencies</artifactId>
@@ -129,24 +125,51 @@
 				<scope>import</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.springframework.statemachine</groupId>
-				<artifactId>spring-statemachine-bom</artifactId>
-				<version>3.0.1</version>
-				<type>pom</type>
-				<scope>import</scope>
+				<groupId>com.github.database-rider</groupId>
+				<artifactId>rider-junit5</artifactId>
+				<version>${database-rider.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springdoc</groupId>
+				<artifactId>springdoc-openapi-ui</artifactId>
+				<version>${springdoc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis.spring.boot</groupId>
+				<artifactId>mybatis-spring-boot-starter</artifactId>
+				<version>${mybatis-spring-boot-starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.icegreen</groupId>
+				<artifactId>greenmail-junit5</artifactId>
+				<version>${greenmail.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.r2dbc</groupId>
+				<artifactId>r2dbc-client</artifactId>
+				<version>${r2dbc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.r2dbc</groupId>
+				<artifactId>r2dbc-postgresql</artifactId>
+				<version>${r2dbc.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.mybatis.generator</groupId>
+					<artifactId>mybatis-generator-maven-plugin</artifactId>
+					<version>${mybatis-generator-maven-plugin.version}</version>
+				 </plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Snapshots</name>
-			<url>https://repo.spring.io/snapshot</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
 		<repository>
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
@@ -156,5 +179,16 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>

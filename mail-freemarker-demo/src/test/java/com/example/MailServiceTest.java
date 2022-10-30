@@ -2,8 +2,6 @@ package com.example;
 
 import static org.junit.Assert.*;
 
-import javax.mail.internet.MimeMessage;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.icegreen.greenmail.junit5.GreenMailExtension;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetupTest;
+
+import jakarta.mail.internet.MimeMessage;
 
 @SpringBootTest
 class MailServiceTest {

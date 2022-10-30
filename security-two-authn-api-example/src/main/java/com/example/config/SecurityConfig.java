@@ -28,7 +28,7 @@ public class SecurityConfig {
 		ap.setPasswordEncoder(passwordEncoder());
 		ap.setUserDetailsService(uds);
 		return http
-				.requestMatchers(c -> c.antMatchers("/customers/**"))
+				.securityMatcher("/customers/**")
 				.authorizeHttpRequests(c -> c.anyRequest().authenticated())
 				.authenticationProvider(ap)
 				.csrf(c -> c.disable())
@@ -45,7 +45,7 @@ public class SecurityConfig {
 		ap.setPasswordEncoder(passwordEncoder());
 		ap.setUserDetailsService(uds);
 		return http
-				.requestMatchers(c -> c.antMatchers("/orders/**"))
+				.securityMatcher("/orders/**")
 				.authorizeHttpRequests(c -> c.anyRequest().authenticated())
 				.authenticationProvider(ap)
 				.csrf(c -> c.disable())

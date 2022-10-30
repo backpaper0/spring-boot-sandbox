@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
