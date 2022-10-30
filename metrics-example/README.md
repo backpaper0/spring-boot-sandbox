@@ -26,6 +26,7 @@ while true; do (curl -s localhost:8080/count|jq); sleep 1; done
 
 - 取得できるメトリクスの一覧は`curl -s http://localhost:8080/actuator/metrics | jq`で確認できる
 - 不要なメトリクスを出さないようにするには`management.metrics.enable.<メトリクス>=false`を設定する
+    - 特定のメトリクスだけを出すには`management.metrics.enable.all=false`を設定してから個別のメトリクスを`true`にする
 
 ## 参考
 
