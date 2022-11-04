@@ -11,6 +11,6 @@ import com.example.routing.Use;
 @Use(LookupKey.FOO)
 public class Foo {
 
-    public void foo() {
-    }
+	public void foo() {
+	}
 }

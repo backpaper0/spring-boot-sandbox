@@ -16,29 +16,29 @@ import org.springframework.stereotype.Component;
  */
 @SpringBootApplication
 public class CommandLineRunnerTestingSample {
-    public static void main(final String[] args) {
-        final SpringApplication sa = new SpringApplication(CommandLineRunnerTestingSample.class);
-        sa.setWebApplicationType(WebApplicationType.NONE);
-        sa.run(args);
-    }
+	public static void main(final String[] args) {
+		final SpringApplication sa = new SpringApplication(CommandLineRunnerTestingSample.class);
+		sa.setWebApplicationType(WebApplicationType.NONE);
+		sa.run(args);
+	}
 }
 
 @Profile("!test")
 @Component
 class Runner implements CommandLineRunner {
-    @Override
-    public void run(final String... args) throws Exception {
-        throw new Exception();
-    }
+	@Override
+	public void run(final String... args) throws Exception {
+		throw new Exception();
+	}
 }
 
 @NotTest
 @Component
 class Runner2 implements CommandLineRunner {
-    @Override
-    public void run(final String... args) throws Exception {
-        throw new Exception();
-    }
+	@Override
+	public void run(final String... args) throws Exception {
+		throw new Exception();
+	}
 }
 
 @Retention(RetentionPolicy.RUNTIME)

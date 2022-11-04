@@ -16,22 +16,22 @@ import org.springframework.http.RequestEntity;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ModelExampleApplicationTest {
 
-    @Autowired
-    TestRestTemplate http;
+	@Autowired
+	TestRestTemplate http;
 
-    @Test
-    void home() throws Exception {
-        final ModelExampleModel model = http.getForObject("/", ModelExampleModel.class);
-        assertEquals(new ModelExampleModel("default"), model);
-    }
+	@Test
+	void home() throws Exception {
+		final ModelExampleModel model = http.getForObject("/", ModelExampleModel.class);
+		assertEquals(new ModelExampleModel("default"), model);
+	}
 
-    @Test
-    void foobar() throws Exception {
-        final Object model = http.exchange(RequestEntity.get(URI.create("/foobar")).build(),
-                new ParameterizedTypeReference<Map<String, ModelExampleModel>>() {
-                }).getBody();
-        assertEquals(
-                Map.of("foo", new ModelExampleModel("foo"), "bar", new ModelExampleModel("bar")),
-                model);
-    }
+	@Test
+	void foobar() throws Exception {
+		final Object model = http.exchange(RequestEntity.get(URI.create("/foobar")).build(),
+				new ParameterizedTypeReference<Map<String, ModelExampleModel>>() {
+				}).getBody();
+		assertEquals(
+				Map.of("foo", new ModelExampleModel("foo"), "bar", new ModelExampleModel("bar")),
+				model);
+	}
 }

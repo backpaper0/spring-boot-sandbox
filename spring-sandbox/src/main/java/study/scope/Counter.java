@@ -9,11 +9,11 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class Counter implements Serializable {
 
-    private int value;
+	private int value;
 
-    public int getAndIncrement() {
-        final int v = value;
-        value++;
-        return v;
-    }
+	public int getAndIncrement() {
+		final int v = value;
+		value++;
+		return v;
+	}
 }

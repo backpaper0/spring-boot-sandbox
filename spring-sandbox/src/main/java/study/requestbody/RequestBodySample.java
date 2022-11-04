@@ -12,35 +12,35 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @RestController
 public class RequestBodySample {
-    public static void main(final String[] args) {
-        SpringApplication.run(RequestBodySample.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(RequestBodySample.class, args);
+	}
 
-    /**
-     *
-     * @param foo
-     * @return
-     * @see org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor
-     * @see org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-     * @see org.springframework.http.converter.HttpMessageConverter
-     */
-    @PostMapping
-    String post(@RequestBody final Foo foo) {
-        return foo.toString();
-    }
+	/**
+	 *
+	 * @param foo
+	 * @return
+	 * @see org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor
+	 * @see org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+	 * @see org.springframework.http.converter.HttpMessageConverter
+	 */
+	@PostMapping
+	String post(@RequestBody final Foo foo) {
+		return foo.toString();
+	}
 
-    static class Foo {
+	static class Foo {
 
-        private final String value;
+		private final String value;
 
-        public Foo(@JsonProperty("value") final String value) {
-            new Throwable().printStackTrace(System.out);
-            this.value = value;
-        }
+		public Foo(@JsonProperty("value") final String value) {
+			new Throwable().printStackTrace(System.out);
+			this.value = value;
+		}
 
-        @Override
-        public String toString() {
-            return value;
-        }
-    }
+		@Override
+		public String toString() {
+			return value;
+		}
+	}
 }

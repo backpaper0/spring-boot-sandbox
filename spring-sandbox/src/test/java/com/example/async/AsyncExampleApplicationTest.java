@@ -9,16 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class AsyncExampleApplicationTest {
 
-    @Autowired
-    private AsyncMethods methods;
+	@Autowired
+	private AsyncMethods methods;
 
-    @Test
-    void method1() throws Exception {
-        assertEquals("default", methods.method1().get());
-    }
+	@Test
+	void method1() throws Exception {
+		assertEquals("default", methods.method1().get());
+	}
 
-    @Test
-    void method2() throws Exception {
-        assertEquals("alternative executor", methods.method2().get());
-    }
+	@Test
+	void method2() throws Exception {
+		assertEquals("alternative executor", methods.method2().get());
+	}
 }

@@ -13,16 +13,16 @@ import com.example.routing.Use;
 @Use(LookupKey.BAR)
 public class Bar {
 
-    private final Foo foo;
+	private final Foo foo;
 
-    public Bar(final Foo foo) {
-        this.foo = Objects.requireNonNull(foo);
-    }
+	public Bar(final Foo foo) {
+		this.foo = Objects.requireNonNull(foo);
+	}
 
-    public void bar() {
-    }
+	public void bar() {
+	}
 
-    public void nest() {
-        foo.foo();
-    }
+	public void nest() {
+		foo.foo();
+	}
 }

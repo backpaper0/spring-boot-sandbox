@@ -15,15 +15,15 @@ import com.example.junit5.hello.impl.MessageFormatter;
 @SpringJUnitConfig(HelloConfiguration.class)
 class MockTest {
 
-    @Autowired
-    private Hello hello;
+	@Autowired
+	private Hello hello;
 
-    @MockBean
-    private MessageFormatter messageFormatter;
+	@MockBean
+	private MessageFormatter messageFormatter;
 
-    @Test
-    void say() throws Exception {
-        given(messageFormatter.format("Hello, %s!", "world")).willReturn("foobar");
-        assertEquals("foobar", hello.say());
-    }
+	@Test
+	void say() throws Exception {
+		given(messageFormatter.format("Hello, %s!", "world")).willReturn("foobar");
+		assertEquals("foobar", hello.say());
+	}
 }

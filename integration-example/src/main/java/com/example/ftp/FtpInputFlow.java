@@ -21,24 +21,24 @@ import org.springframework.integration.ftp.dsl.Ftp;
 @Import(FtpConfig.class)
 public class FtpInputFlow {
 
-    private final SessionFactory<FTPFile> sessionFactory;
+	private final SessionFactory<FTPFile> sessionFactory;
 
-    public FtpInputFlow(final SessionFactory<FTPFile> sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	public FtpInputFlow(final SessionFactory<FTPFile> sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow() {
-        return IntegrationFlows
-                .from(Ftp.inboundAdapter(sessionFactory).localDirectory(new File("output")),
-                        c -> c.poller(Pollers.fixedRate(100)))
-                .split(Files.splitter(true).charset(StandardCharsets.UTF_8))
-                .channel(output())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow() {
+		return IntegrationFlows
+				.from(Ftp.inboundAdapter(sessionFactory).localDirectory(new File("output")),
+						c -> c.poller(Pollers.fixedRate(100)))
+				.split(Files.splitter(true).charset(StandardCharsets.UTF_8))
+				.channel(output())
+				.get();
+	}
 }

@@ -8,15 +8,15 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash
 public class Message {
 
-    @Id
-    public UUID id;
-    public String text;
+	@Id
+	public UUID id;
+	public String text;
 
-    public Message() {
-    }
+	public Message() {
+	}
 
-    public Message(UUID id, String text) {
-        this.id = id;
-        this.text = text;
-    }
+	public Message(UUID id, String text) {
+		this.id = id;
+		this.text = text;
+	}
 }

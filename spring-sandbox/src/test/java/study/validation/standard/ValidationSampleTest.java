@@ -14,30 +14,30 @@ import org.springframework.web.util.UriComponentsBuilder;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ValidationSampleTest {
 
-    @Autowired
-    private TestRestTemplate template;
+	@Autowired
+	private TestRestTemplate template;
 
-    @Test
-    void test1() throws Exception {
-        final URI uri = UriComponentsBuilder.fromPath("/1")
-                .queryParam("foo", "FOO")
-                .build()
-                .toUri();
+	@Test
+	void test1() throws Exception {
+		final URI uri = UriComponentsBuilder.fromPath("/1")
+				.queryParam("foo", "FOO")
+				.build()
+				.toUri();
 
-        final String response = template.getForObject(uri, String.class);
+		final String response = template.getForObject(uri, String.class);
 
-        assertThat(response).isEqualTo("FOO");
-    }
+		assertThat(response).isEqualTo("FOO");
+	}
 
-    @Test
-    void test2() throws Exception {
-        final URI uri = UriComponentsBuilder.fromPath("/1")
-                .queryParam("foo", "HOGE")
-                .build()
-                .toUri();
+	@Test
+	void test2() throws Exception {
+		final URI uri = UriComponentsBuilder.fromPath("/1")
+				.queryParam("foo", "HOGE")
+				.build()
+				.toUri();
 
-        final String response = template.getForObject(uri, String.class);
+		final String response = template.getForObject(uri, String.class);
 
-        assertThat(response).isEqualTo("ERROR");
-    }
+		assertThat(response).isEqualTo("ERROR");
+	}
 }

@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class BindExceptionHandler {
 
-    private final MessageSource messageSource;
+	private final MessageSource messageSource;
 
-    public BindExceptionHandler(final MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
+	public BindExceptionHandler(final MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
 
-    @ExceptionHandler(BindException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    String handle(final BindException e, final Locale locale) {
-        return e.getAllErrors().stream()
-                .map(a -> messageSource.getMessage(a, locale))
-                .collect(Collectors.joining("\n"));
-    }
+	@ExceptionHandler(BindException.class)
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	String handle(final BindException e, final Locale locale) {
+		return e.getAllErrors().stream()
+				.map(a -> messageSource.getMessage(a, locale))
+				.collect(Collectors.joining("\n"));
+	}
 }

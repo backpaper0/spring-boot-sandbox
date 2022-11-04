@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/locale")
 public class LocaleController {
 
-    @GetMapping
-    public String getLocale(final Locale locale) {
-        return Stream.of(locale, LocaleContextHolder.getLocale()).map(Locale::toString)
-                .collect(Collectors.joining(System.lineSeparator()));
-    }
+	@GetMapping
+	public String getLocale(final Locale locale) {
+		return Stream.of(locale, LocaleContextHolder.getLocale()).map(Locale::toString)
+				.collect(Collectors.joining(System.lineSeparator()));
+	}
 }

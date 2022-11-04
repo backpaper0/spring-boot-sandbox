@@ -2,13 +2,13 @@ package study.test;
 
 public class Example {
 
-    private final String value;
+	private final String value;
 
-    public Example(final String value) {
-        this.value = value;
-    }
+	public Example(final String value) {
+		this.value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 }

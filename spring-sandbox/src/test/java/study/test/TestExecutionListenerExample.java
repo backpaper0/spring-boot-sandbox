@@ -8,14 +8,14 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @SpringJUnitConfig(classes = ExampleConfig.class)
 @TestExecutionListeners(listeners = ExampleTestExecutionListener.class,
-        mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
+		mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 class TestExecutionListenerExample {
 
-    @Autowired
-    private Example example;
+	@Autowired
+	private Example example;
 
-    @Test
-    void test() throws Exception {
-        System.out.println(example.getValue());
-    }
+	@Test
+	void test() throws Exception {
+		System.out.println(example.getValue());
+	}
 }

@@ -15,35 +15,35 @@ import org.springframework.integration.dsl.IntegrationFlows;
 @EnableIntegration
 public class AmqpFlow {
 
-    private final ConnectionFactory connectionFactory;
-    private final AmqpTemplate amqpTemplate;
+	private final ConnectionFactory connectionFactory;
+	private final AmqpTemplate amqpTemplate;
 
-    public AmqpFlow(final ConnectionFactory connectionFactory, final AmqpTemplate amqpTemplate) {
-        this.connectionFactory = connectionFactory;
-        this.amqpTemplate = amqpTemplate;
-    }
+	public AmqpFlow(final ConnectionFactory connectionFactory, final AmqpTemplate amqpTemplate) {
+		this.connectionFactory = connectionFactory;
+		this.amqpTemplate = amqpTemplate;
+	}
 
-    @Bean
-    public DirectChannel input() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow sendFlow() {
-        return IntegrationFlows.from(input())
-                .handle(Amqp.outboundAdapter(amqpTemplate).exchangeName("foo"))
-                .get();
-    }
+	@Bean
+	public IntegrationFlow sendFlow() {
+		return IntegrationFlows.from(input())
+				.handle(Amqp.outboundAdapter(amqpTemplate).exchangeName("foo"))
+				.get();
+	}
 
-    @Bean
-    public IntegrationFlow receiveFlow() {
-        return IntegrationFlows.from(Amqp.inboundAdapter(connectionFactory, "bar"))
-                .channel(output())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow receiveFlow() {
+		return IntegrationFlows.from(Amqp.inboundAdapter(connectionFactory, "bar"))
+				.channel(output())
+				.get();
+	}
 }

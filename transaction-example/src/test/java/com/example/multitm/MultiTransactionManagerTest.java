@@ -10,23 +10,23 @@ import com.example.multitm.component.Foo;
 @SpringBootTest(classes = MultiTransactionManagerApplication.class)
 class MultiTransactionManagerTest {
 
-    @Autowired
-    private Foo foo;
-    @Autowired
-    private Bar bar;
+	@Autowired
+	private Foo foo;
+	@Autowired
+	private Bar bar;
 
-    @Test
-    void foo() {
-        foo.foo();
-    }
+	@Test
+	void foo() {
+		foo.foo();
+	}
 
-    @Test
-    void bar() {
-        bar.bar();
-    }
+	@Test
+	void bar() {
+		bar.bar();
+	}
 
-    @Test
-    void nest() {
-        bar.nest();
-    }
+	@Test
+	void nest() {
+		bar.nest();
+	}
 }

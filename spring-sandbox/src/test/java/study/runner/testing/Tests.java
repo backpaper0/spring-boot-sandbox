@@ -7,8 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 @SpringBootTest(
-        webEnvironment = WebEnvironment.NONE,
-        properties = "spring.profiles.active=test")
+		webEnvironment = WebEnvironment.NONE,
+		properties = "spring.profiles.active=test")
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Tests {
 }

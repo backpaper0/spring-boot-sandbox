@@ -10,13 +10,13 @@ import com.example.notgood.staticx.cantchanged.CanNotChangedObject;
 @ComponentScan(basePackages = "com.example.notgood.staticx.component")
 public class StaticExample {
 
-    public static void main(final String[] args) {
-        try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
-            context.register(StaticExample.class);
-            context.refresh();
+	public static void main(final String[] args) {
+		try (AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext()) {
+			context.register(StaticExample.class);
+			context.refresh();
 
-            final CanNotChangedObject obj = new CanNotChangedObject();
-            obj.run(System.out);
-        }
-    }
+			final CanNotChangedObject obj = new CanNotChangedObject();
+			obj.run(System.out);
+		}
+	}
 }

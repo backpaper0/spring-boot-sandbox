@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/{key}")
 public class DemoController {
 
-    @GetMapping
-    public String getSession(@PathVariable final String key, final HttpSession session) {
-        return (String) session.getAttribute(key);
-    }
+	@GetMapping
+	public String getSession(@PathVariable final String key, final HttpSession session) {
+		return (String) session.getAttribute(key);
+	}
 
-    @PostMapping
-    public void setSession(@PathVariable final String key, @RequestParam final String value,
-            final HttpSession session) {
-        session.setAttribute(key, value);
-    }
+	@PostMapping
+	public void setSession(@PathVariable final String key, @RequestParam final String value,
+			final HttpSession session) {
+		session.setAttribute(key, value);
+	}
 }

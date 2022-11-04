@@ -15,23 +15,23 @@ import org.springframework.web.servlet.LocaleContextResolver;
 @Component(DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
 public class ItalyOnlyLocaleContextResolver implements LocaleContextResolver {
 
-    @Override
-    public Locale resolveLocale(final HttpServletRequest request) {
-        return Locale.ITALY;
-    }
+	@Override
+	public Locale resolveLocale(final HttpServletRequest request) {
+		return Locale.ITALY;
+	}
 
-    @Override
-    public void setLocale(final HttpServletRequest request, final HttpServletResponse response,
-            final Locale locale) {
-    }
+	@Override
+	public void setLocale(final HttpServletRequest request, final HttpServletResponse response,
+			final Locale locale) {
+	}
 
-    @Override
-    public LocaleContext resolveLocaleContext(final HttpServletRequest request) {
-        return new SimpleTimeZoneAwareLocaleContext(Locale.ITALY, new SimpleTimeZone(1, "CET"));
-    }
+	@Override
+	public LocaleContext resolveLocaleContext(final HttpServletRequest request) {
+		return new SimpleTimeZoneAwareLocaleContext(Locale.ITALY, new SimpleTimeZone(1, "CET"));
+	}
 
-    @Override
-    public void setLocaleContext(final HttpServletRequest request,
-            final HttpServletResponse response, final LocaleContext localeContext) {
-    }
+	@Override
+	public void setLocaleContext(final HttpServletRequest request,
+			final HttpServletResponse response, final LocaleContext localeContext) {
+	}
 }

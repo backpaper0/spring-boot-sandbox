@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public @interface API {
 
-    @AliasFor(annotation = RestController.class)
-    String value() default "";
+	@AliasFor(annotation = RestController.class)
+	String value() default "";
 }

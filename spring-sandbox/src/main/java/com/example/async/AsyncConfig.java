@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.AsyncConfigurer;
 @Configuration
 public class AsyncConfig implements AsyncConfigurer {
 
-    @Override
-    public Executor getAsyncExecutor() {
-        return Executors.newSingleThreadExecutor(r -> new Thread(r, "default"));
-    }
+	@Override
+	public Executor getAsyncExecutor() {
+		return Executors.newSingleThreadExecutor(r -> new Thread(r, "default"));
+	}
 }

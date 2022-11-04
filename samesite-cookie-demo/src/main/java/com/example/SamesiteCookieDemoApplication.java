@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SamesiteCookieDemoApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(SamesiteCookieDemoApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(SamesiteCookieDemoApplication.class, args);
+	}
 
-    @GetMapping("/")
-    String index(final HttpSession session) {
-        return "demo";
-    }
+	@GetMapping("/")
+	String index(final HttpSession session) {
+		return "demo";
+	}
 }

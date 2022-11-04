@@ -13,15 +13,15 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class RepeatExampleTest {
 
-    @Autowired
-    private JobLauncher jobLauncher;
+	@Autowired
+	private JobLauncher jobLauncher;
 
-    @Autowired
-    private Job job;
+	@Autowired
+	private Job job;
 
-    @Test
-    void simpleRepeatJob() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job, jobParameters);
-    }
+	@Test
+	void simpleRepeatJob() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job, jobParameters);
+	}
 }

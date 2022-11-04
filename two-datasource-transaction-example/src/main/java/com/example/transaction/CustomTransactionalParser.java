@@ -9,13 +9,13 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
 
 public class CustomTransactionalParser implements TransactionAnnotationParser {
 
-    @Override
-    public TransactionAttribute parseTransactionAnnotation(final AnnotatedElement ae) {
-        final CustomTransactional ct = AnnotationUtils.findAnnotation(ae,
-                CustomTransactional.class);
-        if (ct != null) {
-            return new DefaultTransactionAttribute(ct.propagation().value());
-        }
-        return null;
-    }
+	@Override
+	public TransactionAttribute parseTransactionAnnotation(final AnnotatedElement ae) {
+		final CustomTransactional ct = AnnotationUtils.findAnnotation(ae,
+				CustomTransactional.class);
+		if (ct != null) {
+			return new DefaultTransactionAttribute(ct.propagation().value());
+		}
+		return null;
+	}
 }

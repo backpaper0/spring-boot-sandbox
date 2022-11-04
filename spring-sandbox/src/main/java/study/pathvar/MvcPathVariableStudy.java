@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MvcPathVariableStudy {
-    public static void main(final String[] args) {
-        SpringApplication.run(MvcPathVariableStudy.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(MvcPathVariableStudy.class, args);
+	}
 }

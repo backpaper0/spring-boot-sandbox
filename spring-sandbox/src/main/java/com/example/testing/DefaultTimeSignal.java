@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultTimeSignal implements TimeSignal {
 
-    private final Clock clock;
+	private final Clock clock;
 
-    public DefaultTimeSignal(final Clock clock) {
-        this.clock = Objects.requireNonNull(clock);
-    }
+	public DefaultTimeSignal(final Clock clock) {
+		this.clock = Objects.requireNonNull(clock);
+	}
 
-    @Override
-    public LocalDateTime currentDateTime() {
-        return LocalDateTime.now(clock);
-    }
+	@Override
+	public LocalDateTime currentDateTime() {
+		return LocalDateTime.now(clock);
+	}
 }

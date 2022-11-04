@@ -14,46 +14,46 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class ExceptionExampleTest {
 
-    @Autowired
-    private JobLauncher jobLauncher;
+	@Autowired
+	private JobLauncher jobLauncher;
 
-    @Autowired
-    @Qualifier("job1")
-    private Job job1;
+	@Autowired
+	@Qualifier("job1")
+	private Job job1;
 
-    @Autowired
-    @Qualifier("job2")
-    private Job job2;
+	@Autowired
+	@Qualifier("job2")
+	private Job job2;
 
-    @Autowired
-    @Qualifier("job3")
-    private Job job3;
+	@Autowired
+	@Qualifier("job3")
+	private Job job3;
 
-    @Autowired
-    @Qualifier("job4")
-    private Job job4;
+	@Autowired
+	@Qualifier("job4")
+	private Job job4;
 
-    @Test
-    void exceptionExampleJob1() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job1, jobParameters);
-    }
+	@Test
+	void exceptionExampleJob1() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job1, jobParameters);
+	}
 
-    @Test
-    void exceptionExampleJob2() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job2, jobParameters);
-    }
+	@Test
+	void exceptionExampleJob2() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job2, jobParameters);
+	}
 
-    @Test
-    void exceptionExampleJob3() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job3, jobParameters);
-    }
+	@Test
+	void exceptionExampleJob3() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job3, jobParameters);
+	}
 
-    @Test
-    void exceptionExampleJob4() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job4, jobParameters);
-    }
+	@Test
+	void exceptionExampleJob4() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job4, jobParameters);
+	}
 }

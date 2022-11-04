@@ -19,22 +19,22 @@ import com.example.testing.DefaultTimeSignal;
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true")
 class DefaultTimeSignalTest {
 
-    @Autowired
-    private DefaultTimeSignal timeSignal;
+	@Autowired
+	private DefaultTimeSignal timeSignal;
 
-    @Test
-    void currentDateTime() throws Exception {
-        assertThat(timeSignal.currentDateTime())
-                .isEqualTo("2017-11-01T09:00:00");
-    }
+	@Test
+	void currentDateTime() throws Exception {
+		assertThat(timeSignal.currentDateTime())
+				.isEqualTo("2017-11-01T09:00:00");
+	}
 
-    @TestConfiguration
-    public static class TestClockProvider {
-        @Bean
-        public Clock clock() {
-            return Clock.fixed(
-                    Instant.parse("2017-11-01T00:00:00.00Z"),
-                    ZoneId.of("Asia/Tokyo"));
-        }
-    }
+	@TestConfiguration
+	public static class TestClockProvider {
+		@Bean
+		public Clock clock() {
+			return Clock.fixed(
+					Instant.parse("2017-11-01T00:00:00.00Z"),
+					ZoneId.of("Asia/Tokyo"));
+		}
+	}
 }

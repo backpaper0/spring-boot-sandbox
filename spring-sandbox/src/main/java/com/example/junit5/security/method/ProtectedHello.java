@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProtectedHello {
 
-    @PreAuthorize("authenticated")
-    public String say() {
-        final Authentication authentication = SecurityContextHolder.getContext()
-                .getAuthentication();
-        return String.format("Hello, %s!", authentication.getName());
-    }
+	@PreAuthorize("authenticated")
+	public String say() {
+		final Authentication authentication = SecurityContextHolder.getContext()
+				.getAuthentication();
+		return String.format("Hello, %s!", authentication.getName());
+	}
 }

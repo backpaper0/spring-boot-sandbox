@@ -16,16 +16,16 @@ import com.example.testing.TimeSignal;
 @SpringBootTest
 class TimeSignalTest {
 
-    @MockBean
-    private TimeSignal timeSignal;
+	@MockBean
+	private TimeSignal timeSignal;
 
-    @Test
-    void currentDateTime() throws Exception {
+	@Test
+	void currentDateTime() throws Exception {
 
-        final LocalDateTime value = LocalDateTime.of(2017, 1, 2, 3, 4, 5);
+		final LocalDateTime value = LocalDateTime.of(2017, 1, 2, 3, 4, 5);
 
-        given(timeSignal.currentDateTime()).willReturn(value);
+		given(timeSignal.currentDateTime()).willReturn(value);
 
-        assertThat(timeSignal.currentDateTime()).isEqualTo(value);
-    }
+		assertThat(timeSignal.currentDateTime()).isEqualTo(value);
+	}
 }

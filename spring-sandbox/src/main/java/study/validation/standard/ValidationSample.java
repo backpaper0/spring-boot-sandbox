@@ -14,34 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ValidationSample {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(ValidationSample.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(ValidationSample.class, args);
+	}
 
-    /*
-     * ModelAttributeMethodProcessorの処理中にバリデーションが行われる。
-     * 例外を投げるかメソッドパラメーターにErrorsを渡すかは
-     * isBindExceptionRequiredメソッドで決まる。
-     *
-     */
-    @GetMapping("/1")
-    String get1(@Validated final Sample sample, final Errors errors) {
-        if (errors.hasErrors()) {
-            return "ERROR";
-        }
-        return sample.foo;
-    }
+	/*
+	 * ModelAttributeMethodProcessorの処理中にバリデーションが行われる。
+	 * 例外を投げるかメソッドパラメーターにErrorsを渡すかは
+	 * isBindExceptionRequiredメソッドで決まる。
+	 *
+	 */
+	@GetMapping("/1")
+	String get1(@Validated final Sample sample, final Errors errors) {
+		if (errors.hasErrors()) {
+			return "ERROR";
+		}
+		return sample.foo;
+	}
 
-    static class Sample {
-        private String foo;
+	static class Sample {
+		private String foo;
 
-        @Size(max = 3)
-        public String getFoo() {
-            return foo;
-        }
+		@Size(max = 3)
+		public String getFoo() {
+			return foo;
+		}
 
-        public void setFoo(final String foo) {
-            this.foo = foo;
-        }
-    }
+		public void setFoo(final String foo) {
+			this.foo = foo;
+		}
+	}
 }

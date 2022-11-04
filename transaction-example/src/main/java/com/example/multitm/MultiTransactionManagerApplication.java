@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MultiTransactionManagerApplication {
-    public static void main(final String[] args) {
-        SpringApplication.run(MultiTransactionManagerApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(MultiTransactionManagerApplication.class, args);
+	}
 }

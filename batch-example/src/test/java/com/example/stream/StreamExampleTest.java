@@ -13,15 +13,15 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class StreamExampleTest {
 
-    @Autowired
-    private JobLauncher jobLauncher;
+	@Autowired
+	private JobLauncher jobLauncher;
 
-    @Autowired
-    private Job job;
+	@Autowired
+	private Job job;
 
-    @Test
-    void streamExampleJob() throws Exception {
-        JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job, jobParameters);
-    }
+	@Test
+	void streamExampleJob() throws Exception {
+		JobParameters jobParameters = new JobParameters();
+		jobLauncher.run(job, jobParameters);
+	}
 }

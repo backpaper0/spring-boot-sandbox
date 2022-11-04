@@ -12,44 +12,44 @@ import org.springframework.stereotype.Component;
 @Component
 public class SimpleRepeatTasklet implements Tasklet {
 
-    private static final Logger logger = LoggerFactory.getLogger(SimpleRepeatTasklet.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleRepeatTasklet.class);
 
-    private final Counter counter;
+	private final Counter counter;
 
-    public SimpleRepeatTasklet(final Counter counter) {
-        this.counter = counter;
-    }
+	public SimpleRepeatTasklet(final Counter counter) {
+		this.counter = counter;
+	}
 
-    @Override
-    public RepeatStatus execute(final StepContribution contribution,
-            final ChunkContext chunkContext)
-            throws Exception {
-        counter.increment();
-        final int value = counter.getValue();
-        if (value < 10) {
-            if (logger.isInfoEnabled()) {
-                logger.info("Continue {}", value);
-            }
-            return RepeatStatus.CONTINUABLE;
-        }
-        if (logger.isInfoEnabled()) {
-            logger.info("Finish {}", value);
-        }
-        return RepeatStatus.FINISHED;
-    }
+	@Override
+	public RepeatStatus execute(final StepContribution contribution,
+			final ChunkContext chunkContext)
+			throws Exception {
+		counter.increment();
+		final int value = counter.getValue();
+		if (value < 10) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Continue {}", value);
+			}
+			return RepeatStatus.CONTINUABLE;
+		}
+		if (logger.isInfoEnabled()) {
+			logger.info("Finish {}", value);
+		}
+		return RepeatStatus.FINISHED;
+	}
 
-    @Component
-    @StepScope
-    public static class Counter {
+	@Component
+	@StepScope
+	public static class Counter {
 
-        private int value;
+		private int value;
 
-        public void increment() {
-            value++;
-        }
+		public void increment() {
+			value++;
+		}
 
-        public int getValue() {
-            return value;
-        }
-    }
+		public int getValue() {
+			return value;
+		}
+	}
 }

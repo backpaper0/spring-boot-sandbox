@@ -8,5 +8,5 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @Configuration
 @ComponentScan
 public class ProtectedHelloConfig {
-    //nop
+	//nop
 }

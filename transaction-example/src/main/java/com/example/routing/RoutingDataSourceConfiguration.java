@@ -23,60 +23,60 @@ import org.springframework.jdbc.datasource.lookup.DataSourceLookup;
 @Configuration
 public class RoutingDataSourceConfiguration {
 
-    @Bean
-    @ConfigurationProperties(prefix = "foo.datasource")
-    public DataSourceProperties fooDataSourceProperties() {
-        return new DataSourceProperties();
-    }
+	@Bean
+	@ConfigurationProperties(prefix = "foo.datasource")
+	public DataSourceProperties fooDataSourceProperties() {
+		return new DataSourceProperties();
+	}
 
-    @Bean
-    public DataSource fooDataSource() {
-        return fooDataSourceProperties().initializeDataSourceBuilder().build();
-    }
+	@Bean
+	public DataSource fooDataSource() {
+		return fooDataSourceProperties().initializeDataSourceBuilder().build();
+	}
 
-    @Bean
-    @ConfigurationProperties(prefix = "bar.datasource")
-    public DataSourceProperties barDataSourceProperties() {
-        return new DataSourceProperties();
-    }
+	@Bean
+	@ConfigurationProperties(prefix = "bar.datasource")
+	public DataSourceProperties barDataSourceProperties() {
+		return new DataSourceProperties();
+	}
 
-    @Bean
-    public DataSource barDataSource() {
-        return barDataSourceProperties().initializeDataSourceBuilder().build();
-    }
+	@Bean
+	public DataSource barDataSource() {
+		return barDataSourceProperties().initializeDataSourceBuilder().build();
+	}
 
-    @Bean
-    @Primary
-    public DataSourceProperties fakeDataSourceProperties() {
-        return new DataSourceProperties();
-    }
+	@Bean
+	@Primary
+	public DataSourceProperties fakeDataSourceProperties() {
+		return new DataSourceProperties();
+	}
 
-    @Bean
-    @Primary
-    public DataSource routingDataSource() {
-        final Map<Object, Object> targetDataSources = new HashMap<>();
-        targetDataSources.put(LookupKey.FOO, "fooDataSource");
-        targetDataSources.put(LookupKey.BAR, "barDataSource");
-        final RoutingDataSource dataSource = new RoutingDataSource();
-        dataSource.setDataSourceLookup(dataSourceLookup());
-        dataSource.setTargetDataSources(targetDataSources);
-        return dataSource;
-    }
+	@Bean
+	@Primary
+	public DataSource routingDataSource() {
+		final Map<Object, Object> targetDataSources = new HashMap<>();
+		targetDataSources.put(LookupKey.FOO, "fooDataSource");
+		targetDataSources.put(LookupKey.BAR, "barDataSource");
+		final RoutingDataSource dataSource = new RoutingDataSource();
+		dataSource.setDataSourceLookup(dataSourceLookup());
+		dataSource.setTargetDataSources(targetDataSources);
+		return dataSource;
+	}
 
-    @Bean
-    public DataSourceLookup dataSourceLookup() {
-        return new BeanFactoryDataSourceLookup();
-    }
+	@Bean
+	public DataSourceLookup dataSourceLookup() {
+		return new BeanFactoryDataSourceLookup();
+	}
 
-    @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public PointcutAdvisor routingPointcutAdvisor() {
-        final Pointcut pointcut = new ComposablePointcut(
-                new AnnotationMatchingPointcut(null, Use.class, true))
-                        .union(new AnnotationMatchingPointcut(Use.class, null, true));
-        final DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-        advisor.setAdvice(new UseInterceptor());
-        advisor.setPointcut(pointcut);
-        return advisor;
-    }
+	@Bean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public PointcutAdvisor routingPointcutAdvisor() {
+		final Pointcut pointcut = new ComposablePointcut(
+				new AnnotationMatchingPointcut(null, Use.class, true))
+						.union(new AnnotationMatchingPointcut(Use.class, null, true));
+		final DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+		advisor.setAdvice(new UseInterceptor());
+		advisor.setPointcut(pointcut);
+		return advisor;
+	}
 }

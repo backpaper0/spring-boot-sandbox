@@ -12,26 +12,26 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 @Configuration
 public class CustomTransactionalConfiguration {
 
-    @Bean
-    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public PointcutAdvisor customTransactionalPointcutAdvisor() {
-        final BeanFactoryTransactionAttributeSourceAdvisor advisor = new BeanFactoryTransactionAttributeSourceAdvisor();
-        advisor.setTransactionAttributeSource(customTransactionalTransactionAttributeSource());
-        advisor.setAdvice(customTransactionalInterceptor());
-        return advisor;
-    }
+	@Bean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public PointcutAdvisor customTransactionalPointcutAdvisor() {
+		final BeanFactoryTransactionAttributeSourceAdvisor advisor = new BeanFactoryTransactionAttributeSourceAdvisor();
+		advisor.setTransactionAttributeSource(customTransactionalTransactionAttributeSource());
+		advisor.setAdvice(customTransactionalInterceptor());
+		return advisor;
+	}
 
-    @Bean
-    public TransactionAttributeSource customTransactionalTransactionAttributeSource() {
-        final CustomTransactionalParser annotationParser = new CustomTransactionalParser();
-        return new AnnotationTransactionAttributeSource(annotationParser);
-    }
+	@Bean
+	public TransactionAttributeSource customTransactionalTransactionAttributeSource() {
+		final CustomTransactionalParser annotationParser = new CustomTransactionalParser();
+		return new AnnotationTransactionAttributeSource(annotationParser);
+	}
 
-    @Bean
-    public CustomTransactionalInterceptor customTransactionalInterceptor() {
-        final CustomTransactionalInterceptor interceptor = new CustomTransactionalInterceptor();
-        interceptor.setTransactionAttributeSource(
-                customTransactionalTransactionAttributeSource());
-        return interceptor;
-    }
+	@Bean
+	public CustomTransactionalInterceptor customTransactionalInterceptor() {
+		final CustomTransactionalInterceptor interceptor = new CustomTransactionalInterceptor();
+		interceptor.setTransactionAttributeSource(
+				customTransactionalTransactionAttributeSource());
+		return interceptor;
+	}
 }

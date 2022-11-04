@@ -14,53 +14,53 @@ import org.springframework.integration.dsl.IntegrationFlows;
 @EnableIntegration
 public class AggregatorFlow {
 
-    @Bean
-    public DirectChannel input1() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input1() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output1() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output1() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow1() {
-        return IntegrationFlows.from(input1())
-                .aggregate()
-                .channel(output1())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow1() {
+		return IntegrationFlows.from(input1())
+				.aggregate()
+				.channel(output1())
+				.get();
+	}
 
-    @Bean
-    public DirectChannel input2() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input2() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output2() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output2() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow2() {
-        return IntegrationFlows.from(input2())
-                .aggregate(a -> a.correlationStrategy(correlationStrategy())
-                        .releaseStrategy(releaseStrategy()))
-                .channel(output2())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow2() {
+		return IntegrationFlows.from(input2())
+				.aggregate(a -> a.correlationStrategy(correlationStrategy())
+						.releaseStrategy(releaseStrategy()))
+				.channel(output2())
+				.get();
+	}
 
-    @Bean
-    public CorrelationStrategy correlationStrategy() {
-        return message -> {
-            final int payload = (Integer) message.getPayload();
-            return payload % 4;
-        };
-    }
+	@Bean
+	public CorrelationStrategy correlationStrategy() {
+		return message -> {
+			final int payload = (Integer) message.getPayload();
+			return payload % 4;
+		};
+	}
 
-    @Bean
-    public ReleaseStrategy releaseStrategy() {
-        return group -> group.size() == 3;
-    }
+	@Bean
+	public ReleaseStrategy releaseStrategy() {
+		return group -> group.size() == 3;
+	}
 }

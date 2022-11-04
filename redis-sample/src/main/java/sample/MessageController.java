@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MessageController {
 
-    private final MessageRepository repository;
-    private final UUID id = UUID.randomUUID();
+	private final MessageRepository repository;
+	private final UUID id = UUID.randomUUID();
 
-    public MessageController(final MessageRepository template) {
-        this.repository = template;
-    }
+	public MessageController(final MessageRepository template) {
+		this.repository = template;
+	}
 
-    @GetMapping
-    Optional<Message> get() {
-        return repository.findById(id);
-    }
+	@GetMapping
+	Optional<Message> get() {
+		return repository.findById(id);
+	}
 
-    @PostMapping
-    void post(@RequestParam final String text) {
-        repository.save(new Message(id, text));
-    }
+	@PostMapping
+	void post(@RequestParam final String text) {
+		repository.save(new Message(id, text));
+	}
 }

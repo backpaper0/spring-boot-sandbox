@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/foo")
 public class FooBar {
-    @GetMapping
-    public String foo() {
-        return "foo";
-    }
+	@GetMapping
+	public String foo() {
+		return "foo";
+	}
 
-    @GetMapping("/bar")
-    public String bar() {
-        return "foo/bar";
-    }
+	@GetMapping("/bar")
+	public String bar() {
+		return "foo/bar";
+	}
 }

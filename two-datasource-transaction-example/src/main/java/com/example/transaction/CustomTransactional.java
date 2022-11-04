@@ -10,7 +10,7 @@ import com.example.jdbc.DataSources;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CustomTransactional {
 
-    DataSources value();
+	DataSources value();
 
-    Propagation propagation() default Propagation.REQUIRED;
+	Propagation propagation() default Propagation.REQUIRED;
 }

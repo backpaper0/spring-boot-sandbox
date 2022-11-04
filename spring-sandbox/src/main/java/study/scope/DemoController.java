@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-    private Counter counter;
+	private Counter counter;
 
-    public DemoController(Counter counter) {
-        this.counter = Objects.requireNonNull(counter);
-    }
+	public DemoController(Counter counter) {
+		this.counter = Objects.requireNonNull(counter);
+	}
 
-    @GetMapping
-    public int getAndIncrement() {
-        return counter.getAndIncrement();
-    }
+	@GetMapping
+	public int getAndIncrement() {
+		return counter.getAndIncrement();
+	}
 }

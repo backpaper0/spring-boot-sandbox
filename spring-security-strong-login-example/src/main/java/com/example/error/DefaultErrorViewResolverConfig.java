@@ -10,18 +10,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DefaultErrorViewResolverConfig {
 
-    private final ApplicationContext applicationContext;
+	private final ApplicationContext applicationContext;
 
-    private final Resources resources;
+	private final Resources resources;
 
-    DefaultErrorViewResolverConfig(ApplicationContext applicationContext, WebProperties webProperties) {
-        this.applicationContext = applicationContext;
-        this.resources = webProperties.getResources();
-    }
+	DefaultErrorViewResolverConfig(ApplicationContext applicationContext, WebProperties webProperties) {
+		this.applicationContext = applicationContext;
+		this.resources = webProperties.getResources();
+	}
 
-    @Bean
-    public DefaultErrorViewResolver conventionErrorViewResolver() {
-        return new DefaultErrorViewResolver(this.applicationContext, this.resources);
-    }
+	@Bean
+	public DefaultErrorViewResolver conventionErrorViewResolver() {
+		return new DefaultErrorViewResolver(this.applicationContext, this.resources);
+	}
 
 }

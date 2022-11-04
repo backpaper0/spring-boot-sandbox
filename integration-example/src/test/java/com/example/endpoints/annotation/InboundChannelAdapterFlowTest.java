@@ -12,13 +12,13 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = InboundChannelAdapterFlow.class)
 class InboundChannelAdapterFlowTest {
 
-    @Autowired
-    private QueueChannel output;
+	@Autowired
+	private QueueChannel output;
 
-    @Test
-    void test() {
-        for (int i = 0; i < 100; i++) {
-            assertEquals(i + 1, output.receive().getPayload());
-        }
-    }
+	@Test
+	void test() {
+		for (int i = 0; i < 100; i++) {
+			assertEquals(i + 1, output.receive().getPayload());
+		}
+	}
 }

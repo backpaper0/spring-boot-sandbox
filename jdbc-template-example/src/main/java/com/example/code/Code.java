@@ -2,7 +2,7 @@ package com.example.code;
 
 public interface Code {
 
-    String getCode();
+	String getCode();
 
-    String getLabel();
+	String getLabel();
 }

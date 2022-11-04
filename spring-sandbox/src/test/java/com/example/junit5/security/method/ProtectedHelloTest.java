@@ -13,20 +13,20 @@ import com.example.junit5.security.method.ProtectedHelloConfig;
 @SpringJUnitConfig(ProtectedHelloConfig.class)
 class ProtectedHelloTest {
 
-    @Autowired
-    private ProtectedHello hello;
+	@Autowired
+	private ProtectedHello hello;
 
-    @Test
-    @WithMockUser
-    void withMockUser() {
-        final String said = hello.say();
-        assertEquals("Hello, user!", said);
-    }
+	@Test
+	@WithMockUser
+	void withMockUser() {
+		final String said = hello.say();
+		assertEquals("Hello, user!", said);
+	}
 
-    @Test
-    @WithMockUser(username = "hoge")
-    void withMockUserUsername() {
-        final String said = hello.say();
-        assertEquals("Hello, hoge!", said);
-    }
+	@Test
+	@WithMockUser(username = "hoge")
+	void withMockUserUsername() {
+		final String said = hello.say();
+		assertEquals("Hello, hoge!", said);
+	}
 }

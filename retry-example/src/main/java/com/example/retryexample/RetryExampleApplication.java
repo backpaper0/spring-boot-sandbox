@@ -19,43 +19,43 @@ import org.springframework.web.context.annotation.RequestScope;
 @RestController
 public class RetryExampleApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(RetryExampleApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(RetryExampleApplication.class, args);
+	}
 
-    private static final Logger logger = LoggerFactory.getLogger(RetryExampleApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(RetryExampleApplication.class);
 
-    private final Obj obj;
+	private final Obj obj;
 
-    public RetryExampleApplication(final Obj obj) {
-        this.obj = Objects.requireNonNull(obj);
-    }
+	public RetryExampleApplication(final Obj obj) {
+		this.obj = Objects.requireNonNull(obj);
+	}
 
-    @RequestMapping
-    @Retryable
-    public String hello(@RequestParam(defaultValue = "0") final int count) {
-        if (logger.isInfoEnabled()) {
-            logger.info("try");
-        }
-        if (obj.getCount() < count) {
-            obj.increment();
-            throw new RuntimeException();
-        }
-        return "hello";
-    }
+	@RequestMapping
+	@Retryable
+	public String hello(@RequestParam(defaultValue = "0") final int count) {
+		if (logger.isInfoEnabled()) {
+			logger.info("try");
+		}
+		if (obj.getCount() < count) {
+			obj.increment();
+			throw new RuntimeException();
+		}
+		return "hello";
+	}
 
-    @Component
-    @RequestScope
-    public static class Obj {
+	@Component
+	@RequestScope
+	public static class Obj {
 
-        private int count;
+		private int count;
 
-        public void increment() {
-            count++;
-        }
+		public void increment() {
+			count++;
+		}
 
-        public int getCount() {
-            return count;
-        }
-    }
+		public int getCount() {
+			return count;
+		}
+	}
 }

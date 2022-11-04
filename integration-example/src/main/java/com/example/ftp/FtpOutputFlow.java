@@ -17,29 +17,29 @@ import org.springframework.integration.ftp.dsl.Ftp;
 @Import(FtpConfig.class)
 public class FtpOutputFlow {
 
-    private final SessionFactory<FTPFile> sessionFactory;
+	private final SessionFactory<FTPFile> sessionFactory;
 
-    public FtpOutputFlow(final SessionFactory<FTPFile> sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+	public FtpOutputFlow(final SessionFactory<FTPFile> sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 
-    @Bean
-    public DirectChannel input() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow() {
-        return IntegrationFlows
-                .from(input())
-                .handle(Ftp.outboundAdapter(sessionFactory)
-                        .remoteDirectory("hoge")
-                        .autoCreateDirectory(true))
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow() {
+		return IntegrationFlows
+				.from(input())
+				.handle(Ftp.outboundAdapter(sessionFactory)
+						.remoteDirectory("hoge")
+						.autoCreateDirectory(true))
+				.get();
+	}
 }

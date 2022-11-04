@@ -12,11 +12,11 @@ import com.example.junit5.hello.HelloConfiguration;
 @SpringJUnitConfig(HelloConfiguration.class)
 class SimpleTest {
 
-    @Autowired
-    private Hello hello;
+	@Autowired
+	private Hello hello;
 
-    @Test
-    void say() throws Exception {
-        assertEquals("Hello, world!", hello.say());
-    }
+	@Test
+	void say() throws Exception {
+		assertEquals("Hello, world!", hello.say());
+	}
 }

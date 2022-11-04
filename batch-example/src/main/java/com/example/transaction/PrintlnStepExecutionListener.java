@@ -14,18 +14,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrintlnStepExecutionListener extends StepExecutionListenerSupport {
 
-    private final JdbcTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 
-    public PrintlnStepExecutionListener(final DataSource dataSource) {
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
+	public PrintlnStepExecutionListener(final DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
-    @Override
-    public ExitStatus afterStep(final StepExecution stepExecution) {
-        final List<String> entities = jdbcTemplate.query(
-                "SELECT varname FROM metavar ORDER BY id ASC",
-                new SingleColumnRowMapper<>(String.class));
-        System.out.println(entities);
-        return stepExecution.getExitStatus();
-    }
+	@Override
+	public ExitStatus afterStep(final StepExecution stepExecution) {
+		final List<String> entities = jdbcTemplate.query(
+				"SELECT varname FROM metavar ORDER BY id ASC",
+				new SingleColumnRowMapper<>(String.class));
+		System.out.println(entities);
+		return stepExecution.getExitStatus();
+	}
 }

@@ -13,20 +13,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class Foo {
 
-    private final DataSource dataSource;
+	private final DataSource dataSource;
 
-    public Foo(final DataSource dataSource) {
-        this.dataSource = new TransactionAwareDataSourceProxy(dataSource);
-    }
+	public Foo(final DataSource dataSource) {
+		this.dataSource = new TransactionAwareDataSourceProxy(dataSource);
+	}
 
-    public void willCommit() throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-        }
-    }
+	public void willCommit() throws SQLException {
+		try (Connection con = dataSource.getConnection()) {
+		}
+	}
 
-    public void willRollback() throws SQLException {
-        try (Connection con = dataSource.getConnection()) {
-            throw new RuntimeException();
-        }
-    }
+	public void willRollback() throws SQLException {
+		try (Connection con = dataSource.getConnection()) {
+			throw new RuntimeException();
+		}
+	}
 }

@@ -11,12 +11,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class HttpMessageConverterSampleTest {
 
-    @Autowired
-    private TestRestTemplate template;
+	@Autowired
+	private TestRestTemplate template;
 
-    @Test
-    void test() {
-        final String response = template.postForObject("/", "x", String.class);
-        assertThat(response).isEqualTo("OK");
-    }
+	@Test
+	void test() {
+		final String response = template.postForObject("/", "x", String.class);
+		assertThat(response).isEqualTo("OK");
+	}
 }

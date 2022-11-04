@@ -21,48 +21,48 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @RestController
 public class HttpMessageConverterSample {
-    public static void main(final String[] args) {
-        SpringApplication.run(HttpMessageConverterSample.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(HttpMessageConverterSample.class, args);
+	}
 
-    @PostMapping
-    String post(@RequestBody final Hoge hoge) {
-        return "OK";
-    }
+	@PostMapping
+	String post(@RequestBody final Hoge hoge) {
+		return "OK";
+	}
 }
 
 enum Hoge {
-    SINGLETON
+	SINGLETON
 }
 
 @Component
 class HogeHttpMessageConverter implements HttpMessageConverter<Hoge> {
 
-    @Override
-    public boolean canRead(final Class<?> clazz, final MediaType mediaType) {
-        return clazz == Hoge.class;
-    }
+	@Override
+	public boolean canRead(final Class<?> clazz, final MediaType mediaType) {
+		return clazz == Hoge.class;
+	}
 
-    @Override
-    public boolean canWrite(final Class<?> clazz, final MediaType mediaType) {
-        return false;
-    }
+	@Override
+	public boolean canWrite(final Class<?> clazz, final MediaType mediaType) {
+		return false;
+	}
 
-    @Override
-    public List<MediaType> getSupportedMediaTypes() {
-        return Collections.singletonList(MediaType.ALL);
-    }
+	@Override
+	public List<MediaType> getSupportedMediaTypes() {
+		return Collections.singletonList(MediaType.ALL);
+	}
 
-    @Override
-    public Hoge read(final Class<? extends Hoge> clazz, final HttpInputMessage inputMessage)
-            throws IOException, HttpMessageNotReadableException {
-        return Hoge.SINGLETON;
-    }
+	@Override
+	public Hoge read(final Class<? extends Hoge> clazz, final HttpInputMessage inputMessage)
+			throws IOException, HttpMessageNotReadableException {
+		return Hoge.SINGLETON;
+	}
 
-    @Override
-    public void write(final Hoge t, final MediaType contentType,
-            final HttpOutputMessage outputMessage)
-            throws IOException, HttpMessageNotWritableException {
-        throw new UnsupportedOperationException();
-    }
+	@Override
+	public void write(final Hoge t, final MediaType contentType,
+			final HttpOutputMessage outputMessage)
+			throws IOException, HttpMessageNotWritableException {
+		throw new UnsupportedOperationException();
+	}
 }

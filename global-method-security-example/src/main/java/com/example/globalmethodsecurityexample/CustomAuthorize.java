@@ -6,5 +6,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CustomAuthorize {
 
-    Roles[] value() default { Roles.FOO, Roles.BAR };
+	Roles[] value() default { Roles.FOO, Roles.BAR };
 }

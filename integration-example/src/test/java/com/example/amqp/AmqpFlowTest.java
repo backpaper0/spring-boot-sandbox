@@ -17,20 +17,20 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = { AmqpFlow.class, RabbitAutoConfiguration.class })
 class AmqpFlowTest {
 
-    @Autowired
-    private DirectChannel input;
-    @Autowired
-    private QueueChannel output;
+	@Autowired
+	private DirectChannel input;
+	@Autowired
+	private QueueChannel output;
 
-    @Test
-    void test() throws Exception {
-        input.send(MessageBuilder.withPayload("foo").build());
-        input.send(MessageBuilder.withPayload("bar").build());
-        input.send(MessageBuilder.withPayload("baz").build());
+	@Test
+	void test() throws Exception {
+		input.send(MessageBuilder.withPayload("foo").build());
+		input.send(MessageBuilder.withPayload("bar").build());
+		input.send(MessageBuilder.withPayload("baz").build());
 
-        assertEquals("foo", output.receive().getPayload());
-        assertEquals("bar", output.receive().getPayload());
-        assertEquals("baz", output.receive().getPayload());
-        assertEquals(0, output.getQueueSize());
-    }
+		assertEquals("foo", output.receive().getPayload());
+		assertEquals("bar", output.receive().getPayload());
+		assertEquals("baz", output.receive().getPayload());
+		assertEquals(0, output.getQueueSize());
+	}
 }

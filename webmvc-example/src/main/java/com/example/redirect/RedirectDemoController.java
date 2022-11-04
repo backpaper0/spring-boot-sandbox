@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/redirect")
 public class RedirectDemoController {
 
-    @GetMapping
-    @ResponseBody
-    public String get() {
-        return "Hello, world!";
-    }
+	@GetMapping
+	@ResponseBody
+	public String get() {
+		return "Hello, world!";
+	}
 
-    @PostMapping
-    public String post() {
-        return "redirect:/redirect";
-    }
+	@PostMapping
+	public String post() {
+		return "redirect:/redirect";
+	}
 }

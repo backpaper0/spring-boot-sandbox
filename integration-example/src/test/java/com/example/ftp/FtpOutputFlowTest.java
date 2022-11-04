@@ -25,44 +25,44 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = FtpOutputFlow.class)
 class FtpOutputFlowTest {
 
-    @Autowired
-    private DirectChannel input;
+	@Autowired
+	private DirectChannel input;
 
-    @Test
-    void test() throws Exception {
+	@Test
+	void test() throws Exception {
 
-        final Message<String> foo = MessageBuilder.withPayload("foo").build();
-        input.send(foo);
+		final Message<String> foo = MessageBuilder.withPayload("foo").build();
+		input.send(foo);
 
-        final Message<byte[]> bar = MessageBuilder.withPayload("bar".getBytes()).build();
-        input.send(bar);
+		final Message<byte[]> bar = MessageBuilder.withPayload("bar".getBytes()).build();
+		input.send(bar);
 
-        final AtomicBoolean closed = new AtomicBoolean(false);
-        final InputStream inputStream = new ByteArrayInputStream("baz".getBytes()) {
-            @Override
-            public void close() throws IOException {
-                super.close();
-                closed.set(true);
-            }
-        };
-        final Message<InputStream> baz = MessageBuilder.withPayload(inputStream).build();
-        input.send(baz);
+		final AtomicBoolean closed = new AtomicBoolean(false);
+		final InputStream inputStream = new ByteArrayInputStream("baz".getBytes()) {
+			@Override
+			public void close() throws IOException {
+				super.close();
+				closed.set(true);
+			}
+		};
+		final Message<InputStream> baz = MessageBuilder.withPayload(inputStream).build();
+		input.send(baz);
 
-        final Function<Message<?>, String> read = message -> {
-            final String filename = message.getHeaders().getId() + ".msg";
-            try {
-                return new String(Files.readAllBytes(Paths.get("input", "hoge", filename)));
-            } catch (final IOException e) {
-                throw new UncheckedIOException(e);
-            }
-        };
+		final Function<Message<?>, String> read = message -> {
+			final String filename = message.getHeaders().getId() + ".msg";
+			try {
+				return new String(Files.readAllBytes(Paths.get("input", "hoge", filename)));
+			} catch (final IOException e) {
+				throw new UncheckedIOException(e);
+			}
+		};
 
-        assertEquals("foo", read.apply(foo));
+		assertEquals("foo", read.apply(foo));
 
-        assertEquals("bar", read.apply(bar));
+		assertEquals("bar", read.apply(bar));
 
-        assertEquals("baz", read.apply(baz));
+		assertEquals("baz", read.apply(baz));
 
-        assertTrue(closed.get());
-    }
+		assertTrue(closed.get());
+	}
 }

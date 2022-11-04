@@ -8,15 +8,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Example implements CommandLineRunner {
 
-    private final MessageService service;
+	private final MessageService service;
 
-    public Example(final MessageService service) {
-        this.service = Objects.requireNonNull(service);
-    }
+	public Example(final MessageService service) {
+		this.service = Objects.requireNonNull(service);
+	}
 
-    @Override
-    public void run(final String... args) throws Exception {
-        service.setUpData();
-        service.printData();
-    }
+	@Override
+	public void run(final String... args) throws Exception {
+		service.setUpData();
+		service.printData();
+	}
 }

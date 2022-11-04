@@ -11,16 +11,16 @@ import org.springframework.test.context.DynamicPropertySource;
 @SpringBootTest
 class PropertyOverriddenTest {
 
-    @Autowired
-    private PropertyOverriddenApp app;
+	@Autowired
+	private PropertyOverriddenApp app;
 
-    @DynamicPropertySource
-    static void props(final DynamicPropertyRegistry registry) {
-        registry.add("foo.bar.baz", () -> "Yeah!");
-    }
+	@DynamicPropertySource
+	static void props(final DynamicPropertyRegistry registry) {
+		registry.add("foo.bar.baz", () -> "Yeah!");
+	}
 
-    @Test
-    void test() throws Exception {
-        assertEquals("Yeah!", app.getProp());
-    }
+	@Test
+	void test() throws Exception {
+		assertEquals("Yeah!", app.getProp());
+	}
 }

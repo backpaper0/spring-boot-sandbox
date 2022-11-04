@@ -7,6 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional("fooTransactionManager")
 public class Foo {
 
-    public void foo() {
-    }
+	public void foo() {
+	}
 }

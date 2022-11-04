@@ -19,61 +19,61 @@ import org.springframework.util.ReflectionUtils;
 @SpringBootApplication
 public class JpaStreamExampleApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(JpaStreamExampleApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(JpaStreamExampleApplication.class, args);
+	}
 
-    @Component
-    static class DataSourceWrapper implements BeanPostProcessor {
+	@Component
+	static class DataSourceWrapper implements BeanPostProcessor {
 
-        @Override
-        public Object postProcessAfterInitialization(final Object bean, final String beanName)
-                throws BeansException {
-            if (bean instanceof DataSource) {
-                final ClassLoader loader = getClass().getClassLoader();
-                return Wrapper.wrap(loader, DataSource.class, bean);
-            }
-            return bean;
-        }
-    }
+		@Override
+		public Object postProcessAfterInitialization(final Object bean, final String beanName)
+				throws BeansException {
+			if (bean instanceof DataSource) {
+				final ClassLoader loader = getClass().getClassLoader();
+				return Wrapper.wrap(loader, DataSource.class, bean);
+			}
+			return bean;
+		}
+	}
 
-    static class Wrapper implements InvocationHandler {
+	static class Wrapper implements InvocationHandler {
 
-        private static final Method next = ReflectionUtils.findMethod(ResultSet.class, "next");
+		private static final Method next = ReflectionUtils.findMethod(ResultSet.class, "next");
 
-        private final ClassLoader loader;
-        private final Object obj;
+		private final ClassLoader loader;
+		private final Object obj;
 
-        public Wrapper(final ClassLoader loader, final Object obj) {
-            this.loader = loader;
-            this.obj = obj;
-        }
+		public Wrapper(final ClassLoader loader, final Object obj) {
+			this.loader = loader;
+			this.obj = obj;
+		}
 
-        @Override
-        public Object invoke(final Object proxy, final Method method, final Object[] args)
-                throws Throwable {
+		@Override
+		public Object invoke(final Object proxy, final Method method, final Object[] args)
+				throws Throwable {
 
-            final Object returnValue = method.invoke(obj, args);
+			final Object returnValue = method.invoke(obj, args);
 
-            if (method.equals(next)) {
-                final StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
-                System.out.printf("next(%s#%s): %s%n", ste.getClassName(), ste.getMethodName(),
-                        returnValue);
-            }
+			if (method.equals(next)) {
+				final StackTraceElement ste = Thread.currentThread().getStackTrace()[3];
+				System.out.printf("next(%s#%s): %s%n", ste.getClassName(), ste.getMethodName(),
+						returnValue);
+			}
 
-            if (returnValue instanceof Connection
-                    || returnValue instanceof Statement
-                    || returnValue instanceof ResultSet) {
-                return wrap(loader, method.getReturnType(), returnValue);
-            }
+			if (returnValue instanceof Connection
+					|| returnValue instanceof Statement
+					|| returnValue instanceof ResultSet) {
+				return wrap(loader, method.getReturnType(), returnValue);
+			}
 
-            return returnValue;
-        }
+			return returnValue;
+		}
 
-        static Object wrap(final ClassLoader loader, final Class<?> c, final Object obj) {
-            final Class<?>[] interfaces = { c };
-            final Wrapper h = new Wrapper(loader, obj);
-            return Proxy.newProxyInstance(loader, interfaces, h);
-        }
-    }
+		static Object wrap(final ClassLoader loader, final Class<?> c, final Object obj) {
+			final Class<?>[] interfaces = { c };
+			final Wrapper h = new Wrapper(loader, obj);
+			return Proxy.newProxyInstance(loader, interfaces, h);
+		}
+	}
 }

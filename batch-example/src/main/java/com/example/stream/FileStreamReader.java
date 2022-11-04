@@ -18,43 +18,43 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileStreamReader implements ItemStreamReader<String> {
 
-    private final Resource resource;
+	private final Resource resource;
 
-    private BufferedReader reader;
+	private BufferedReader reader;
 
-    public FileStreamReader(@Value("classpath:/input.txt") final Resource resource) {
-        this.resource = resource;
-    }
+	public FileStreamReader(@Value("classpath:/input.txt") final Resource resource) {
+		this.resource = resource;
+	}
 
-    @Override
-    public void open(final ExecutionContext executionContext) throws ItemStreamException {
-        System.out.println("*open*");
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
-        } catch (final IOException e) {
-            throw new ItemStreamException(e);
-        }
-    }
+	@Override
+	public void open(final ExecutionContext executionContext) throws ItemStreamException {
+		System.out.println("*open*");
+		try {
+			reader = new BufferedReader(
+					new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8));
+		} catch (final IOException e) {
+			throw new ItemStreamException(e);
+		}
+	}
 
-    @Override
-    public void update(final ExecutionContext executionContext) throws ItemStreamException {
-        System.out.println("*update*");
-    }
+	@Override
+	public void update(final ExecutionContext executionContext) throws ItemStreamException {
+		System.out.println("*update*");
+	}
 
-    @Override
-    public void close() throws ItemStreamException {
-        System.out.println("*close*");
-        try {
-            reader.close();
-        } catch (final IOException e) {
-            throw new ItemStreamException(e);
-        }
-    }
+	@Override
+	public void close() throws ItemStreamException {
+		System.out.println("*close*");
+		try {
+			reader.close();
+		} catch (final IOException e) {
+			throw new ItemStreamException(e);
+		}
+	}
 
-    @Override
-    public String read() throws Exception, UnexpectedInputException, ParseException,
-            NonTransientResourceException {
-        return reader.readLine();
-    }
+	@Override
+	public String read() throws Exception, UnexpectedInputException, ParseException,
+			NonTransientResourceException {
+		return reader.readLine();
+	}
 }

@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class SameSiteCookieTomcatContextCustomizer implements TomcatContextCustomizer {
 
-    @Override
-    public void customize(final Context context) {
-        final Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
-        cookieProcessor.setSameSiteCookies("Lax");
-        context.setCookieProcessor(cookieProcessor);
-    }
+	@Override
+	public void customize(final Context context) {
+		final Rfc6265CookieProcessor cookieProcessor = new Rfc6265CookieProcessor();
+		cookieProcessor.setSameSiteCookies("Lax");
+		context.setCookieProcessor(cookieProcessor);
+	}
 }

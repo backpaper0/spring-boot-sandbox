@@ -14,20 +14,20 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = ServiceActivatorFlow.class)
 public class ServiceActivatorFlowTest {
 
-    @Autowired
-    private MessageChannel input;
-    @Autowired
-    private QueueChannel output;
+	@Autowired
+	private MessageChannel input;
+	@Autowired
+	private QueueChannel output;
 
-    @Test
-    void test() {
-        input.send(MessageBuilder.withPayload("foo").build());
-        input.send(MessageBuilder.withPayload("bar").build());
-        input.send(MessageBuilder.withPayload("baz").build());
+	@Test
+	void test() {
+		input.send(MessageBuilder.withPayload("foo").build());
+		input.send(MessageBuilder.withPayload("bar").build());
+		input.send(MessageBuilder.withPayload("baz").build());
 
-        assertEquals("FOO", output.receive().getPayload());
-        assertEquals("BAR", output.receive().getPayload());
-        assertEquals("BAZ", output.receive().getPayload());
-        assertEquals(0, output.getQueueSize());
-    }
+		assertEquals("FOO", output.receive().getPayload());
+		assertEquals("BAR", output.receive().getPayload());
+		assertEquals("BAZ", output.receive().getPayload());
+		assertEquals(0, output.getQueueSize());
+	}
 }

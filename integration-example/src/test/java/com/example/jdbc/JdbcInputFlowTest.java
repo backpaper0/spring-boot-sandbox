@@ -18,28 +18,28 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = JdbcInputFlow.class)
 class JdbcInputFlowTest {
 
-    @Autowired
-    private QueueChannel output;
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private QueueChannel output;
+	@Autowired
+	private DataSource dataSource;
 
-    @Test
-    void test() {
+	@Test
+	void test() {
 
-        final List<MyMessage> list = (List<MyMessage>) output.receive()
-                .getPayload();
+		final List<MyMessage> list = (List<MyMessage>) output.receive()
+				.getPayload();
 
-        final Iterator<MyMessage> it = list.iterator();
+		final Iterator<MyMessage> it = list.iterator();
 
-        assertEquals(new MyMessage(1L, "foo", false), it.next());
-        assertEquals(new MyMessage(2L, "bar", false), it.next());
-        assertEquals(new MyMessage(3L, "baz", false), it.next());
-        assertFalse(it.hasNext());
+		assertEquals(new MyMessage(1L, "foo", false), it.next());
+		assertEquals(new MyMessage(2L, "bar", false), it.next());
+		assertEquals(new MyMessage(3L, "baz", false), it.next());
+		assertFalse(it.hasNext());
 
-        final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        final Long count = jdbcTemplate.queryForObject(
-                "SELECT COUNT(*) FROM messages WHERE sent = 0",
-                Long.class);
-        assertEquals((Long) 0L, count);
-    }
+		final JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		final Long count = jdbcTemplate.queryForObject(
+				"SELECT COUNT(*) FROM messages WHERE sent = 0",
+				Long.class);
+		assertEquals((Long) 0L, count);
+	}
 }

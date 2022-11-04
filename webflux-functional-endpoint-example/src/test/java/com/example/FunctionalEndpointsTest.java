@@ -8,27 +8,27 @@ import reactor.test.StepVerifier;
 
 public class FunctionalEndpointsTest {
 
-    WebTestClient client;
+	WebTestClient client;
 
-    @BeforeEach
-    void setUp() {
-        client = WebTestClient.bindToRouterFunction(new FunctionalEndpoints().routerFunction())
-                .build();
-    }
+	@BeforeEach
+	void setUp() {
+		client = WebTestClient.bindToRouterFunction(new FunctionalEndpoints().routerFunction())
+				.build();
+	}
 
-    @Test
-    void simple() {
-        client.get().uri("/simple").exchange().expectBody(String.class).isEqualTo("hello world");
-    }
+	@Test
+	void simple() {
+		client.get().uri("/simple").exchange().expectBody(String.class).isEqualTo("hello world");
+	}
 
-    @Test
-    void sse() {
-        final var returnResult = client.get().uri("/sse")
-                .exchange()
-                .returnResult(String.class);
+	@Test
+	void sse() {
+		final var returnResult = client.get().uri("/sse")
+				.exchange()
+				.returnResult(String.class);
 
-        StepVerifier.create(returnResult.getResponseBody())
-                .expectNext("1", "2", "3", "4", "5")
-                .verifyComplete();
-    }
+		StepVerifier.create(returnResult.getResponseBody())
+				.expectNext("1", "2", "3", "4", "5")
+				.verifyComplete();
+	}
 }

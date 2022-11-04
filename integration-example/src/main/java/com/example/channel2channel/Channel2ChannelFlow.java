@@ -12,32 +12,32 @@ import org.springframework.integration.dsl.IntegrationFlows;
 @EnableIntegration
 public class Channel2ChannelFlow {
 
-    @Bean
-    public DirectChannel input() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public DirectChannel inOut() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel inOut() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow1() {
-        return IntegrationFlows.from(input())
-                .channel(inOut())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow1() {
+		return IntegrationFlows.from(input())
+				.channel(inOut())
+				.get();
+	}
 
-    @Bean
-    public IntegrationFlow flow2() {
-        return IntegrationFlows.from(inOut())
-                .channel(output())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow2() {
+		return IntegrationFlows.from(inOut())
+				.channel(output())
+				.get();
+	}
 }

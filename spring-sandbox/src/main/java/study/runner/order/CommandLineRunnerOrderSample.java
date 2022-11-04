@@ -13,68 +13,68 @@ import org.springframework.core.Ordered;
 @SpringBootApplication
 public class CommandLineRunnerOrderSample {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(CommandLineRunnerOrderSample.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(CommandLineRunnerOrderSample.class, args);
+	}
 
-    @Bean
-    ValuesHolder valuesHolder() {
-        return new ValuesHolder();
-    }
+	@Bean
+	ValuesHolder valuesHolder() {
+		return new ValuesHolder();
+	}
 
-    @Bean
-    Runner runner1() {
-        return new Runner(valuesHolder(), "qux", 4);
-    }
+	@Bean
+	Runner runner1() {
+		return new Runner(valuesHolder(), "qux", 4);
+	}
 
-    @Bean
-    Runner runner2() {
-        return new Runner(valuesHolder(), "bar", 2);
-    }
+	@Bean
+	Runner runner2() {
+		return new Runner(valuesHolder(), "bar", 2);
+	}
 
-    @Bean
-    Runner runner3() {
-        return new Runner(valuesHolder(), "baz", 3);
-    }
+	@Bean
+	Runner runner3() {
+		return new Runner(valuesHolder(), "baz", 3);
+	}
 
-    @Bean
-    Runner runner4() {
-        return new Runner(valuesHolder(), "foo", 1);
-    }
+	@Bean
+	Runner runner4() {
+		return new Runner(valuesHolder(), "foo", 1);
+	}
 }
 
 class Runner implements CommandLineRunner, Ordered {
 
-    private final ValuesHolder valuesHolder;
-    private final String value;
-    private final int order;
+	private final ValuesHolder valuesHolder;
+	private final String value;
+	private final int order;
 
-    public Runner(final ValuesHolder valuesHolder, final String value, final int order) {
-        this.valuesHolder = Objects.requireNonNull(valuesHolder);
-        this.value = Objects.requireNonNull(value);
-        this.order = order;
-    }
+	public Runner(final ValuesHolder valuesHolder, final String value, final int order) {
+		this.valuesHolder = Objects.requireNonNull(valuesHolder);
+		this.value = Objects.requireNonNull(value);
+		this.order = order;
+	}
 
-    @Override
-    public void run(final String... args) throws Exception {
-        valuesHolder.add(value);
-    }
+	@Override
+	public void run(final String... args) throws Exception {
+		valuesHolder.add(value);
+	}
 
-    @Override
-    public int getOrder() {
-        return order;
-    }
+	@Override
+	public int getOrder() {
+		return order;
+	}
 }
 
 class ValuesHolder {
 
-    private final List<String> values = new CopyOnWriteArrayList<>();
+	private final List<String> values = new CopyOnWriteArrayList<>();
 
-    public void add(final String value) {
-        values.add(value);
-    }
+	public void add(final String value) {
+		values.add(value);
+	}
 
-    public List<String> get() {
-        return values;
-    }
+	public List<String> get() {
+		return values;
+	}
 }

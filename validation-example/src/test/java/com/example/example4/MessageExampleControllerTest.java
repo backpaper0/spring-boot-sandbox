@@ -16,29 +16,29 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 class MessageExampleControllerTest {
 
-    @Autowired
-    private WebApplicationContext context;
+	@Autowired
+	private WebApplicationContext context;
 
-    private MockMvc mvc;
+	private MockMvc mvc;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		mvc = MockMvcBuilders.webAppContextSetup(context).build();
+	}
 
-    @Test
-    void invalid() throws Exception {
-        mvc.perform(post("/4")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", "1234")
-                .param("num", "text")
-                .param("vo", "abcd"))
-                //                .andExpect(status().isBadRequest())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0]").value("num item must be int"))
-                .andExpect(jsonPath("$[1]")
-                        .value("value object must be text that size is between 1 and 3"))
-                .andExpect(jsonPath("$[2]").value("テキスト項目 size must be between 1 and 3"));
-    }
+	@Test
+	void invalid() throws Exception {
+		mvc.perform(post("/4")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", "1234")
+				.param("num", "text")
+				.param("vo", "abcd"))
+				//                .andExpect(status().isBadRequest())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$[0]").value("num item must be int"))
+				.andExpect(jsonPath("$[1]")
+						.value("value object must be text that size is between 1 and 3"))
+				.andExpect(jsonPath("$[2]").value("テキスト項目 size must be between 1 and 3"));
+	}
 }

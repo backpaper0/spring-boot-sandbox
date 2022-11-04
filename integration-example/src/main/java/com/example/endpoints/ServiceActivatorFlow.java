@@ -12,32 +12,32 @@ import org.springframework.integration.dsl.IntegrationFlows;
 @EnableIntegration
 public class ServiceActivatorFlow {
 
-    @Bean
-    public DirectChannel input() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow() {
-        return IntegrationFlows.from(input())
-                .handle("toUpperCase", "apply")
-                .channel(output())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow() {
+		return IntegrationFlows.from(input())
+				.handle("toUpperCase", "apply")
+				.channel(output())
+				.get();
+	}
 
-    @Bean
-    public ToUpperCase toUpperCase() {
-        return new ToUpperCase();
-    }
+	@Bean
+	public ToUpperCase toUpperCase() {
+		return new ToUpperCase();
+	}
 
-    static class ToUpperCase {
-        public String apply(final String s) {
-            return s.toUpperCase();
-        }
-    }
+	static class ToUpperCase {
+		public String apply(final String s) {
+			return s.toUpperCase();
+		}
+	}
 }

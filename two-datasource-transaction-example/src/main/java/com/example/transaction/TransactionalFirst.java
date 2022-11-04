@@ -12,6 +12,6 @@ import com.example.jdbc.DataSources;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TransactionalFirst {
 
-    @AliasFor(annotation = CustomTransactional.class)
-    Propagation propagation() default Propagation.REQUIRED;
+	@AliasFor(annotation = CustomTransactional.class)
+	Propagation propagation() default Propagation.REQUIRED;
 }

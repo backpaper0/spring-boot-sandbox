@@ -21,39 +21,39 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @Controller
 public class DemoApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+	}
 
-    @GetMapping("/")
-    String home() {
-        return "index";
-    }
+	@GetMapping("/")
+	String home() {
+		return "index";
+	}
 
-    @PostMapping("/")
-    @ResponseBody
-    ResponseEntity<StreamingResponseBody> post(@RequestPart final MultipartFile file)
-            throws Exception {
+	@PostMapping("/")
+	@ResponseBody
+	ResponseEntity<StreamingResponseBody> post(@RequestPart final MultipartFile file)
+			throws Exception {
 
-        if (file.isEmpty()) {
-            throw new ValidationException("file was empty");
-        }
+		if (file.isEmpty()) {
+			throw new ValidationException("file was empty");
+		}
 
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentDispositionFormData("filename", "sample.txt");
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentDispositionFormData("filename", "sample.txt");
 
-        final StreamingResponseBody body = out -> out.write(file.getBytes());
+		final StreamingResponseBody body = out -> out.write(file.getBytes());
 
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentType(MediaType.valueOf("application/force-download"))
-                .body(body);
-    }
+		return ResponseEntity.ok()
+				.headers(headers)
+				.contentType(MediaType.valueOf("application/force-download"))
+				.body(body);
+	}
 
-    @ExceptionHandler
-    String handle(final Exception e, final Model model) {
-        e.printStackTrace(System.out);
-        model.addAttribute("errorMessage", e.getMessage());
-        return "index";
-    }
+	@ExceptionHandler
+	String handle(final Exception e, final Model model) {
+		e.printStackTrace(System.out);
+		model.addAttribute("errorMessage", e.getMessage());
+		return "index";
+	}
 }

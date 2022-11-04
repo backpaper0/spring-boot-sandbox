@@ -12,12 +12,12 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class AsyncExampleApplication {
 
-    public static void main(final String[] args) {
-        SpringApplication.run(AsyncExampleApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(AsyncExampleApplication.class, args);
+	}
 
-    @Bean
-    ExecutorService altExecutor() {
-        return Executors.newSingleThreadExecutor(r -> new Thread(r, "alternative executor"));
-    }
+	@Bean
+	ExecutorService altExecutor() {
+		return Executors.newSingleThreadExecutor(r -> new Thread(r, "alternative executor"));
+	}
 }

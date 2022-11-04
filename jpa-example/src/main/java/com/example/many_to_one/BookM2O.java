@@ -8,35 +8,35 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class BookM2O {
 
-    @Id
-    @GeneratedValue
-    private Long id;
-    private String title;
+	@Id
+	@GeneratedValue
+	private Long id;
+	private String title;
 
-    @ManyToOne
-    private AuthorM2O author;
+	@ManyToOne
+	private AuthorM2O author;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
+	public void setId(final Long id) {
+		this.id = id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
+	public void setTitle(final String title) {
+		this.title = title;
+	}
 
-    public AuthorM2O getAuthor() {
-        return author;
-    }
+	public AuthorM2O getAuthor() {
+		return author;
+	}
 
-    public void setAuthor(final AuthorM2O author) {
-        this.author = author;
-    }
+	public void setAuthor(final AuthorM2O author) {
+		this.author = author;
+	}
 }

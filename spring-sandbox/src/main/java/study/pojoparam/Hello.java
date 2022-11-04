@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hello")
 public class Hello {
-    @GetMapping
-    public String say(@RequestParam final Name name) {
-        return "Hello, " + name.value + "!";
-    }
+	@GetMapping
+	public String say(@RequestParam final Name name) {
+		return "Hello, " + name.value + "!";
+	}
 
-    public static class Name {
-        public final String value;
+	public static class Name {
+		public final String value;
 
-        public Name(final String value) {
-            this.value = value;
-            new Throwable().printStackTrace(System.out);
-        }
-    }
+		public Name(final String value) {
+			this.value = value;
+			new Throwable().printStackTrace(System.out);
+		}
+	}
 }

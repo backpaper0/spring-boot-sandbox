@@ -10,21 +10,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PropertyOverriddenApp implements ApplicationRunner {
 
-    public static void main(final String[] args) {
-        final var app = new SpringApplication(PropertyOverriddenApp.class);
-        app.setWebApplicationType(WebApplicationType.NONE);
-        app.run(args);
-    }
+	public static void main(final String[] args) {
+		final var app = new SpringApplication(PropertyOverriddenApp.class);
+		app.setWebApplicationType(WebApplicationType.NONE);
+		app.run(args);
+	}
 
-    @Value("${foo.bar.baz:Hello, world!}")
-    private String prop;
+	@Value("${foo.bar.baz:Hello, world!}")
+	private String prop;
 
-    @Override
-    public void run(final ApplicationArguments args) throws Exception {
-        System.out.println(getProp());
-    }
+	@Override
+	public void run(final ApplicationArguments args) throws Exception {
+		System.out.println(getProp());
+	}
 
-    public String getProp() {
-        return prop;
-    }
+	public String getProp() {
+		return prop;
+	}
 }

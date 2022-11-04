@@ -16,21 +16,22 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class ErrorViewResolverImpl implements ErrorViewResolver, Ordered {
 
-    @Override
-    public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+	@Override
+	public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
 
-        if (status == HttpStatus.FORBIDDEN) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || authentication instanceof AnonymousAuthenticationToken || !authentication.isAuthenticated()) {
-                return new ModelAndView("redirect:/login");
-            }
-        }
+		if (status == HttpStatus.FORBIDDEN) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (authentication == null || authentication instanceof AnonymousAuthenticationToken
+					|| !authentication.isAuthenticated()) {
+				return new ModelAndView("redirect:/login");
+			}
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    @Override
-    public int getOrder() {
-        return Ordered.HIGHEST_PRECEDENCE;
-    }
+	@Override
+	public int getOrder() {
+		return Ordered.HIGHEST_PRECEDENCE;
+	}
 }

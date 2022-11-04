@@ -16,35 +16,35 @@ import org.springframework.messaging.Message;
 @EnableIntegration
 public class SplitterFlow {
 
-    @Bean
-    public DirectChannel input() {
-        return new DirectChannel();
-    }
+	@Bean
+	public DirectChannel input() {
+		return new DirectChannel();
+	}
 
-    @Bean
-    public QueueChannel output() {
-        return new QueueChannel();
-    }
+	@Bean
+	public QueueChannel output() {
+		return new QueueChannel();
+	}
 
-    @Bean
-    public IntegrationFlow flow() {
-        return IntegrationFlows.from(input())
-                .split(splitter())
-                .channel(output())
-                .get();
-    }
+	@Bean
+	public IntegrationFlow flow() {
+		return IntegrationFlows.from(input())
+				.split(splitter())
+				.channel(output())
+				.get();
+	}
 
-    @Bean
-    public Splitter splitter() {
-        return new Splitter();
-    }
+	@Bean
+	public Splitter splitter() {
+		return new Splitter();
+	}
 
-    private static class Splitter extends AbstractMessageSplitter {
+	private static class Splitter extends AbstractMessageSplitter {
 
-        @Override
-        protected Object splitMessage(final Message<?> message) {
-            final String value = (String) message.getPayload();
-            return Stream.of(value.substring(0, 1), value.substring(1));
-        }
-    }
+		@Override
+		protected Object splitMessage(final Message<?> message) {
+			final String value = (String) message.getPayload();
+			return Stream.of(value.substring(0, 1), value.substring(1));
+		}
+	}
 }

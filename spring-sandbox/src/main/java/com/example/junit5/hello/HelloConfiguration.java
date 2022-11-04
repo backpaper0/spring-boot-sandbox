@@ -13,14 +13,14 @@ import com.example.junit5.hello.impl.MessageFormatter;
 @ComponentScan
 public class HelloConfiguration {
 
-    private final MessageFormatter messageFormatter;
+	private final MessageFormatter messageFormatter;
 
-    public HelloConfiguration(final MessageFormatter messageFormatter) {
-        this.messageFormatter = Objects.requireNonNull(messageFormatter);
-    }
+	public HelloConfiguration(final MessageFormatter messageFormatter) {
+		this.messageFormatter = Objects.requireNonNull(messageFormatter);
+	}
 
-    @Bean
-    public Hello hello() {
-        return new DefaultHello(messageFormatter, "world");
-    }
+	@Bean
+	public Hello hello() {
+		return new DefaultHello(messageFormatter, "world");
+	}
 }

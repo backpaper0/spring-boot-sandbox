@@ -14,23 +14,23 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = SplitterFlow.class)
 class SplitterFlowTest {
 
-    @Autowired
-    private MessageChannel input;
-    @Autowired
-    private QueueChannel output;
+	@Autowired
+	private MessageChannel input;
+	@Autowired
+	private QueueChannel output;
 
-    @Test
-    void test() {
-        input.send(MessageBuilder.withPayload("foo").build());
-        input.send(MessageBuilder.withPayload("bar").build());
-        input.send(MessageBuilder.withPayload("baz").build());
+	@Test
+	void test() {
+		input.send(MessageBuilder.withPayload("foo").build());
+		input.send(MessageBuilder.withPayload("bar").build());
+		input.send(MessageBuilder.withPayload("baz").build());
 
-        assertEquals("f", output.receive().getPayload());
-        assertEquals("oo", output.receive().getPayload());
-        assertEquals("b", output.receive().getPayload());
-        assertEquals("ar", output.receive().getPayload());
-        assertEquals("b", output.receive().getPayload());
-        assertEquals("az", output.receive().getPayload());
-        assertEquals(0, output.getQueueSize());
-    }
+		assertEquals("f", output.receive().getPayload());
+		assertEquals("oo", output.receive().getPayload());
+		assertEquals("b", output.receive().getPayload());
+		assertEquals("ar", output.receive().getPayload());
+		assertEquals("b", output.receive().getPayload());
+		assertEquals("az", output.receive().getPayload());
+		assertEquals(0, output.getQueueSize());
+	}
 }

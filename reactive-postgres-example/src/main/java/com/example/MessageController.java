@@ -17,47 +17,47 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/messages")
 public class MessageController {
 
-    private final ConnectionFactory connectionFactory;
-    private final R2dbc r2dbc;
-    private final MessageMapper mapper = new MessageMapper();
+	private final ConnectionFactory connectionFactory;
+	private final R2dbc r2dbc;
+	private final MessageMapper mapper = new MessageMapper();
 
-    public MessageController(final ConnectionFactory connectionFactory, final R2dbc r2dbc) {
-        this.connectionFactory = connectionFactory;
-        this.r2dbc = r2dbc;
-    }
+	public MessageController(final ConnectionFactory connectionFactory, final R2dbc r2dbc) {
+		this.connectionFactory = connectionFactory;
+		this.r2dbc = r2dbc;
+	}
 
-    @GetMapping
-    public Flux<Message> getAll() {
-        return Mono.from(connectionFactory.create())
-                .flatMapMany(con -> con
-                        .createStatement("SELECT id, text FROM messages ORDER BY id")
-                        .execute())
-                .flatMap(result -> result.map((row, meta) -> mapper.map(row)));
-    }
+	@GetMapping
+	public Flux<Message> getAll() {
+		return Mono.from(connectionFactory.create())
+				.flatMapMany(con -> con
+						.createStatement("SELECT id, text FROM messages ORDER BY id")
+						.execute())
+				.flatMap(result -> result.map((row, meta) -> mapper.map(row)));
+	}
 
-    @GetMapping("/by_client")
-    public Flux<Message> getAllByClient() {
-        return r2dbc.withHandle(handle -> handle
-                .select("SELECT id, text FROM messages ORDER BY id")
-                .mapRow(mapper::map));
-    }
+	@GetMapping("/by_client")
+	public Flux<Message> getAllByClient() {
+		return r2dbc.withHandle(handle -> handle
+				.select("SELECT id, text FROM messages ORDER BY id")
+				.mapRow(mapper::map));
+	}
 
-    @PostMapping("/by_client")
-    public Mono<Void> postByClient(@RequestBody final Text message) {
-        return r2dbc.useTransaction(handle -> handle
-                .execute("INSERT INTO messages (text) VALUES ($1)", message.getText()));
-    }
+	@PostMapping("/by_client")
+	public Mono<Void> postByClient(@RequestBody final Text message) {
+		return r2dbc.useTransaction(handle -> handle
+				.execute("INSERT INTO messages (text) VALUES ($1)", message.getText()));
+	}
 
-    static final class Text {
+	static final class Text {
 
-        private final String text;
+		private final String text;
 
-        public Text(@JsonProperty("text") final String text) {
-            this.text = text;
-        }
+		public Text(@JsonProperty("text") final String text) {
+			this.text = text;
+		}
 
-        public String getText() {
-            return text;
-        }
-    }
+		public String getText() {
+			return text;
+		}
+	}
 }

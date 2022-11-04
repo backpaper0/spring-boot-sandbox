@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheExample {
 
-    @Cacheable("example")
-    public String foo(final int i) {
-        return "foo:" + i;
-    }
+	@Cacheable("example")
+	public String foo(final int i) {
+		return "foo:" + i;
+	}
 
-    @Cacheable("example")
-    public String bar(final int i) {
-        return "bar:" + i;
-    }
+	@Cacheable("example")
+	public String bar(final int i) {
+		return "bar:" + i;
+	}
 }

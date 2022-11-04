@@ -16,42 +16,42 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 class SpringValidatorExampleControllerTest {
 
-    @Autowired
-    private WebApplicationContext context;
+	@Autowired
+	private WebApplicationContext context;
 
-    private MockMvc mvc;
+	private MockMvc mvc;
 
-    @BeforeEach
-    void setUp() throws Exception {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+	@BeforeEach
+	void setUp() throws Exception {
+		mvc = MockMvcBuilders.webAppContextSetup(context).build();
+	}
 
-    @Test
-    void valid() throws Exception {
-        mvc.perform(post("/1")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", "hello"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Valid"));
-    }
+	@Test
+	void valid() throws Exception {
+		mvc.perform(post("/1")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", "hello"))
+				.andExpect(status().isOk())
+				.andExpect(content().string("Valid"));
+	}
 
-    @Test
-    void invalid_null() throws Exception {
-        mvc.perform(post("/1")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Required"));
-    }
+	@Test
+	void invalid_null() throws Exception {
+		mvc.perform(post("/1")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string("Required"));
+	}
 
-    @Test
-    void invalid_empty() throws Exception {
-        mvc.perform(post("/3")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
-                .param("text", ""))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().string("Required"));
-    }
+	@Test
+	void invalid_empty() throws Exception {
+		mvc.perform(post("/3")
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+				.header(HttpHeaders.ACCEPT_LANGUAGE, "ja-JP")
+				.param("text", ""))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string("Required"));
+	}
 }

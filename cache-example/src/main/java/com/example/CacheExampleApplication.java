@@ -10,21 +10,21 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class CacheExampleApplication implements CommandLineRunner {
 
-    @Autowired
-    private CacheExample example;
+	@Autowired
+	private CacheExample example;
 
-    public static void main(final String[] args) {
-        SpringApplication.run(CacheExampleApplication.class, args);
-    }
+	public static void main(final String[] args) {
+		SpringApplication.run(CacheExampleApplication.class, args);
+	}
 
-    @Override
-    public void run(final String... args) throws Exception {
-        System.out.println(example.foo(1));
-        System.out.println(example.foo(2));
+	@Override
+	public void run(final String... args) throws Exception {
+		System.out.println(example.foo(1));
+		System.out.println(example.foo(2));
 
-        //keyがfoo(1)と被っているからキャッシュされているfoo:1が表示される
-        System.out.println(example.bar(1));
+		//keyがfoo(1)と被っているからキャッシュされているfoo:1が表示される
+		System.out.println(example.bar(1));
 
-        System.out.println(example.bar(3));
-    }
+		System.out.println(example.bar(3));
+	}
 }

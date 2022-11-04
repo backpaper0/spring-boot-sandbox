@@ -12,12 +12,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CommandLineRunnerOrderSampleTest {
 
-    @Autowired
-    private ValuesHolder valuesHolder;
+	@Autowired
+	private ValuesHolder valuesHolder;
 
-    @Test
-    void test() throws Exception {
-        final List<String> values = valuesHolder.get();
-        assertEquals(Arrays.asList("foo", "bar", "baz", "qux"), values);
-    }
+	@Test
+	void test() throws Exception {
+		final List<String> values = valuesHolder.get();
+		assertEquals(Arrays.asList("foo", "bar", "baz", "qux"), values);
+	}
 }

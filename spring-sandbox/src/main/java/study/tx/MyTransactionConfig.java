@@ -11,18 +11,18 @@ import org.springframework.transaction.annotation.ProxyTransactionManagementConf
 @EnableTransactionManagement(proxyTargetClass = true)
 public class MyTransactionConfig {
 
-    @Bean
-    public MyTransactionManager myTransactionManager() {
-        return new MyTransactionManager();
-    }
+	@Bean
+	public MyTransactionManager myTransactionManager() {
+		return new MyTransactionManager();
+	}
 
-    @Bean
-    public Foo foo() {
-        return new Foo();
-    }
+	@Bean
+	public Foo foo() {
+		return new Foo();
+	}
 
-    @Bean
-    public Bar bar() {
-        return new Bar(foo());
-    }
+	@Bean
+	public Bar bar() {
+		return new Bar(foo());
+	}
 }

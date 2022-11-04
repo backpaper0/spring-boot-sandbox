@@ -17,40 +17,40 @@ import org.springframework.util.MultiValueMap;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ValidationValueObjectSampleTest {
 
-    @Autowired
-    private TestRestTemplate template;
+	@Autowired
+	private TestRestTemplate template;
 
-    @Test
-    void test1() throws Exception {
+	@Test
+	void test1() throws Exception {
 
-        final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
-        form.add("foo", "He");
-        form.add("bar", "ll");
-        form.add("baz", "o!");
+		final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+		form.add("foo", "He");
+		form.add("bar", "ll");
+		form.add("baz", "o!");
 
-        final RequestEntity<MultiValueMap<String, String>> request = RequestEntity
-                .post(URI.create("/"))
-                .body(form);
+		final RequestEntity<MultiValueMap<String, String>> request = RequestEntity
+				.post(URI.create("/"))
+				.body(form);
 
-        final ResponseEntity<String> response = template.exchange(request, String.class);
+		final ResponseEntity<String> response = template.exchange(request, String.class);
 
-        assertThat(response.getBody()).isEqualTo("Hello!");
-    }
+		assertThat(response.getBody()).isEqualTo("Hello!");
+	}
 
-    @Test
-    void test2() throws Exception {
+	@Test
+	void test2() throws Exception {
 
-        final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
-        form.add("foo", "123");
-        form.add("bar", "12");
-        form.add("baz", "123");
+		final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+		form.add("foo", "123");
+		form.add("bar", "12");
+		form.add("baz", "123");
 
-        final RequestEntity<MultiValueMap<String, String>> request = RequestEntity
-                .post(URI.create("/"))
-                .body(form);
+		final RequestEntity<MultiValueMap<String, String>> request = RequestEntity
+				.post(URI.create("/"))
+				.body(form);
 
-        final ResponseEntity<String> response = template.exchange(request, String.class);
+		final ResponseEntity<String> response = template.exchange(request, String.class);
 
-        assertThat(response.getBody()).isEqualTo("ERROR");
-    }
+		assertThat(response.getBody()).isEqualTo("ERROR");
+	}
 }

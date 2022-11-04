@@ -14,24 +14,24 @@ import org.springframework.security.config.annotation.method.configuration.Globa
 @EnableGlobalMethodSecurity
 public class CustomGlobalMethodSecurityConfiguration extends GlobalMethodSecurityConfiguration {
 
-    @Override
-    protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
-        return new SecuredAnnotationSecurityMetadataSource(new CustomAnnotationMetadataExtractor());
-    }
+	@Override
+	protected MethodSecurityMetadataSource customMethodSecurityMetadataSource() {
+		return new SecuredAnnotationSecurityMetadataSource(new CustomAnnotationMetadataExtractor());
+	}
 
-    static class CustomAnnotationMetadataExtractor
-            implements AnnotationMetadataExtractor<CustomAuthorize> {
+	static class CustomAnnotationMetadataExtractor
+			implements AnnotationMetadataExtractor<CustomAuthorize> {
 
-        @Override
-        public Collection<? extends ConfigAttribute> extractAttributes(
-                final CustomAuthorize securityAnnotation) {
-            return Arrays.stream(securityAnnotation.value())
-                    .map(this::toConfigAttribute)
-                    .collect(Collectors.toSet());
-        }
+		@Override
+		public Collection<? extends ConfigAttribute> extractAttributes(
+				final CustomAuthorize securityAnnotation) {
+			return Arrays.stream(securityAnnotation.value())
+					.map(this::toConfigAttribute)
+					.collect(Collectors.toSet());
+		}
 
-        private ConfigAttribute toConfigAttribute(final Roles r) {
-            return () -> "ROLE_" + r.name();
-        }
-    }
+		private ConfigAttribute toConfigAttribute(final Roles r) {
+			return () -> "ROLE_" + r.name();
+		}
+	}
 }

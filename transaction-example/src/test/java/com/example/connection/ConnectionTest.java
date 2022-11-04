@@ -17,38 +17,38 @@ import com.example.connection.component.Foo;
 @SpringBootTest
 class ConnectionTest {
 
-    @Autowired
-    private Foo foo;
-    @MockBean
-    private DataSource dataSource;
+	@Autowired
+	private Foo foo;
+	@MockBean
+	private DataSource dataSource;
 
-    @Test
-    void fooWillCommit() throws Exception {
+	@Test
+	void fooWillCommit() throws Exception {
 
-        final Connection con = mock(Connection.class);
-        //        doAnswer(i -> {
-        //            new Throwable().printStackTrace(System.out);
-        //            return null;
-        //        }).when(con).close();
+		final Connection con = mock(Connection.class);
+		//        doAnswer(i -> {
+		//            new Throwable().printStackTrace(System.out);
+		//            return null;
+		//        }).when(con).close();
 
-        when(dataSource.getConnection()).thenReturn(con);
+		when(dataSource.getConnection()).thenReturn(con);
 
-        foo.willCommit();
+		foo.willCommit();
 
-        verify(con).commit();
-        verify(con).close();
-    }
+		verify(con).commit();
+		verify(con).close();
+	}
 
-    @Test
-    void fooWillRollback() throws Exception {
+	@Test
+	void fooWillRollback() throws Exception {
 
-        final Connection con = mock(Connection.class);
+		final Connection con = mock(Connection.class);
 
-        when(dataSource.getConnection()).thenReturn(con);
+		when(dataSource.getConnection()).thenReturn(con);
 
-        assertThrows(RuntimeException.class, () -> foo.willRollback());
+		assertThrows(RuntimeException.class, () -> foo.willRollback());
 
-        verify(con).rollback();
-        verify(con).close();
-    }
+		verify(con).rollback();
+		verify(con).close();
+	}
 }

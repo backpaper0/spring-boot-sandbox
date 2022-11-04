@@ -11,12 +11,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class SessionScopeTest {
 
-    @Autowired
-    private TestRestTemplate template;
+	@Autowired
+	private TestRestTemplate template;
 
-    @Test
-    void test() {
-        final int count = template.getForObject("/demo", Integer.class);
-        assertEquals(0, count);
-    }
+	@Test
+	void test() {
+		final int count = template.getForObject("/demo", Integer.class);
+		assertEquals(0, count);
+	}
 }

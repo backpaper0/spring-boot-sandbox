@@ -15,35 +15,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LocaldatetimeFormatExampleApplication {
 
-    public static void main(final String[] args) throws Exception {
-        final ConfigurableApplicationContext context = SpringApplication
-                .run(LocaldatetimeFormatExampleApplication.class, args);
+	public static void main(final String[] args) throws Exception {
+		final ConfigurableApplicationContext context = SpringApplication
+				.run(LocaldatetimeFormatExampleApplication.class, args);
 
-        final URL url = new URL("http://localhost:8080");
-        final HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        final InputStream in = (InputStream) con.getContent();
-        final byte[] b = in.readAllBytes();
-        final String s = new String(b);
-        System.out.println(s);
+		final URL url = new URL("http://localhost:8080");
+		final HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		final InputStream in = (InputStream) con.getContent();
+		final byte[] b = in.readAllBytes();
+		final String s = new String(b);
+		System.out.println(s);
 
-        SpringApplication.exit(context);
-    }
+		SpringApplication.exit(context);
+	}
 
-    @GetMapping("/")
-    Example get() {
-        return new Example(LocalDateTime.now());
-    }
+	@GetMapping("/")
+	Example get() {
+		return new Example(LocalDateTime.now());
+	}
 
-    public static class Example {
+	public static class Example {
 
-        private final LocalDateTime value;
+		private final LocalDateTime value;
 
-        public Example(final LocalDateTime value) {
-            this.value = value;
-        }
+		public Example(final LocalDateTime value) {
+			this.value = value;
+		}
 
-        public LocalDateTime getValue() {
-            return value;
-        }
-    }
+		public LocalDateTime getValue() {
+			return value;
+		}
+	}
 }
