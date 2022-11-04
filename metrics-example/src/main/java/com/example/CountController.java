@@ -16,9 +16,9 @@ public class CountController {
 	private final AtomicInteger counter1 = new AtomicInteger();
 	private final AtomicInteger counter2;
 	private final Counter counter3;
-	private Counter counter4a;
-	private Counter counter4b;
-	private Counter counter4c;
+	private final Counter counter4a;
+	private final Counter counter4b;
+	private final Counter counter4c;
 
 	public CountController(MeterRegistry registry) {
 		Gauge.builder("example.count.1", this.counter1::get).register(registry);

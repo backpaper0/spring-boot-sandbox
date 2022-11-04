@@ -30,7 +30,7 @@ public class FixedLocalDateTimeProvider implements LocalDateTimeProvider {
 
 	/**
 	 * 固定された現在日時を設定する。
-	 * 
+	 *
 	 * @param fixedValue 固定された現在日時
 	 */
 	public void setFixedValue(LocalDateTime fixedValue) {

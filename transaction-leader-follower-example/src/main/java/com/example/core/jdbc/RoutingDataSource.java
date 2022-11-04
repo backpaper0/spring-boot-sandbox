@@ -21,7 +21,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 
 	/**
 	 * スレッドローカルへデータソースのタイプが設定されているかどうかを返す。
-	 * 
+	 *
 	 * @return データソースのタイプが設定されていればtrue
 	 */
 	public boolean dataSourceTypeIsSet() {
@@ -30,7 +30,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 
 	/**
 	 * スレッドローカルへデータソースのタイプを設定する。
-	 * 
+	 *
 	 * @param dataSourceType データソースのタイプ
 	 */
 	public void setDataSourceType(DataSourceType dataSourceType) {
@@ -39,7 +39,7 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
 
 	/**
 	 * スレッドローカルからデータソースのタイプをクリアする。
-	 * 
+	 *
 	 */
 	public void clearDataSourceType() {
 		dataSourceType.remove();

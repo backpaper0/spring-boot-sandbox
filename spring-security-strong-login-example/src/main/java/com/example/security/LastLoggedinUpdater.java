@@ -22,7 +22,7 @@ public class LastLoggedinUpdater {
 
 	/**
 	 * ログイン成功時に最終ログイン日時を更新する。
-	 * 
+	 *
 	 * @param event
 	 */
 	@EventListener(AuthenticationSuccessEvent.class)

@@ -22,7 +22,7 @@ class ComponentInterfaceTest {
 		/**
 		 * プロファイルを指定しなければdefaultプロファイルにフォールバックされる。
 		 * defaultプロファイルだとモック実装が選ばれる。
-		 * 
+		 *
 		 */
 		@Test
 		void get() {
@@ -32,7 +32,7 @@ class ComponentInterfaceTest {
 		/**
 		 * コンポーネント管理されるのはモック実装のみ。
 		 * プロダクション実装は無視される。
-		 * 
+		 *
 		 */
 		@Test
 		void testName() {
@@ -51,7 +51,7 @@ class ComponentInterfaceTest {
 
 		/**
 		 * defaultプロファイル以外だとプロダクション実装が選ばれる。
-		 * 
+		 *
 		 */
 		@Test
 		void get() {
@@ -61,7 +61,7 @@ class ComponentInterfaceTest {
 		/**
 		 * コンポーネント管理されるのはプロダクション実装のみ。
 		 * モック実装は無視される。
-		 * 
+		 *
 		 */
 		@Test
 		void testName() {

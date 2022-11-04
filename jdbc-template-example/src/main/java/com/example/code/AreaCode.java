@@ -12,7 +12,7 @@ public enum AreaCode implements Code {
 	private String code;
 	private String label;
 
-	private AreaCode(final String code, final String label) {
+	AreaCode(final String code, final String label) {
 		this.code = code;
 		this.label = label;
 	}

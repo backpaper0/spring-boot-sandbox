@@ -23,7 +23,7 @@ public class LoginFailureCountUpdater {
 
 	/**
 	 * ログイン成功時のイベントハンドラーでログイン失敗回数をリセットする。
-	 * 
+	 *
 	 * @param event
 	 */
 	@EventListener(AuthenticationSuccessEvent.class)
@@ -35,7 +35,7 @@ public class LoginFailureCountUpdater {
 	/**
 	 * ログイン失敗時のイベントハンドラーでログイン失敗回数をインクリメントする。
 	 * ログイン失敗回数が規定値を超えるとアカウントをロックする。
-	 * 
+	 *
 	 * @param event
 	 */
 	@EventListener(AuthenticationFailureBadCredentialsEvent.class)

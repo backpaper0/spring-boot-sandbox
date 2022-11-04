@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 /**
- * 
+ *
  * @see org.springframework.validation.beanvalidation.SpringValidatorAdapter
  */
 @RestController

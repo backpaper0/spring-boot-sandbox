@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-	private Counter counter;
+	private final Counter counter;
 
 	public DemoController(Counter counter) {
 		this.counter = Objects.requireNonNull(counter);

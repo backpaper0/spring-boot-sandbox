@@ -20,7 +20,7 @@ class BeanNameExampleTest {
 	@Test
 	void component() {
 		final String[] actual = context.getBeanNamesForType(Foo.class);
-		final String[] expected = new String[] {
+		final String[] expected = {
 				"study.beanname.BeanNameExample$Foo"
 		};
 		assertArrayEquals(expected, actual);
@@ -29,7 +29,7 @@ class BeanNameExampleTest {
 	@Test
 	void componentValueElement() {
 		final String[] actual = context.getBeanNamesForType(Bar.class);
-		final String[] expected = new String[] {
+		final String[] expected = {
 				"barbar"
 		};
 		assertArrayEquals(expected, actual);
@@ -38,7 +38,7 @@ class BeanNameExampleTest {
 	@Test
 	void beanAnnotation() {
 		final String[] actual = context.getBeanNamesForType(Baz.class);
-		final String[] expected = new String[] {
+		final String[] expected = {
 				"baz1",
 				"bazbaz"
 		};

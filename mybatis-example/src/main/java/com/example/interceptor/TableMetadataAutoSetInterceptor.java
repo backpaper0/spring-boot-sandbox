@@ -18,7 +18,7 @@ import org.springframework.util.ReflectionUtils;
 
 /**
  * テーブルがメタデータのカラムを持つ場合、自動で設定するInterceptor。
- * 
+ *
  * MyBatisのInterceptorについては以下のURLを参照。
  * https://mybatis.org/mybatis-3/ja/configuration.html#plugins
  *

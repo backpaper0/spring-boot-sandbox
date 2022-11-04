@@ -18,7 +18,7 @@ public class FollowerConfig {
 
 	/**
 	 * フォロワーデータベースのプロパティを構築する。
-	 * 
+	 *
 	 * @return フォロワーデータベースのプロパティ
 	 */
 	@Bean
@@ -30,7 +30,7 @@ public class FollowerConfig {
 
 	/**
 	 * フォロワーデータベースのデータソースを構築する。
-	 * 
+	 *
 	 * @return フォロワーデータベースのデータソース
 	 */
 	@Bean

@@ -18,7 +18,7 @@ public class LeaderConfig {
 
 	/**
 	 * リーダーデータベースのプロパティを構築する。
-	 * 
+	 *
 	 * @return リーダーデータベースのプロパティ
 	 */
 	@Bean
@@ -30,7 +30,7 @@ public class LeaderConfig {
 
 	/**
 	 * リーダーデータベースのデータソースを構築する。
-	 * 
+	 *
 	 * @return リーダーデータベースのデータソース
 	 */
 	@Bean

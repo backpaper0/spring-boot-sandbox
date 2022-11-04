@@ -24,7 +24,7 @@ public class RoutingDataSourceConfig {
 
 	/**
 	 * ルーティングデータソースを構築する。
-	 * 
+	 *
 	 * @param leaderDataSource リーダーデータソース
 	 * @param followerDataSource フォロワーデータソース
 	 * @return ルーティングデータソース
@@ -46,7 +46,7 @@ public class RoutingDataSourceConfig {
 
 	/**
 	 * ルーティングインターセプターを適用するAdvisorを構築する。
-	 * 
+	 *
 	 * @param tas トランザクションの属性を取得するためのインターフェース
 	 * @param routingInteceptor ルーティングインターセプター
 	 * @return ルーティングインターセプターを適用するAdvisor

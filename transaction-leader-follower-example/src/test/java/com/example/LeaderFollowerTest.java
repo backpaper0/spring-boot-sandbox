@@ -21,7 +21,7 @@ public class LeaderFollowerTest {
 
 	/**
 	 * リーダーデータソースを使用する。
-	 * 
+	 *
 	 */
 	@Test
 	void findAllFromLeader1() {
@@ -31,7 +31,7 @@ public class LeaderFollowerTest {
 
 	/**
 	 * フォロワーデータソースを使用する。
-	 * 
+	 *
 	 */
 	@Test
 	void findAllFromFollower1() {
@@ -41,7 +41,7 @@ public class LeaderFollowerTest {
 
 	/**
 	 * {@link ReadOnlyTransaction}アノテーションを利用してフォロワーデータソースを使用する。
-	 * 
+	 *
 	 */
 	@Test
 	void findAllFromFollower2() {

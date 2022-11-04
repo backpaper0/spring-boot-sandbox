@@ -38,7 +38,7 @@ public class RoundTripTimeRecorderTest {
 				3L); // レスポンスのハンドリング終了時
 
 		HttpRequest request = mock(HttpRequest.class);
-		byte[] body = new byte[0];
+		byte[] body = {};
 		response = sut.intercept(request, body, execution);
 		response.close();
 
@@ -65,7 +65,7 @@ public class RoundTripTimeRecorderTest {
 				.thenReturn(4L);
 
 		HttpRequest request = mock(HttpRequest.class);
-		byte[] body = new byte[0];
+		byte[] body = {};
 		response = sut.intercept(request, body, execution);
 		response.close();
 
@@ -88,7 +88,7 @@ public class RoundTripTimeRecorderTest {
 				3L); // レスポンスのハンドリング終了時
 
 		HttpRequest request = mock(HttpRequest.class);
-		byte[] body = new byte[0];
+		byte[] body = {};
 		response = sut.intercept(request, body, execution);
 		response.close();
 		response.close(); //2度目のclose呼び出しだが、経過時間の計算は一度しか行われない

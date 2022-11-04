@@ -44,10 +44,7 @@ public class PasswordForm {
 
 	@AssertTrue(message = "{passwordConfirmationError}")
 	public boolean getPasswordConfirmation() {
-		if (!StringUtils.hasText(newPassword)) {
-			return true;
-		}
-		if (!StringUtils.hasText(currentPassword)) {
+		if (!StringUtils.hasText(newPassword) || !StringUtils.hasText(currentPassword)) {
 			return true;
 		}
 		return newPassword.equals(confirmPassword);
