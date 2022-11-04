@@ -2,8 +2,6 @@ package com.example.common.httpclient;
 
 import java.io.IOException;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -12,6 +10,8 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 
 import com.example.common.accesslog.ElapsedTimeConverter;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Component
 public class RoundTripTimeRecorder implements ClientHttpRequestInterceptor {

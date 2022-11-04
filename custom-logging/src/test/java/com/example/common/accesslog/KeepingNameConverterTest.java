@@ -3,11 +3,10 @@ package com.example.common.accesslog;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.junit.jupiter.api.Test;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class KeepingNameConverterTest {
 

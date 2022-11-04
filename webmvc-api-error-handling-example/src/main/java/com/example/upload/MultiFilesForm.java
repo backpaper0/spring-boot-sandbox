@@ -2,10 +2,10 @@ package com.example.upload;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Size;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class MultiFilesForm {
 

@@ -2,13 +2,13 @@ package com.example.error;
 
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/error")

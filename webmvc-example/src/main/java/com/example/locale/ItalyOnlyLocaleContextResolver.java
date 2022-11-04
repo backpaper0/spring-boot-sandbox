@@ -3,14 +3,14 @@ package com.example.locale;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.springframework.context.i18n.LocaleContext;
 import org.springframework.context.i18n.SimpleTimeZoneAwareLocaleContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.LocaleContextResolver;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Component(DispatcherServlet.LOCALE_RESOLVER_BEAN_NAME)
 public class ItalyOnlyLocaleContextResolver implements LocaleContextResolver {

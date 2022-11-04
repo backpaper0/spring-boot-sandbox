@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import jakarta.validation.constraints.NotNull;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +17,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.SmartValidator;
 
 import com.example.manual.ManualValidationExampleTest.AppValidator;
+
+import jakarta.validation.constraints.NotNull;
 
 @SpringBootTest
 @Import(AppValidator.class)

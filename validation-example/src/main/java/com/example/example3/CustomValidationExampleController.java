@@ -4,9 +4,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
-
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.Errors;
@@ -17,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 
 @RestController
 @RequestMapping("/3")

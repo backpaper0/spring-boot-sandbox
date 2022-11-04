@@ -2,10 +2,9 @@ package com.example.common.accesslog;
 
 import java.util.concurrent.TimeUnit;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import ch.qos.logback.access.pattern.AccessConverter;
 import ch.qos.logback.access.spi.IAccessEvent;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ElapsedTimeConverter extends AccessConverter {
 

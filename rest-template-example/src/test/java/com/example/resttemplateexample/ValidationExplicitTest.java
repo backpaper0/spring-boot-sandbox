@@ -6,8 +6,6 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 import java.util.Map;
 
-import jakarta.validation.constraints.NotNull;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,8 @@ import org.springframework.validation.SmartValidator;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jakarta.validation.constraints.NotNull;
 
 @SpringBootTest
 public class ValidationExplicitTest {

@@ -6,14 +6,14 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Size;
-
 import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 
 @RestController
 @RequestMapping("4")

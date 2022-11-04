@@ -10,8 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.testing.TimeSignal;
-
 @SpringJUnitConfig
 @SpringBootTest
 class TimeSignalTest {

@@ -2,7 +2,6 @@ package com.example.app.form;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import lombok.Data;
 
 @Data

@@ -3,8 +3,6 @@ package com.example.common.httpclient;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,6 +12,8 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.common.accesslog.ElapsedTimeConverter;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @SpringJUnitConfig(classes = { RoundTripTimeRecorder.class })
 public class RoundTripTimeRecorderTest {

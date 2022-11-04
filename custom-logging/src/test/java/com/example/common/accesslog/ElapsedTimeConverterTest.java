@@ -5,11 +5,10 @@ import static org.mockito.Mockito.*;
 
 import java.util.concurrent.TimeUnit;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import org.junit.jupiter.api.Test;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class ElapsedTimeConverterTest {
 

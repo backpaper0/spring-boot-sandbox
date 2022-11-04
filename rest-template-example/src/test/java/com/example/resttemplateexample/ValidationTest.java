@@ -2,8 +2,6 @@ package com.example.resttemplateexample;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import jakarta.validation.constraints.Size;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +10,8 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.validation.BindException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import jakarta.validation.constraints.Size;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ValidationTest {

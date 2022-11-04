@@ -1,8 +1,8 @@
 package com.example.upload;
 
-import jakarta.validation.constraints.AssertTrue;
-
 import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.validation.constraints.AssertTrue;
 
 public class SingleFileForm {
 

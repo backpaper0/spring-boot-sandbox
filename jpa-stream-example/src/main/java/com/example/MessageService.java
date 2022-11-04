@@ -3,10 +3,10 @@ package com.example;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import jakarta.persistence.EntityManager;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import jakarta.persistence.EntityManager;
 
 @Service
 public class MessageService {

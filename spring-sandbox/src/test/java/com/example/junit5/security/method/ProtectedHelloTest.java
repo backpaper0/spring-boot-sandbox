@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import com.example.junit5.security.method.ProtectedHello;
-import com.example.junit5.security.method.ProtectedHelloConfig;
-
 @SpringJUnitConfig(ProtectedHelloConfig.class)
 class ProtectedHelloTest {
 
