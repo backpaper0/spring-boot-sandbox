@@ -9,36 +9,38 @@ import java.util.stream.IntStream;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class MultiThreadedExample {
 
-	private final JobBuilderFactory jobs;
-	private final StepBuilderFactory steps;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 
-	public MultiThreadedExample(JobBuilderFactory jobs, StepBuilderFactory steps) {
-		this.jobs = jobs;
-		this.steps = steps;
+	public MultiThreadedExample(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 	}
 
 	@Bean
 	public Job multiThreadedJob() {
-		return jobs.get(MultiThreadedExample.class.getSimpleName() + "Job")
+		return new JobBuilder(MultiThreadedExample.class.getSimpleName() + "Job", jobRepository)
 				.start(multiThreadedStep()).build();
 	}
 
 	@Bean
 	public Step multiThreadedStep() {
-		return steps.get(MultiThreadedExample.class.getSimpleName() + "Step")
-				.<Integer, Integer> chunk(3)
+		return new StepBuilder(MultiThreadedExample.class.getSimpleName() + "Step", jobRepository)
+				.<Integer, Integer> chunk(3, transactionManager)
 				.reader(multiThreadedReader())
 				.writer(multiThreadedWriter()).taskExecutor(multiThreadedTaskExecutor())
 				.build();

@@ -2,32 +2,35 @@ package com.example.repeat;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class RepeatExample {
 
-	private final JobBuilderFactory jobs;
-	private final StepBuilderFactory steps;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 	private final SimpleRepeatTasklet simpleRepeatTasklet;
 
-	public RepeatExample(final JobBuilderFactory jobs, final StepBuilderFactory steps,
+	public RepeatExample(JobRepository jobRepository, PlatformTransactionManager transactionManager,
 			final SimpleRepeatTasklet simpleRepeatTasklet) {
-		this.jobs = jobs;
-		this.steps = steps;
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 		this.simpleRepeatTasklet = simpleRepeatTasklet;
 	}
 
 	@Bean
 	public Job simpleRepeatJob() {
-		return jobs.get("simpleRepeatJob").start(simpleRepeatStep()).build();
+		return new JobBuilder("simpleRepeatJob", jobRepository).start(simpleRepeatStep()).build();
 	}
 
 	@Bean
 	public Step simpleRepeatStep() {
-		return steps.get("simpleRepeatStep").tasklet(simpleRepeatTasklet).build();
+		return new StepBuilder("simpleRepeatStep", jobRepository)
+				.tasklet(simpleRepeatTasklet, transactionManager).build();
 	}
 }

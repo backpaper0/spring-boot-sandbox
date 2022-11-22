@@ -6,13 +6,13 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.listener.StepExecutionListenerSupport;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PrintlnStepExecutionListener extends StepExecutionListenerSupport {
+public class PrintlnStepExecutionListener implements StepExecutionListener {
 
 	private final JdbcTemplate jdbcTemplate;
 

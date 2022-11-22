@@ -2,27 +2,29 @@ package com.example.flow;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class FlowExample {
 
-	private final JobBuilderFactory jobs;
-	private final StepBuilderFactory steps;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 
-	public FlowExample(final JobBuilderFactory jobs, final StepBuilderFactory steps) {
-		this.jobs = jobs;
-		this.steps = steps;
+	public FlowExample(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 	}
 
 	@Bean
 	public Job flowExampleJob() {
-		return jobs.get("flowExampleJob")
+		return new JobBuilder("flowExampleJob", jobRepository)
 				.start(flowExampleStep1())
 				.on("FAILED").to(flowExampleStep2())
 				.from(flowExampleStep1()).on("*").to(flowExampleStep3())
@@ -32,17 +34,20 @@ public class FlowExample {
 
 	@Bean
 	public Step flowExampleStep1() {
-		return steps.get("flowExampleStep1").tasklet(flowExampleTasklet1()).build();
+		return new StepBuilder("flowExampleStep1", jobRepository)
+				.tasklet(flowExampleTasklet1(), transactionManager).build();
 	}
 
 	@Bean
 	public Step flowExampleStep2() {
-		return steps.get("flowExampleStep2").tasklet(flowExampleTasklet2()).build();
+		return new StepBuilder("flowExampleStep2", jobRepository)
+				.tasklet(flowExampleTasklet2(), transactionManager).build();
 	}
 
 	@Bean
 	public Step flowExampleStep3() {
-		return steps.get("flowExampleStep3").tasklet(flowExampleTasklet3()).build();
+		return new StepBuilder("flowExampleStep3", jobRepository)
+				.tasklet(flowExampleTasklet3(), transactionManager).build();
 	}
 
 	@Bean

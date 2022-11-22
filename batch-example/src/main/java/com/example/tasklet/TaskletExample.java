@@ -2,32 +2,35 @@ package com.example.tasklet;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class TaskletExample {
 
-	private final JobBuilderFactory jobs;
-	private final StepBuilderFactory steps;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 	private final HelloTasklet tasklet;
 
-	public TaskletExample(final JobBuilderFactory jobs, final StepBuilderFactory steps,
+	public TaskletExample(JobRepository jobRepository, PlatformTransactionManager transactionManager,
 			final HelloTasklet tasklet) {
-		this.jobs = jobs;
-		this.steps = steps;
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 		this.tasklet = tasklet;
 	}
 
 	@Bean
 	public Job taskletExampleJob() {
-		return jobs.get("taskletExampleJob").start(taskletExampleStep()).build();
+		return new JobBuilder("taskletExampleJob", jobRepository).start(taskletExampleStep()).build();
 	}
 
 	@Bean
 	public Step taskletExampleStep() {
-		return steps.get("taskletExampleStep").tasklet(tasklet).build();
+		return new StepBuilder("taskletExampleStep", jobRepository)
+				.tasklet(tasklet, transactionManager).build();
 	}
 }

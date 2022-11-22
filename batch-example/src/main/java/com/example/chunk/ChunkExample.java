@@ -2,25 +2,27 @@ package com.example.chunk;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class ChunkExample {
 
-	private final JobBuilderFactory jobs;
-	private final StepBuilderFactory steps;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 	private final FooBarItemReader reader;
 	private final TwoRepeatItemProcessor processor;
 	private final PrintlnItemWriter writer;
 
-	public ChunkExample(final JobBuilderFactory jobs, final StepBuilderFactory steps,
+	public ChunkExample(JobRepository jobRepository, PlatformTransactionManager transactionManager,
 			final FooBarItemReader reader, final TwoRepeatItemProcessor processor,
 			final PrintlnItemWriter writer) {
-		this.jobs = jobs;
-		this.steps = steps;
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 		this.reader = reader;
 		this.processor = processor;
 		this.writer = writer;
@@ -28,13 +30,14 @@ public class ChunkExample {
 
 	@Bean
 	public Job chunkExampleJob() {
-		return jobs.get("chunkExampleJob").start(chunkExampleStep()).build();
+		return new JobBuilder("chunkExampleJob", jobRepository).start(chunkExampleStep()).build();
 	}
 
 	@Bean
 	public Step chunkExampleStep() {
-		return steps.get("chunkExampleStep")
-				.<String, String> chunk(1).reader(reader).processor(processor).writer(writer)
+		return new StepBuilder("chunkExampleStep", jobRepository)
+				.<String, String> chunk(1, transactionManager)
+				.reader(reader).processor(processor).writer(writer)
 				.build();
 	}
 }
