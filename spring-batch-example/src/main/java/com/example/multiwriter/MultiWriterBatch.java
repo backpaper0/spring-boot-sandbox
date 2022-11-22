@@ -6,10 +6,11 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.listener.StepExecutionListenerSupport;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -17,20 +18,19 @@ import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.batch.item.support.PassThroughItemProcessor;
 import org.springframework.batch.item.support.builder.ClassifierCompositeItemWriterBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class MultiWriterBatch {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
-
-	public MultiWriterBatch(StepBuilderFactory steps, JobBuilderFactory jobs) {
-		this.steps = steps;
-		this.jobs = jobs;
-	}
+	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
 
 	@Bean
 	@StepScope
@@ -70,12 +70,12 @@ public class MultiWriterBatch {
 
 	@Bean
 	public Step multiWriterStep() {
-		return steps.get("MultiWriter")
-				.<String, String> chunk(1)
+		return new StepBuilder("MultiWriter", jobRepository)
+				.<String, String> chunk(1, transactionManager)
 				.reader(multiWriterItemReader())
 				.processor(multiWriterItemProcessor())
 				.writer(multiWriterItemWriter())
-				.listener(new StepExecutionListenerSupport() {
+				.listener(new StepExecutionListener() {
 					@Override
 					public ExitStatus afterStep(StepExecution stepExecution) {
 						System.out.println(multiWriterItemWriter1().getWrittenItems());
@@ -88,7 +88,7 @@ public class MultiWriterBatch {
 
 	@Bean
 	public Job multiWriterJob() {
-		return jobs.get("MultiWriter")
+		return new JobBuilder("MultiWriter", jobRepository)
 				.start(multiWriterStep())
 				.build();
 	}

@@ -11,9 +11,10 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.annotation.AfterStep;
 import org.springframework.batch.core.annotation.BeforeStep;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.separator.DefaultRecordSeparatorPolicy;
@@ -21,10 +22,12 @@ import org.springframework.batch.item.file.transform.Range;
 import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.batch.item.support.PassThroughItemProcessor;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,8 +42,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NoLineBreaksFlatFileExample {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
+	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
 
 	@Bean
 	@StepScope
@@ -71,8 +76,8 @@ public class NoLineBreaksFlatFileExample {
 
 	@Bean
 	public Step noLineBreaksFlatFileExampleStep(LineSplitter lineSplitter) {
-		return steps.get("noLineBreaksFlatFileExampleStep")
-				.<ExampleItem, ExampleItem> chunk(1)
+		return new StepBuilder("noLineBreaksFlatFileExampleStep", jobRepository)
+				.<ExampleItem, ExampleItem> chunk(1, transactionManager)
 				.listener(lineSplitter)
 				.reader(noLineBreaksFlatFileExampleReader(null))
 				.processor(noLineBreaksFlatFileExampleProcessor())
@@ -82,7 +87,7 @@ public class NoLineBreaksFlatFileExample {
 
 	@Bean
 	public Job noLineBreaksFlatFileExampleJob() {
-		return jobs.get("noLineBreaksFlatFileExampleJob")
+		return new JobBuilder("noLineBreaksFlatFileExampleJob", jobRepository)
 				.start(noLineBreaksFlatFileExampleStep(null))
 				.build();
 	}

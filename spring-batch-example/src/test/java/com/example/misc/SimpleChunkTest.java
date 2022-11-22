@@ -9,9 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.support.ListItemReader;
 import org.springframework.batch.item.support.ListItemWriter;
 import org.springframework.batch.item.support.PassThroughItemProcessor;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootTest
 public class SimpleChunkTest {
@@ -40,9 +42,9 @@ public class SimpleChunkTest {
 	static class TestConfig {
 
 		@Autowired
-		StepBuilderFactory steps;
+		private JobRepository jobRepository;
 		@Autowired
-		JobBuilderFactory jobs;
+		private PlatformTransactionManager transactionManager;
 
 		@Bean
 		public ListItemReader<Integer> itemReader() {
@@ -61,8 +63,8 @@ public class SimpleChunkTest {
 
 		@Bean
 		public Step step() {
-			return steps.get("test")
-					.<Integer, Integer> chunk(3)
+			return new StepBuilder("test", jobRepository)
+					.<Integer, Integer> chunk(3, transactionManager)
 					.reader(itemReader())
 					.processor(itemProcessor())
 					.writer(itemWriter())
@@ -71,7 +73,7 @@ public class SimpleChunkTest {
 
 		@Bean
 		public Job job() {
-			return jobs.get("test")
+			return new JobBuilder("test", jobRepository)
 					.start(step())
 					.build();
 		}

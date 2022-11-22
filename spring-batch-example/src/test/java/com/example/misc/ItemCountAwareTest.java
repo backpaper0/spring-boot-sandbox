@@ -8,9 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemCountAware;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -21,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.PathResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -69,9 +71,9 @@ public class ItemCountAwareTest {
 	static class TestConfig {
 
 		@Autowired
-		StepBuilderFactory steps;
+		private JobRepository jobRepository;
 		@Autowired
-		JobBuilderFactory jobs;
+		private PlatformTransactionManager transactionManager;
 
 		@Bean
 		public FlatFileItemReader<MyItem> itemReader() {
@@ -97,8 +99,8 @@ public class ItemCountAwareTest {
 
 		@Bean
 		public Step step() {
-			return steps.get("test")
-					.<MyItem, MyItem> chunk(3)
+			return new StepBuilder("test", jobRepository)
+					.<MyItem, MyItem> chunk(3, transactionManager)
 					.reader(itemReader())
 					.processor(itemProcessor())
 					.writer(itemWriter())
@@ -107,7 +109,7 @@ public class ItemCountAwareTest {
 
 		@Bean
 		public Job job() {
-			return jobs.get("test")
+			return new JobBuilder("test", jobRepository)
 					.start(step())
 					.build();
 		}

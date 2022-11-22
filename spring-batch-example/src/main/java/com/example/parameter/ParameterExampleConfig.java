@@ -3,28 +3,27 @@ package com.example.parameter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class ParameterExampleConfig {
 
 	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
+
+	@Autowired
 	private MyParameterSupplier myParameterSupplier;
-
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
-
-	public ParameterExampleConfig(StepBuilderFactory steps, JobBuilderFactory jobs) {
-		this.steps = steps;
-		this.jobs = jobs;
-	}
 
 	@Bean
 	public ParameterExampleTasklet parameterExampleTasklet() {
@@ -33,14 +32,14 @@ public class ParameterExampleConfig {
 
 	@Bean
 	public Step parameterExampleStep() {
-		return steps.get("parameterExampleStep")
-				.tasklet(parameterExampleTasklet())
+		return new StepBuilder("parameterExampleStep", jobRepository)
+				.tasklet(parameterExampleTasklet(), transactionManager)
 				.build();
 	}
 
 	@Bean
 	public Job parameterExampleJob() {
-		return jobs.get("parameterExampleJob")
+		return new JobBuilder("parameterExampleJob", jobRepository)
 				.start(parameterExampleStep())
 				.build();
 	}

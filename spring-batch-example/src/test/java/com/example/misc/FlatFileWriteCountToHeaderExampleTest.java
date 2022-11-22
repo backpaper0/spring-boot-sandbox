@@ -16,10 +16,11 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.listener.StepExecutionListenerSupport;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.file.FlatFileHeaderCallback;
 import org.springframework.batch.item.file.FlatFileItemWriter;
 import org.springframework.batch.item.file.builder.FlatFileItemWriterBuilder;
@@ -32,6 +33,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.PathResource;
 import org.springframework.core.io.WritableResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -64,7 +66,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
 		System.out.println(s);
 	}
 
-	static class FileDeleteStepExecutionListener extends StepExecutionListenerSupport {
+	static class FileDeleteStepExecutionListener implements StepExecutionListener {
 		@Override
 		public void beforeStep(StepExecution stepExecution) {
 			if (resource.exists()) {
@@ -94,7 +96,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
 		}
 	}
 
-	static class WriteCountToHeaderStepExecutionListener extends StepExecutionListenerSupport {
+	static class WriteCountToHeaderStepExecutionListener implements StepExecutionListener {
 		@Override
 		public ExitStatus afterStep(StepExecution stepExecution) {
 			long count = stepExecution.getWriteCount();
@@ -113,9 +115,9 @@ public class FlatFileWriteCountToHeaderExampleTest {
 	static class TestConfig {
 
 		@Autowired
-		StepBuilderFactory steps;
+		private JobRepository jobRepository;
 		@Autowired
-		JobBuilderFactory jobs;
+		private PlatformTransactionManager transactionManager;
 
 		@Bean
 		public IteratorItemReader<ExampleItem> itemReader() {
@@ -149,8 +151,8 @@ public class FlatFileWriteCountToHeaderExampleTest {
 
 		@Bean
 		public Step step() {
-			return steps.get("test")
-					.<ExampleItem, ExampleItem> chunk(3)
+			return new StepBuilder("test", jobRepository)
+					.<ExampleItem, ExampleItem> chunk(3, transactionManager)
 					.reader(itemReader())
 					.processor(itemProcessor())
 					.writer(itemWriter())
@@ -161,7 +163,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
 
 		@Bean
 		public Job job() {
-			return jobs.get("test")
+			return new JobBuilder("test", jobRepository)
 					.start(step())
 					.build();
 		}

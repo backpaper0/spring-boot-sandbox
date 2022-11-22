@@ -6,10 +6,11 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
@@ -19,10 +20,12 @@ import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.validator.BeanValidatingItemProcessor;
 import org.springframework.batch.item.validator.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.example.common.ExitCodeGeneratorImpl;
 import com.example.common.LoggingListener;
@@ -30,18 +33,19 @@ import com.example.common.LoggingListener;
 @Configuration
 public class FileToDbBatch {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
+	@Autowired
+	private JobRepository jobRepository;
+	@Autowired
+	private PlatformTransactionManager transactionManager;
+
 	private final DataSource dataSource;
 	private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
 	private final LoggingListener loggingListener;
 	private final BeanValidatingItemProcessor<?> beanValidatingItemProcessor;
 
-	public FileToDbBatch(StepBuilderFactory steps, JobBuilderFactory jobs, DataSource dataSource,
+	public FileToDbBatch(DataSource dataSource,
 			ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener,
 			BeanValidatingItemProcessor<?> beanValidatingItemProcessor) {
-		this.steps = steps;
-		this.jobs = jobs;
 		this.dataSource = dataSource;
 		this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
 		this.loggingListener = loggingListener;
@@ -81,8 +85,8 @@ public class FileToDbBatch {
 
 	@Bean
 	public Step fileToDbStep() {
-		return steps.get("FileToDb")
-				.<Demo1, Demo1> chunk(2)
+		return new StepBuilder("FileToDb", jobRepository)
+				.<Demo1, Demo1> chunk(2, transactionManager)
 
 				.reader(fileToDbItemReader(null))
 				.processor(fileToDbItemProcessor())
@@ -100,7 +104,7 @@ public class FileToDbBatch {
 
 	@Bean
 	public Job fileToDbJob() {
-		return jobs.get("FileToDb")
+		return new JobBuilder("FileToDb", jobRepository)
 				.start(fileToDbStep())
 				.incrementer(new RunIdIncrementer())
 				.build();

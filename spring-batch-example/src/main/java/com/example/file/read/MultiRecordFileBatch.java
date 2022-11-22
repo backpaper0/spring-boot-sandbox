@@ -5,8 +5,9 @@ import java.util.Map;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -23,14 +24,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
 import org.springframework.format.support.DefaultFormattingConversionService;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class MultiRecordFileBatch {
 
 	@Autowired
-	private StepBuilderFactory steps;
+	private JobRepository jobRepository;
 	@Autowired
-	private JobBuilderFactory jobs;
+	private PlatformTransactionManager transactionManager;
 
 	@Bean
 	public FlatFileItemReader<MultiRecordItem> multiRecordFileItemReader() {
@@ -92,8 +94,8 @@ public class MultiRecordFileBatch {
 
 	@Bean
 	public Step multiRecordFileStep() {
-		return steps.get("MultiRecordFile")
-				.<MultiRecordItem, MultiRecordItem> chunk(10)
+		return new StepBuilder("MultiRecordFile", jobRepository)
+				.<MultiRecordItem, MultiRecordItem> chunk(10, transactionManager)
 				.reader(multiRecordFileItemReader())
 				.processor(multiRecordFileItemProcessor())
 				.writer(multiRecordFileItemWriter())
@@ -102,7 +104,7 @@ public class MultiRecordFileBatch {
 
 	@Bean
 	public Job multiRecordFileJob() {
-		return jobs.get("MultiRecordFile")
+		return new JobBuilder("MultiRecordFile", jobRepository)
 				.start(multiRecordFileStep())
 				.build();
 	}

@@ -1,7 +1,6 @@
 package com.example.profile.impl;
 
 import org.springframework.batch.core.StepExecutionListener;
-import org.springframework.batch.core.listener.StepExecutionListenerSupport;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,7 @@ public class DefaultSwitchListenerByProfileExampleListenerBuilder
 
 	@Override
 	public StepExecutionListener build() {
-		return new StepExecutionListenerSupport();
+		return new StepExecutionListener() {
+		};
 	}
 }

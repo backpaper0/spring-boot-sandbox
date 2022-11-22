@@ -1,7 +1,5 @@
 package com.example.common;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.annotation.AfterProcess;
@@ -11,6 +9,7 @@ import org.springframework.batch.core.annotation.BeforeWrite;
 import org.springframework.batch.core.annotation.OnSkipInProcess;
 import org.springframework.batch.core.annotation.OnSkipInRead;
 import org.springframework.batch.core.annotation.OnSkipInWrite;
+import org.springframework.batch.item.Chunk;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,7 +33,7 @@ public class LoggingListener {
 	}
 
 	@BeforeWrite
-	public void beforeWrite(List<Object> items) {
+	public void beforeWrite(Chunk<Object> items) {
 		logger.info("write: {}", items);
 	}
 

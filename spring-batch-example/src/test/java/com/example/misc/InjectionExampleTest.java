@@ -4,16 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.JobContext;
 import org.springframework.batch.core.scope.context.StepContext;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * {@link Value}でインジェクションできる値を確認する。
@@ -37,9 +39,10 @@ public class InjectionExampleTest {
 	static class TestConfig {
 
 		@Autowired
-		StepBuilderFactory steps;
+		private JobRepository jobRepository;
 		@Autowired
-		JobBuilderFactory jobs;
+		private PlatformTransactionManager transactionManager;
+
 		@Autowired
 		InjectionExampleTasklet1 tasklet1;
 		@Autowired
@@ -47,21 +50,21 @@ public class InjectionExampleTest {
 
 		@Bean
 		public Step step1() {
-			return steps.get("test1")
-					.tasklet(tasklet1)
+			return new StepBuilder("test1", jobRepository)
+					.tasklet(tasklet1, transactionManager)
 					.build();
 		}
 
 		@Bean
 		public Step step2() {
-			return steps.get("test2")
-					.tasklet(tasklet2)
+			return new StepBuilder("test2", jobRepository)
+					.tasklet(tasklet2, transactionManager)
 					.build();
 		}
 
 		@Bean
 		public Job job() {
-			return jobs.get("test")
+			return new JobBuilder("test", jobRepository)
 					.start(step1())
 					.next(step2())
 					.build();
