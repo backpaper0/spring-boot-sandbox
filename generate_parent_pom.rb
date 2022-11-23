@@ -38,7 +38,7 @@ File.open("pom.xml", "w") { |out|
 		<testcontainers.version>#{testcontainers_version}</testcontainers.version>
 		<database-rider.version>1.35.0</database-rider.version>
 		<springdoc.version>1.6.12</springdoc.version>
-		<mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
+		<mybatis-spring-boot-starter.version>3.0.0-SNAPSHOT</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.1</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.0.0-alpha-2</greenmail.version>
 		<r2dbc.version>1.0.0.M7</r2dbc.version>
@@ -131,6 +131,14 @@ _EOS_
 			<url>https://repo.spring.io/milestone</url>
 			<snapshots>
 				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>maven-snapshots</id>
+			<name>Maven Snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<snapshots>
+				<enabled>true</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
