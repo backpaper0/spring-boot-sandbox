@@ -24,7 +24,7 @@ public class RequestBodySample {
 	 * @see org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 	 * @see org.springframework.http.converter.HttpMessageConverter
 	 */
-	@PostMapping
+	@PostMapping("/")
 	String post(@RequestBody final Foo foo) {
 		return foo.toString();
 	}

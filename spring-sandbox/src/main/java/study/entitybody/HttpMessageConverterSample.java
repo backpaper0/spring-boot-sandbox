@@ -25,7 +25,7 @@ public class HttpMessageConverterSample {
 		SpringApplication.run(HttpMessageConverterSample.class, args);
 	}
 
-	@PostMapping
+	@PostMapping("/")
 	String post(@RequestBody final Hoge hoge) {
 		return "OK";
 	}
