@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class MultiTransactionManagerConfiguration {
 
 	@Bean
-	@ConfigurationProperties(prefix = "foo.datasource")
+	@ConfigurationProperties(prefix = "multi-transaction-manager.foo.datasource")
 	public DataSourceProperties fooDataSourceProperties() {
 		return new DataSourceProperties();
 	}
@@ -30,7 +30,7 @@ public class MultiTransactionManagerConfiguration {
 	}
 
 	@Bean
-	@ConfigurationProperties(prefix = "bar.datasource")
+	@ConfigurationProperties(prefix = "multi-transaction-manager.bar.datasource")
 	public DataSourceProperties barDataSourceProperties() {
 		return new DataSourceProperties();
 	}

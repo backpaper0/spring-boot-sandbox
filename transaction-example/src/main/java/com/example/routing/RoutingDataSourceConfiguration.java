@@ -24,7 +24,7 @@ import org.springframework.jdbc.datasource.lookup.DataSourceLookup;
 public class RoutingDataSourceConfiguration {
 
 	@Bean
-	@ConfigurationProperties(prefix = "foo.datasource")
+	@ConfigurationProperties(prefix = "routing-datasource.foo.datasource")
 	public DataSourceProperties fooDataSourceProperties() {
 		return new DataSourceProperties();
 	}
@@ -35,7 +35,7 @@ public class RoutingDataSourceConfiguration {
 	}
 
 	@Bean
-	@ConfigurationProperties(prefix = "bar.datasource")
+	@ConfigurationProperties(prefix = "routing-datasource.bar.datasource")
 	public DataSourceProperties barDataSourceProperties() {
 		return new DataSourceProperties();
 	}
