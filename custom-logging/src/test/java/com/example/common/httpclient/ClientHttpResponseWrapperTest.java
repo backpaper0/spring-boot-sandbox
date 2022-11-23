@@ -2,8 +2,11 @@ package com.example.common.httpclient;
 
 import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 
 @SuppressWarnings("resource")
@@ -15,10 +18,11 @@ public class ClientHttpResponseWrapperTest {
 	Runnable recorder;
 
 	@BeforeEach
-	void init() {
+	void init() throws IOException {
 		response = mock(ClientHttpResponse.class);
 		recorder = mock(Runnable.class);
 		sut = new ClientHttpResponseWrapper(response, recorder);
+		when(response.getStatusCode()).thenReturn(HttpStatus.OK);
 	}
 
 	@Test
