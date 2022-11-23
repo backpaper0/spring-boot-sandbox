@@ -41,7 +41,7 @@ public class PasswordController {
 
 		try {
 			passwordService.changePassword(form.getCurrentPassword(), form.getNewPassword());
-		} catch (BadCredentialsException e) {
+		} catch (@SuppressWarnings("unused") BadCredentialsException e) {
 			bindingResult.rejectValue("currentPassword", "mistakePassword");
 			form.setCurrentPassword(null);
 			form.setNewPassword(null);

@@ -10,7 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PropertyOverriddenApp implements ApplicationRunner {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		final var app = new SpringApplication(PropertyOverriddenApp.class);
 		app.setWebApplicationType(WebApplicationType.NONE);
 		app.run(args);

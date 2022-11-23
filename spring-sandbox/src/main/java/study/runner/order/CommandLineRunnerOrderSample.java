@@ -13,7 +13,8 @@ import org.springframework.core.Ordered;
 @SpringBootApplication
 public class CommandLineRunnerOrderSample {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(CommandLineRunnerOrderSample.class, args);
 	}
 

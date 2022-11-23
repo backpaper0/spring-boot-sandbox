@@ -19,7 +19,8 @@ import org.springframework.util.ReflectionUtils;
 @SpringBootApplication
 public class JpaStreamExampleApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(JpaStreamExampleApplication.class, args);
 	}
 

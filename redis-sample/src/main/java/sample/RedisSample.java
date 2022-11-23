@@ -14,7 +14,9 @@ import org.springframework.data.redis.core.convert.RedisCustomConversions;
 
 @SpringBootApplication
 public class RedisSample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(RedisSample.class, args);
 	}
 

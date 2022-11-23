@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 @ConfigurationPropertiesScan
 public class App {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}

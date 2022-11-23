@@ -12,7 +12,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @RestController
 public class RequestBodySample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(RequestBodySample.class, args);
 	}
 

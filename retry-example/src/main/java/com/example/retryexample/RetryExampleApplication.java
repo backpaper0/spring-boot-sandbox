@@ -19,7 +19,8 @@ import org.springframework.web.context.annotation.RequestScope;
 @RestController
 public class RetryExampleApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(RetryExampleApplication.class, args);
 	}
 

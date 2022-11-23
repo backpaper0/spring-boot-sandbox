@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class PublicFieldSample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(PublicFieldSample.class, args);
 	}
 }

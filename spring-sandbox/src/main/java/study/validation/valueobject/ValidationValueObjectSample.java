@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ValidationValueObjectSample {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(ValidationValueObjectSample.class, args);
 	}
 

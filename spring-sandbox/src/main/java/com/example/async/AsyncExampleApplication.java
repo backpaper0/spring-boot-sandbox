@@ -12,7 +12,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class AsyncExampleApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(AsyncExampleApplication.class, args);
 	}
 

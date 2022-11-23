@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class App {
 
+	@SuppressWarnings("resource")
 	public static void main(final String[] args) {
 		SpringApplication.run(App.class, args);
 	}

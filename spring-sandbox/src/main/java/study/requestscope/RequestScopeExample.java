@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 public class RequestScopeExample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(RequestScopeExample.class, args);
 	}
 }

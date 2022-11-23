@@ -11,7 +11,8 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 public class SamesiteCookieDemoApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(SamesiteCookieDemoApplication.class, args);
 	}
 

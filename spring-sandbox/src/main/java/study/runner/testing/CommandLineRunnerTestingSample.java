@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
  */
 @SpringBootApplication
 public class CommandLineRunnerTestingSample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		final SpringApplication sa = new SpringApplication(CommandLineRunnerTestingSample.class);
 		sa.setWebApplicationType(WebApplicationType.NONE);
 		sa.run(args);

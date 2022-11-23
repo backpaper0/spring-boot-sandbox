@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @RestController
 public class ImmutableJsonSample {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(ImmutableJsonSample.class, args);
 	}
 

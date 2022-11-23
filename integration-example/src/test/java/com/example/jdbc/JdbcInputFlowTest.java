@@ -26,6 +26,7 @@ class JdbcInputFlowTest {
 	@Test
 	void test() {
 
+		@SuppressWarnings("unchecked")
 		final List<MyMessage> list = (List<MyMessage>) output.receive()
 				.getPayload();
 

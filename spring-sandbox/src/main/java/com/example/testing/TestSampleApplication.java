@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class TestSampleApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(TestSampleApplication.class, args);
 	}
 

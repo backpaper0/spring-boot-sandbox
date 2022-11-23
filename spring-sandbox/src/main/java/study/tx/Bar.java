@@ -11,7 +11,7 @@ public class Bar {
 
 	private final Foo foo;
 
-	public Bar(final Foo foo) {
+	public Bar(Foo foo) {
 		this.foo = foo;
 	}
 
@@ -31,7 +31,7 @@ public class Bar {
 		logger.info("begin method3");
 		try {
 			foo.method3();
-		} catch (final Exception ignore) {
+		} catch (@SuppressWarnings("unused") Exception ignore) {
 		}
 		logger.info("end method3");
 	}

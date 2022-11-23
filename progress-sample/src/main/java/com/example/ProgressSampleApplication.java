@@ -27,6 +27,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @SpringBootApplication
 public class ProgressSampleApplication {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SpringApplication.run(ProgressSampleApplication.class, args);
 	}
@@ -99,7 +100,7 @@ class SampleService {
 			consumer.accept(d);
 			try {
 				TimeUnit.MILLISECONDS.sleep(r.nextInt(1000));
-			} catch (InterruptedException e) {
+			} catch (@SuppressWarnings("unused") InterruptedException e) {
 			}
 		}
 		consumer.accept(1);

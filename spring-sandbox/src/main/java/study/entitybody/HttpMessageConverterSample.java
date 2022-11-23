@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @RestController
 public class HttpMessageConverterSample {
-	public static void main(final String[] args) {
+
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(HttpMessageConverterSample.class, args);
 	}
 

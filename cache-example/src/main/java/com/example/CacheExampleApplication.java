@@ -13,7 +13,8 @@ public class CacheExampleApplication implements CommandLineRunner {
 	@Autowired
 	private CacheExample example;
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(CacheExampleApplication.class, args);
 	}
 

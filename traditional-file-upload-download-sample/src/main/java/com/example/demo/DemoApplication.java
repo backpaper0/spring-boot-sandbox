@@ -21,7 +21,8 @@ import jakarta.validation.ValidationException;
 @Controller
 public class DemoApplication {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

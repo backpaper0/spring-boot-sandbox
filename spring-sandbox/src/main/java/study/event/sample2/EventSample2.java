@@ -25,6 +25,7 @@ import org.springframework.util.ReflectionUtils;
 @SpringBootApplication
 public class EventSample2 implements CommandLineRunner {
 
+	@SuppressWarnings("resource")
 	public static void main(final String[] args) {
 		final SpringApplication sa = new SpringApplication(EventSample2.class);
 		sa.setWebApplicationType(WebApplicationType.NONE);

@@ -16,6 +16,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "my")
 public class App implements ApplicationRunner {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
 	}

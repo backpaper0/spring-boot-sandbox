@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LocaldatetimeFormatExampleApplication {
 
-	public static void main(final String[] args) throws Exception {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) throws Exception {
 		final ConfigurableApplicationContext context = SpringApplication
 				.run(LocaldatetimeFormatExampleApplication.class, args);
 

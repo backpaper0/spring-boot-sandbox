@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import com.example.connection.component.Foo;
 
 @SpringBootTest
+@SuppressWarnings("resource")
 class ConnectionTest {
 
 	@Autowired
@@ -25,7 +26,7 @@ class ConnectionTest {
 	@Test
 	void fooWillCommit() throws Exception {
 
-		final Connection con = mock(Connection.class);
+		Connection con = mock(Connection.class);
 		//        doAnswer(i -> {
 		//            new Throwable().printStackTrace(System.out);
 		//            return null;
@@ -42,7 +43,7 @@ class ConnectionTest {
 	@Test
 	void fooWillRollback() throws Exception {
 
-		final Connection con = mock(Connection.class);
+		Connection con = mock(Connection.class);
 
 		when(dataSource.getConnection()).thenReturn(con);
 

@@ -45,7 +45,8 @@ public class RequestParamSample2 {
 		return foo.toString();
 	}
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(RequestParamSample2.class, args);
 	}
 }

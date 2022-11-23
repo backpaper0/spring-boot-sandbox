@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PropertySourceExampleApplication {
 
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		SpringApplication.run(PropertySourceExampleApplication.class, args);
 	}

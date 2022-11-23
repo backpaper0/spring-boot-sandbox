@@ -14,7 +14,8 @@ import jakarta.validation.constraints.Size;
 @RestController
 public class ValidationSample {
 
-	public static void main(final String[] args) {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) {
 		SpringApplication.run(ValidationSample.class, args);
 	}
 
