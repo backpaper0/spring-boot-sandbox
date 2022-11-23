@@ -7,8 +7,8 @@
   </head>
   <body>
     <h1>Login</h1>
-    <p th:if="${#request.getParameter('error') != null && #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-      th:text="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}"></p>
+    <p th:if="${param.error != null && session.containsKey('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+      th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
     <form th:action="@{/login}" method="POST">
       <p><input name="username" type="text" placeholder="username" autofocus/></p>
       <p><input name="password" type="password" placeholder="password"/></p>

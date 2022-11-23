@@ -2,7 +2,6 @@ package com.example.security;
 
 import java.util.List;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -11,14 +10,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@ConfigurationProperties(prefix = "app")
 public class LoginFailureCountUpdater {
 
 	private final JdbcTemplate jdbc;
-	private int maxLoginFailureCount;
+	private final LoginFailureCountUpdaterProperties properties;
 
-	public LoginFailureCountUpdater(JdbcTemplate jdbc) {
+	public LoginFailureCountUpdater(JdbcTemplate jdbc, LoginFailureCountUpdaterProperties properties) {
 		this.jdbc = jdbc;
+		this.properties = properties;
 	}
 
 	/**
@@ -54,15 +53,11 @@ public class LoginFailureCountUpdater {
 
 		int loginFailureCount = loginFailureCounts.get(0);
 
-		if (loginFailureCount < maxLoginFailureCount) {
+		if (loginFailureCount < properties.getMaxLoginFailureCount()) {
 			jdbc.update("update accounts set login_failure_count = ? where username = ?", loginFailureCount + 1,
 					username);
 		} else {
 			jdbc.update("update accounts set locked = true where username = ?", username);
 		}
-	}
-
-	public void setMaxLoginFailureCount(int maxLoginFailureCount) {
-		this.maxLoginFailureCount = maxLoginFailureCount;
 	}
 }
