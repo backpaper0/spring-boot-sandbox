@@ -1,0 +1,13 @@
+services:
+
+  config:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  bus:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:1672"
+

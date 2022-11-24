@@ -4,23 +4,17 @@
 
 ## 準備
 
-設定値を格納するためのRedisを起動する。
+設定値を格納するためのRedisと[Spring Cloud Bus](https://spring.io/projects/spring-cloud-bus)のためRabbitMQを起動する。
 
 ```sh
-docker run -d --name config -p 6379:6379 redis
+docker compose up -d
 ```
 
 初期値を登録しておく。
 ※なお`my.foobar`は登録しているけど使っていない。今後使うような修正を入れるかも。
 
 ```sh
-docker exec config redis-cli HMSET my-config my.text "Hello World" my.foobar "foo"
-```
-
-[Spring Cloud Bus](https://spring.io/projects/spring-cloud-bus)のためRabbitMQを起動する。
-
-```sh
-docker run -d --name bus -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+docker compose exec config redis-cli HMSET my-config my.text "Hello World" my.foobar "foo"
 ```
 
 コンフィグサーバーとクライアントアプリケーションを起動する。
@@ -52,7 +46,7 @@ curl -s localhost:8080/demo | jq
 `my.text`プロパティの値を変更してみる。
 
 ```sh
-docker exec config redis-cli HSET my-config my.text "Hello Spring Cloud Config"
+docker compose exec config redis-cli HSET my-config my.text "Hello Spring Cloud Config"
 ```
 
 この時点では設定値は変わっていない。
@@ -84,3 +78,10 @@ curl -s localhost:8080/demo | jq
   "text": "Hello Spring Cloud Config"
 }
 ```
+
+## 後始末
+
+```sh
+docker compose down -v
+```
+
