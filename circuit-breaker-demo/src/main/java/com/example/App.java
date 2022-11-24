@@ -21,8 +21,8 @@ public class App {
 	}
 
 	@Bean
-	RestTemplate restTemplate() {
-		return new RestTemplateBuilder().build();
+	RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
 	}
 
 	@Bean

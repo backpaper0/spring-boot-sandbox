@@ -1,7 +1,7 @@
 # circuit-breaker-demo
 
 ```sh
-docker run -d --name hello -p 8000:80 -v $(PWD)/src/nginx:/usr/share/nginx/html nginx
+docker run -d --name hello -p 8000:80 -v $PWD/src/nginx:/usr/share/nginx/html nginx
 ```
 
 ```sh
