@@ -160,3 +160,10 @@ curl -s localhost:8080/demo | jq -S
 `foo`が変更されているのは先ほど確認した。
 `value1`は変化がないのに対して`value2`は新しい値になっている。
 これで`RefreshScope`のコンポーネントがリフレッシュされたことが確認できた。
+
+## 後始末
+
+```sh
+docker rm -f bus
+```
+
