@@ -35,7 +35,6 @@
 		<module>api-token-authentication-example</module>
 		<module>batch-example</module>
 		<module>cache-example</module>
-		<module>character-replacement-example</module>
 		<module>circuit-breaker-demo</module>
 		<module>cloud-bus-demo/service1</module>
 		<module>cloud-bus-demo/service2</module>
