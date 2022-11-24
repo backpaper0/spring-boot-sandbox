@@ -1,15 +1,23 @@
 # accesslog-standard-output-example
 
-https://logback.qos.ch/access.html
+アクセスログを標準出力に出力する例。
 
-Try following curl:
+- https://logback.qos.ch/access.html
+
+アプリケーションを起動する。
+
+```
+mvn spring-boot:run
+```
+
+次の`curl`を試してアクセスログを確認する。
 
 ```
 curl localhost:8080/foo
 curl localhost:8080/bar
 ```
 
-log example:
+次のようなログが出ているはず。
 
 ```
 0:0:0:0:0:0:0:1 - - - 23/9月/2022:13:15:31 +0900 "GET /foo HTTP/1.1" 200 3
