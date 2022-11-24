@@ -7,7 +7,7 @@
 まずRabbitMQを起動する。
 
 ```sh
-docker run -d --name bus -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+docker compose up -d
 ```
 
 次に`service1`、`service2`を起動する。
@@ -164,6 +164,6 @@ curl -s localhost:8080/demo | jq -S
 ## 後始末
 
 ```sh
-docker rm -f bus
+docker compose down -v
 ```
 
