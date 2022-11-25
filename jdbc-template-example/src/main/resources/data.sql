@@ -1,5 +1,0 @@
-INSERT INTO example (txt, dt) VALUES
- ('foo', CURRENT_TIMESTAMP)
-,('bar', CURRENT_TIMESTAMP)
-,('baz', CURRENT_TIMESTAMP)
-;
