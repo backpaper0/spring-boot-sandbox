@@ -18,7 +18,7 @@ public class PersonHandlers {
 
 	Mono<ServerResponse> getPerson(final ServerRequest request) {
 		final String name = request.pathVariable("name");
-		return ServerResponse.ok().syncBody(new Person(name));
+		return ServerResponse.ok().bodyValue(new Person(name));
 	}
 
 	Mono<ServerResponse> postPerson(final ServerRequest request) {
