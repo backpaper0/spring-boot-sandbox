@@ -1,0 +1,21 @@
+services:
+  mq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    hostname: usaq
+
+  ftpd:
+    image: stilliard/pure-ftpd
+    ports:
+      - "10021:21"
+      - "30000-30009:30000-30009"
+    environment:
+      PUBLICHOST: localhost
+      FTP_USER_NAME: example
+      FTP_USER_PASS: example
+      FTP_USER_HOME: /home/example
+    volumes:
+      - ./input:/home/example
+

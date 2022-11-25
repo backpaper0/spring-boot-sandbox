@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.dsl.Files;
 import org.springframework.integration.file.remote.session.SessionFactory;
@@ -34,7 +33,7 @@ public class FtpInputFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows
+		return IntegrationFlow
 				.from(Ftp.inboundAdapter(sessionFactory).localDirectory(new File("output")),
 						c -> c.poller(Pollers.fixedRate(100)))
 				.split(Files.splitter(true).charset(StandardCharsets.UTF_8))

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
 
@@ -22,7 +21,7 @@ public class ExceptionExampleFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows.from(input)
+		return IntegrationFlow.from(input)
 				.handle((String payload, MessageHeaders headers) -> payload.startsWith("b")
 						? new MyException(payload)
 						: payload)

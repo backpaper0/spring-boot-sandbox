@@ -1,6 +1,6 @@
 package com.example.max_message_per_poll;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.dsl.SourcePollingChannelAdapterSpec;
 import org.springframework.integration.endpoint.AbstractMessageSource;
@@ -29,13 +28,13 @@ public class MaxMessagePerPollExample {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows.from(input(), this::configurePoller)
+		return IntegrationFlow.from(input(), this::configurePoller)
 				.channel(output())
 				.get();
 	}
 
 	private void configurePoller(SourcePollingChannelAdapterSpec c) {
-		c.poller(Pollers.fixedRate(2, TimeUnit.SECONDS).maxMessagesPerPoll(3));
+		c.poller(Pollers.fixedRate(Duration.ofSeconds(2)).maxMessagesPerPoll(3));
 	}
 
 	static class CounterMessageSource extends AbstractMessageSource<Integer> {

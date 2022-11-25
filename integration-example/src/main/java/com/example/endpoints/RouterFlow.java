@@ -9,7 +9,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.router.AbstractMessageRouter;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -40,7 +39,7 @@ public class RouterFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows.from(input())
+		return IntegrationFlow.from(input())
 				.route(router())
 				.get();
 	}

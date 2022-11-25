@@ -1,11 +1,38 @@
-```
-docker run -d --name mq -h usaq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
-# Add exchange: foo
-# Add queue: bar
-# bar bound foo
+# integration-example
+
+[Spring Integration](https://spring.io/projects/spring-integration)を試す。
+
+## 準備
+
+RabbitMQとFTPサーバーを起動する。
+
+```sh
+docker compose up -d
 ```
 
+ExchangeとQueueを作成してバインドする。
+
+```sh
+docker compose exec mq rabbitmqadmin declare exchange name=foo type=direct
 ```
-docker run -d --name ftpd -p 10021:21 -p 30000-30009:30000-30009 -e "PUBLICHOST=localhost" -e "FTP_USER_NAME=example" -e "FTP_USER_PASS=example" -e "FTP_USER_HOME=/home/example" -v `pwd`/input:/home/example stilliard/pure-ftpd
+
+```sh
+docker compose exec mq rabbitmqadmin declare queue name=bar
+```
+
+```sh
+docker compose exec mq rabbitmqadmin declare binding source=foo destination=bar
+```
+
+## 動作確認
+
+```sh
+mvn test
+```
+
+## 後始末
+
+```sh
+docker compose down -v
 ```
 

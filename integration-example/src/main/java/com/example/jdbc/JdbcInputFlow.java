@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -33,7 +32,7 @@ public class JdbcInputFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows
+		return IntegrationFlow
 				.from(jdbcPollingChannelAdapter(), c -> c.poller(Pollers.fixedRate(100)))
 				.channel(output())
 				.get();

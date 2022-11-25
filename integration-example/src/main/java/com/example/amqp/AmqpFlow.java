@@ -9,7 +9,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 
 @Configuration
 @EnableIntegration
@@ -35,14 +34,14 @@ public class AmqpFlow {
 
 	@Bean
 	public IntegrationFlow sendFlow() {
-		return IntegrationFlows.from(input())
+		return IntegrationFlow.from(input())
 				.handle(Amqp.outboundAdapter(amqpTemplate).exchangeName("foo"))
 				.get();
 	}
 
 	@Bean
 	public IntegrationFlow receiveFlow() {
-		return IntegrationFlows.from(Amqp.inboundAdapter(connectionFactory, "bar"))
+		return IntegrationFlow.from(Amqp.inboundAdapter(connectionFactory, "bar"))
 				.channel(output())
 				.get();
 	}

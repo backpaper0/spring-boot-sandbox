@@ -7,7 +7,6 @@ import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.core.GenericTransformer;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 
 @Configuration
 @EnableIntegration
@@ -25,7 +24,7 @@ public class TransformerFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows.from(input())
+		return IntegrationFlow.from(input())
 				.transform(upperCase())
 				.channel(output())
 				.get();

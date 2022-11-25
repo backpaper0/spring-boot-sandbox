@@ -12,7 +12,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 
 @Configuration
 @EnableIntegration
@@ -30,7 +29,7 @@ public class AnnotationsFlow {
 
 	@Bean
 	public IntegrationFlow flow() {
-		return IntegrationFlows.from(input())
+		return IntegrationFlow.from(input())
 				.filter(annotations())
 				.transform(annotations())
 				.split(annotations())

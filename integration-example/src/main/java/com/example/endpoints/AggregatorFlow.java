@@ -8,7 +8,6 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 
 @Configuration
 @EnableIntegration
@@ -26,7 +25,7 @@ public class AggregatorFlow {
 
 	@Bean
 	public IntegrationFlow flow1() {
-		return IntegrationFlows.from(input1())
+		return IntegrationFlow.from(input1())
 				.aggregate()
 				.channel(output1())
 				.get();
@@ -44,7 +43,7 @@ public class AggregatorFlow {
 
 	@Bean
 	public IntegrationFlow flow2() {
-		return IntegrationFlows.from(input2())
+		return IntegrationFlow.from(input2())
 				.aggregate(a -> a.correlationStrategy(correlationStrategy())
 						.releaseStrategy(releaseStrategy()))
 				.channel(output2())
