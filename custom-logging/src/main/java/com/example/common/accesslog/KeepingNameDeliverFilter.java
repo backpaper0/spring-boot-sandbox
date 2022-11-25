@@ -14,6 +14,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Component
 @Order(OrderedFilter.REQUEST_WRAPPER_FILTER_MAX_ORDER + 1)
@@ -28,9 +30,12 @@ public class KeepingNameDeliverFilter implements Filter {
 		try {
 			chain.doFilter(request, response);
 		} finally {
-			String name = nameKeeper.getName();
-			if (name != null) {
-				request.setAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME, name);
+			HttpSession session = ((HttpServletRequest) request).getSession(false);
+			if (session != null) {
+				String name = nameKeeper.getName();
+				if (name != null) {
+					request.setAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME, name);
+				}
 			}
 		}
 	}

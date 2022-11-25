@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;
 
 public class ClientHttpResponseWrapper implements ClientHttpResponse {
@@ -28,8 +28,8 @@ public class ClientHttpResponseWrapper implements ClientHttpResponse {
 	}
 
 	@Override
-	public HttpStatus getStatusCode() throws IOException {
-		return HttpStatus.valueOf(response.getStatusCode().value());
+	public HttpStatusCode getStatusCode() throws IOException {
+		return response.getStatusCode();
 	}
 
 	@Override
