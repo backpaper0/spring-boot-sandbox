@@ -17,7 +17,7 @@
 		<spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
 		<spring-cloud-aws.version>2.4.2</spring-cloud-aws.version>
 		<doma.version>2.53.1</doma.version>
-		<doma.boot.version>1.6.0</doma.boot.version>
+		<doma.boot.version>1.7.0</doma.boot.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<database-rider.version>1.35.0</database-rider.version>
 		<springdoc.version>1.6.12</springdoc.version>
@@ -41,14 +41,11 @@
 		<module>cloud-config-demo/client</module>
 		<module>cloud-config-demo/server</module>
 		<module>cloud-function-demo</module>
-		<module>configuration-properties-example</module>
 		<module>custom-logging</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>integration-example</module>
-		<module>jdbc-template-example</module>
 		<module>jpa-example</module>
-		<module>jpa-stream-example</module>
 		<module>language-country-timezone-encoding-example</module>
 		<module>localdatetime-format-example</module>
 		<module>mail-freemarker-demo</module>
