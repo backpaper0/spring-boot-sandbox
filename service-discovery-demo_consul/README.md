@@ -30,7 +30,7 @@ Consulの管理画面が次のURLで確認できる。
 新しいターミナルを開いて次のコマンドで1秒毎にリクエストを送信し続ける。
 
 ```sh
-while true; do curl -s localhost:8080/id; echo ""; sleep 1; done
+while true; do curl -s -w '\n' localhost:8080/id; sleep 1; done
 ```
 
 `servie1`から`service2`がラウンドロビンで呼び出されていることがわかる。
@@ -45,10 +45,10 @@ while true; do curl -s localhost:8080/id; echo ""; sleep 1; done
 ```
 
 ここで`servie2_3`を停止してみる。
-なおDocker Composeではスケールを変更してもエラーになって反映されなかったため`docker`コマンドで停止している。
+なおDocker Composeではスケールを変更するとすべてのコンテナが作り直されて意図した挙動にならなかったため`docker`コマンドで停止している。
 
 ```sh
-docker stop service-discovery-demo_consul_service2_3
+docker stop service-discovery-demo_consul-service2-3
 ```
 
 `service2`のインスタンスが1つ減っていることがわかる。
@@ -68,7 +68,7 @@ docker stop service-discovery-demo_consul_service2_3
 `service_3`を再開してみる。
 
 ```sh
-docker start service-discovery-demo_consul_service2_3
+docker start service-discovery-demo_consul-service2-3
 ```
 
 インスタンスが3つに戻ったことがわかる。
@@ -89,3 +89,10 @@ docker start service-discovery-demo_consul_service2_3
 {"id":"service2-2f56b081b401c02e50fbf77d86998523"}
 {"id":"service2-836c50b812bdcb584a27f99372b1c95d"}
 ```
+
+## 後始末
+
+```sh
+docker compose down -v
+```
+
