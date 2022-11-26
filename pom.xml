@@ -47,9 +47,6 @@
 		<module>integration-example</module>
 		<module>jpa-example</module>
 		<module>language-country-timezone-encoding-example</module>
-		<module>localdatetime-format-example</module>
-		<module>mail-freemarker-demo</module>
-		<module>messages-example</module>
 		<module>method-validation-example</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
@@ -58,7 +55,6 @@
 		<module>progress-sample</module>
 		<module>property-source-example</module>
 		<module>random-value-property-demo</module>
-		<module>reactive-postgres-example</module>
 		<module>reactor-example</module>
 		<module>redis-sample</module>
 		<module>rest-template-example</module>
