@@ -12,6 +12,9 @@ Redis store also available via 'redis' profile.
 
 ```
 docker-compose up -d
+```
+
+```
 mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=redis"
 ```
 
