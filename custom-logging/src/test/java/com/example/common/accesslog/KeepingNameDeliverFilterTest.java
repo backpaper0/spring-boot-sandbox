@@ -12,6 +12,7 @@ import com.example.common.session.NameKeeper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @SpringJUnitConfig(classes = { KeepingNameDeliverFilter.class })
 public class KeepingNameDeliverFilterTest {
@@ -26,6 +27,8 @@ public class KeepingNameDeliverFilterTest {
 		when(nameKeeper.getName()).thenReturn("testname");
 
 		HttpServletRequest request = mock(HttpServletRequest.class);
+		HttpSession session = mock(HttpSession.class);
+		when(request.getSession(false)).thenReturn(session);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
 
@@ -33,21 +36,21 @@ public class KeepingNameDeliverFilterTest {
 
 		verify(nameKeeper).getName();
 		verify(request).setAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME, "testname");
+		verify(request).getSession(false);
 		verify(chain).doFilter(request, response);
-		verifyNoMoreInteractions(nameKeeper, request, response, chain);
+		verifyNoMoreInteractions(nameKeeper, request, response, chain, session);
 	}
 
 	@Test
 	void 保持している名前がなければリクエストへセットしない() throws Exception {
-		when(nameKeeper.getName()).thenReturn(null);
-
 		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getSession(false)).thenReturn(null);
 		HttpServletResponse response = mock(HttpServletResponse.class);
 		FilterChain chain = mock(FilterChain.class);
 
 		sut.doFilter(request, response, chain);
 
-		verify(nameKeeper).getName();
+		verify(request).getSession(false);
 		verify(chain).doFilter(request, response);
 		verifyNoMoreInteractions(nameKeeper, request, response, chain);
 	}
