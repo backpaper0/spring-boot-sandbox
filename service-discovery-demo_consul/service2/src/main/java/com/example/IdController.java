@@ -29,7 +29,7 @@ public class IdController implements ApplicationContextAware, InitializingBean {
 	}
 
 	@Override
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		id = ConsulAutoRegistration.getInstanceId(properties, context);
 	}
 
