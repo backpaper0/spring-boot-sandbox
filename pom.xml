@@ -81,14 +81,11 @@
 		<module>test-mock-example</module>
 		<module>test-with-database-example</module>
 		<module>thymeleaf-example</module>
-		<module>traditional-file-upload-download-sample</module>
 		<module>transaction-example</module>
 		<module>transaction-leader-follower-example</module>
-		<module>two-datasource-transaction-example</module>
 		<module>validation-example</module>
 		<module>webflux-example</module>
 		<module>webflux-functional-endpoint-example</module>
-		<module>webmvc-api-error-handling-example</module>
 		<module>webmvc-error-handling-example</module>
 		<module>webmvc-example</module>
 	</modules>
