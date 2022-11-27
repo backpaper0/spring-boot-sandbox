@@ -21,7 +21,7 @@ public final class FunctionalEndpoints {
 	}
 
 	Mono<ServerResponse> simple(final ServerRequest request) {
-		return ServerResponse.ok().body(BodyInserters.fromObject("hello world"));
+		return ServerResponse.ok().body(BodyInserters.fromValue("hello world"));
 	}
 
 	Mono<ServerResponse> sse(final ServerRequest request) {
