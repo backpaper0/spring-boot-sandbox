@@ -12,10 +12,12 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.example.app.exception.HandlingException;
+
 @ControllerAdvice(basePackages = "com.example.app.controller")
 public class ExceptionHandlers extends ResponseEntityExceptionHandler {
 
-	@ExceptionHandler(Throwable.class)
+	@ExceptionHandler(HandlingException.class)
 	public String handleError() {
 		return "error/handled";
 	}

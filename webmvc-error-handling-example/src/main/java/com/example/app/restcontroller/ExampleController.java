@@ -21,4 +21,9 @@ public class ExampleController {
 	public Object handlingException() {
 		throw new HandlingException();
 	}
+
+	@GetMapping("c")
+	public Object unhandlingException() {
+		throw new RuntimeException();
+	}
 }
