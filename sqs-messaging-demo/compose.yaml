@@ -1,7 +1,7 @@
 services:
 
   localstack:
-    image: localstack/localstack:0.12.11
+    image: localstack/localstack
     ports:
       - 4566:4566
       - 4571:4571
