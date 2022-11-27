@@ -32,7 +32,7 @@ class FunctionalEndpointsTest {
 		form.add("b", "3");
 
 		client.post().uri("/add")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED).syncBody(form)
+				.contentType(MediaType.APPLICATION_FORM_URLENCODED).bodyValue(form)
 				.exchange()
 				.expectHeader().contentType(MediaType.TEXT_PLAIN)
 				.expectBody(String.class).isEqualTo("5");
