@@ -4,15 +4,15 @@ import javax.sql.DataSource;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
 import org.springframework.batch.item.database.JdbcCursorItemReader;
 import org.springframework.batch.item.database.builder.JdbcBatchItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
@@ -21,16 +21,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.example.entity.Example;
 import com.example.processor.ExampleItemProcessor;
 
-import lombok.Setter;
-
 @Configuration
-@ConfigurationProperties(prefix = "example")
 public class ExampleBatchConfig {
 
 	@Autowired
-	private StepBuilderFactory steps;
-	@Autowired
-	private JobBuilderFactory jobs;
+	private JobRepository jobRepository;
 	@Autowired
 	@AppDataSource
 	private PlatformTransactionManager transactionManager;
@@ -38,8 +33,8 @@ public class ExampleBatchConfig {
 	private DataSource dataSource;
 	@Autowired
 	private ExampleItemProcessor exampleItemProcessor;
-	@Setter
-	private int chunkSize;
+	@Autowired
+	private ExampleBatchProperties properties;
 
 	@Bean
 	@StepScope
@@ -64,20 +59,17 @@ public class ExampleBatchConfig {
 
 	@Bean
 	public Step exampleStep() {
-		return steps.get("example")
-				.<Integer, Example> chunk(chunkSize)
+		return new StepBuilder("example", jobRepository)
+				.<Integer, Example> chunk(properties.getChunkSize(), transactionManager)
 				.reader(exampleItemReader())
 				.processor(exampleItemProcessor)
 				.writer(exampleItemWriter())
-				// BeanPostProcessorを使用してTaskletStep#setTransactionManagerで
-				// 設定した方が漏れがなくて良い気がする。
-				.transactionManager(transactionManager)
 				.build();
 	}
 
 	@Bean
 	public Job exampleJob() {
-		return jobs.get("example")
+		return new JobBuilder("example", jobRepository)
 				.start(exampleStep())
 				.build();
 	}

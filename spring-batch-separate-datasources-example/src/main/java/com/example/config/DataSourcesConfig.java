@@ -19,6 +19,7 @@ public class DataSourcesConfig {
 	@Bean
 	@Primary
 	@ConfigurationProperties(prefix = "spring.datasource.hikari")
+	@AppDataSource
 	public HikariDataSource dataSource(DataSourceProperties dataSourceProperties) {
 		return dataSourceProperties
 				.initializeDataSourceBuilder()
@@ -40,5 +41,12 @@ public class DataSourcesConfig {
 				.setType(EmbeddedDatabaseType.H2)
 				.setName("batch")
 				.build();
+	}
+
+	@Bean
+	@BatchDataSource
+	@Primary
+	public DataSourceTransactionManager batchDataSourceTransactionManager() {
+		return new DataSourceTransactionManager(batchDataSource());
 	}
 }

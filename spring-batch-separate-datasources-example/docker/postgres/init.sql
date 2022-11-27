@@ -1,12 +1,12 @@
 create table example (
-	id int primary key,
-	content varchar(100)
+	id integer primary key,
+	content integer not null
 );
 
 insert into example (id, content)
 select
 	generate_series,
-	'initial value'
+	0
 from
 	generate_series(1, 20)
 ;

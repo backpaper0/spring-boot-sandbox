@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Example {
 
-	private Integer id;
-	private String content;
+	private int id;
+	private int content;
 }
