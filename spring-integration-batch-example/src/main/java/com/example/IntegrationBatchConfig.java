@@ -4,25 +4,23 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.batch.core.Job;
-import org.springframework.batch.core.launch.support.SimpleJobLauncher;
-import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.integration.launch.JobLaunchingGateway;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
-import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.endpoint.MethodInvokingMessageSource;
 
 @Configuration
 public class IntegrationBatchConfig {
 
-	private final JobRepository jobRepository;
+	private final JobLauncher jobLauncher;
 	private final List<Job> jobs;
 	private final BatchProperties batchProperties;
 
-	public IntegrationBatchConfig(JobRepository jobRepository, List<Job> jobs, BatchProperties batchProperties) {
-		this.jobRepository = jobRepository;
+	public IntegrationBatchConfig(JobLauncher jobLauncher, List<Job> jobs, BatchProperties batchProperties) {
+		this.jobLauncher = jobLauncher;
 		this.jobs = jobs;
 		this.batchProperties = batchProperties;
 	}
@@ -33,15 +31,8 @@ public class IntegrationBatchConfig {
 	}
 
 	@Bean
-	public SimpleJobLauncher simpleJobLauncher() {
-		SimpleJobLauncher jobLauncher = new SimpleJobLauncher();
-		jobLauncher.setJobRepository(jobRepository);
-		return jobLauncher;
-	}
-
-	@Bean
 	public JobLaunchingGateway jobLaunchingGateway() {
-		return new JobLaunchingGateway(simpleJobLauncher());
+		return new JobLaunchingGateway(jobLauncher);
 	}
 
 	@Bean
@@ -54,10 +45,18 @@ public class IntegrationBatchConfig {
 
 	@Bean
 	public IntegrationFlow integrationFlow() {
-		return IntegrationFlows
+		return IntegrationFlow
 				.from(countMessageSource())
 				.transform(countToJobLaunchRequestTransformer())
 				.handle(jobLaunchingGateway())
+
+				// なんか例外が出るようになったのでnullChannelを設定するようにした、、、
+				// Caused by: org.springframework.messaging.core.DestinationResolutionException: no output-channel or replyChannel header available
+				//		         at org.springframework.integration.handler.AbstractMessageProducingHandler.sendOutput(AbstractMessageProducingHandler.java:479)
+				//		         at org.springframework.integration.handler.AbstractMessageProducingHandler.doProduceOutput(AbstractMessageProducingHandler.java:339)
+				//		         at org.springframework.integration.handler.AbstractMessageProducingHandler.produceOutput(AbstractMessageProducingHandler.java:268)
+				.channel("nullChannel")
+
 				.log()
 				.get();
 	}

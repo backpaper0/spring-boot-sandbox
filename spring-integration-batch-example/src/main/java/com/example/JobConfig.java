@@ -2,21 +2,23 @@ package com.example;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class JobConfig {
 
-	private final StepBuilderFactory steps;
-	private final JobBuilderFactory jobs;
+	private final JobRepository jobRepository;
+	private final PlatformTransactionManager transactionManager;
 
-	public JobConfig(StepBuilderFactory steps, JobBuilderFactory jobs) {
-		this.steps = steps;
-		this.jobs = jobs;
+	public JobConfig(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+		this.jobRepository = jobRepository;
+		this.transactionManager = transactionManager;
 	}
 
 	@Bean
@@ -27,11 +29,15 @@ public class JobConfig {
 
 	@Bean
 	public Step printCountStep() {
-		return steps.get("PrintCount").tasklet(printCountTask()).build();
+		return new StepBuilder("PrintCount", jobRepository)
+				.tasklet(printCountTask(), transactionManager)
+				.build();
 	}
 
 	@Bean
 	public Job printCountJob() {
-		return jobs.get("PrintCount").start(printCountStep()).build();
+		return new JobBuilder("PrintCount", jobRepository)
+				.start(printCountStep())
+				.build();
 	}
 }
