@@ -3,6 +3,7 @@
 DBを起動する。
 
 ```bash
+# pgAdminを使う場合は export COMPOSE_PROFILES=gui しておく
 docker compose up -d
 ```
 
