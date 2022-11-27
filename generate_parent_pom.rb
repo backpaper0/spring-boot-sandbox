@@ -37,7 +37,7 @@ File.open("pom.xml", "w") { |out|
 		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
 		<testcontainers.version>#{testcontainers_version}</testcontainers.version>
 		<database-rider.version>1.35.0</database-rider.version>
-		<springdoc.version>1.6.12</springdoc.version>
+		<springdoc.version>2.0.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.0-SNAPSHOT</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.1</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.0.0-alpha-2</greenmail.version>
@@ -86,7 +86,7 @@ _EOS_
 			</dependency>
 			<dependency>
 				<groupId>org.springdoc</groupId>
-				<artifactId>springdoc-openapi-ui</artifactId>
+				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 				<version>${springdoc.version}</version>
 			</dependency>
 			<dependency>
