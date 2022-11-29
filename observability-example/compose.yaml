@@ -6,7 +6,13 @@ services:
 
   prometheus:
     image: prom/prometheus
-    ports: ["9090:9090"]
+    ports:
+      - "9090:9090"
     volumes:
       - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana-oss
+    ports:
+      - "3000:3000"
 
