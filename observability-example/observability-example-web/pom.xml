@@ -6,9 +6,9 @@
         <groupId>com.example</groupId>
         <artifactId>spring-boot-sandbox-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
+		<relativePath>../../</relativePath>
     </parent>
-    <artifactId>observability-example</artifactId>
+    <artifactId>observability-example-web</artifactId>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

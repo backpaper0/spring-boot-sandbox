@@ -50,7 +50,7 @@
 		<module>method-validation-example</module>
 		<module>metrics-example</module>
 		<module>mybatis-example</module>
-		<module>observability-example</module>
+		<module>observability-example/observability-example-web</module>
 		<module>oidc-example</module>
 		<module>profile-demo</module>
 		<module>progress-sample</module>
@@ -58,6 +58,7 @@
 		<module>random-value-property-demo</module>
 		<module>reactor-example</module>
 		<module>redis-sample</module>
+		<module>rest-client-http-interface-example</module>
 		<module>rest-template-example</module>
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
