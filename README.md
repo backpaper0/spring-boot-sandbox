@@ -5,8 +5,10 @@
 ## プロジェクトの追加 or Spring Bootのバージョンアップ
 
 ```
-ruby generate_parent_pom.rb
+./generate-parent-pom > pom.xml
 ```
+
+あらかじめ`go build`でバイナリを生成しておくこと。
 
 ## License
 

@@ -11,7 +11,6 @@
 	<artifactId>spring-boot-sandbox-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
@@ -27,7 +26,6 @@
 		<r2dbc.version>1.0.0.M7</r2dbc.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
-
 	<modules>
 		<module>accesslog-standard-output-example</module>
 		<module>aop-example</module>
@@ -91,7 +89,6 @@
 		<module>webmvc-error-handling-example</module>
 		<module>webmvc-example</module>
 	</modules>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -147,7 +144,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -159,7 +155,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -178,7 +173,6 @@
 			</snapshots>
 		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
@@ -189,5 +183,4 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

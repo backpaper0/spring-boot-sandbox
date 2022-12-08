@@ -1,41 +1,86 @@
-require "rexml/document"
-require "net/https"
+package main
 
-def get_latest_version(name)
-  http = Net::HTTP.new("repo.maven.apache.org", 443)
-  http.use_ssl = true
-  response = http.get("/maven2/#{name}/maven-metadata.xml")
-  REXML::Document.new(response.body).elements["metadata/versioning/latest"].get_text
-end
+import (
+	"encoding/xml"
+	"io/fs"
+	"io/ioutil"
+	"net/http"
+	"os"
+	"strings"
+	"text/template"
+)
 
-spring_boot_version = get_latest_version("org/springframework/boot/spring-boot")
-doma_version = get_latest_version("org/seasar/doma/doma-core")
-doma_spring_boot_version = get_latest_version("org/seasar/doma/boot/doma-spring-boot-starter")
-testcontainers_version = get_latest_version("org/testcontainers/testcontainers-bom")
+type Metadata struct {
+	LatestVersion string `xml:"versioning>latest"`
+}
 
-File.open("pom.xml", "w") { |out|
-  out.puts <<_EOS_
-<?xml version='1.0' encoding='UTF-8'?>
+func GetLatestVersion(name string) string {
+	resp, err := http.Get("https://repo.maven.apache.org/maven2/" + name + "/maven-metadata.xml")
+	if err != nil {
+		panic(err)
+	}
+	bs, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	md := Metadata{LatestVersion: ""}
+	err = xml.Unmarshal(bs, &md)
+	if err != nil {
+		panic(err)
+	}
+	return md.LatestVersion
+}
+
+type Data struct {
+	SpringBootVersion     string
+	DomaVersion           string
+	DomaSpringBootVersion string
+	TestcontainersVersion string
+	Dirs                  []string
+}
+
+func main() {
+
+	dirs := make([]string, 0)
+	fs.WalkDir(os.DirFS("."), ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			panic(err)
+		}
+		if !d.IsDir() && strings.HasSuffix(path, "/pom.xml") {
+			dir, _, _ := strings.Cut(path, "/pom.xml")
+			dirs = append(dirs, dir)
+		}
+		return nil
+	})
+
+	data := Data{
+		SpringBootVersion:     GetLatestVersion("org/springframework/boot/spring-boot"),
+		DomaVersion:           GetLatestVersion("org/seasar/doma/doma-core"),
+		DomaSpringBootVersion: GetLatestVersion("org/seasar/doma/boot/doma-spring-boot-starter"),
+		TestcontainersVersion: GetLatestVersion("org/testcontainers/testcontainers-bom"),
+		Dirs:                  dirs,
+	}
+
+	t := `<?xml version='1.0' encoding='UTF-8'?>
 <project xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd' xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>#{spring_boot_version}</version>
+		<version>{{.SpringBootVersion}}</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>spring-boot-sandbox-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
 		<spring-cloud-aws.version>3.0.0-M3</spring-cloud-aws.version>
-		<doma.version>#{doma_version}</doma.version>
-		<doma.boot.version>#{doma_spring_boot_version}</doma.boot.version>
-		<testcontainers.version>#{testcontainers_version}</testcontainers.version>
+		<doma.version>{{.DomaVersion}}</doma.version>
+		<doma.boot.version>{{.DomaSpringBootVersion}}</doma.boot.version>
+		<testcontainers.version>{{.TestcontainersVersion}}</testcontainers.version>
 		<database-rider.version>1.35.0</database-rider.version>
 		<springdoc.version>2.0.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.0-SNAPSHOT</mybatis-spring-boot-starter.version>
@@ -44,18 +89,9 @@ File.open("pom.xml", "w") { |out|
 		<r2dbc.version>1.0.0.M7</r2dbc.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
-
-	<modules>
-_EOS_
-
-  poms = `git ls-files | grep /pom\.xml | xargs -I {} dirname {}$`.split("\n")
-  poms.each do |mod|
-	out.puts "		<module>#{mod}</module>"
-  end
-
-  out.puts <<_EOS_
+	<modules>{{range .Dirs}}
+		<module>{{.}}</module>{{end}}
 	</modules>
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -111,7 +147,6 @@ _EOS_
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -123,7 +158,6 @@ _EOS_
 			</plugins>
 		</pluginManagement>
 	</build>
-
 	<repositories>
 		<repository>
 			<id>spring-milestones</id>
@@ -142,7 +176,6 @@ _EOS_
 			</snapshots>
 		</repository>
 	</repositories>
-
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
@@ -153,8 +186,7 @@ _EOS_
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-
-</project>
-_EOS_
+</project>`
+	tt := template.Must(template.New("pom").Parse(t))
+	tt.Execute(os.Stdout, data)
 }
-
