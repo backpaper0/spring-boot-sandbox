@@ -26,10 +26,10 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests(c -> c
 
 						// ワンタイムパスワード入力画面はログイン認証していないとアクセスできない
-						.mvcMatchers("/oneTimePassword").authenticated()
+						.requestMatchers("/oneTimePassword").authenticated()
 
 						// ホーム画面はログイン認証に加え、2要素認証を通過していないとアクセスできない
-						.mvcMatchers("/home").access(passedTwoFactorAuth)
+						.requestMatchers("/home").access(passedTwoFactorAuth)
 
 						.anyRequest().authenticated())
 

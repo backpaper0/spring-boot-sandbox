@@ -1,15 +1,15 @@
 package com.example.security;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import com.example.session.LoginUserInfo;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public class AuthenticationSuccessHandlerImpl extends SimpleUrlAuthenticationSuccessHandler {
 
-	private LoginUserInfo loginUserInfo;
+	private final LoginUserInfo loginUserInfo;
 
 	public AuthenticationSuccessHandlerImpl(LoginUserInfo loginUserInfo) {
 		this.loginUserInfo = loginUserInfo;
