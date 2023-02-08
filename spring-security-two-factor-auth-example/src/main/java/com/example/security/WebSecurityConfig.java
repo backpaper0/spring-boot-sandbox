@@ -1,26 +1,37 @@
 package com.example.security;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authorization.AuthenticatedAuthorizationManager;
-import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.security.web.access.expression.DefaultHttpSecurityExpressionHandler;
+import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 
 import com.example.session.LoginUserInfo;
 
 @Configuration(proxyBeanMethods = false)
-public class WebSecurityConfig {
+public class WebSecurityConfig implements ApplicationContextAware {
+
+	private ApplicationContext applicationContext;
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.applicationContext = applicationContext;
+	}
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http, LoginUserInfo loginUserInfo)
 			throws Exception {
 
-		AuthorizationManager<RequestAuthorizationContext> passedTwoFactorAuth = CompositeAuthorizationManager
-				.composite(
-						AuthenticatedAuthorizationManager.authenticated(),
-						new TwoFactorAuthAuthorizationManager(loginUserInfo));
+		DefaultHttpSecurityExpressionHandler expressionHandler = new DefaultHttpSecurityExpressionHandler();
+		expressionHandler.setApplicationContext(applicationContext);
+
+		WebExpressionAuthorizationManager passedTwoFactorAuth = new WebExpressionAuthorizationManager(
+				"isAuthenticated() and @loginUserInfo.isPassedTwoFactorAuth()");
+		passedTwoFactorAuth.setExpressionHandler(expressionHandler);
 
 		return http
 				.authorizeHttpRequests(c -> c
