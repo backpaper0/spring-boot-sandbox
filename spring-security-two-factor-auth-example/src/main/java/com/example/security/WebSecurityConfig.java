@@ -1,8 +1,5 @@
 package com.example.security;
 
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,21 +10,17 @@ import org.springframework.security.web.access.expression.WebExpressionAuthoriza
 import com.example.session.LoginUserInfo;
 
 @Configuration(proxyBeanMethods = false)
-public class WebSecurityConfig implements ApplicationContextAware {
+public class WebSecurityConfig {
 
-	private ApplicationContext applicationContext;
-
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.applicationContext = applicationContext;
+	@Bean
+	DefaultHttpSecurityExpressionHandler expressionHandler() {
+		return new DefaultHttpSecurityExpressionHandler();
 	}
 
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http, LoginUserInfo loginUserInfo)
+	SecurityFilterChain securityFilterChain(HttpSecurity http, LoginUserInfo loginUserInfo,
+			DefaultHttpSecurityExpressionHandler expressionHandler)
 			throws Exception {
-
-		DefaultHttpSecurityExpressionHandler expressionHandler = new DefaultHttpSecurityExpressionHandler();
-		expressionHandler.setApplicationContext(applicationContext);
 
 		WebExpressionAuthorizationManager passedTwoFactorAuth = new WebExpressionAuthorizationManager(
 				"isAuthenticated() and @loginUserInfo.isPassedTwoFactorAuth()");
