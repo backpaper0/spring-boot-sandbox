@@ -3,6 +3,9 @@ package com.example.controller;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.form.OneTimePasswordForm;
 import com.example.session.LoginUserInfo;
-
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/oneTimePassword")
