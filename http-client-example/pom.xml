@@ -8,7 +8,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../</relativePath>
 	</parent>
-	<artifactId>rest-client-http-interface-example</artifactId>
+	<artifactId>http-client-example</artifactId>
 
 	<dependencies>
 		<dependency>
