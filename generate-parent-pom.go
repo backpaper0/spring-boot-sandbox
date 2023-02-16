@@ -46,7 +46,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		if !d.IsDir() && strings.HasSuffix(path, "/pom.xml") {
+		if !d.IsDir() && strings.HasSuffix(path, "/pom.xml") && !strings.Contains(path, "/target/classes/META-INF/maven/") {
 			dir, _, _ := strings.Cut(path, "/pom.xml")
 			dirs = append(dirs, dir)
 		}
