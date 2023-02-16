@@ -1,4 +1,4 @@
-package com.example.junit5.security.method;
+package com.example.methodsecurity;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
