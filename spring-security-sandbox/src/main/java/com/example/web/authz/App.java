@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.web.authz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

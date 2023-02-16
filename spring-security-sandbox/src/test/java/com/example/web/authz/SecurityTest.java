@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.web.authz;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,9 +49,9 @@ class SecurityTest {
 			"/qux          | BAZ1 | true ",
 			"/qux          | BAZ2 | true ",
 	})
-	void test(String uri, String authorities, boolean expected) {
+	void test(String uri, String authority, boolean expected) {
 		Authentication authentication = new TestingAuthenticationToken(
-				"user1", "...", authorities.split("\\s*,\\s"));
+				"user1", "...", authority);
 		boolean actual = evaluator.isAllowed(uri, authentication);
 		assertEquals(expected, actual);
 	}

@@ -1,4 +1,4 @@
-package com.example.security;
+package com.example.web.authz;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.authorizeHttpRequests(c -> c
 						.requestMatchers("/foo").hasAuthority("FOO")
@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+	InMemoryUserDetailsManager inMemoryUserDetailsManager() {
 		List<UserDetails> users = List.of(
 				User.withUsername("user1").authorities("FOO").password("secret").build(),
 				User.withUsername("user2").authorities("BAR").password("secret").build(),
