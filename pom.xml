@@ -74,6 +74,7 @@
 		<module>spring-integration-batch-example</module>
 		<module>spring-no-boot-example</module>
 		<module>spring-sandbox</module>
+		<module>spring-security-sandbox</module>
 		<module>spring-security-strong-login-example</module>
 		<module>spring-security-two-factor-auth-example</module>
 		<module>spring-webmvc-fn-demo</module>
