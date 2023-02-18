@@ -1,0 +1,9 @@
+RULE helloworld
+CLASS com.example.HelloWorld
+METHOD run
+AT ENTRY
+BIND runner:HelloWorld = $0
+IF true
+DO traceln("HelloWorld: runner = " + runner)
+ENDRULE
+
