@@ -6,8 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
-import org.springframework.security.web.util.matcher.AnyRequestMatcher;
 import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
 @Configuration
@@ -15,14 +13,8 @@ public class WebSecurityConfig {
 
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-		// any request && !h2 console
-		AndRequestMatcher requestMatcher = new AndRequestMatcher(
-				AnyRequestMatcher.INSTANCE,
-				new NegatedRequestMatcher(PathRequest.toH2Console()));
-
 		return http
-				.securityMatcher(requestMatcher)
+				.securityMatcher(new NegatedRequestMatcher(PathRequest.toH2Console()))
 				.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
 				.formLogin(Customizer.withDefaults())
 				.build();
