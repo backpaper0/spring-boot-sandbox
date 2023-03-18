@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Switch User Example</title>
+</head>
+
+<body>
+  <h1>Admin</h1>
+  <p th:text="${#authentication.name}"></p>
+  <form th:action="@{/login/impersonate}" method="POST" sec:authorize-url="/login/impersonate">
+    <p th:if="${param.error != null and session.containsKey('SPRING_SECURITY_LAST_EXCEPTION')}"
+      th:text="ユーザーの切り替えに失敗しました。"></p>
+  	<p><input type="text" name="username"></p>
+  	<p><button>Switch User</button></p>
+  </form>
+  <form th:action="@{/logout/impersonate}" method="POST" sec:authorize-url="/logout/impersonate">
+  	<p><button>Exit</button></p>
+  </form>
+  <p><a href="#" th:href="@{/}">ホームヘ戻る</a></p>
+</body>
+
+</html>

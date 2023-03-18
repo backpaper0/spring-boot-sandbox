@@ -82,6 +82,7 @@
 		<module>spring-webmvc-fn-demo</module>
 		<module>springdoc-openapi-example</module>
 		<module>sqs-messaging-demo</module>
+		<module>switch-user-example</module>
 		<module>test-mock-example</module>
 		<module>test-with-database-example</module>
 		<module>thymeleaf-example</module>

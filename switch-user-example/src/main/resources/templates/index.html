@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Switch User Example</title>
+</head>
+
+<body>
+  <h1>Home</h1>
+  <p><a href="#" th:href="@{/foo}">Foo</a></p>
+  <p><a href="#" th:href="@{/bar}">Bar</a></p>
+  <p><a href="#" th:href="@{/switch}">Switch</a></p>
+  <p><a href="#" th:href="@{/logout}">ログアウト</a></p>
+</body>
+
+</html>
