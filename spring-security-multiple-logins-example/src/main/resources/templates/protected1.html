@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>spring-security-multiple-logins-example</title>
+</head>
+
+<body>
+  <h1>Protected 1</h1>
+  <p th:text="${#authentication.name}">...</p>
+  <ul>
+  	<li><a href="#" th:href="@{/}">ホームへ戻る</li>
+  	<li><a href="#" th:href="@{/protected1/logout}">ログアウト</a></li>
+  </ul>
+</body>
+
+</html>

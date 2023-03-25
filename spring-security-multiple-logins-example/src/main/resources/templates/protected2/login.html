@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>spring-security-multiple-logins-example</title>
+</head>
+
+<body>
+  <h1>Protected 2 / Login</h1>
+
+  <form th:action="@{/protected2/login}" action="index.html" method="POST">
+    <p th:if="${param.error != null and session.containsKey('SPRING_SECURITY_LAST_EXCEPTION')}"
+      th:text="${session.SPRING_SECURITY_LAST_EXCEPTION.message}"></p>
+
+    <p><label>ユーザー名：<input name="username" type="text" autofocus></label></p>
+
+    <p><label>パスワード：<input name="password" type="password"></label></p>
+
+    <p><button>ログイン</button></p>
+  </form>
+  <ul>
+  	<li><a href="#" th:href="@{/}">ホームへ戻る</li>
+  </ul>
+</body>
+
+</html>

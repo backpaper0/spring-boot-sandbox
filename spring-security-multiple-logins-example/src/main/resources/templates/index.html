@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>spring-security-multiple-logins-example</title>
+</head>
+
+<body>
+  <h1>Home</h1>
+  <ul>
+  	<li><a href="#" th:href="@{/protected1}">保護ページ1</a></li>
+  	<li><a href="#" th:href="@{/protected2}">保護ページ2</a></li>
+  </ul>
+</body>
+
+</html>
