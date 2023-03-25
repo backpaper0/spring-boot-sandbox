@@ -41,6 +41,7 @@
 		<module>cloud-config-demo/server</module>
 		<module>cloud-function-demo</module>
 		<module>custom-logging</module>
+		<module>environment-post-processor-example</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
 		<module>http-client-example</module>
