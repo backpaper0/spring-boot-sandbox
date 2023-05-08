@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/xml"
+	"io"
 	"io/fs"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -14,16 +14,16 @@ type Metadata struct {
 	LatestVersion string `xml:"versioning>latest"`
 }
 
-func GetLatestVersion(name string) string {
+func getLatestVersion(name string) string {
 	resp, err := http.Get("https://repo.maven.apache.org/maven2/" + name + "/maven-metadata.xml")
 	if err != nil {
 		panic(err)
 	}
-	bs, err := ioutil.ReadAll(resp.Body)
+	bs, err := io.ReadAll(resp.Body)
 	if err != nil {
 		panic(err)
 	}
-	md := Metadata{LatestVersion: ""}
+	md := &Metadata{LatestVersion: ""}
 	err = xml.Unmarshal(bs, &md)
 	if err != nil {
 		panic(err)
@@ -53,11 +53,11 @@ func main() {
 		return nil
 	})
 
-	data := Data{
-		SpringBootVersion:     GetLatestVersion("org/springframework/boot/spring-boot"),
-		DomaVersion:           GetLatestVersion("org/seasar/doma/doma-core"),
-		DomaSpringBootVersion: GetLatestVersion("org/seasar/doma/boot/doma-spring-boot-starter"),
-		TestcontainersVersion: GetLatestVersion("org/testcontainers/testcontainers-bom"),
+	data := &Data{
+		SpringBootVersion:     getLatestVersion("org/springframework/boot/spring-boot"),
+		DomaVersion:           getLatestVersion("org/seasar/doma/doma-core"),
+		DomaSpringBootVersion: getLatestVersion("org/seasar/doma/boot/doma-spring-boot-starter"),
+		TestcontainersVersion: getLatestVersion("org/testcontainers/testcontainers-bom"),
 		Dirs:                  dirs,
 	}
 
