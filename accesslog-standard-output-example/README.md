@@ -24,3 +24,9 @@ curl localhost:8080/bar
 0:0:0:0:0:0:0:1 - - - 23/9月/2022:13:15:33 +0900 "GET /bar HTTP/1.1" 200 3
 ```
 
+非同期処理も。
+
+```
+curl -N localhost:8080/count -d n=5
+```
+

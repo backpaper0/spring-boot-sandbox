@@ -13,6 +13,7 @@ public class AccessLogCustomizer
 	@Override
 	public void customize(ConfigurableTomcatWebServerFactory factory) {
 		LogbackValve logbackValve = new LogbackValve();
+		logbackValve.setAsyncSupported(true);
 		factory.addEngineValves(logbackValve);
 	}
 }
