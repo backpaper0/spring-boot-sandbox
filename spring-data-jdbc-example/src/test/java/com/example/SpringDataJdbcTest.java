@@ -2,6 +2,8 @@ package com.example;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,21 +26,20 @@ public class SpringDataJdbcTest {
 	@Test
 	void singer1() {
 		Singer singer = singers.findById(1).get();
-		assertAll(
-				() -> assertEquals(1, singer.id()),
-				() -> assertEquals("LUNA SEA", singer.name()),
-				() -> assertEquals(1, singer.version()),
-				() -> assertEquals(3, singer.songs().size()));
+		Singer expected = new Singer(1, "LUNA SEA", 1, Set.of(
+				new Song(1, "Limit", AggregateReference.to(1)),
+				new Song(2, "Unlikelihood", AggregateReference.to(1)),
+				new Song(3, "MECHANICAL DANCE", AggregateReference.to(1))));
+		assertEquals(expected, singer);
 	}
 
 	@Test
 	void singer2() {
 		Singer singer = singers.findById(2).get();
-		assertAll(
-				() -> assertEquals(2, singer.id()),
-				() -> assertEquals("THEE MICHELLE GUN ELEPHANT", singer.name()),
-				() -> assertEquals(1, singer.version()),
-				() -> assertEquals(2, singer.songs().size()));
+		Singer expected = new Singer(2, "THEE MICHELLE GUN ELEPHANT", 1, Set.of(
+				new Song(4, "暴かれた世界", AggregateReference.to(2)),
+				new Song(5, "G.W.D", AggregateReference.to(2))));
+		assertEquals(expected, singer);
 	}
 
 	@Test
