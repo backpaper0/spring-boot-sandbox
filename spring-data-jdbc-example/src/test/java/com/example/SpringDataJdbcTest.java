@@ -25,20 +25,20 @@ public class SpringDataJdbcTest {
 	void singer1() {
 		Singer singer = singers.findById(1).get();
 		assertAll(
-				() -> assertEquals(1, singer.getId()),
-				() -> assertEquals("LUNA SEA", singer.getName()),
-				() -> assertEquals(1, singer.getVersion()),
-				() -> assertEquals(3, singer.getSongs().size()));
+				() -> assertEquals(1, singer.id()),
+				() -> assertEquals("LUNA SEA", singer.name()),
+				() -> assertEquals(1, singer.version()),
+				() -> assertEquals(3, singer.songs().size()));
 	}
 
 	@Test
 	void singer2() {
 		Singer singer = singers.findById(2).get();
 		assertAll(
-				() -> assertEquals(2, singer.getId()),
-				() -> assertEquals("THEE MICHELLE GUN ELEPHANT", singer.getName()),
-				() -> assertEquals(1, singer.getVersion()),
-				() -> assertEquals(2, singer.getSongs().size()));
+				() -> assertEquals(2, singer.id()),
+				() -> assertEquals("THEE MICHELLE GUN ELEPHANT", singer.name()),
+				() -> assertEquals(1, singer.version()),
+				() -> assertEquals(2, singer.songs().size()));
 	}
 
 	@Test
@@ -60,9 +60,9 @@ public class SpringDataJdbcTest {
 		Singer singer = singers.findById(3).get();
 		singer = singer.withName("Mr.Children");
 		singer = singers.save(singer);
-		assertEquals(3, singer.getId());
-		assertEquals("Mr.Children", singer.getName());
-		assertEquals(2, singer.getVersion());
+		assertEquals(3, singer.id());
+		assertEquals("Mr.Children", singer.name());
+		assertEquals(2, singer.version());
 	}
 
 	@Test

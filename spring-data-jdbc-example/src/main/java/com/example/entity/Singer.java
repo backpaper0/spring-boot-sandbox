@@ -6,18 +6,17 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
-import lombok.Value;
-import lombok.With;
+public record Singer(
+		@Id Integer id,
+		String name,
+		@Version Integer version,
+		@MappedCollection Set<Song> songs) {
 
-@Value
-@With
-public class Singer {
+	public Singer withName(String newName) {
+		return new Singer(id, newName, version, songs);
+	}
 
-	@Id
-	Integer id;
-	String name;
-	@Version
-	Integer version;
-	@MappedCollection
-	Set<Song> songs;
+	public Singer withVersion(Integer newVersion) {
+		return new Singer(id, name, newVersion, songs);
+	}
 }
