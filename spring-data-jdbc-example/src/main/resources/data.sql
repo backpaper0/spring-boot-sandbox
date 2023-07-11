@@ -10,3 +10,7 @@ insert into song (id, title, singer) values
 (4, '暴かれた世界', 2),
 (5, 'G.W.D', 2),
 (6, 'デルモ', 3);
+
+
+insert into tweet (id, content) values
+('01H53KCNBZ9MMFBN7TDDPTRS6B', 'foobar');

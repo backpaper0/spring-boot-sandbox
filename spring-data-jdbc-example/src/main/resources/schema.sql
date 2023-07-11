@@ -14,3 +14,10 @@ create table singer (
 
 alter table song add foreign key (singer) references singer (id);
 
+
+
+create table tweet (
+	id varchar(26),
+	content varchar not null,
+	primary key (id)
+);
