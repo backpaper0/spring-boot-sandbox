@@ -3,6 +3,7 @@ name: spring-boot-sandbox
 on:
   push:
     branches: [ master ]
+  workflow_dispatch: {}
 
 jobs:
   build:
