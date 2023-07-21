@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.1.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -17,7 +17,7 @@
 		<spring-cloud-aws.version>3.0.0-M3</spring-cloud-aws.version>
 		<doma.version>2.53.3</doma.version>
 		<doma.boot.version>1.7.0</doma.boot.version>
-		<testcontainers.version>1.18.1</testcontainers.version>
+		<testcontainers.version>1.18.3</testcontainers.version>
 		<database-rider.version>1.35.0</database-rider.version>
 		<springdoc.version>2.0.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.0</mybatis-spring-boot-starter.version>
@@ -44,6 +44,7 @@
 		<module>environment-post-processor-example</module>
 		<module>functional-endpoints-example</module>
 		<module>global-method-security-example</module>
+		<module>hello-scylladb</module>
 		<module>http-client-example</module>
 		<module>integration-example</module>
 		<module>jpa-example</module>
