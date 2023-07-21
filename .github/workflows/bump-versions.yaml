@@ -1,0 +1,25 @@
+name: Bump versions
+
+on: [workflow_dispatch]
+
+jobs:
+  bump:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '1.19'
+    - run: go build
+    - run: ./generate-parent-pom > pom.xml
+    - run: |
+        git config --local user.email backpaper0@gmail.com
+        git config --local user.name "Uragami Taichi"
+    - run: |
+        git add pom.xml
+        git commit -m "Bump up"
+        git push
+
