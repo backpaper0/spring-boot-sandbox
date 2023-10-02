@@ -75,17 +75,17 @@ func main() {
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
-		<java.version>17</java.version>
-		<spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
-		<spring-cloud-aws.version>3.0.0-M3</spring-cloud-aws.version>
+		<java.version>21</java.version>
+		<spring-cloud.version>2022.0.4</spring-cloud.version>
+		<spring-cloud-aws.version>3.0.2</spring-cloud-aws.version>
 		<doma.version>{{.DomaVersion}}</doma.version>
 		<doma.boot.version>{{.DomaSpringBootVersion}}</doma.boot.version>
 		<testcontainers.version>{{.TestcontainersVersion}}</testcontainers.version>
-		<database-rider.version>1.35.0</database-rider.version>
-		<springdoc.version>2.0.0</springdoc.version>
-		<mybatis-spring-boot-starter.version>3.0.0</mybatis-spring-boot-starter.version>
-		<mybatis-generator-maven-plugin.version>1.4.1</mybatis-generator-maven-plugin.version>
-		<greenmail.version>2.0.0-alpha-2</greenmail.version>
+		<database-rider.version>1.41.0</database-rider.version>
+		<springdoc.version>2.2.0</springdoc.version>
+		<mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>
+		<mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
+		<greenmail.version>2.1.0-alpha-2</greenmail.version>
 		<r2dbc.version>1.0.0.M7</r2dbc.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
