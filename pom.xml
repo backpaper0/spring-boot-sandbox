@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.4</version>
+		<version>3.1.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -17,7 +17,7 @@
 		<spring-cloud-aws.version>3.0.2</spring-cloud-aws.version>
 		<doma.version>2.54.1</doma.version>
 		<doma.boot.version>1.7.0</doma.boot.version>
-		<testcontainers.version>1.19.0</testcontainers.version>
+		<testcontainers.version>1.19.1</testcontainers.version>
 		<database-rider.version>1.41.0</database-rider.version>
 		<springdoc.version>2.2.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>
