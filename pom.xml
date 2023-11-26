@@ -20,7 +20,7 @@
 		<testcontainers.version>1.19.3</testcontainers.version>
 		<database-rider.version>1.41.0</database-rider.version>
 		<springdoc.version>2.2.0</springdoc.version>
-		<mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>
+		<mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.1.0-alpha-2</greenmail.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
