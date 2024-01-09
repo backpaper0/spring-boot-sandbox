@@ -16,3 +16,5 @@
 /Cargo.lock
 /elm-stuff/
 generate-parent-pom
+.vscode/
+
