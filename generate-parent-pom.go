@@ -143,7 +143,16 @@ func main() {
 					<groupId>org.mybatis.generator</groupId>
 					<artifactId>mybatis-generator-maven-plugin</artifactId>
 					<version>${mybatis-generator-maven-plugin.version}</version>
-				 </plugin>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<compilerArgs>
+							<arg>-Xlint:deprecation</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
