@@ -47,13 +47,6 @@ public class ClientHttpResponseWrapperTest {
 	}
 
 	@Test
-	void getRawStatusCode() throws Exception {
-		sut.getRawStatusCode();
-		verify(response).getRawStatusCode();
-		verifyNoMoreInteractions(response, recorder);
-	}
-
-	@Test
 	void getStatusText() throws Exception {
 		sut.getStatusText();
 		verify(response).getStatusText();
