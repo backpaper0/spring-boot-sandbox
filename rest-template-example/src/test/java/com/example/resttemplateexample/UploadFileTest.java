@@ -71,10 +71,8 @@ public class UploadFileTest {
 
 		//RequestFactoryを設定する(任意)
 		//デフォルトだとByteArrayOutputStreamに全て書き出してから実際のレスポンスへコピーするっぽい
-		//メモリ大事にしたい場合はbufferRequestBodyをfalseにした方が良さそう
 		//その場合はContent-Lengthが事前に分からないのでchunkで送信されることになる
 		SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
-		requestFactory.setBufferRequestBody(false);
 		restTemplate.setRequestFactory(requestFactory);
 
 		URI uri = UriComponentsBuilder
