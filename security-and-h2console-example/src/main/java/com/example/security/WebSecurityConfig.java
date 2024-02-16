@@ -11,24 +11,24 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 @Configuration
 public class WebSecurityConfig {
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
-				.securityMatcher(new NegatedRequestMatcher(PathRequest.toH2Console()))
-				.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-				.formLogin(Customizer.withDefaults())
-				.build();
-	}
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher(new NegatedRequestMatcher(PathRequest.toH2Console()))
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
+                .formLogin(Customizer.withDefaults())
+                .build();
+    }
 
-	@Bean
-	SecurityFilterChain h2SecurityFilterChain(HttpSecurity http) throws Exception {
-		return http
-				.securityMatcher(PathRequest.toH2Console())
-				.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
-				.csrf(csrf -> csrf.disable())
-				.headers(headers -> {
-					headers.frameOptions().sameOrigin();
-				})
-				.build();
-	}
+    @Bean
+    SecurityFilterChain h2SecurityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .securityMatcher(PathRequest.toH2Console())
+                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
+                .csrf(csrf -> csrf.disable())
+                .headers(headers -> {
+                    headers.frameOptions(frame -> frame.sameOrigin());
+                })
+                .build();
+    }
 }
