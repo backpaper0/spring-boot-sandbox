@@ -9,45 +9,40 @@ import org.springframework.http.client.ClientHttpResponse;
 
 public class ClientHttpResponseWrapper implements ClientHttpResponse {
 
-	private final ClientHttpResponse response;
-	private final Runnable recorder;
+    private final ClientHttpResponse response;
+    private final Runnable recorder;
 
-	public ClientHttpResponseWrapper(ClientHttpResponse response, Runnable recorder) {
-		this.response = response;
-		this.recorder = recorder;
-	}
+    public ClientHttpResponseWrapper(ClientHttpResponse response, Runnable recorder) {
+        this.response = response;
+        this.recorder = recorder;
+    }
 
-	@Override
-	public HttpHeaders getHeaders() {
-		return response.getHeaders();
-	}
+    @Override
+    public HttpHeaders getHeaders() {
+        return response.getHeaders();
+    }
 
-	@Override
-	public InputStream getBody() throws IOException {
-		return response.getBody();
-	}
+    @Override
+    public InputStream getBody() throws IOException {
+        return response.getBody();
+    }
 
-	@Override
-	public HttpStatusCode getStatusCode() throws IOException {
-		return response.getStatusCode();
-	}
+    @Override
+    public HttpStatusCode getStatusCode() throws IOException {
+        return response.getStatusCode();
+    }
 
-	@Override
-	public int getRawStatusCode() throws IOException {
-		return response.getRawStatusCode();
-	}
+    @Override
+    public String getStatusText() throws IOException {
+        return response.getStatusText();
+    }
 
-	@Override
-	public String getStatusText() throws IOException {
-		return response.getStatusText();
-	}
-
-	@Override
-	public void close() {
-		try {
-			response.close();
-		} finally {
-			recorder.run();
-		}
-	}
+    @Override
+    public void close() {
+        try {
+            response.close();
+        } finally {
+            recorder.run();
+        }
+    }
 }
