@@ -6,7 +6,7 @@ spring.security.oauth2.client:
   registration.example:
     client-id: example
     client-secret: 43b2f153-4b58-4e1b-a0fc-37bae6895950
-    client-authentication-method: basic
+    client-authentication-method: client_secret_basic
     authorization-grant-type: authorization_code
     redirect-uri: http://localhost:8080/login/oauth2/code/example
     scope: openid
