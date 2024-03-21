@@ -1,12 +1,8 @@
-# metrics-example
+# telemetry-example
 
 ## 動作確認
 
-Prometheusを起動する。
-
-```
-docker compose up -d
-```
+[SigNozをDocker Composeで起動する](https://github.com/SigNoz/signoz/tree/develop/deploy)。
 
 アプリケーションを起動する。
 
