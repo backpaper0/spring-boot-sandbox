@@ -9,7 +9,11 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-    <artifactId>metrics-example</artifactId>
+    <artifactId>telemetry-example</artifactId>
+
+    <properties>
+        <otel-inst.version>2.2.0-alpha</otel-inst.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -17,12 +21,8 @@
             <artifactId>micrometer-registry-otlp</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bridge-otel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.opentelemetry</groupId>
-            <artifactId>opentelemetry-exporter-otlp</artifactId>
+            <groupId>io.opentelemetry.instrumentation</groupId>
+            <artifactId>opentelemetry-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,6 +40,18 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.opentelemetry.instrumentation</groupId>
+                <artifactId>opentelemetry-instrumentation-bom-alpha</artifactId>
+                <version>${otel-inst.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <finalName>app</finalName>
