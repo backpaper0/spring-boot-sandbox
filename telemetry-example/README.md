@@ -13,7 +13,7 @@ mvn spring-boot:run
 リクエストを送信する。
 
 ```
-while true; do (curl -s localhost:8080/rolldice -G -d rolls=3|jq -cS); sleep 1; done
+while true; do (curl -s localhost:8080/rolldice -G -d rolls=3|jq -cS); sleep 1; (curl -s localhost:8080/rolldice -G -d rolls=5 -d player=urgm|jq -cS); sleep 1; done
 ```
 
 SigNozでテレメトリーを確認する。
@@ -23,6 +23,8 @@ SigNozでテレメトリーを確認する。
 - 取得できるメトリクスの一覧は`curl -s http://localhost:8080/actuator/metrics | jq`で確認できる
 - 不要なメトリクスを出さないようにするには`management.metrics.enable.<メトリクス>=false`を設定する
     - 特定のメトリクスだけを出すには`management.metrics.enable.all=false`を設定してから個別のメトリクスを`true`にする
+- SigNoz
+    - [JVMメトリクスのダッシュボード](https://github.com/SigNoz/dashboards/blob/main/JVM%20Metrics.json)
 
 ## 参考
 
