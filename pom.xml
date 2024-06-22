@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.2.4</version>
+		<version>3.3.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -13,13 +13,13 @@
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2022.0.4</spring-cloud.version>
-		<spring-cloud-aws.version>3.0.2</spring-cloud-aws.version>
-		<doma.version>2.57.0</doma.version>
-		<doma.boot.version>1.7.0</doma.boot.version>
-		<testcontainers.version>1.19.7</testcontainers.version>
-		<database-rider.version>1.41.0</database-rider.version>
-		<springdoc.version>2.2.0</springdoc.version>
+		<spring-cloud.version>2023.0.2</spring-cloud.version>
+		<spring-cloud-aws.version>3.1.1</spring-cloud-aws.version>
+		<doma.version>2.60.0</doma.version>
+		<doma.boot.version>1.8.0</doma.boot.version>
+		<testcontainers.version>1.19.8</testcontainers.version>
+		<database-rider.version>1.42.0</database-rider.version>
+		<springdoc.version>2.5.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.1.0-alpha-2</greenmail.version>

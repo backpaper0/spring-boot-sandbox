@@ -76,13 +76,13 @@ func main() {
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2022.0.4</spring-cloud.version>
-		<spring-cloud-aws.version>3.0.2</spring-cloud-aws.version>
+		<spring-cloud.version>2023.0.2</spring-cloud.version>
+		<spring-cloud-aws.version>3.1.1</spring-cloud-aws.version>
 		<doma.version>{{.DomaVersion}}</doma.version>
 		<doma.boot.version>{{.DomaSpringBootVersion}}</doma.boot.version>
 		<testcontainers.version>{{.TestcontainersVersion}}</testcontainers.version>
-		<database-rider.version>1.41.0</database-rider.version>
-		<springdoc.version>2.2.0</springdoc.version>
+		<database-rider.version>1.42.0</database-rider.version>
+		<springdoc.version>2.5.0</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.1.0-alpha-2</greenmail.version>
