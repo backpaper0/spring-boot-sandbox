@@ -86,6 +86,7 @@ func main() {
 		<mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
 		<mybatis-generator-maven-plugin.version>1.4.2</mybatis-generator-maven-plugin.version>
 		<greenmail.version>2.1.0-alpha-2</greenmail.version>
+		<logback.version>1.4.14</logback.version>
 		<argLine>-Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo</argLine>
 	</properties>
 	<modules>{{range .Dirs}}
@@ -133,6 +134,11 @@ func main() {
 				<groupId>com.icegreen</groupId>
 				<artifactId>greenmail-junit5</artifactId>
 				<version>${greenmail.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-access</artifactId>
+				<version>${logback.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
