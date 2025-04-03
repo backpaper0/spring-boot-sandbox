@@ -30,7 +30,7 @@ public class RoutingDataSourceConfig {
 	// データソースをインジェクションする場面ではこのルーディングデータソースを
 	// インジェクションしたいためPrimaryアノテーションを付けている。
 	@Primary
-	public DataSource routingDataSource(
+	DataSource routingDataSource(
 			@LeaderDataSource DataSource leaderDataSource,
 			@FollowerDataSource DataSource followerDataSource) {
 		RoutingDataSource dataSource = new RoutingDataSource();

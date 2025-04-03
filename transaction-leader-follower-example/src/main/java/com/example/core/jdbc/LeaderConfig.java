@@ -24,19 +24,19 @@ public class LeaderConfig {
 	@Bean
 	@ConfigurationProperties(prefix = "spring.datasource")
 	@LeaderDataSource
-	public DataSourceProperties leaderDataSourceProperties() {
+	DataSourceProperties leaderDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 
-	/**
-	 * リーダーデータベースのデータソースを構築する。
-	 *
-	 * @return リーダーデータベースのデータソース
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource.hikari")
-	@LeaderDataSource
-	public HikariDataSource leaderDataSource() {
+    /**
+     * リーダーデータベースのデータソースを構築する。
+     *
+     * @return リーダーデータベースのデータソース
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+    @LeaderDataSource
+    HikariDataSource leaderDataSource() {
 		// 以下のメソッドを参考にした。
 		// org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
 		DataSourceProperties properties = leaderDataSourceProperties();

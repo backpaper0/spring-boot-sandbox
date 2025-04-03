@@ -16,27 +16,27 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 public class FollowerConfig {
 
-	/**
-	 * フォロワーデータベースのプロパティを構築する。
-	 *
-	 * @return フォロワーデータベースのプロパティ
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "follower.datasource")
-	@FollowerDataSource
-	public DataSourceProperties followerDataSourceProperties() {
+    /**
+     * フォロワーデータベースのプロパティを構築する。
+     *
+     * @return フォロワーデータベースのプロパティ
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "follower.datasource")
+    @FollowerDataSource
+    DataSourceProperties followerDataSourceProperties() {
 		return new DataSourceProperties();
 	}
 
-	/**
-	 * フォロワーデータベースのデータソースを構築する。
-	 *
-	 * @return フォロワーデータベースのデータソース
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "follower.datasource.hikari")
-	@FollowerDataSource
-	public HikariDataSource followerDataSource() {
+    /**
+     * フォロワーデータベースのデータソースを構築する。
+     *
+     * @return フォロワーデータベースのデータソース
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "follower.datasource.hikari")
+    @FollowerDataSource
+    HikariDataSource followerDataSource() {
 		// 以下のメソッドを参考にした。
 		// org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
 		DataSourceProperties properties = followerDataSourceProperties();
