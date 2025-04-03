@@ -50,7 +50,7 @@ public class LeaderFollowerTest {
 	}
 
 	/**
-	 * {@link Transactional}をネストした場合、リーダーデータソースが使われる。
+	 * {@link Transactional}をネストした場合、リーダーデータソースが使われる(最初の{@link Transactional}に従う)。
 	 */
 	@Test
 	void nestFindAllFromLeader1() {
@@ -59,7 +59,8 @@ public class LeaderFollowerTest {
 	}
 
 	/**
-	 * {@link Transactional}をネストした場合、ネスト側がreadOnly = trueでもリーダーデータソースが使われる。
+	 * {@link Transactional}をネストした場合、ネスト側がreadOnly =
+	 * trueでもリーダーデータソースが使われる(最初の{@link Transactional}に従う)。
 	 */
 	@Test
 	void nestFindAllFromLeader2() {
@@ -69,7 +70,7 @@ public class LeaderFollowerTest {
 
 	/**
 	 * {@link Transactional}をネストした場合、ネスト側が{@link ReadOnlyTransaction}アノテーションを
-	 * 付けていてもリーダーデータソースが使われる。
+	 * 付けていてもリーダーデータソースが使われる(最初の{@link Transactional}に従う)。
 	 */
 	@Test
 	void nestFindAllFromLeader3() {
