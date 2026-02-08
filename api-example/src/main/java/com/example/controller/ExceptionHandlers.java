@@ -1,11 +1,11 @@
 package com.example.controller;
 
 import java.util.Locale;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,8 +34,10 @@ public class ExceptionHandlers {
 								error -> messageSource.getMessage(error, locale),
 								Collectors.toList())));
 
-		return Map.of(
-				"globalErrors", globalErrors,
-				"fieldErrors", fieldErrors);
+		var probs = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+		probs.setProperty("globalErrors", globalErrors);
+		probs.setProperty("fieldErrors", fieldErrors);
+
+		return probs;
 	}
 }

@@ -1,9 +1,12 @@
 package com.example.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -61,6 +64,20 @@ public class SongControllerMockMvcTest extends RestControllerTestBase {
 		JSONAssert.assertEquals(
 				read("expected-list.json"),
 				response, false);
+	}
+
+	@Test
+	void testGetListInvalid() throws Exception {
+		mvc.perform(get("/songs").queryParam("singer", "0").locale(Locale.JAPANESE))
+				.andExpectAll(status().isBadRequest(),
+						jsonPath("$.type").value("about:blank"),
+						jsonPath("$.title").value("Bad Request"),
+						jsonPath("$.status").value(400),
+						jsonPath("$.instance").value("/songs"),
+						jsonPath("$.globalErrors.length()").value(0),
+						jsonPath("$.fieldErrors.length()").value(1),
+						jsonPath("$.fieldErrors.singer.length()").value(1),
+						jsonPath("$.fieldErrors.singer[0]").value("1 以上の値にしてください"));
 	}
 
 	@Test
