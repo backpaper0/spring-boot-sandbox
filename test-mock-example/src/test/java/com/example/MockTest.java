@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 public class MockTest {
@@ -14,7 +14,7 @@ public class MockTest {
 	@Autowired
 	private MyService service;
 
-	@MockBean
+	@MockitoBean
 	private Foobar mock;
 
 	@Test

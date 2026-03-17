@@ -27,7 +27,7 @@ public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, Se
 
         public AddHeaderResponse(final ServerResponse response) {
             this.response = response;
-            final HttpHeaders headers = HttpHeaders.writableHttpHeaders(response.headers());
+            final HttpHeaders headers = new HttpHeaders(response.headers());
             headers.add("X-Hoge", "FooBarBaz");
             this.headers = HttpHeaders.readOnlyHttpHeaders(headers);
         }
@@ -52,9 +52,5 @@ public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, Se
             return response.writeTo(exchange, context);
         }
 
-        @Override
-        public int rawStatusCode() {
-            return response.statusCode().value();
-        }
     }
 }

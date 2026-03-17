@@ -4,7 +4,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.common.session.NameKeeper;
@@ -19,7 +19,7 @@ public class KeepingNameDeliverFilterTest {
 
 	@Autowired
 	KeepingNameDeliverFilter sut;
-	@MockBean
+	@MockitoBean
 	NameKeeper nameKeeper;
 
 	@Test

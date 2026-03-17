@@ -5,8 +5,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.session.SessionProperties;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import jakarta.servlet.FilterChain;
@@ -15,13 +14,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @SpringJUnitConfig(classes = { SessionIdDeliverFilter.class })
+@TestPropertySource(properties = "spring.session.servlet.filter-order=100")
 public class SessionIdDeliverFilterTest {
 
 	@Autowired
 	SessionIdDeliverFilter sut;
-
-	@MockBean
-	SessionProperties sessionProperties;
 
 	@Test
 	void セッションIDをリクエストへセットする() throws Exception {
@@ -41,7 +38,7 @@ public class SessionIdDeliverFilterTest {
 		verify(request).getSession(false);
 		verify(session).getId();
 		verify(request).setAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME, "asdfzxcv");
-		verifyNoMoreInteractions(request, response, chain, session, sessionProperties);
+		verifyNoMoreInteractions(request, response, chain, session);
 	}
 
 	@Test
@@ -59,20 +56,14 @@ public class SessionIdDeliverFilterTest {
 
 		verify(chain).doFilter(request, response);
 		verify(request).getSession(false);
-		verifyNoMoreInteractions(request, response, chain, session, sessionProperties);
+		verifyNoMoreInteractions(request, response, chain, session);
 	}
 
 	@Test
 	void フィルターの順序() {
-		SessionProperties.Servlet servlet = new SessionProperties.Servlet();
-		servlet.setFilterOrder(100);
-		when(sessionProperties.getServlet()).thenReturn(servlet);
 
 		int order = sut.getOrder();
 
 		assertEquals(101, order);
-
-		verify(sessionProperties).getServlet();
-		verifyNoMoreInteractions(sessionProperties);
 	}
 }

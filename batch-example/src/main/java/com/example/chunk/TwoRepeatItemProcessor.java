@@ -2,7 +2,7 @@ package com.example.chunk;
 
 import java.util.StringJoiner;
 
-import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.infrastructure.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
 @Component

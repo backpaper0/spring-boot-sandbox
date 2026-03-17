@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.4.4</version>
+		<version>4.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
@@ -13,11 +13,11 @@
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2024.0.1</spring-cloud.version>
+		<spring-cloud.version>2025.1.0</spring-cloud.version>
 		<spring-cloud-aws.version>3.3.0</spring-cloud-aws.version>
-		<doma.version>3.6.0</doma.version>
-		<doma.boot.version>2.3.0</doma.boot.version>
-		<testcontainers.version>1.20.6</testcontainers.version>
+		<doma.version>3.11.3</doma.version>
+		<doma.boot.version>3.0.0</doma.boot.version>
+		<testcontainers.version>2.0.3</testcontainers.version>
 		<database-rider.version>1.44.0</database-rider.version>
 		<springdoc.version>2.8.6</springdoc.version>
 		<mybatis-spring-boot-starter.version>3.0.4</mybatis-spring-boot-starter.version>
@@ -29,6 +29,7 @@
 	<modules>
 		<module>accesslog-standard-output-example</module>
 		<module>aop-example</module>
+		<module>aop-logging-simple-example</module>
 		<module>api-example</module>
 		<module>api-token-authentication-example</module>
 		<module>batch-example</module>
@@ -53,8 +54,10 @@
 		<module>language-country-timezone-encoding-example</module>
 		<module>method-validation-example</module>
 		<module>mybatis-example</module>
+		<module>mybatis-executor-switch-example</module>
 		<module>observability-example/observability-example-web</module>
 		<module>oidc-example</module>
+		<module>postgres-rls-example</module>
 		<module>profile-demo</module>
 		<module>progress-sample</module>
 		<module>property-source-example</module>

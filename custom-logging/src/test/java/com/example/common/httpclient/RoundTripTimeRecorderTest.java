@@ -5,7 +5,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
@@ -21,9 +21,9 @@ public class RoundTripTimeRecorderTest {
 	@Autowired
 	RoundTripTimeRecorder sut;
 
-	@MockBean
+	@MockitoBean
 	HttpServletRequest mockHttpServletRequest;
-	@MockBean
+	@MockitoBean
 	SystemNanoTimeProvider mockSystemNanoTimeProvider;
 
 	@SuppressWarnings("resource") // モックのClientHttpResponseがcloseされないために出る警告を抑止する

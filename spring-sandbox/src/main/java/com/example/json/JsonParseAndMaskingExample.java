@@ -1,16 +1,15 @@
 package com.example.json;
 
-import java.io.IOException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonStreamContext;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JsonParser;
+import tools.jackson.core.TokenStreamContext;
+import tools.jackson.core.JsonToken;
+import tools.jackson.databind.ObjectMapper;
 
 @Component
 @ConfigurationProperties(prefix = "com.example.json")
@@ -27,7 +26,7 @@ public class JsonParseAndMaskingExample {
 			JsonToken token;
 			StringBuilder sb = new StringBuilder();
 			while (null != (token = parser.nextToken())) {
-				JsonStreamContext context = parser.getParsingContext();
+				TokenStreamContext context = parser.streamReadContext();
 				switch (token) {
 				case START_OBJECT:
 					sb.append('{');
@@ -41,7 +40,7 @@ public class JsonParseAndMaskingExample {
 				case END_ARRAY:
 					sb.append(']');
 					break;
-				case FIELD_NAME:
+				case PROPERTY_NAME:
 					if (context.inObject() && context.getCurrentIndex() > 0) {
 						sb.append(',');
 					}
@@ -60,7 +59,7 @@ public class JsonParseAndMaskingExample {
 					if (isString) {
 						sb.append('"');
 					}
-					if (context.hasCurrentName() && maskingTargets.contains(context.getCurrentName())) {
+					if (context.hasCurrentName() && maskingTargets.contains(context.currentName())) {
 						sb.append("********");
 					} else {
 						String value = parser.getValueAsString();
@@ -85,7 +84,7 @@ public class JsonParseAndMaskingExample {
 				}
 			}
 			return sb.toString();
-		} catch (@SuppressWarnings("unused") IOException e) {
+		} catch (@SuppressWarnings("unused") tools.jackson.core.JacksonException e) {
 			return "<parse error>";
 		}
 	}

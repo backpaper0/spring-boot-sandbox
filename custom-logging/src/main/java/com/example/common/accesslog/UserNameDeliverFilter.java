@@ -2,9 +2,8 @@ package com.example.common.accesslog;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.web.servlet.filter.OrderedFilter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.servlet.filter.OrderedFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,8 +17,8 @@ import jakarta.servlet.ServletResponse;
 @Component
 public class UserNameDeliverFilter implements OrderedFilter {
 
-	@Autowired
-	private SecurityProperties securityProperties;
+	@Value("${spring.security.filter.order:-100}")
+	private int securityFilterOrder;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -38,6 +37,6 @@ public class UserNameDeliverFilter implements OrderedFilter {
 
 	@Override
 	public int getOrder() {
-		return securityProperties.getFilter().getOrder() + 1;
+		return securityFilterOrder + 1;
 	}
 }

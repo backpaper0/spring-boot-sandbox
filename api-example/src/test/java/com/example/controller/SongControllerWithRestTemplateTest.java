@@ -2,26 +2,42 @@ package com.example.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.web.client.DefaultResponseErrorHandler;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
-	@Autowired
-	TestRestTemplate http;
+	@LocalServerPort
+	int port;
+
+	RestTemplate http;
+
+	@BeforeEach
+	void setup() {
+		http = new RestTemplate();
+		http.setErrorHandler(new DefaultResponseErrorHandler() {
+			@Override
+			public boolean hasError(ClientHttpResponse response) {
+				return false;
+			}
+		});
+	}
 
 	@Test
 	void testGetList() throws Exception {
-		var request = RequestEntity.get("/songs").build();
+		var request = RequestEntity.get("http://localhost:" + port + "/songs").build();
 
 		var response = http.exchange(request, String.class);
 
@@ -34,7 +50,7 @@ public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
 	@Test
 	void testGetListWithCriteria() throws Exception {
-		var uri = UriComponentsBuilder.fromPath("/songs")
+		var uri = UriComponentsBuilder.fromUriString("http://localhost:" + port + "/songs")
 				.queryParam("singer", "1")
 				.build().toUri();
 
@@ -51,7 +67,7 @@ public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
 	@Test
 	void testGetListWithInvalidCriteria() throws Exception {
-		var uri = UriComponentsBuilder.fromPath("/songs")
+		var uri = UriComponentsBuilder.fromUriString("http://localhost:" + port + "/songs")
 				.queryParam("singer", "0")
 				.build().toUri();
 
@@ -68,7 +84,7 @@ public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
 	@Test
 	void testGetListNoExistsSinger() throws Exception {
-		var uri = UriComponentsBuilder.fromPath("/songs")
+		var uri = UriComponentsBuilder.fromUriString("http://localhost:" + port + "/songs")
 				.queryParam("singer", "999")
 				.build().toUri();
 
@@ -85,7 +101,7 @@ public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
 	@Test
 	void testCreate() throws Exception {
-		var request = RequestEntity.post("/songs")
+		var request = RequestEntity.post("http://localhost:" + port + "/songs")
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(read("create.json"));
 
@@ -100,7 +116,7 @@ public class SongControllerWithRestTemplateTest extends RestControllerTestBase {
 
 	@Test
 	void testCreateWithoutExpectedId() throws Exception {
-		var request = RequestEntity.post("/songs")
+		var request = RequestEntity.post("http://localhost:" + port + "/songs")
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(read("create.json"));
 

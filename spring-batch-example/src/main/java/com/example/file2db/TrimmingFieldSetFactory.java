@@ -1,7 +1,7 @@
 package com.example.file2db;
 
-import org.springframework.batch.item.file.transform.FieldSet;
-import org.springframework.batch.item.file.transform.FieldSetFactory;
+import org.springframework.batch.infrastructure.item.file.transform.FieldSet;
+import org.springframework.batch.infrastructure.item.file.transform.FieldSetFactory;
 
 public class TrimmingFieldSetFactory implements FieldSetFactory {
 

@@ -5,9 +5,9 @@ import java.time.Duration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -24,8 +24,11 @@ public class App {
 
 	@Bean
 	@LoadBalanced
-	public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
-		return builder.setConnectTimeout(connectTimeout).setReadTimeout(readTimeout).build();
+	public RestTemplate loadBalancedRestTemplate() {
+		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+		factory.setConnectTimeout((int) connectTimeout.toMillis());
+		factory.setReadTimeout((int) readTimeout.toMillis());
+		return new RestTemplate(factory);
 	}
 
 	public void setConnectTimeout(Duration connectTimeout) {

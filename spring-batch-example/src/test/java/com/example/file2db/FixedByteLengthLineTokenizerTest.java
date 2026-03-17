@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.batch.item.file.transform.FieldSet;
-import org.springframework.batch.item.file.transform.FlatFileFormatException;
+import org.springframework.batch.infrastructure.item.file.transform.FieldSet;
+import org.springframework.batch.infrastructure.item.file.transform.FlatFileFormatException;
 
 import com.example.file2db.FixedByteLengthLineTokenizer.Column;
 import com.example.file2db.FixedByteLengthLineTokenizer.DataType;

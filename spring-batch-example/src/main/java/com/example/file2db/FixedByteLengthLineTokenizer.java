@@ -4,10 +4,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.batch.item.file.transform.DefaultFieldSet;
-import org.springframework.batch.item.file.transform.FieldSet;
-import org.springframework.batch.item.file.transform.FlatFileFormatException;
-import org.springframework.batch.item.file.transform.LineTokenizer;
+import org.springframework.batch.infrastructure.item.file.transform.DefaultFieldSet;
+import org.springframework.batch.infrastructure.item.file.transform.FieldSet;
+import org.springframework.batch.infrastructure.item.file.transform.FlatFileFormatException;
+import org.springframework.batch.infrastructure.item.file.transform.LineTokenizer;
 
 public class FixedByteLengthLineTokenizer implements LineTokenizer {
 

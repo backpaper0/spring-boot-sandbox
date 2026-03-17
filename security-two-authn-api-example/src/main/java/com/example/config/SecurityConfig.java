@@ -25,9 +25,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
         InMemoryUserDetailsManager uds = new InMemoryUserDetailsManager(
                 User.withUsername("alice").password(passwordEncoder().encode("secret")).authorities("USER").build());
-        DaoAuthenticationProvider ap = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider ap = new DaoAuthenticationProvider(uds);
         ap.setPasswordEncoder(passwordEncoder());
-        ap.setUserDetailsService(uds);
         return http
                 .securityMatcher("/customers/**")
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated())
@@ -42,9 +41,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
         UserDetailsService uds = new InMemoryUserDetailsManager(
                 User.withUsername("bob").password(passwordEncoder().encode("secret")).authorities("USER").build());
-        DaoAuthenticationProvider ap = new DaoAuthenticationProvider();
+        DaoAuthenticationProvider ap = new DaoAuthenticationProvider(uds);
         ap.setPasswordEncoder(passwordEncoder());
-        ap.setUserDetailsService(uds);
         return http
                 .securityMatcher("/orders/**")
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated())

@@ -27,8 +27,7 @@ public class WebSecurityConfig {
 
 	@Bean
 	public ProviderManager authenticationManager(AuthenticationEventPublisher eventPublisher) {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-		provider.setUserDetailsService(userDetailsService);
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder);
 		ProviderManager providerManager = new ProviderManager(provider);
 		providerManager.setAuthenticationEventPublisher(eventPublisher);

@@ -3,8 +3,8 @@ package com.example.misc;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
-import org.springframework.batch.core.StepExecution;
-import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.core.step.StepExecution;
+import org.springframework.batch.infrastructure.item.ItemReader;
 import org.springframework.beans.factory.annotation.Value;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,9 +1,9 @@
 package com.example;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
@@ -17,10 +17,10 @@ public class MyConfiguration {
 
 	@Bean
 	@LoadBalanced
-	public RestTemplate loadBalancedRestTemplate(RestTemplateBuilder builder) {
-		return builder
-				.setConnectTimeout(properties.getConnectTimeout())
-				.setReadTimeout(properties.getReadTimeout())
-				.build();
+	public RestTemplate loadBalancedRestTemplate() {
+		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+		factory.setConnectTimeout((int) properties.getConnectTimeout().toMillis());
+		factory.setReadTimeout((int) properties.getReadTimeout().toMillis());
+		return new RestTemplate(factory);
 	}
 }

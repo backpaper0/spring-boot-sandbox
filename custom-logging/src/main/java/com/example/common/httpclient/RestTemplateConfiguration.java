@@ -1,8 +1,8 @@
 package com.example.common.httpclient;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -18,15 +18,12 @@ public class RestTemplateConfiguration {
 	private RoundTripTimeRecorder interceptor;
 
 	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		RestTemplateCustomizer customizer = restTemplate -> {
-			DefaultUriBuilderFactory handler = new DefaultUriBuilderFactory(properties.getBaseUri());
-			handler.setEncodingMode(EncodingMode.URI_COMPONENT);
-			restTemplate.setUriTemplateHandler(handler);
-		};
-		return builder
-				.additionalCustomizers(customizer)
-				.interceptors(interceptor)
-				.build();
+	public RestTemplate restTemplate() {
+		RestTemplate restTemplate = new RestTemplate();
+		DefaultUriBuilderFactory handler = new DefaultUriBuilderFactory(properties.getBaseUri());
+		handler.setEncodingMode(EncodingMode.URI_COMPONENT);
+		restTemplate.setUriTemplateHandler(handler);
+		restTemplate.setInterceptors(List.of(interceptor));
+		return restTemplate;
 	}
 }

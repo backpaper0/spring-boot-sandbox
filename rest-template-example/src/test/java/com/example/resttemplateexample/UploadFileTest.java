@@ -76,7 +76,7 @@ public class UploadFileTest {
 		restTemplate.setRequestFactory(requestFactory);
 
 		URI uri = UriComponentsBuilder
-				.fromHttpUrl("http://localhost:{port}")
+				.fromUriString("http://localhost:{port}")
 				.path("/upload")
 				.build(port);
 

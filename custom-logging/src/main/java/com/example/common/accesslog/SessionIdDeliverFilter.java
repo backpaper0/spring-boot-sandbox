@@ -2,9 +2,8 @@ package com.example.common.accesslog;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.session.SessionProperties;
-import org.springframework.boot.web.servlet.filter.OrderedFilter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.servlet.filter.OrderedFilter;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.FilterChain;
@@ -17,8 +16,8 @@ import jakarta.servlet.http.HttpSession;
 @Component
 public class SessionIdDeliverFilter implements OrderedFilter {
 
-	@Autowired
-	private SessionProperties sessionProperties;
+	@Value("${spring.session.servlet.filter-order:#{T(Integer).MIN_VALUE + 50}}")
+	private int sessionFilterOrder;
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -36,6 +35,6 @@ public class SessionIdDeliverFilter implements OrderedFilter {
 
 	@Override
 	public int getOrder() {
-		return sessionProperties.getServlet().getFilterOrder() + 1;
+		return sessionFilterOrder + 1;
 	}
 }

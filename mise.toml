@@ -1,0 +1,4 @@
+[tools]
+go = "latest"
+java = "21"
+maven = "latest"

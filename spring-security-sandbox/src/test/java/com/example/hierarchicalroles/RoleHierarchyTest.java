@@ -15,8 +15,7 @@ class RoleHierarchyTest {
 
 	@BeforeEach
 	void init() {
-		RoleHierarchyImpl sut = new RoleHierarchyImpl();
-		sut.setHierarchy("""
+		this.sut = RoleHierarchyImpl.fromHierarchy("""
 				A > B > C
 
 				D > E
@@ -25,7 +24,6 @@ class RoleHierarchyTest {
 				G > H
 				H > I
 				""");
-		this.sut = sut;
 	}
 
 	@ParameterizedTest

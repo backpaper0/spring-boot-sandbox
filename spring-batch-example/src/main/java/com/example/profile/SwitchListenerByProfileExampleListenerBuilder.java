@@ -1,6 +1,6 @@
 package com.example.profile;
 
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.listener.StepExecutionListener;
 
 public interface SwitchListenerByProfileExampleListenerBuilder {
 

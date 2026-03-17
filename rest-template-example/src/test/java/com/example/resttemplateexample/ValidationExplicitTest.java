@@ -20,7 +20,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 import jakarta.validation.constraints.NotNull;
 

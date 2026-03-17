@@ -16,7 +16,7 @@ class PersonHandlersTest {
     void getPerson() {
         client.get().uri("/people/hoge").exchange()
                 .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-                .expectBody().jsonPath("name", "hoge");
+                .expectBody().jsonPath("name").isEqualTo("hoge");
     }
 
     @Test
@@ -24,6 +24,6 @@ class PersonHandlersTest {
         client.post().uri("/people").contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(new Person("foobar")).exchange()
                 .expectHeader().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
-                .expectBody().jsonPath("name", "foobar");
+                .expectBody().jsonPath("name").isEqualTo("foobar");
     }
 }

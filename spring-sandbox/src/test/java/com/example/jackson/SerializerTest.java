@@ -2,17 +2,17 @@ package com.example.jackson;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ValueSerializer;
+import tools.jackson.databind.annotation.JsonSerialize;
 
 class SerializerTest {
 
@@ -101,17 +101,17 @@ class SerializerTest {
 		}
 	}
 
-	static class ParentSerializer extends JsonSerializer<Parent> {
+	static class ParentSerializer extends ValueSerializer<Parent> {
 
 		@Override
 		public void serialize(final Parent value, final JsonGenerator gen,
-				final SerializerProvider serializers)
-				throws IOException {
+				final SerializationContext serializers)
+				throws JacksonException {
 			gen.writeStartObject();
-			gen.writeNumberField("id", value.getId());
-			gen.writeStringField("name", value.getName());
+			gen.writeName("id"); gen.writeNumber(value.getId());
+			gen.writeName("name"); gen.writeString(value.getName());
 			for (final Child child : value.getChildren()) {
-				gen.writeStringField(String.valueOf(child.getId()), child.getName());
+				gen.writeName(String.valueOf(child.getId())); gen.writeString(child.getName());
 			}
 			gen.writeEndObject();
 		}

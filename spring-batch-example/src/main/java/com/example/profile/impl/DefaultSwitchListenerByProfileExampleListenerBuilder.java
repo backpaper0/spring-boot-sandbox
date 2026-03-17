@@ -1,6 +1,6 @@
 package com.example.profile.impl;
 
-import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.listener.StepExecutionListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 

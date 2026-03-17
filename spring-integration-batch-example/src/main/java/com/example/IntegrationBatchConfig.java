@@ -3,10 +3,10 @@ package com.example;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.integration.launch.JobLaunchingGateway;
-import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import org.springframework.boot.batch.autoconfigure.BatchProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
@@ -15,11 +15,11 @@ import org.springframework.integration.endpoint.MethodInvokingMessageSource;
 @Configuration
 public class IntegrationBatchConfig {
 
-	private final JobLauncher jobLauncher;
+	private final JobOperator jobLauncher;
 	private final List<Job> jobs;
 	private final BatchProperties batchProperties;
 
-	public IntegrationBatchConfig(JobLauncher jobLauncher, List<Job> jobs, BatchProperties batchProperties) {
+	public IntegrationBatchConfig(JobOperator jobLauncher, List<Job> jobs, BatchProperties batchProperties) {
 		this.jobLauncher = jobLauncher;
 		this.jobs = jobs;
 		this.batchProperties = batchProperties;

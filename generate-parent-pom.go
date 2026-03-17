@@ -76,7 +76,7 @@ func main() {
 	<packaging>pom</packaging>
 	<properties>
 		<java.version>21</java.version>
-		<spring-cloud.version>2024.0.1</spring-cloud.version>
+		<spring-cloud.version>2025.1.0</spring-cloud.version>
 		<spring-cloud-aws.version>3.3.0</spring-cloud-aws.version>
 		<doma.version>{{.DomaVersion}}</doma.version>
 		<doma.boot.version>{{.DomaSpringBootVersion}}</doma.boot.version>

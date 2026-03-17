@@ -3,7 +3,7 @@ package com.example.common.accesslog;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.filter.OrderedFilter;
+import org.springframework.boot.servlet.filter.OrderedFilter;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
