@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres
+    image: "postgres:18"
     ports:
       - "5432:5432"
     environment:
@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass1234
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/18/docker
       - ./docker/postgres:/docker-entrypoint-initdb.d:ro
 
   pgadmin:

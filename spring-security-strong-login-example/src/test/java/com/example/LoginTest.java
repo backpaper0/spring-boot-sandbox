@@ -50,7 +50,7 @@ public class LoginTest {
 		MvcResult mvcResult = mvc.perform(get("/"))
 				.andExpectAll(
 						status().is3xxRedirection(),
-						redirectedUrlPattern("**/login"))
+						redirectedUrl("/login"))
 				.andReturn();
 
 		mvc.perform(get(mvcResult.getResponse().getHeader("Location")))
