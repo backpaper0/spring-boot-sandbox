@@ -11,12 +11,16 @@
     </parent>
     <artifactId>rest-client-example</artifactId>
     <properties>
-        <logbook.version>3.7.1</logbook.version>
+        <logbook.version>4.0.3</logbook.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-restclient</artifactId>
         </dependency>
         <dependency>
             <groupId>org.zalando</groupId>
