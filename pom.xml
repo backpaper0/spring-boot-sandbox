@@ -40,7 +40,6 @@
 		<module>cloud-bus-demo/service2</module>
 		<module>cloud-config-demo/client</module>
 		<module>cloud-config-demo/server</module>
-		<module>cloud-function-demo</module>
 		<module>custom-logging</module>
 		<module>environment-post-processor-example</module>
 		<module>functional-endpoints-example</module>
@@ -65,7 +64,6 @@
 		<module>reactor-example</module>
 		<module>redis-sample</module>
 		<module>rest-client-example</module>
-		<module>rest-template-example</module>
 		<module>retry-example</module>
 		<module>samesite-cookie-demo</module>
 		<module>scheduling-example</module>
