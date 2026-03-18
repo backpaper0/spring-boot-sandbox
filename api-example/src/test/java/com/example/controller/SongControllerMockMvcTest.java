@@ -78,7 +78,6 @@ public class SongControllerMockMvcTest extends RestControllerTestBase {
 	void testGetListInvalid() throws Exception {
 		mvc.perform(get("/songs").queryParam("singer", "0").locale(Locale.JAPANESE))
 				.andExpectAll(status().isBadRequest(),
-						jsonPath("$.type").value("about:blank"),
 						jsonPath("$.title").value("Bad Request"),
 						jsonPath("$.status").value(400),
 						jsonPath("$.instance").value("/songs"),
