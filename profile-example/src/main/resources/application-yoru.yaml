@@ -1,0 +1,5 @@
+app:
+    greeting:
+        time-of-day: evening
+        evening:
+            suffix: ⭐️

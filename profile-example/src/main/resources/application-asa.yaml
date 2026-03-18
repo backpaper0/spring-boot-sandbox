@@ -1,0 +1,5 @@
+app:
+    greeting:
+        time-of-day: morning
+        morning:
+            prefix: ☀️

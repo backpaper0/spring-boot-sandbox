@@ -1,0 +1,5 @@
+spring:
+    application:
+        name: profile-example
+    profiles:
+        active: asa
