@@ -16,29 +16,30 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class FoobarControllerTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	@Transactional
-	@Sql("foobar.sql")
-	void test() throws Exception {
-		mvc.perform(get("/foobar"))
-				.andExpectAll(status().isOk(),
-						jsonPath("$[0].id").isNumber(),
-						jsonPath("$[0].content").value("foo"),
-						jsonPath("$[1].id").isNumber(),
-						jsonPath("$[1].content").value("bar"),
-						jsonPath("$[2].id").isNumber(),
-						jsonPath("$[2].content").value("baz"),
-						jsonPath("$[3].id").isNumber(),
-						jsonPath("$[3].content").value("qux"));
-	}
+    @Test
+    @Transactional
+    @Sql("foobar.sql")
+    void test() throws Exception {
+        mvc.perform(get("/foobar"))
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$[0].id").isNumber(),
+                        jsonPath("$[0].content").value("foo"),
+                        jsonPath("$[1].id").isNumber(),
+                        jsonPath("$[1].content").value("bar"),
+                        jsonPath("$[2].id").isNumber(),
+                        jsonPath("$[2].content").value("baz"),
+                        jsonPath("$[3].id").isNumber(),
+                        jsonPath("$[3].content").value("qux"));
+    }
 }

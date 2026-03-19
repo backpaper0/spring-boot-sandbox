@@ -9,14 +9,12 @@ import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
-
 import reactor.core.publisher.Mono;
 
 public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, ServerResponse> {
 
     @Override
-    public Mono<ServerResponse> filter(final ServerRequest request,
-            final HandlerFunction<ServerResponse> next) {
+    public Mono<ServerResponse> filter(final ServerRequest request, final HandlerFunction<ServerResponse> next) {
         return next.handle(request).map(AddHeaderResponse::new);
     }
 
@@ -51,6 +49,5 @@ public class AddHeaderFilter implements HandlerFilterFunction<ServerResponse, Se
         public Mono<Void> writeTo(final ServerWebExchange exchange, final Context context) {
             return response.writeTo(exchange, context);
         }
-
     }
 }

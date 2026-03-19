@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class LoginFailureCountUpdaterProperties {
 
-	private int maxLoginFailureCount;
+    private int maxLoginFailureCount;
 
-	public int getMaxLoginFailureCount() {
-		return maxLoginFailureCount;
-	}
+    public int getMaxLoginFailureCount() {
+        return maxLoginFailureCount;
+    }
 
-	public void setMaxLoginFailureCount(int maxLoginFailureCount) {
-		this.maxLoginFailureCount = maxLoginFailureCount;
-	}
+    public void setMaxLoginFailureCount(int maxLoginFailureCount) {
+        this.maxLoginFailureCount = maxLoginFailureCount;
+    }
 }

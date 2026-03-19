@@ -8,9 +8,10 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  */
 public class RoutingDataSource extends AbstractRoutingDataSource {
 
-	@Override
-	protected Object determineCurrentLookupKey() {
-		return TransactionSynchronizationManager.isCurrentTransactionReadOnly() ?
-				DataSourceType.FOLLOWER : DataSourceType.LEADER;
-	}
+    @Override
+    protected Object determineCurrentLookupKey() {
+        return TransactionSynchronizationManager.isCurrentTransactionReadOnly()
+                ? DataSourceType.FOLLOWER
+                : DataSourceType.LEADER;
+    }
 }

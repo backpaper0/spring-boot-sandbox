@@ -14,25 +14,25 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class SessionScopeTest {
 
-	@LocalServerPort
-	int port;
+    @LocalServerPort
+    int port;
 
-	RestTemplate template;
+    RestTemplate template;
 
-	@BeforeEach
-	void setup() {
-		template = new RestTemplate();
-		template.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public boolean hasError(ClientHttpResponse response) {
-				return false;
-			}
-		});
-	}
+    @BeforeEach
+    void setup() {
+        template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) {
+                return false;
+            }
+        });
+    }
 
-	@Test
-	void test() {
-		final int count = template.getForObject("http://localhost:" + port + "/demo", Integer.class);
-		assertEquals(0, count);
-	}
+    @Test
+    void test() {
+        final int count = template.getForObject("http://localhost:" + port + "/demo", Integer.class);
+        assertEquals(0, count);
+    }
 }

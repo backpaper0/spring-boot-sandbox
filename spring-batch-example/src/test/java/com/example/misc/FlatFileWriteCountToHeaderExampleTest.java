@@ -9,17 +9,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.stream.IntStream;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.listener.StepExecutionListener;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.StepExecution;
-import org.springframework.batch.core.listener.StepExecutionListener;
-import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.file.FlatFileHeaderCallback;
 import org.springframework.batch.infrastructure.item.file.FlatFileItemWriter;
@@ -35,10 +37,6 @@ import org.springframework.core.io.PathResource;
 import org.springframework.core.io.WritableResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * {@link RandomAccessFile}を使って後から固定長ファイルのヘッダーに処理件数を書き込む例。
  *
@@ -46,127 +44,125 @@ import lombok.NoArgsConstructor;
 @SpringBootTest
 public class FlatFileWriteCountToHeaderExampleTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	static final WritableResource resource = new PathResource("target/output.txt");
+    @Autowired
+    TestConfig config;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.job(), new JobParameters());
+    static final WritableResource resource = new PathResource("target/output.txt");
 
-		byte[] b;
-		try (InputStream in = resource.getInputStream()) {
-			b = in.readAllBytes();
-		}
-		String s = new String(b, StandardCharsets.UTF_8);
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.job(), new JobParameters());
 
-		System.out.println(s);
-	}
+        byte[] b;
+        try (InputStream in = resource.getInputStream()) {
+            b = in.readAllBytes();
+        }
+        String s = new String(b, StandardCharsets.UTF_8);
 
-	static class FileDeleteStepExecutionListener implements StepExecutionListener {
-		@Override
-		public void beforeStep(StepExecution stepExecution) {
-			if (resource.exists()) {
-				try {
-					Files.delete(resource.getFile().toPath());
-				} catch (IOException e) {
-					throw new UncheckedIOException(e);
-				}
-			}
-		}
-	}
+        System.out.println(s);
+    }
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	static class ExampleItem {
-		private Integer value;
-	}
+    static class FileDeleteStepExecutionListener implements StepExecutionListener {
+        @Override
+        public void beforeStep(StepExecution stepExecution) {
+            if (resource.exists()) {
+                try {
+                    Files.delete(resource.getFile().toPath());
+                } catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            }
+        }
+    }
 
-	static class ExampleFieldExtractor implements FieldExtractor<ExampleItem> {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class ExampleItem {
+        private Integer value;
+    }
 
-		@Override
-		public Object[] extract(ExampleItem item) {
-			return new Object[] {
-					item.getValue()
-			};
-		}
-	}
+    static class ExampleFieldExtractor implements FieldExtractor<ExampleItem> {
 
-	static class WriteCountToHeaderStepExecutionListener implements StepExecutionListener {
-		@Override
-		public ExitStatus afterStep(StepExecution stepExecution) {
-			long count = stepExecution.getWriteCount();
-			String s = String.format("%04d", count);
-			try (RandomAccessFile raf = new RandomAccessFile(resource.getFile(), "rw")) {
-				raf.seek(0L);
-				raf.write(s.getBytes());
-			} catch (IOException e) {
-				throw new UncheckedIOException(e);
-			}
-			return null;
-		}
-	}
+        @Override
+        public Object[] extract(ExampleItem item) {
+            return new Object[] {item.getValue()};
+        }
+    }
 
-	@TestConfiguration
-	static class TestConfig {
+    static class WriteCountToHeaderStepExecutionListener implements StepExecutionListener {
+        @Override
+        public ExitStatus afterStep(StepExecution stepExecution) {
+            long count = stepExecution.getWriteCount();
+            String s = String.format("%04d", count);
+            try (RandomAccessFile raf = new RandomAccessFile(resource.getFile(), "rw")) {
+                raf.seek(0L);
+                raf.write(s.getBytes());
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+            return null;
+        }
+    }
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+    @TestConfiguration
+    static class TestConfig {
 
-		@Bean
-		public IteratorItemReader<ExampleItem> itemReader() {
-			Iterator<ExampleItem> iterator = IntStream.rangeClosed(1, 10).mapToObj(ExampleItem::new).iterator();
-			return new IteratorItemReader<>(iterator);
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		public PassThroughItemProcessor<ExampleItem> itemProcessor() {
-			return new PassThroughItemProcessor<>();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		public FlatFileItemWriter<ExampleItem> itemWriter() {
-			return new FlatFileItemWriterBuilder<ExampleItem>()
-					.resource(resource)
-					.lineSeparator("\n")
-					.formatted()
-					.format("%s")
-					.fieldExtractor(new ExampleFieldExtractor())
-					.saveState(false)
-					.name("test")
-					.headerCallback(new FlatFileHeaderCallback() {
-						@Override
-						public void writeHeader(Writer writer) throws IOException {
-							writer.write("9999");
-						}
-					})
-					.build();
-		}
+        @Bean
+        public IteratorItemReader<ExampleItem> itemReader() {
+            Iterator<ExampleItem> iterator =
+                    IntStream.rangeClosed(1, 10).mapToObj(ExampleItem::new).iterator();
+            return new IteratorItemReader<>(iterator);
+        }
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<ExampleItem, ExampleItem> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.listener(new FileDeleteStepExecutionListener())
-					.listener(new WriteCountToHeaderStepExecutionListener())
-					.build();
-		}
+        @Bean
+        public PassThroughItemProcessor<ExampleItem> itemProcessor() {
+            return new PassThroughItemProcessor<>();
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        public FlatFileItemWriter<ExampleItem> itemWriter() {
+            return new FlatFileItemWriterBuilder<ExampleItem>()
+                    .resource(resource)
+                    .lineSeparator("\n")
+                    .formatted()
+                    .format("%s")
+                    .fieldExtractor(new ExampleFieldExtractor())
+                    .saveState(false)
+                    .name("test")
+                    .headerCallback(new FlatFileHeaderCallback() {
+                        @Override
+                        public void writeHeader(Writer writer) throws IOException {
+                            writer.write("9999");
+                        }
+                    })
+                    .build();
+        }
 
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<ExampleItem, ExampleItem>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .listener(new FileDeleteStepExecutionListener())
+                    .listener(new WriteCountToHeaderStepExecutionListener())
+                    .build();
+        }
+
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 }

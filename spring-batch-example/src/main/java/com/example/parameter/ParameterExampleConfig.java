@@ -1,11 +1,11 @@
 package com.example.parameter;
 
 import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
-import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.Step;
+import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.infrastructure.repeat.RepeatStatus;
@@ -17,50 +17,51 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class ParameterExampleConfig {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Autowired
-	private MyParameterSupplier myParameterSupplier;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	public ParameterExampleTasklet parameterExampleTasklet() {
-		return new ParameterExampleTasklet(myParameterSupplier);
-	}
+    @Autowired
+    private MyParameterSupplier myParameterSupplier;
 
-	@Bean
-	public Step parameterExampleStep() {
-		return new StepBuilder("parameterExampleStep", jobRepository)
-				.tasklet(parameterExampleTasklet(), transactionManager)
-				.build();
-	}
+    @Bean
+    public ParameterExampleTasklet parameterExampleTasklet() {
+        return new ParameterExampleTasklet(myParameterSupplier);
+    }
 
-	@Bean
-	public Job parameterExampleJob() {
-		return new JobBuilder("parameterExampleJob", jobRepository)
-				.start(parameterExampleStep())
-				.build();
-	}
+    @Bean
+    public Step parameterExampleStep() {
+        return new StepBuilder("parameterExampleStep", jobRepository)
+                .tasklet(parameterExampleTasklet(), transactionManager)
+                .build();
+    }
 
-	static class ParameterExampleTasklet implements Tasklet {
+    @Bean
+    public Job parameterExampleJob() {
+        return new JobBuilder("parameterExampleJob", jobRepository)
+                .start(parameterExampleStep())
+                .build();
+    }
 
-		private final MyParameterSupplier myParameterSupplier;
-		private String value;
+    static class ParameterExampleTasklet implements Tasklet {
 
-		public ParameterExampleTasklet(MyParameterSupplier myParameterSupplier) {
-			this.myParameterSupplier = myParameterSupplier;
-		}
+        private final MyParameterSupplier myParameterSupplier;
+        private String value;
 
-		@Override
-		public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-			value = myParameterSupplier.get();
-			return RepeatStatus.FINISHED;
-		}
+        public ParameterExampleTasklet(MyParameterSupplier myParameterSupplier) {
+            this.myParameterSupplier = myParameterSupplier;
+        }
 
-		public String getValue() {
-			return value;
-		}
-	}
+        @Override
+        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+            value = myParameterSupplier.get();
+            return RepeatStatus.FINISHED;
+        }
+
+        public String getValue() {
+            return value;
+        }
+    }
 }

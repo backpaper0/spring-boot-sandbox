@@ -2,7 +2,6 @@ package com.example.download;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +15,21 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @RequestMapping("/download")
 public class DownloadController {
 
-	@GetMapping
-	public String index() {
-		return "download/index";
-	}
+    @GetMapping
+    public String index() {
+        return "download/index";
+    }
 
-	@GetMapping(params = "file1")
-	@ResponseBody
-	public ResponseEntity<StreamingResponseBody> file1() {
-		StreamingResponseBody body = out -> out.write("file1".getBytes());
-		return ResponseEntity.ok()
-				.contentType(MediaType.APPLICATION_OCTET_STREAM)
-				.header(HttpHeaders.CONTENT_DISPOSITION,
-						//RFC 6266形式のfilename*パラメーターを使う
-						"attachment; filename*=utf-8''" + URLEncoder.encode("ファイル1.txt", StandardCharsets.UTF_8))
-				.body(body);
-	}
+    @GetMapping(params = "file1")
+    @ResponseBody
+    public ResponseEntity<StreamingResponseBody> file1() {
+        StreamingResponseBody body = out -> out.write("file1".getBytes());
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        // RFC 6266形式のfilename*パラメーターを使う
+                        "attachment; filename*=utf-8''" + URLEncoder.encode("ファイル1.txt", StandardCharsets.UTF_8))
+                .body(body);
+    }
 }

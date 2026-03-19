@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 public class App {
 
-	@SuppressWarnings("resource")
-	public static void main(final String[] args) {
-		SpringApplication.run(App.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(final String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 }

@@ -3,53 +3,51 @@ package com.example.connection;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import com.example.connection.component.Foo;
 import java.sql.Connection;
-
 import javax.sql.DataSource;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.example.connection.component.Foo;
-
 @SpringBootTest
 @SuppressWarnings("resource")
 class ConnectionTest {
 
-	@Autowired
-	private Foo foo;
-	@MockitoBean
-	private DataSource dataSource;
+    @Autowired
+    private Foo foo;
 
-	@Test
-	void fooWillCommit() throws Exception {
+    @MockitoBean
+    private DataSource dataSource;
 
-		Connection con = mock(Connection.class);
-		//        doAnswer(i -> {
-		//            new Throwable().printStackTrace(System.out);
-		//            return null;
-		//        }).when(con).close();
+    @Test
+    void fooWillCommit() throws Exception {
 
-		when(dataSource.getConnection()).thenReturn(con);
+        Connection con = mock(Connection.class);
+        //        doAnswer(i -> {
+        //            new Throwable().printStackTrace(System.out);
+        //            return null;
+        //        }).when(con).close();
 
-		foo.willCommit();
+        when(dataSource.getConnection()).thenReturn(con);
 
-		verify(con).commit();
-		verify(con).close();
-	}
+        foo.willCommit();
 
-	@Test
-	void fooWillRollback() throws Exception {
+        verify(con).commit();
+        verify(con).close();
+    }
 
-		Connection con = mock(Connection.class);
+    @Test
+    void fooWillRollback() throws Exception {
 
-		when(dataSource.getConnection()).thenReturn(con);
+        Connection con = mock(Connection.class);
 
-		assertThrows(RuntimeException.class, () -> foo.willRollback());
+        when(dataSource.getConnection()).thenReturn(con);
 
-		verify(con).rollback();
-		verify(con).close();
-	}
+        assertThrows(RuntimeException.class, () -> foo.willRollback());
+
+        verify(con).rollback();
+        verify(con).close();
+    }
 }

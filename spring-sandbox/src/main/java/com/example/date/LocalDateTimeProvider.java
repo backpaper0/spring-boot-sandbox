@@ -8,10 +8,10 @@ import java.time.LocalDateTime;
  */
 public interface LocalDateTimeProvider {
 
-	/**
-	 * 日時を提供する。
-	 *
-	 * @return 日時
-	 */
-	LocalDateTime now();
+    /**
+     * 日時を提供する。
+     *
+     * @return 日時
+     */
+    LocalDateTime now();
 }

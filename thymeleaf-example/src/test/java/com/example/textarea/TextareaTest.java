@@ -14,28 +14,24 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class TextareaTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void test1() throws Exception {
-		mvc.perform(post("/textarea").param("myTextarea", "foo\r\nbar"))
-				.andExpectAll(
-						model().attribute("textareaForm", new TextareaForm("foo\r\nbar")));
-	}
+    @Test
+    void test1() throws Exception {
+        mvc.perform(post("/textarea").param("myTextarea", "foo\r\nbar"))
+                .andExpectAll(model().attribute("textareaForm", new TextareaForm("foo\r\nbar")));
+    }
 
-	@Test
-	void test2() throws Exception {
-		mvc.perform(post("/textarea"))
-				.andExpectAll(
-						model().attribute("textareaForm", new TextareaForm(null)));
-	}
-
+    @Test
+    void test2() throws Exception {
+        mvc.perform(post("/textarea")).andExpectAll(model().attribute("textareaForm", new TextareaForm(null)));
+    }
 }

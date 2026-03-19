@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.List;
-
 import org.springframework.jdbc.core.SingleColumnRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;

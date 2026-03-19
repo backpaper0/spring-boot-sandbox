@@ -4,17 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.listener.StepExecutionListener;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.StepExecution;
-import org.springframework.batch.core.listener.StepExecutionListener;
-import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.TaskletStep;
 import org.springframework.batch.infrastructure.item.support.ListItemReader;
@@ -33,92 +32,92 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootTest
 public class AddListenerWithBeanPostProcessorTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.job(), new JobParameters());
+    @Autowired
+    TestConfig config;
 
-		List<Integer> list = IntStream.rangeClosed(1, 10).boxed().toList();
-		assertEquals(list, config.itemWriter().getWrittenItems());
-	}
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.job(), new JobParameters());
 
-	@TestConfiguration
-	@Import(MyListenerRegister.class)
-	static class TestConfig {
+        List<Integer> list = IntStream.rangeClosed(1, 10).boxed().toList();
+        assertEquals(list, config.itemWriter().getWrittenItems());
+    }
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+    @TestConfiguration
+    @Import(MyListenerRegister.class)
+    static class TestConfig {
 
-		@Bean
-		public ListItemReader<Integer> itemReader() {
-			return new ListItemReader<>(IntStream.rangeClosed(1, 10).boxed().toList());
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		public PassThroughItemProcessor<Integer> itemProcessor() {
-			return new PassThroughItemProcessor<>();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		public ListItemWriter<Integer> itemWriter() {
-			return new ListItemWriter<>();
-		}
+        @Bean
+        public ListItemReader<Integer> itemReader() {
+            return new ListItemReader<>(IntStream.rangeClosed(1, 10).boxed().toList());
+        }
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<Integer, Integer> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.listener(new MyListener("foo"))
-					.listener(new MyListener("bar"))
-					.build();
-		}
+        @Bean
+        public PassThroughItemProcessor<Integer> itemProcessor() {
+            return new PassThroughItemProcessor<>();
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        public ListItemWriter<Integer> itemWriter() {
+            return new ListItemWriter<>();
+        }
 
-	@TestComponent
-	static class MyListenerRegister implements BeanPostProcessor {
-		@Override
-		public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-			if (bean instanceof TaskletStep) {
-				TaskletStep step = (TaskletStep) bean;
-				step.registerStepExecutionListener(new MyListener("baz"));
-			}
-			return bean;
-		}
-	}
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<Integer, Integer>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .listener(new MyListener("foo"))
+                    .listener(new MyListener("bar"))
+                    .build();
+        }
 
-	static class MyListener implements StepExecutionListener {
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 
-		private final String name;
+    @TestComponent
+    static class MyListenerRegister implements BeanPostProcessor {
+        @Override
+        public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+            if (bean instanceof TaskletStep) {
+                TaskletStep step = (TaskletStep) bean;
+                step.registerStepExecutionListener(new MyListener("baz"));
+            }
+            return bean;
+        }
+    }
 
-		public MyListener(String name) {
-			this.name = name;
-		}
+    static class MyListener implements StepExecutionListener {
 
-		@Override
-		public void beforeStep(StepExecution stepExecution) {
-			System.out.println("[" + name + "]beforeStep");
-		}
+        private final String name;
 
-		@Override
-		public ExitStatus afterStep(StepExecution stepExecution) {
-			System.out.println("[" + name + "]afterStep");
-			return null;
-		}
-	}
+        public MyListener(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public void beforeStep(StepExecution stepExecution) {
+            System.out.println("[" + name + "]beforeStep");
+        }
+
+        @Override
+        public ExitStatus afterStep(StepExecution stepExecution) {
+            System.out.println("[" + name + "]afterStep");
+            return null;
+        }
+    }
 }

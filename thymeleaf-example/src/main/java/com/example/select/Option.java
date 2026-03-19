@@ -5,6 +5,6 @@ import lombok.Value;
 @Value
 public class Option {
 
-	String value;
-	String text;
+    String value;
+    String text;
 }

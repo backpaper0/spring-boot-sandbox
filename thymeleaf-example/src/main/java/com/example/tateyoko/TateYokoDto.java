@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TateYokoDto {
 
-	private Integer id;
-	private String content1;
-	private String content2;
+    private Integer id;
+    private String content1;
+    private String content2;
 }

@@ -6,11 +6,11 @@ import org.springframework.batch.infrastructure.item.ItemProcessor;
 
 public class DemoItemProcessor implements ItemProcessor<Integer, Integer> {
 
-	private static final Logger logger = LoggerFactory.getLogger(DemoItemProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(DemoItemProcessor.class);
 
-	@Override
-	public Integer process(Integer item) throws Exception {
-		logger.info("processor#process: {}", item);
-		return item;
-	}
+    @Override
+    public Integer process(Integer item) throws Exception {
+        logger.info("processor#process: {}", item);
+        return item;
+    }
 }

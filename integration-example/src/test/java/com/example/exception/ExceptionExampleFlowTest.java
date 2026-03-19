@@ -12,34 +12,36 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringJUnitConfig(classes = ExceptionExampleFlow.class)
 public class ExceptionExampleFlowTest {
 
-	@Autowired
-	private MessageChannel input;
-	@Autowired
-	private PollableChannel output;
-	@Autowired
-	private PollableChannel errorChannel;
+    @Autowired
+    private MessageChannel input;
 
-	@Test
-	void test() {
-		final long timeout = 1000;
+    @Autowired
+    private PollableChannel output;
 
-		assertNull(output.receive(timeout));
+    @Autowired
+    private PollableChannel errorChannel;
 
-		input.send(MessageBuilder.withPayload("foo").build());
-		input.send(MessageBuilder.withPayload("bar").build());
-		input.send(MessageBuilder.withPayload("baz").build());
-		input.send(MessageBuilder.withPayload("qux").build());
+    @Test
+    void test() {
+        final long timeout = 1000;
 
-		assertEquals("foo", output.receive(timeout).getPayload());
-		assertEquals("qux", output.receive(timeout).getPayload());
-		assertNull(output.receive(timeout));
+        assertNull(output.receive(timeout));
 
-		MyException e = (MyException) errorChannel.receive(timeout).getPayload();
-		assertEquals("bar", e.getMessage());
+        input.send(MessageBuilder.withPayload("foo").build());
+        input.send(MessageBuilder.withPayload("bar").build());
+        input.send(MessageBuilder.withPayload("baz").build());
+        input.send(MessageBuilder.withPayload("qux").build());
 
-		e = (MyException) errorChannel.receive(timeout).getPayload();
-		assertEquals("baz", e.getMessage());
+        assertEquals("foo", output.receive(timeout).getPayload());
+        assertEquals("qux", output.receive(timeout).getPayload());
+        assertNull(output.receive(timeout));
 
-		assertNull(errorChannel.receive(timeout));
-	}
+        MyException e = (MyException) errorChannel.receive(timeout).getPayload();
+        assertEquals("bar", e.getMessage());
+
+        e = (MyException) errorChannel.receive(timeout).getPayload();
+        assertEquals("baz", e.getMessage());
+
+        assertNull(errorChannel.receive(timeout));
+    }
 }

@@ -3,10 +3,9 @@ package com.example.common.accesslog;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.Test;
-
 import ch.qos.logback.access.common.spi.IAccessEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.Test;
 
 public class KeepingNameConverterTest {
 
@@ -17,8 +16,7 @@ public class KeepingNameConverterTest {
         IAccessEvent event = mock(IAccessEvent.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(event.getRequest()).thenReturn(request);
-        when(request.getAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME))
-                .thenReturn("testname");
+        when(request.getAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME)).thenReturn("testname");
 
         String actual = sut.convert(event);
 
@@ -34,8 +32,7 @@ public class KeepingNameConverterTest {
         IAccessEvent event = mock(IAccessEvent.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(event.getRequest()).thenReturn(request);
-        when(request.getAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME))
-                .thenReturn(null);
+        when(request.getAttribute(KeepingNameConverter.REQUEST_ATTRIBUTE_NAME)).thenReturn(null);
 
         String actual = sut.convert(event);
 

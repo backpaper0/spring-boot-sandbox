@@ -9,11 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = AopApplication.class)
 public class AopTest {
 
-	@Autowired
-	private Hello sut;
+    @Autowired
+    private Hello sut;
 
-	@Test
-	void test() {
-		assertEquals("*Hello AOP*", sut.say());
-	}
+    @Test
+    void test() {
+        assertEquals("*Hello AOP*", sut.say());
+    }
 }

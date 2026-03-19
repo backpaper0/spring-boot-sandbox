@@ -16,30 +16,30 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class RequestBodySampleTest {
 
-	@LocalServerPort
-	int port;
+    @LocalServerPort
+    int port;
 
-	RestTemplate template;
+    RestTemplate template;
 
-	@BeforeEach
-	void setup() {
-		template = new RestTemplate();
-		template.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public boolean hasError(ClientHttpResponse response) {
-				return false;
-			}
-		});
-	}
+    @BeforeEach
+    void setup() {
+        template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) {
+                return false;
+            }
+        });
+    }
 
-	@Test
-	void test() {
-		final RequestEntity<String> request = RequestEntity.post("http://localhost:" + port + "/")
-				.contentType(MediaType.APPLICATION_JSON)
-				.body("{\"value\":\"Hello, world!\"}");
+    @Test
+    void test() {
+        final RequestEntity<String> request = RequestEntity.post("http://localhost:" + port + "/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body("{\"value\":\"Hello, world!\"}");
 
-		final String response = template.exchange(request, String.class).getBody();
+        final String response = template.exchange(request, String.class).getBody();
 
-		assertThat(response).isEqualTo("Hello, world!");
-	}
+        assertThat(response).isEqualTo("Hello, world!");
+    }
 }

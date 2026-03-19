@@ -1,29 +1,27 @@
 package com.example.service;
 
+import com.example.model.Account;
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.model.Account;
-
 @Component
 @Transactional
 public class AdminService {
 
-	private final JdbcTemplate jdbc;
+    private final JdbcTemplate jdbc;
 
-	public AdminService(JdbcTemplate jdbc) {
-		this.jdbc = jdbc;
-	}
+    public AdminService(JdbcTemplate jdbc) {
+        this.jdbc = jdbc;
+    }
 
-	@Transactional(readOnly = true)
-	public List<Account> findAllAccounts() {
+    @Transactional(readOnly = true)
+    public List<Account> findAllAccounts() {
 
-		List<Account> accounts = jdbc.query("""
+        List<Account> accounts = jdbc.query("""
 				select
 					username,
 					locked,
@@ -37,13 +35,13 @@ public class AdminService {
 					username asc
 				""", new BeanPropertyRowMapper<>(Account.class));
 
-		return accounts;
-	}
+        return accounts;
+    }
 
-	@Transactional(readOnly = true)
-	public Account findAccountById(String username) {
+    @Transactional(readOnly = true)
+    public Account findAccountById(String username) {
 
-		Account account = jdbc.queryForObject("""
+        Account account = jdbc.queryForObject("""
 				select
 					username,
 					locked,
@@ -57,11 +55,11 @@ public class AdminService {
 					username = ?
 				""", new BeanPropertyRowMapper<>(Account.class), username);
 
-		return account;
-	}
+        return account;
+    }
 
-	public void updateValidity(String username, LocalDate validityFrom, LocalDate validityTo) {
-		jdbc.update("""
+    public void updateValidity(String username, LocalDate validityFrom, LocalDate validityTo) {
+        jdbc.update("""
 				update
 					accounts
 				set
@@ -70,10 +68,10 @@ public class AdminService {
 				where
 					username = ?
 				""", validityFrom, validityTo, username);
-	}
+    }
 
-	public void unlock(String username) {
-		jdbc.update("""
+    public void unlock(String username) {
+        jdbc.update("""
 				update
 					accounts
 				set
@@ -82,5 +80,5 @@ public class AdminService {
 				where
 					username = ?
 				""", username);
-	}
+    }
 }

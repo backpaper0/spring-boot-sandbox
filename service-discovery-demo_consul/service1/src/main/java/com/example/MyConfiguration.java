@@ -9,18 +9,18 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class MyConfiguration {
 
-	private final MyProperties properties;
+    private final MyProperties properties;
 
-	public MyConfiguration(MyProperties properties) {
-		this.properties = properties;
-	}
+    public MyConfiguration(MyProperties properties) {
+        this.properties = properties;
+    }
 
-	@Bean
-	@LoadBalanced
-	public RestTemplate loadBalancedRestTemplate() {
-		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-		factory.setConnectTimeout((int) properties.getConnectTimeout().toMillis());
-		factory.setReadTimeout((int) properties.getReadTimeout().toMillis());
-		return new RestTemplate(factory);
-	}
+    @Bean
+    @LoadBalanced
+    public RestTemplate loadBalancedRestTemplate() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout((int) properties.getConnectTimeout().toMillis());
+        factory.setReadTimeout((int) properties.getReadTimeout().toMillis());
+        return new RestTemplate(factory);
+    }
 }

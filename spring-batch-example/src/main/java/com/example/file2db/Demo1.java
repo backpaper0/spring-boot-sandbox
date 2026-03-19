@@ -5,29 +5,30 @@ import jakarta.validation.constraints.Size;
 
 public class Demo1 {
 
-	private Integer id;
-	@NotNull
-	@Size(min = 1)
-	private String content;
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @NotNull
+    @Size(min = 1)
+    private String content;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	@Override
-	public String toString() {
-		return "Demo1 [id=" + id + ", content=" + content + "]";
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "Demo1 [id=" + id + ", content=" + content + "]";
+    }
 }

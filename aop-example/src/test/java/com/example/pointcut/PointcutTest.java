@@ -9,11 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = PointcutExampleApplication.class)
 public class PointcutTest {
 
-	@Autowired
-	private Hello sut;
+    @Autowired
+    private Hello sut;
 
-	@Test
-	void test() {
-		assertEquals("*Hello Pointcut*", sut.say());
-	}
+    @Test
+    void test() {
+        assertEquals("*Hello Pointcut*", sut.say());
+    }
 }

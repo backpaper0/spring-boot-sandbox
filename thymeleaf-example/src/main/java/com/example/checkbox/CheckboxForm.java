@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CheckboxForm {
 
-	private Boolean singleCheckbox;
+    private Boolean singleCheckbox;
 
-	private String[] multiCheckboxes;
+    private String[] multiCheckboxes;
 }

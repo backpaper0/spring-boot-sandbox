@@ -1,8 +1,9 @@
 package com.example.service;
 
+import com.example.mapper.MessageMapper;
+import com.example.model.Message;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.mapper.MessageMapper;
-import com.example.model.Message;
-
 @Service
 @Transactional
 public class MessageService {
 
     @Autowired
     private MessageMapper mapper;
+
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 

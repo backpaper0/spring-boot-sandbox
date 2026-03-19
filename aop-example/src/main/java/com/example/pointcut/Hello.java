@@ -1,14 +1,13 @@
 package com.example.pointcut;
 
-import org.springframework.stereotype.Component;
-
 import com.example.Asterisk;
+import org.springframework.stereotype.Component;
 
 @Component
 @Asterisk
 public class Hello {
 
-	public String say() {
-		return "Hello Pointcut";
-	}
+    public String say() {
+        return "Hello Pointcut";
+    }
 }

@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +19,7 @@ public class DiceController {
     }
 
     @GetMapping("/rolldice")
-    public List<Integer> rolldice(@RequestParam(required = false) String player,
-            @RequestParam int rolls) {
+    public List<Integer> rolldice(@RequestParam(required = false) String player, @RequestParam int rolls) {
         List<Integer> result = dice.rollTheDice(rolls);
         if (player != null) {
             logger.info("{} is rolling the dice: {}", player, result);

@@ -1,52 +1,53 @@
 package com.example.form;
 
-import org.springframework.util.StringUtils;
-
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.util.StringUtils;
 
 public class PasswordForm {
 
-	@NotNull
-	@Size(min = 1)
-	private String currentPassword;
-	@NotNull
-	@Size(min = 1)
-	private String newPassword;
-	@NotNull
-	@Size(min = 1)
-	private String confirmPassword;
+    @NotNull
+    @Size(min = 1)
+    private String currentPassword;
 
-	public String getCurrentPassword() {
-		return currentPassword;
-	}
+    @NotNull
+    @Size(min = 1)
+    private String newPassword;
 
-	public void setCurrentPassword(String currentPassword) {
-		this.currentPassword = currentPassword;
-	}
+    @NotNull
+    @Size(min = 1)
+    private String confirmPassword;
 
-	public String getNewPassword() {
-		return newPassword;
-	}
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
 
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
-	}
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
+    }
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
+    public String getNewPassword() {
+        return newPassword;
+    }
 
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
 
-	@AssertTrue(message = "{passwordConfirmationError}")
-	public boolean getPasswordConfirmation() {
-		if (!StringUtils.hasText(newPassword) || !StringUtils.hasText(currentPassword)) {
-			return true;
-		}
-		return newPassword.equals(confirmPassword);
-	}
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    @AssertTrue(message = "{passwordConfirmationError}")
+    public boolean getPasswordConfirmation() {
+        if (!StringUtils.hasText(newPassword) || !StringUtils.hasText(currentPassword)) {
+            return true;
+        }
+        return newPassword.equals(confirmPassword);
+    }
 }

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Profile("production")
 public class Bar implements Foobar {
 
-	@Override
-	public String get() {
-		return "bar";
-	}
+    @Override
+    public String get() {
+        return "bar";
+    }
 }

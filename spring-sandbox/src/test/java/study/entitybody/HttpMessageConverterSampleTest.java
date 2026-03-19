@@ -14,25 +14,25 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class HttpMessageConverterSampleTest {
 
-	@LocalServerPort
-	int port;
+    @LocalServerPort
+    int port;
 
-	RestTemplate template;
+    RestTemplate template;
 
-	@BeforeEach
-	void setup() {
-		template = new RestTemplate();
-		template.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public boolean hasError(ClientHttpResponse response) {
-				return false;
-			}
-		});
-	}
+    @BeforeEach
+    void setup() {
+        template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) {
+                return false;
+            }
+        });
+    }
 
-	@Test
-	void test() {
-		final String response = template.postForObject("http://localhost:" + port + "/", "x", String.class);
-		assertThat(response).isEqualTo("OK");
-	}
+    @Test
+    void test() {
+        final String response = template.postForObject("http://localhost:" + port + "/", "x", String.class);
+        assertThat(response).isEqualTo("OK");
+    }
 }

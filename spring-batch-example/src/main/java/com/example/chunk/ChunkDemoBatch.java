@@ -1,62 +1,62 @@
 package com.example.chunk;
 
-import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
+import com.example.misc.DemoItemProcessor;
+import com.example.misc.DemoItemReader;
+import com.example.misc.DemoItemWriter;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.example.misc.DemoItemProcessor;
-import com.example.misc.DemoItemReader;
-import com.example.misc.DemoItemWriter;
-
 @Configuration
 public class ChunkDemoBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Bean
-	@StepScope
-	public DemoItemReader chunkDemoItemReader() {
-		return new DemoItemReader(5);
-	}
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	@StepScope
-	public DemoItemProcessor chunkDemoItemProcessor() {
-		return new DemoItemProcessor();
-	}
+    @Bean
+    @StepScope
+    public DemoItemReader chunkDemoItemReader() {
+        return new DemoItemReader(5);
+    }
 
-	@Bean
-	@StepScope
-	public DemoItemWriter chunkDemoItemWriter() {
-		return new DemoItemWriter();
-	}
+    @Bean
+    @StepScope
+    public DemoItemProcessor chunkDemoItemProcessor() {
+        return new DemoItemProcessor();
+    }
 
-	@Bean
-	public Step chunkDemoStep() {
-		return new StepBuilder("ChunkDemo", jobRepository)
-				.<Integer, Integer> chunk(3, transactionManager)
-				.reader(chunkDemoItemReader())
-				.processor(chunkDemoItemProcessor())
-				.writer(chunkDemoItemWriter())
-				.build();
-	}
+    @Bean
+    @StepScope
+    public DemoItemWriter chunkDemoItemWriter() {
+        return new DemoItemWriter();
+    }
 
-	@Bean
-	public Job chunkDemoJob() {
-		return new JobBuilder("ChunkDemo", jobRepository)
-				.start(chunkDemoStep())
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
+    @Bean
+    public Step chunkDemoStep() {
+        return new StepBuilder("ChunkDemo", jobRepository)
+                .<Integer, Integer>chunk(3, transactionManager)
+                .reader(chunkDemoItemReader())
+                .processor(chunkDemoItemProcessor())
+                .writer(chunkDemoItemWriter())
+                .build();
+    }
+
+    @Bean
+    public Job chunkDemoJob() {
+        return new JobBuilder("ChunkDemo", jobRepository)
+                .start(chunkDemoStep())
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 }

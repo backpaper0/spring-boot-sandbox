@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/textarea")
 public class TextareaController {
 
-	@GetMapping
-	public String index() {
-		return "textarea/index";
-	}
+    @GetMapping
+    public String index() {
+        return "textarea/index";
+    }
 
-	@PostMapping
-	public String post(TextareaForm form) {
-		System.out.println(form);
-		return "textarea/index";
-	}
+    @PostMapping
+    public String post(TextareaForm form) {
+        System.out.println(form);
+        return "textarea/index";
+    }
 
-	@ModelAttribute
-	public TextareaForm form() {
-		return new TextareaForm();
-	}
+    @ModelAttribute
+    public TextareaForm form() {
+        return new TextareaForm();
+    }
 }

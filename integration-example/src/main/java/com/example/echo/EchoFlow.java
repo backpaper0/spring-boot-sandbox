@@ -13,20 +13,18 @@ import org.springframework.messaging.PollableChannel;
 @EnableIntegration
 public class EchoFlow {
 
-	@Bean
-	public MessageChannel input() {
-		return new DirectChannel();
-	}
+    @Bean
+    public MessageChannel input() {
+        return new DirectChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input())
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input()).channel(output()).get();
+    }
 
-	@Bean
-	public PollableChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public PollableChannel output() {
+        return new QueueChannel();
+    }
 }

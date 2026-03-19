@@ -14,23 +14,24 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 @Tag("FailOnGitHub")
 @SpringJUnitConfig
-@ContextConfiguration(classes = { AmqpFlow.class, RabbitAutoConfiguration.class })
+@ContextConfiguration(classes = {AmqpFlow.class, RabbitAutoConfiguration.class})
 class AmqpFlowTest {
 
-	@Autowired
-	private DirectChannel input;
-	@Autowired
-	private QueueChannel output;
+    @Autowired
+    private DirectChannel input;
 
-	@Test
-	void test() throws Exception {
-		input.send(MessageBuilder.withPayload("foo").build());
-		input.send(MessageBuilder.withPayload("bar").build());
-		input.send(MessageBuilder.withPayload("baz").build());
+    @Autowired
+    private QueueChannel output;
 
-		assertEquals("foo", output.receive().getPayload());
-		assertEquals("bar", output.receive().getPayload());
-		assertEquals("baz", output.receive().getPayload());
-		assertEquals(0, output.getQueueSize());
-	}
+    @Test
+    void test() throws Exception {
+        input.send(MessageBuilder.withPayload("foo").build());
+        input.send(MessageBuilder.withPayload("bar").build());
+        input.send(MessageBuilder.withPayload("baz").build());
+
+        assertEquals("foo", output.receive().getPayload());
+        assertEquals("bar", output.receive().getPayload());
+        assertEquals("baz", output.receive().getPayload());
+        assertEquals(0, output.getQueueSize());
+    }
 }

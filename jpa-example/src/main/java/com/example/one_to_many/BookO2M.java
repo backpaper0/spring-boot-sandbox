@@ -7,24 +7,25 @@ import jakarta.persistence.Id;
 @Entity
 public class BookO2M {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	private String title;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	public Long getId() {
-		return id;
-	}
+    private String title;
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setTitle(final String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 }

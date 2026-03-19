@@ -11,16 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class ChunkExampleTest {
 
-	@Autowired
-	private JobLauncher jobLauncher;
+    @Autowired
+    private JobLauncher jobLauncher;
 
-	@Autowired
-	private ChunkExample example;
+    @Autowired
+    private ChunkExample example;
 
-	@Test
-	void chunkExampleJob() throws Exception {
-		final Job job = example.chunkExampleJob();
-		final JobParameters jobParameters = new JobParameters();
-		jobLauncher.run(job, jobParameters);
-	}
+    @Test
+    void chunkExampleJob() throws Exception {
+        final Job job = example.chunkExampleJob();
+        final JobParameters jobParameters = new JobParameters();
+        jobLauncher.run(job, jobParameters);
+    }
 }

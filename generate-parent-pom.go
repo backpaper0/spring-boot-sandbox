@@ -159,38 +159,40 @@ func main() {
 						</compilerArgs>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>com.diffplug.spotless</groupId>
-					<artifactId>spotless-maven-plugin</artifactId>
-					<version>3.3.0</version>
-					<configuration>
-						<java>
-							<palantirJavaFormat>
-								<version>2.89.0</version>
-								<style>PALANTIR</style>
-								<formatJavadoc>false</formatJavadoc>
-							</palantirJavaFormat>
-						</java>
-					</configuration>
-					<executions>
-						<execution>
-							<id>apply</id>
-							<phase>process-sources</phase>
-							<goals>
-								<goal>apply</goal>
-							</goals>
-						</execution>
-						<execution>
-							<id>check</id>
-							<phase>verify</phase>
-							<goals>
-								<goal>check</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
 			</plugins>
 		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<java>
+						<palantirJavaFormat>
+							<version>2.89.0</version>
+							<style>PALANTIR</style>
+							<formatJavadoc>false</formatJavadoc>
+						</palantirJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<id>apply</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>check</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 	<repositories>
 		<repository>

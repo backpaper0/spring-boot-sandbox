@@ -1,14 +1,14 @@
 package com.example.misc;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.step.Step;
-import org.springframework.batch.core.step.StepExecution;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
+import org.springframework.batch.core.step.StepExecution;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,57 +23,57 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootTest
 public class StepExecutionExampleTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.job(), new JobParameters());
-	}
+    @Autowired
+    TestConfig config;
 
-	@TestConfiguration
-	static class TestConfig {
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.job(), new JobParameters());
+    }
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+    @TestConfiguration
+    static class TestConfig {
 
-		@Bean
-		@StepScope
-		public StepExecutionExampleItemReader itemReader() {
-			return new StepExecutionExampleItemReader();
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		@StepScope
-		public StepExecutionExampleItemProcessor itemProcessor() {
-			return new StepExecutionExampleItemProcessor();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		@StepScope
-		public StepExecutionExampleItemWriter itemWriter() {
-			return new StepExecutionExampleItemWriter();
-		}
+        @Bean
+        @StepScope
+        public StepExecutionExampleItemReader itemReader() {
+            return new StepExecutionExampleItemReader();
+        }
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<Integer, Integer> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.build();
-		}
+        @Bean
+        @StepScope
+        public StepExecutionExampleItemProcessor itemProcessor() {
+            return new StepExecutionExampleItemProcessor();
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        @StepScope
+        public StepExecutionExampleItemWriter itemWriter() {
+            return new StepExecutionExampleItemWriter();
+        }
+
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<Integer, Integer>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .build();
+        }
+
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 }

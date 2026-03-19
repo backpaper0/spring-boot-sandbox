@@ -2,7 +2,6 @@ package com.example.common.httpclient;
 
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.ClientHttpResponse;

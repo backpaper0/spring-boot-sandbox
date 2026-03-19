@@ -1,7 +1,6 @@
 package study.json.immutable;
 
 import java.net.URI;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -19,36 +18,35 @@ import org.springframework.web.util.UriComponentsBuilder;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ImmutableJsonSampleTest {
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	RestTemplate template;
+    RestTemplate template;
 
-	@BeforeEach
-	void setup() {
-		template = new RestTemplate();
-		template.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public boolean hasError(ClientHttpResponse response) {
-				return false;
-			}
-		});
-	}
+    @BeforeEach
+    void setup() {
+        template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) {
+                return false;
+            }
+        });
+    }
 
-	@Test
-	void test() throws Exception {
-		final URI uri = UriComponentsBuilder.fromUriString("http://localhost:" + port + "/emp")
-				.build()
-				.toUri();
-		final String body = "{\"id\":123,\"name\":\"uragami\",\"dept\":{\"id\":456,\"name\":\"development\"}}";
-		final RequestEntity<String> request = RequestEntity.post(uri)
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.body(body);
+    @Test
+    void test() throws Exception {
+        final URI uri = UriComponentsBuilder.fromUriString("http://localhost:" + port + "/emp")
+                .build()
+                .toUri();
+        final String body = "{\"id\":123,\"name\":\"uragami\",\"dept\":{\"id\":456,\"name\":\"development\"}}";
+        final RequestEntity<String> request = RequestEntity.post(uri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(body);
 
-		final ResponseEntity<String> response = template.exchange(request, String.class);
+        final ResponseEntity<String> response = template.exchange(request, String.class);
 
-		JSONAssert.assertEquals(body, response.getBody(), true);
-	}
-
+        JSONAssert.assertEquals(body, response.getBody(), true);
+    }
 }

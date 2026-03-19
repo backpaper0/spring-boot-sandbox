@@ -11,11 +11,13 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class AsteriskInterceptor {
 
-	@Around("@within(com.example.Asterisk)")
-	public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
-		Logger logger = LoggerFactory.getLogger(pjp.getSignature().getDeclaringType());
-		logger.info("Aspect: {}#{}", pjp.getSignature().getDeclaringType().getSimpleName(),
-				pjp.getSignature().getName());
-		return pjp.proceed();
-	}
+    @Around("@within(com.example.Asterisk)")
+    public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
+        Logger logger = LoggerFactory.getLogger(pjp.getSignature().getDeclaringType());
+        logger.info(
+                "Aspect: {}#{}",
+                pjp.getSignature().getDeclaringType().getSimpleName(),
+                pjp.getSignature().getName());
+        return pjp.proceed();
+    }
 }

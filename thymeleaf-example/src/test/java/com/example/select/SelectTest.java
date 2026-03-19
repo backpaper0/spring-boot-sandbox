@@ -14,28 +14,24 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class SelectTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void test1() throws Exception {
-		mvc.perform(post("/select").param("mySelect", "a"))
-				.andExpectAll(
-						model().attribute("selectForm", new SelectForm("a")));
-	}
+    @Test
+    void test1() throws Exception {
+        mvc.perform(post("/select").param("mySelect", "a"))
+                .andExpectAll(model().attribute("selectForm", new SelectForm("a")));
+    }
 
-	@Test
-	void test2() throws Exception {
-		mvc.perform(post("/select"))
-				.andExpectAll(
-						model().attribute("selectForm", new SelectForm(null)));
-	}
-
+    @Test
+    void test2() throws Exception {
+        mvc.perform(post("/select")).andExpectAll(model().attribute("selectForm", new SelectForm(null)));
+    }
 }

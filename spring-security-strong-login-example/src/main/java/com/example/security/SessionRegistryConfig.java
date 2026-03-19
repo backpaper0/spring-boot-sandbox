@@ -10,10 +10,10 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 @ConditionalOnBean(JdbcIndexedSessionRepository.class)
 public class SessionRegistryConfig {
 
-	private JdbcIndexedSessionRepository jdbcIndexedSessionRepository;
+    private JdbcIndexedSessionRepository jdbcIndexedSessionRepository;
 
-	@Bean
-	public SpringSessionBackedSessionRegistry<?> sessionRegistry() {
-		return new SpringSessionBackedSessionRegistry<>(jdbcIndexedSessionRepository);
-	}
+    @Bean
+    public SpringSessionBackedSessionRegistry<?> sessionRegistry() {
+        return new SpringSessionBackedSessionRegistry<>(jdbcIndexedSessionRepository);
+    }
 }

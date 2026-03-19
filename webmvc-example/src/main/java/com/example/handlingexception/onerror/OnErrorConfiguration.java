@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OnErrorConfiguration {
 
-	private final OnErrorInterceptor onErrorInterceptor;
+    private final OnErrorInterceptor onErrorInterceptor;
 
-	public OnErrorConfiguration(OnErrorInterceptor onErrorInterceptor) {
-		this.onErrorInterceptor = onErrorInterceptor;
-	}
+    public OnErrorConfiguration(OnErrorInterceptor onErrorInterceptor) {
+        this.onErrorInterceptor = onErrorInterceptor;
+    }
 
-	@Bean
-	public DefaultPointcutAdvisor onErrorPointcutAdvisor() {
-		DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-		Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(OnError.class);
-		advisor.setPointcut(pointcut);
-		advisor.setAdvice(onErrorInterceptor);
-		return advisor;
-	}
+    @Bean
+    public DefaultPointcutAdvisor onErrorPointcutAdvisor() {
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+        Pointcut pointcut = AnnotationMatchingPointcut.forMethodAnnotation(OnError.class);
+        advisor.setPointcut(pointcut);
+        advisor.setAdvice(onErrorInterceptor);
+        return advisor;
+    }
 }

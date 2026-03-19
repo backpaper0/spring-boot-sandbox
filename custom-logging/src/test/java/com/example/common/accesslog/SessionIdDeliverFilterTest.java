@@ -3,67 +3,66 @@ package com.example.common.accesslog;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
-@SpringJUnitConfig(classes = { SessionIdDeliverFilter.class })
+@SpringJUnitConfig(classes = {SessionIdDeliverFilter.class})
 @TestPropertySource(properties = "spring.session.servlet.filter-order=100")
 public class SessionIdDeliverFilterTest {
 
-	@Autowired
-	SessionIdDeliverFilter sut;
+    @Autowired
+    SessionIdDeliverFilter sut;
 
-	@Test
-	void セッションIDをリクエストへセットする() throws Exception {
+    @Test
+    void セッションIDをリクエストへセットする() throws Exception {
 
-		HttpServletRequest request = mock(HttpServletRequest.class);
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		FilterChain chain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain chain = mock(FilterChain.class);
 
-		HttpSession session = mock(HttpSession.class);
+        HttpSession session = mock(HttpSession.class);
 
-		when(request.getSession(false)).thenReturn(session);
-		when(session.getId()).thenReturn("asdfzxcv");
+        when(request.getSession(false)).thenReturn(session);
+        when(session.getId()).thenReturn("asdfzxcv");
 
-		sut.doFilter(request, response, chain);
+        sut.doFilter(request, response, chain);
 
-		verify(chain).doFilter(request, response);
-		verify(request).getSession(false);
-		verify(session).getId();
-		verify(request).setAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME, "asdfzxcv");
-		verifyNoMoreInteractions(request, response, chain, session);
-	}
+        verify(chain).doFilter(request, response);
+        verify(request).getSession(false);
+        verify(session).getId();
+        verify(request).setAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME, "asdfzxcv");
+        verifyNoMoreInteractions(request, response, chain, session);
+    }
 
-	@Test
-	void セッションが取得できない場合はリクエストへセットしない() throws Exception {
+    @Test
+    void セッションが取得できない場合はリクエストへセットしない() throws Exception {
 
-		HttpServletRequest request = mock(HttpServletRequest.class);
-		HttpServletResponse response = mock(HttpServletResponse.class);
-		FilterChain chain = mock(FilterChain.class);
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        HttpServletResponse response = mock(HttpServletResponse.class);
+        FilterChain chain = mock(FilterChain.class);
 
-		HttpSession session = mock(HttpSession.class);
+        HttpSession session = mock(HttpSession.class);
 
-		when(request.getSession(false)).thenReturn(null);
+        when(request.getSession(false)).thenReturn(null);
 
-		sut.doFilter(request, response, chain);
+        sut.doFilter(request, response, chain);
 
-		verify(chain).doFilter(request, response);
-		verify(request).getSession(false);
-		verifyNoMoreInteractions(request, response, chain, session);
-	}
+        verify(chain).doFilter(request, response);
+        verify(request).getSession(false);
+        verifyNoMoreInteractions(request, response, chain, session);
+    }
 
-	@Test
-	void フィルターの順序() {
+    @Test
+    void フィルターの順序() {
 
-		int order = sut.getOrder();
+        int order = sut.getOrder();
 
-		assertEquals(101, order);
-	}
+        assertEquals(101, order);
+    }
 }

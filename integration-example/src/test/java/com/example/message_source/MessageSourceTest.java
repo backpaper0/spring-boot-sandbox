@@ -12,15 +12,15 @@ import org.springframework.integration.channel.QueueChannel;
 @Tag("FailOnGitHub")
 public class MessageSourceTest {
 
-	@Autowired
-	private QueueChannel output;
+    @Autowired
+    private QueueChannel output;
 
-	@Test
-	void test() throws Exception {
-		long timeout = 200L;
-		assertEquals(1, output.receive(timeout).getPayload());
-		assertEquals(2, output.receive(timeout).getPayload());
-		assertEquals(3, output.receive(timeout).getPayload());
-		assertNull(output.receive(0));
-	}
+    @Test
+    void test() throws Exception {
+        long timeout = 200L;
+        assertEquals(1, output.receive(timeout).getPayload());
+        assertEquals(2, output.receive(timeout).getPayload());
+        assertEquals(3, output.receive(timeout).getPayload());
+        assertNull(output.receive(0));
+    }
 }

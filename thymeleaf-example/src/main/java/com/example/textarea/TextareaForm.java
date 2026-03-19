@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TextareaForm {
 
-	private String myTextarea;
+    private String myTextarea;
 }

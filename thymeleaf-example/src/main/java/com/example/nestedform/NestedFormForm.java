@@ -1,10 +1,9 @@
 package com.example.nestedform;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,17 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NestedFormForm {
 
-	@Valid
-	private List<SubForm> subForms = new ArrayList<>();
+    @Valid
+    private List<SubForm> subForms = new ArrayList<>();
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class SubForm {
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class SubForm {
 
-		@Size(max = 3)
-		private String foo;
-		@Size(max = 3)
-		private String bar;
-	}
+        @Size(max = 3)
+        private String foo;
+
+        @Size(max = 3)
+        private String bar;
+    }
 }

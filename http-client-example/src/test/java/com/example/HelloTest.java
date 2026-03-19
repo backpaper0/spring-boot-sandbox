@@ -3,7 +3,6 @@ package com.example;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -20,9 +19,10 @@ class HelloTest {
 
     @Test
     void testName() throws Exception {
-        WebClient client = WebClient.builder().baseUrl("http://localhost:" + port).build();
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory
-                .builderFor(WebClientAdapter.create(client)).build();
+        WebClient client =
+                WebClient.builder().baseUrl("http://localhost:" + port).build();
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(WebClientAdapter.create(client))
+                .build();
         Hello hello = factory.createClient(Hello.class);
         Map<String, String> said = hello.sayHello();
         assertEquals(Map.of("message", "Hello World"), said);

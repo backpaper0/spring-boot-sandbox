@@ -12,18 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExampleController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ExampleController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExampleController.class);
 
-	@RequestMapping("/")
-	@Retryable
-	public String hello(@RequestParam(defaultValue = "0") int count) {
-		RetryContext context = RetrySynchronizationManager.getContext();
-		if (context != null) {
-			logger.info("Retry count = {}", context.getRetryCount());
-			if (context.getRetryCount() < count) {
-				throw new RuntimeException();
-			}
-		}
-		return "hello";
-	}
+    @RequestMapping("/")
+    @Retryable
+    public String hello(@RequestParam(defaultValue = "0") int count) {
+        RetryContext context = RetrySynchronizationManager.getContext();
+        if (context != null) {
+            logger.info("Retry count = {}", context.getRetryCount());
+            if (context.getRetryCount() < count) {
+                throw new RuntimeException();
+            }
+        }
+        return "hello";
+    }
 }

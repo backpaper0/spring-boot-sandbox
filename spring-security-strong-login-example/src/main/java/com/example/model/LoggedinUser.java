@@ -2,7 +2,6 @@ package com.example.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -10,22 +9,22 @@ import org.springframework.web.context.annotation.SessionScope;
 @SessionScope
 public class LoggedinUser implements Serializable {
 
-	private String username;
-	private LocalDateTime lastLoggedin;
+    private String username;
+    private LocalDateTime lastLoggedin;
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public LocalDateTime getLastLoggedin() {
-		return lastLoggedin;
-	}
+    public LocalDateTime getLastLoggedin() {
+        return lastLoggedin;
+    }
 
-	public void setLastLoggedin(LocalDateTime lastLoggedin) {
-		this.lastLoggedin = lastLoggedin;
-	}
+    public void setLastLoggedin(LocalDateTime lastLoggedin) {
+        this.lastLoggedin = lastLoggedin;
+    }
 }

@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableMethodSecurity
 public class GlobalMethodSecurityExampleApplication {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(GlobalMethodSecurityExampleApplication.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(GlobalMethodSecurityExampleApplication.class, args);
+    }
 }

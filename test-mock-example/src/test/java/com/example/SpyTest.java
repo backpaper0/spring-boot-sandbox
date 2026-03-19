@@ -11,24 +11,24 @@ import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 @SpringBootTest
 public class SpyTest {
 
-	@Autowired
-	private MyService service;
+    @Autowired
+    private MyService service;
 
-	@MockitoSpyBean
-	private Foobar spy;
+    @MockitoSpyBean
+    private Foobar spy;
 
-	@Test
-	void noSpy() {
-		assertEquals("FooBar", service.foobar());
-	}
+    @Test
+    void noSpy() {
+        assertEquals("FooBar", service.foobar());
+    }
 
-	@Test
-	void spyBar() {
-		when(spy.bar()).thenReturn("Baz");
-		assertEquals("FooBaz", service.foobar());
+    @Test
+    void spyBar() {
+        when(spy.bar()).thenReturn("Baz");
+        assertEquals("FooBaz", service.foobar());
 
-		verify(spy).foo();
-		verify(spy).bar();
-		verifyNoMoreInteractions(spy);
-	}
+        verify(spy).foo();
+        verify(spy).bar();
+        verifyNoMoreInteractions(spy);
+    }
 }

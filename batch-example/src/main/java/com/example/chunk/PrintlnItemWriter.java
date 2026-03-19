@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrintlnItemWriter implements ItemWriter<String> {
 
-	@Override
-	public void write(Chunk<? extends String> chunk) throws Exception {
-		for (String item : chunk) {
-			System.out.println(item);
-		}
-	}
+    @Override
+    public void write(Chunk<? extends String> chunk) throws Exception {
+        for (String item : chunk) {
+            System.out.println(item);
+        }
+    }
 }

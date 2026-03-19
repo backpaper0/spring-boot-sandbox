@@ -15,24 +15,24 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class HandlerInterceptorExampleControllerTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void test() throws Exception {
+    @Test
+    void test() throws Exception {
 
-		assertNull(ClassNameHolder.get());
+        assertNull(ClassNameHolder.get());
 
-		mvc.perform(get("/handler-interceptor-example"))
-				.andExpect(content().string("HandlerInterceptorExampleController"));
+        mvc.perform(get("/handler-interceptor-example"))
+                .andExpect(content().string("HandlerInterceptorExampleController"));
 
-		assertNull(ClassNameHolder.get());
-	}
+        assertNull(ClassNameHolder.get());
+    }
 }

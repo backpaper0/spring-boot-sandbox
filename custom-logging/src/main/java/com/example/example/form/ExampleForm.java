@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class ExampleForm {
 
-	@NotNull
-	@Size(min = 1)
-	private String name;
+    @NotNull
+    @Size(min = 1)
+    private String name;
 
-	private int delay = 3;
+    private int delay = 3;
 }

@@ -7,14 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShutdownService {
 
-	private final IntegrationMBeanExporter integrationMBeanExporter;
+    private final IntegrationMBeanExporter integrationMBeanExporter;
 
-	public ShutdownService(IntegrationMBeanExporter integrationMBeanExporter) {
-		this.integrationMBeanExporter = integrationMBeanExporter;
-	}
+    public ShutdownService(IntegrationMBeanExporter integrationMBeanExporter) {
+        this.integrationMBeanExporter = integrationMBeanExporter;
+    }
 
-	@ServiceActivator
-	public void stop() {
-		integrationMBeanExporter.stopActiveComponents(0);
-	}
+    @ServiceActivator
+    public void stop() {
+        integrationMBeanExporter.stopActiveComponents(0);
+    }
 }

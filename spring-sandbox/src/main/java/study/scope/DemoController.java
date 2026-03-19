@@ -1,7 +1,6 @@
 package study.scope;
 
 import java.util.Objects;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-	private final Counter counter;
+    private final Counter counter;
 
-	public DemoController(Counter counter) {
-		this.counter = Objects.requireNonNull(counter);
-	}
+    public DemoController(Counter counter) {
+        this.counter = Objects.requireNonNull(counter);
+    }
 
-	@GetMapping
-	public int getAndIncrement() {
-		return counter.getAndIncrement();
-	}
+    @GetMapping
+    public int getAndIncrement() {
+        return counter.getAndIncrement();
+    }
 }

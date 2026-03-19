@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -14,16 +13,16 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringBootTest
 class TimeSignalTest {
 
-	@MockitoBean
-	private TimeSignal timeSignal;
+    @MockitoBean
+    private TimeSignal timeSignal;
 
-	@Test
-	void currentDateTime() throws Exception {
+    @Test
+    void currentDateTime() throws Exception {
 
-		final LocalDateTime value = LocalDateTime.of(2017, 1, 2, 3, 4, 5);
+        final LocalDateTime value = LocalDateTime.of(2017, 1, 2, 3, 4, 5);
 
-		given(timeSignal.currentDateTime()).willReturn(value);
+        given(timeSignal.currentDateTime()).willReturn(value);
 
-		assertThat(timeSignal.currentDateTime()).isEqualTo(value);
-	}
+        assertThat(timeSignal.currentDateTime()).isEqualTo(value);
+    }
 }

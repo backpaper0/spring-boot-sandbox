@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/other")
 public class OtherController {
 
-	@GetMapping
-	public String index() {
-		return "other";
-	}
+    @GetMapping
+    public String index() {
+        return "other";
+    }
 }

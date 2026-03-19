@@ -6,27 +6,27 @@ import org.springframework.batch.infrastructure.item.ItemProcessor;
 
 public class SleepItemProcessor<I, O> implements ItemProcessor<I, O> {
 
-	private static final Logger logger = LoggerFactory.getLogger(SleepItemProcessor.class);
-	private final ItemProcessor<I, O> delegate;
-	private final long sleepTimeMillis;
+    private static final Logger logger = LoggerFactory.getLogger(SleepItemProcessor.class);
+    private final ItemProcessor<I, O> delegate;
+    private final long sleepTimeMillis;
 
-	public SleepItemProcessor(ItemProcessor<I, O> delegate, long sleepTimeMillis) {
-		this.delegate = delegate;
-		this.sleepTimeMillis = sleepTimeMillis;
-	}
+    public SleepItemProcessor(ItemProcessor<I, O> delegate, long sleepTimeMillis) {
+        this.delegate = delegate;
+        this.sleepTimeMillis = sleepTimeMillis;
+    }
 
-	private void sleep() {
-		try {
-			Thread.sleep(sleepTimeMillis);
-		} catch (InterruptedException e) {
-			logger.warn("", e);
-		}
-	}
+    private void sleep() {
+        try {
+            Thread.sleep(sleepTimeMillis);
+        } catch (InterruptedException e) {
+            logger.warn("", e);
+        }
+    }
 
-	@Override
-	public O process(I item) throws Exception {
-		O value = delegate.process(item);
-		sleep();
-		return value;
-	}
+    @Override
+    public O process(I item) throws Exception {
+        O value = delegate.process(item);
+        sleep();
+        return value;
+    }
 }

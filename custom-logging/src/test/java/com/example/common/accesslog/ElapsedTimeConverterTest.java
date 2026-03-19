@@ -3,12 +3,10 @@ package com.example.common.accesslog;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.Test;
-
 import ch.qos.logback.access.common.spi.IAccessEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.Test;
 
 public class ElapsedTimeConverterTest {
 

@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = App.class)
 public class PostConstructTest {
 
-	@Autowired
-	private PostConstructDemo sut;
+    @Autowired
+    private PostConstructDemo sut;
 
-	@Test
-	void test() throws Exception {
-		sut.run();
-	}
+    @Test
+    void test() throws Exception {
+        sut.run();
+    }
 }

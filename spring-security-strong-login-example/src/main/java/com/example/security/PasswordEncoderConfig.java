@@ -8,13 +8,13 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder.Secret
 @Configuration
 public class PasswordEncoderConfig {
 
-	@Bean
-	public Pbkdf2PasswordEncoder passwordEncoder() {
-		// NIST Special Publication 800-63Bを参考にPasswordEncoderを設定する
-		// https://pages.nist.gov/800-63-3/sp800-63b.html
-		Pbkdf2PasswordEncoder passwordEncoder = new Pbkdf2PasswordEncoder("", 16, 10000,
-				SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
-		passwordEncoder.setEncodeHashAsBase64(true);
-		return passwordEncoder;
-	}
+    @Bean
+    public Pbkdf2PasswordEncoder passwordEncoder() {
+        // NIST Special Publication 800-63Bを参考にPasswordEncoderを設定する
+        // https://pages.nist.gov/800-63-3/sp800-63b.html
+        Pbkdf2PasswordEncoder passwordEncoder =
+                new Pbkdf2PasswordEncoder("", 16, 10000, SecretKeyFactoryAlgorithm.PBKDF2WithHmacSHA256);
+        passwordEncoder.setEncodeHashAsBase64(true);
+        return passwordEncoder;
+    }
 }

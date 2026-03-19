@@ -1,7 +1,6 @@
 package com.example.date;
 
 import java.time.LocalTime;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,23 +16,23 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "example.time")
 public class FixedLocalTimeProvider implements LocalTimeProvider {
 
-	/**
-	 * 固定された現在時刻
-	 */
-	@DateTimeFormat(pattern = "HHmmss")
-	private LocalTime fixedValue;
+    /**
+     * 固定された現在時刻
+     */
+    @DateTimeFormat(pattern = "HHmmss")
+    private LocalTime fixedValue;
 
-	@Override
-	public LocalTime now() {
-		return fixedValue;
-	}
+    @Override
+    public LocalTime now() {
+        return fixedValue;
+    }
 
-	/**
-	 * 固定された現在時刻を設定する。
-	 *
-	 * @param fixedValue 固定された現在時刻
-	 */
-	public void setFixedValue(LocalTime fixedValue) {
-		this.fixedValue = fixedValue;
-	}
+    /**
+     * 固定された現在時刻を設定する。
+     *
+     * @param fixedValue 固定された現在時刻
+     */
+    public void setFixedValue(LocalTime fixedValue) {
+        this.fixedValue = fixedValue;
+    }
 }

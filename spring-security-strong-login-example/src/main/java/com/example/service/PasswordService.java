@@ -9,15 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PasswordService {
 
-	private final UserDetailsManager users;
-	private final PasswordEncoder passwordEncoder;
+    private final UserDetailsManager users;
+    private final PasswordEncoder passwordEncoder;
 
-	public PasswordService(UserDetailsManager users, PasswordEncoder passwordEncoder) {
-		this.users = users;
-		this.passwordEncoder = passwordEncoder;
-	}
+    public PasswordService(UserDetailsManager users, PasswordEncoder passwordEncoder) {
+        this.users = users;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	public void changePassword(String oldPassword, String newPassword) {
-		users.changePassword(oldPassword, passwordEncoder.encode(newPassword));
-	}
+    public void changePassword(String oldPassword, String newPassword) {
+        users.changePassword(oldPassword, passwordEncoder.encode(newPassword));
+    }
 }

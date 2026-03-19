@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Foo {
 
-	@Autowired
-	Bar bar;
+    @Autowired
+    Bar bar;
 }

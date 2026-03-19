@@ -1,15 +1,14 @@
 package com.example.multiwriter;
 
 import java.util.List;
-
 import org.springframework.batch.core.ExitStatus;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.listener.StepExecutionListener;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.StepExecution;
-import org.springframework.batch.core.listener.StepExecutionListener;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.job.builder.JobBuilder;
-import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.ItemProcessor;
 import org.springframework.batch.infrastructure.item.ItemReader;
@@ -27,69 +26,70 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class MultiWriterBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Bean
-	@StepScope
-	public ItemReader<String> multiWriterItemReader() {
-		return new ListItemReader<>(List.of("foo", "bar", "baz", "qux"));
-	}
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	public ItemProcessor<String, String> multiWriterItemProcessor() {
-		return new PassThroughItemProcessor<>();
-	}
+    @Bean
+    @StepScope
+    public ItemReader<String> multiWriterItemReader() {
+        return new ListItemReader<>(List.of("foo", "bar", "baz", "qux"));
+    }
 
-	@Bean
-	@StepScope
-	public ListItemWriter<String> multiWriterItemWriter1() {
-		return new ListItemWriter<>();
-	}
+    @Bean
+    public ItemProcessor<String, String> multiWriterItemProcessor() {
+        return new PassThroughItemProcessor<>();
+    }
 
-	@Bean
-	@StepScope
-	public ListItemWriter<String> multiWriterItemWriter2() {
-		return new ListItemWriter<>();
-	}
+    @Bean
+    @StepScope
+    public ListItemWriter<String> multiWriterItemWriter1() {
+        return new ListItemWriter<>();
+    }
 
-	@Bean
-	public ItemWriter<String> multiWriterItemWriter() {
-		Classifier<String, ItemWriter<? super String>> classifier = item -> {
-			if (item.startsWith("b")) {
-				return multiWriterItemWriter1();
-			}
-			return multiWriterItemWriter2();
-		};
-		return new ClassifierCompositeItemWriterBuilder<String>()
-				.classifier(classifier)
-				.build();
-	}
+    @Bean
+    @StepScope
+    public ListItemWriter<String> multiWriterItemWriter2() {
+        return new ListItemWriter<>();
+    }
 
-	@Bean
-	public Step multiWriterStep() {
-		return new StepBuilder("MultiWriter", jobRepository)
-				.<String, String> chunk(1, transactionManager)
-				.reader(multiWriterItemReader())
-				.processor(multiWriterItemProcessor())
-				.writer(multiWriterItemWriter())
-				.listener(new StepExecutionListener() {
-					@Override
-					public ExitStatus afterStep(StepExecution stepExecution) {
-						System.out.println(multiWriterItemWriter1().getWrittenItems());
-						System.out.println(multiWriterItemWriter2().getWrittenItems());
-						return null;
-					}
-				})
-				.build();
-	}
+    @Bean
+    public ItemWriter<String> multiWriterItemWriter() {
+        Classifier<String, ItemWriter<? super String>> classifier = item -> {
+            if (item.startsWith("b")) {
+                return multiWriterItemWriter1();
+            }
+            return multiWriterItemWriter2();
+        };
+        return new ClassifierCompositeItemWriterBuilder<String>()
+                .classifier(classifier)
+                .build();
+    }
 
-	@Bean
-	public Job multiWriterJob() {
-		return new JobBuilder("MultiWriter", jobRepository)
-				.start(multiWriterStep())
-				.build();
-	}
+    @Bean
+    public Step multiWriterStep() {
+        return new StepBuilder("MultiWriter", jobRepository)
+                .<String, String>chunk(1, transactionManager)
+                .reader(multiWriterItemReader())
+                .processor(multiWriterItemProcessor())
+                .writer(multiWriterItemWriter())
+                .listener(new StepExecutionListener() {
+                    @Override
+                    public ExitStatus afterStep(StepExecution stepExecution) {
+                        System.out.println(multiWriterItemWriter1().getWrittenItems());
+                        System.out.println(multiWriterItemWriter2().getWrittenItems());
+                        return null;
+                    }
+                })
+                .build();
+    }
+
+    @Bean
+    public Job multiWriterJob() {
+        return new JobBuilder("MultiWriter", jobRepository)
+                .start(multiWriterStep())
+                .build();
+    }
 }

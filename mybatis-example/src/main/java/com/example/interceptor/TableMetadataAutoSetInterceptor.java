@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.mapping.SqlCommandType;
@@ -25,78 +24,82 @@ import org.springframework.util.ReflectionUtils;
  */
 @Component
 @Intercepts({
-		@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
+    @Signature(
+            type = Executor.class,
+            method = "update",
+            args = {MappedStatement.class, Object.class}),
 })
 public class TableMetadataAutoSetInterceptor implements Interceptor {
 
-	private final Map<Class<?>, TableMetadataSetters> tableMetadataSettersCache = new ConcurrentHashMap<>();
+    private final Map<Class<?>, TableMetadataSetters> tableMetadataSettersCache = new ConcurrentHashMap<>();
 
-	@Autowired
-	private IdSupplier idSupplier;
-	@Autowired
-	private LocalDateTimeSupplier localDateTimeSupplier;
+    @Autowired
+    private IdSupplier idSupplier;
 
-	@Override
-	public Object intercept(Invocation invocation) throws Throwable {
-		Object[] args = invocation.getArgs();
-		MappedStatement ms = (MappedStatement) args[0];
-		Object model = args[1];
+    @Autowired
+    private LocalDateTimeSupplier localDateTimeSupplier;
 
-		Class<?> modelClass = model.getClass();
-		TableMetadataSetters tms = tableMetadataSettersCache.computeIfAbsent(modelClass, TableMetadataSetters::create);
-		SqlCommandType sqlCommandType = ms.getSqlCommandType();
-		String by = idSupplier.get();
-		LocalDateTime at = localDateTimeSupplier.get();
-		tms.set(sqlCommandType, model, by, at);
-		return invocation.proceed();
-	}
+    @Override
+    public Object intercept(Invocation invocation) throws Throwable {
+        Object[] args = invocation.getArgs();
+        MappedStatement ms = (MappedStatement) args[0];
+        Object model = args[1];
 
-	private static class TableMetadataSetters {
+        Class<?> modelClass = model.getClass();
+        TableMetadataSetters tms = tableMetadataSettersCache.computeIfAbsent(modelClass, TableMetadataSetters::create);
+        SqlCommandType sqlCommandType = ms.getSqlCommandType();
+        String by = idSupplier.get();
+        LocalDateTime at = localDateTimeSupplier.get();
+        tms.set(sqlCommandType, model, by, at);
+        return invocation.proceed();
+    }
 
-		Method setCreatedBy;
-		Method setCreatedAt;
-		Method setUpdatedBy;
-		Method setUpdatedAt;
+    private static class TableMetadataSetters {
 
-		static TableMetadataSetters create(Class<?> modelClass) {
-			TableMetadataSetters tms = new TableMetadataSetters();
-			tms.setCreatedBy = ReflectionUtils.findMethod(modelClass, "setCreatedBy", String.class);
-			tms.setCreatedAt = ReflectionUtils.findMethod(modelClass, "setCreatedAt", LocalDateTime.class);
-			tms.setUpdatedBy = ReflectionUtils.findMethod(modelClass, "setUpdatedBy", String.class);
-			tms.setUpdatedAt = ReflectionUtils.findMethod(modelClass, "setUpdatedAt", LocalDateTime.class);
-			return tms;
-		}
+        Method setCreatedBy;
+        Method setCreatedAt;
+        Method setUpdatedBy;
+        Method setUpdatedAt;
 
-		void set(SqlCommandType sqlCommandType, Object model, String by, LocalDateTime at) {
-			switch (sqlCommandType) {
-			case INSERT:
-				setValue(setCreatedBy, model, by);
-				setValue(setCreatedAt, model, at);
-				setValue(setUpdatedBy, model, by);
-				setValue(setUpdatedAt, model, at);
-				break;
-			case UPDATE:
-				setValue(setUpdatedBy, model, by);
-				setValue(setUpdatedAt, model, at);
-				break;
-			default:
-				// 何もしない
-				break;
-			}
-		}
+        static TableMetadataSetters create(Class<?> modelClass) {
+            TableMetadataSetters tms = new TableMetadataSetters();
+            tms.setCreatedBy = ReflectionUtils.findMethod(modelClass, "setCreatedBy", String.class);
+            tms.setCreatedAt = ReflectionUtils.findMethod(modelClass, "setCreatedAt", LocalDateTime.class);
+            tms.setUpdatedBy = ReflectionUtils.findMethod(modelClass, "setUpdatedBy", String.class);
+            tms.setUpdatedAt = ReflectionUtils.findMethod(modelClass, "setUpdatedAt", LocalDateTime.class);
+            return tms;
+        }
 
-		static void setValue(Method setter, Object model, Object value) {
-			if (setter != null) {
-				ReflectionUtils.invokeMethod(setter, model, value);
-			}
-		}
-	}
+        void set(SqlCommandType sqlCommandType, Object model, String by, LocalDateTime at) {
+            switch (sqlCommandType) {
+                case INSERT:
+                    setValue(setCreatedBy, model, by);
+                    setValue(setCreatedAt, model, at);
+                    setValue(setUpdatedBy, model, by);
+                    setValue(setUpdatedAt, model, at);
+                    break;
+                case UPDATE:
+                    setValue(setUpdatedBy, model, by);
+                    setValue(setUpdatedAt, model, at);
+                    break;
+                default:
+                    // 何もしない
+                    break;
+            }
+        }
 
-	public interface IdSupplier {
-		String get();
-	}
+        static void setValue(Method setter, Object model, Object value) {
+            if (setter != null) {
+                ReflectionUtils.invokeMethod(setter, model, value);
+            }
+        }
+    }
 
-	public interface LocalDateTimeSupplier {
-		LocalDateTime get();
-	}
+    public interface IdSupplier {
+        String get();
+    }
+
+    public interface LocalDateTimeSupplier {
+        LocalDateTime get();
+    }
 }

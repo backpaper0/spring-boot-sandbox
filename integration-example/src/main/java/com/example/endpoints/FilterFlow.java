@@ -12,26 +12,23 @@ import org.springframework.integration.dsl.IntegrationFlow;
 @EnableIntegration
 public class FilterFlow {
 
-	@Bean
-	public DirectChannel input() {
-		return new DirectChannel();
-	}
+    @Bean
+    public DirectChannel input() {
+        return new DirectChannel();
+    }
 
-	@Bean
-	public QueueChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public QueueChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input())
-				.filter(odd())
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input()).filter(odd()).channel(output()).get();
+    }
 
-	@Bean
-	public GenericSelector<Integer> odd() {
-		return a -> a % 2 == 1;
-	}
+    @Bean
+    public GenericSelector<Integer> odd() {
+        return a -> a % 2 == 1;
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.message_source;
 
 import java.time.Duration;
-
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.channel.QueueChannel;
@@ -14,25 +13,25 @@ import org.springframework.integration.dsl.SourcePollingChannelAdapterSpec;
 @EnableIntegration
 public class MessageSourceExample {
 
-	private final CounterMessageSource input;
+    private final CounterMessageSource input;
 
-	public MessageSourceExample(CounterMessageSource input) {
-		this.input = input;
-	}
+    public MessageSourceExample(CounterMessageSource input) {
+        this.input = input;
+    }
 
-	@Bean
-	public QueueChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public QueueChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input, this::configurePoller)
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input, this::configurePoller)
+                .channel(output())
+                .get();
+    }
 
-	private void configurePoller(SourcePollingChannelAdapterSpec c) {
-		c.poller(Pollers.fixedRate(Duration.ofMillis(100)));
-	}
+    private void configurePoller(SourcePollingChannelAdapterSpec c) {
+        c.poller(Pollers.fixedRate(Duration.ofMillis(100)));
+    }
 }

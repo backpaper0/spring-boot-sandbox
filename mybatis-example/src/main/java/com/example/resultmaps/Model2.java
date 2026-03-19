@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Model2 {
 
-	private Integer id;
-	private String name;
+    private Integer id;
+    private String name;
 }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("use-assets")
 public class UseAssetsExampleController {
 
-	@GetMapping
-	public String index() {
-		return "use-assets/index";
-	}
+    @GetMapping
+    public String index() {
+        return "use-assets/index";
+    }
 }

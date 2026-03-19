@@ -1,17 +1,16 @@
 package com.example.tasklet;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
-import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.Step;
+import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.infrastructure.repeat.RepeatStatus;
@@ -23,45 +22,45 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class TaskletDemoBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Bean
-	@StepScope
-	public TaskletDemoTasklet taskletDemoTasklet() {
-		return new TaskletDemoTasklet();
-	}
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	public Step taskletDemoStep() {
-		return new StepBuilder("TaskletDemo", jobRepository)
-				.tasklet(taskletDemoTasklet(), transactionManager)
-				.build();
-	}
+    @Bean
+    @StepScope
+    public TaskletDemoTasklet taskletDemoTasklet() {
+        return new TaskletDemoTasklet();
+    }
 
-	@Bean
-	public Job taskletDemoJob() {
-		return new JobBuilder("TaskletDemo", jobRepository)
-				.start(taskletDemoStep())
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
+    @Bean
+    public Step taskletDemoStep() {
+        return new StepBuilder("TaskletDemo", jobRepository)
+                .tasklet(taskletDemoTasklet(), transactionManager)
+                .build();
+    }
 
-	static class TaskletDemoTasklet implements Tasklet {
+    @Bean
+    public Job taskletDemoJob() {
+        return new JobBuilder("TaskletDemo", jobRepository)
+                .start(taskletDemoStep())
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 
-		private static final Logger logger = LoggerFactory.getLogger(TaskletDemoTasklet.class);
-		private final AtomicInteger counter = new AtomicInteger();
-		private final int size = 3;
+    static class TaskletDemoTasklet implements Tasklet {
 
-		@Override
-		public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
-			RepeatStatus repeatStatus = counter.getAndIncrement() < size
-					? RepeatStatus.CONTINUABLE
-					: RepeatStatus.FINISHED;
-			logger.info("tasklet#execute: {}", repeatStatus);
-			return repeatStatus;
-		}
-	}
+        private static final Logger logger = LoggerFactory.getLogger(TaskletDemoTasklet.class);
+        private final AtomicInteger counter = new AtomicInteger();
+        private final int size = 3;
+
+        @Override
+        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
+            RepeatStatus repeatStatus =
+                    counter.getAndIncrement() < size ? RepeatStatus.CONTINUABLE : RepeatStatus.FINISHED;
+            logger.info("tasklet#execute: {}", repeatStatus);
+            return repeatStatus;
+        }
+    }
 }

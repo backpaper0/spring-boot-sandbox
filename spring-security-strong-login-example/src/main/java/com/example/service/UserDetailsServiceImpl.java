@@ -1,7 +1,6 @@
 package com.example.service;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +9,14 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 @Configuration
 public class UserDetailsServiceImpl {
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@Bean
-	public JdbcUserDetailsManager jdbcUserDetailsManager() {
-		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-		jdbcUserDetailsManager.setDataSource(dataSource);
-		jdbcUserDetailsManager.setUsersByUsernameQuery("""
+    @Bean
+    public JdbcUserDetailsManager jdbcUserDetailsManager() {
+        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+        jdbcUserDetailsManager.setDataSource(dataSource);
+        jdbcUserDetailsManager.setUsersByUsernameQuery("""
 				select
 					a.username,
 					p.password,
@@ -37,7 +36,7 @@ public class UserDetailsServiceImpl {
 				where
 					a.username = ?
 				""");
-		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("""
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("""
 				select
 					username,
 					authority
@@ -46,8 +45,8 @@ public class UserDetailsServiceImpl {
 				where
 					username = ?
 				""");
-		jdbcUserDetailsManager.setEnableGroups(false);
-		jdbcUserDetailsManager.setChangePasswordSql("""
+        jdbcUserDetailsManager.setEnableGroups(false);
+        jdbcUserDetailsManager.setChangePasswordSql("""
 				update
 					account_passwords
 				set
@@ -55,6 +54,6 @@ public class UserDetailsServiceImpl {
 				where
 					username = ?
 				""");
-		return jdbcUserDetailsManager;
-	}
+        return jdbcUserDetailsManager;
+    }
 }

@@ -3,7 +3,6 @@ package com.example.parameter;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
@@ -14,19 +13,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ParameterExampleTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Autowired
-	ParameterExampleConfig config;
+    @Autowired
+    ParameterExampleConfig config;
 
-	@Test
-	void test() throws Exception {
-		String myParam = UUID.randomUUID().toString();
-		JobParameters jobParameters = new JobParametersBuilder()
-				.addString("my.param", myParam)
-				.toJobParameters();
-		jobLauncher.run(config.parameterExampleJob(), jobParameters);
-		assertEquals(myParam, config.parameterExampleTasklet().getValue());
-	}
+    @Test
+    void test() throws Exception {
+        String myParam = UUID.randomUUID().toString();
+        JobParameters jobParameters =
+                new JobParametersBuilder().addString("my.param", myParam).toJobParameters();
+        jobLauncher.run(config.parameterExampleJob(), jobParameters);
+        assertEquals(myParam, config.parameterExampleTasklet().getValue());
+    }
 }

@@ -18,61 +18,59 @@ import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 @Configuration
 public class WebSecurityConfig {
 
-	@Autowired(required = false)
-	private SpringSessionBackedSessionRegistry<?> sessionRegistry;
-	@Autowired
-	private UserDetailsService userDetailsService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Autowired(required = false)
+    private SpringSessionBackedSessionRegistry<?> sessionRegistry;
 
-	@Bean
-	public ProviderManager authenticationManager(AuthenticationEventPublisher eventPublisher) {
-		DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
-		provider.setPasswordEncoder(passwordEncoder);
-		ProviderManager providerManager = new ProviderManager(provider);
-		providerManager.setAuthenticationEventPublisher(eventPublisher);
-		return providerManager;
-	}
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-	@Bean
-	@ConditionalOnBean(JdbcUserDetailsManager.class)
-	public InitializingBean jdbcUserDetailsManagerInitializer(JdbcUserDetailsManager jdbcUserDetailsManager) {
-		return new InitializingBean() {
-			@Override
-			public void afterPropertiesSet() {
-				// パスワード変更時、現在のパスワードをチェックするために使用する
-				jdbcUserDetailsManager.setAuthenticationManager(authenticationManager(null));
-			}
-		};
-	}
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
-				.authorizeHttpRequests(c -> c
-						.requestMatchers("/login").permitAll()
-						.requestMatchers("/page1").hasAuthority("AUTH1")
-						.requestMatchers("/page2").hasAuthority("AUTH2")
-						.requestMatchers("/admin").hasAuthority("ADMIN")
-						.anyRequest().authenticated())
+    @Bean
+    public ProviderManager authenticationManager(AuthenticationEventPublisher eventPublisher) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        ProviderManager providerManager = new ProviderManager(provider);
+        providerManager.setAuthenticationEventPublisher(eventPublisher);
+        return providerManager;
+    }
 
-				.formLogin(c -> c
-						.loginPage("/login")
-						.defaultSuccessUrl("/", true))
-				.logout(c -> c
-						.logoutUrl("/logout"))
+    @Bean
+    @ConditionalOnBean(JdbcUserDetailsManager.class)
+    public InitializingBean jdbcUserDetailsManagerInitializer(JdbcUserDetailsManager jdbcUserDetailsManager) {
+        return new InitializingBean() {
+            @Override
+            public void afterPropertiesSet() {
+                // パスワード変更時、現在のパスワードをチェックするために使用する
+                jdbcUserDetailsManager.setAuthenticationManager(authenticationManager(null));
+            }
+        };
+    }
 
-				// 二重ログインを禁止する
-				.sessionManagement(c -> {
-					var maximumSessions = c
-							.maximumSessions(1);
-					if (sessionRegistry != null) {
-						maximumSessions.sessionRegistry(sessionRegistry);
-					}
-				})
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(c -> c.requestMatchers("/login")
+                        .permitAll()
+                        .requestMatchers("/page1")
+                        .hasAuthority("AUTH1")
+                        .requestMatchers("/page2")
+                        .hasAuthority("AUTH2")
+                        .requestMatchers("/admin")
+                        .hasAuthority("ADMIN")
+                        .anyRequest()
+                        .authenticated())
+                .formLogin(c -> c.loginPage("/login").defaultSuccessUrl("/", true))
+                .logout(c -> c.logoutUrl("/logout"))
 
-				.authenticationManager(authenticationManager(null))
-
-				.build();
-	}
+                // 二重ログインを禁止する
+                .sessionManagement(c -> {
+                    var maximumSessions = c.maximumSessions(1);
+                    if (sessionRegistry != null) {
+                        maximumSessions.sessionRegistry(sessionRegistry);
+                    }
+                })
+                .authenticationManager(authenticationManager(null))
+                .build();
+    }
 }

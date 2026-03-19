@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class AsteriskInterceptor {
 
-	@Around("@within(com.example.Asterisk) && execution(String *(..))")
-	public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
-		return "*" + pjp.proceed() + "*";
-	}
+    @Around("@within(com.example.Asterisk) && execution(String *(..))")
+    public Object invoke(ProceedingJoinPoint pjp) throws Throwable {
+        return "*" + pjp.proceed() + "*";
+    }
 }

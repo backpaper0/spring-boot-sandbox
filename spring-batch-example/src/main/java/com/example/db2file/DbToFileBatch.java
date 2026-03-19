@@ -1,13 +1,14 @@
 package com.example.db2file;
 
+import com.example.common.ExitCodeGeneratorImpl;
+import com.example.common.LoggingListener;
 import javax.sql.DataSource;
-
-import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.database.JdbcCursorItemReader;
 import org.springframework.batch.infrastructure.item.database.builder.JdbcCursorItemReaderBuilder;
@@ -25,87 +26,79 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.example.common.ExitCodeGeneratorImpl;
-import com.example.common.LoggingListener;
-
 @Configuration
 public class DbToFileBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	private final DataSource dataSource;
-	private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
-	private final LoggingListener loggingListener;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	public DbToFileBatch(DataSource dataSource,
-			ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener) {
-		this.dataSource = dataSource;
-		this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
-		this.loggingListener = loggingListener;
-	}
+    private final DataSource dataSource;
+    private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
+    private final LoggingListener loggingListener;
 
-	@Bean
-	@StepScope
-	public JdbcCursorItemReader<Demo3> dbToFileItemReader() {
-		return new JdbcCursorItemReaderBuilder<Demo3>()
-				.dataSource(dataSource)
-				.sql("select id, content1, content2 from demo3 order by id asc")
-				.rowMapper(new BeanPropertyRowMapper<>(Demo3.class))
-				.saveState(false)
-				.build();
-	}
+    public DbToFileBatch(
+            DataSource dataSource, ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener) {
+        this.dataSource = dataSource;
+        this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
+        this.loggingListener = loggingListener;
+    }
 
-	@Bean
-	public PassThroughItemProcessor<Demo3> dbToFileItemProcessor() {
-		return new PassThroughItemProcessor<>();
-	}
+    @Bean
+    @StepScope
+    public JdbcCursorItemReader<Demo3> dbToFileItemReader() {
+        return new JdbcCursorItemReaderBuilder<Demo3>()
+                .dataSource(dataSource)
+                .sql("select id, content1, content2 from demo3 order by id asc")
+                .rowMapper(new BeanPropertyRowMapper<>(Demo3.class))
+                .saveState(false)
+                .build();
+    }
 
-	@Bean
-	@StepScope
-	public FlatFileItemWriter<Demo3> dbToFileItemWriter(
-			@Value("#{jobParameters['output.file'] ?: 'target/output.txt'}") String file) {
-		FieldExtractor<Demo3> fieldExtractor = item -> new Object[] {
-				item.getId(),
-				item.getContent1(),
-				FullWidthUtil.fillPad(item.getContent2(), 20)
-		};
-		return new FlatFileItemWriterBuilder<Demo3>()
-				.resource(new FileSystemResource(file))
-				.formatted()
-				.format("%04d%-10s%s")
-				.fieldExtractor(fieldExtractor)
-				.saveState(false)
-				.name("DbToFile")
-				.build();
-	}
+    @Bean
+    public PassThroughItemProcessor<Demo3> dbToFileItemProcessor() {
+        return new PassThroughItemProcessor<>();
+    }
 
-	@Bean
-	public Step dbToFileStep() {
-		return new StepBuilder("DbToFile", jobRepository)
-				.<Demo3, Demo3> chunk(2, transactionManager)
+    @Bean
+    @StepScope
+    public FlatFileItemWriter<Demo3> dbToFileItemWriter(
+            @Value("#{jobParameters['output.file'] ?: 'target/output.txt'}") String file) {
+        FieldExtractor<Demo3> fieldExtractor =
+                item -> new Object[] {item.getId(), item.getContent1(), FullWidthUtil.fillPad(item.getContent2(), 20)};
+        return new FlatFileItemWriterBuilder<Demo3>()
+                .resource(new FileSystemResource(file))
+                .formatted()
+                .format("%04d%-10s%s")
+                .fieldExtractor(fieldExtractor)
+                .saveState(false)
+                .name("DbToFile")
+                .build();
+    }
 
-				.reader(dbToFileItemReader())
-				.processor(dbToFileItemProcessor())
-				.writer(dbToFileItemWriter(null))
+    @Bean
+    public Step dbToFileStep() {
+        return new StepBuilder("DbToFile", jobRepository)
+                .<Demo3, Demo3>chunk(2, transactionManager)
+                .reader(dbToFileItemReader())
+                .processor(dbToFileItemProcessor())
+                .writer(dbToFileItemWriter(null))
+                .faultTolerant()
+                .skip(FlatFileParseException.class)
+                .skip(ValidationException.class)
+                .skipLimit(10)
+                .listener(loggingListener)
+                .listener(exitCodeGeneratorImpl)
+                .build();
+    }
 
-				.faultTolerant()
-				.skip(FlatFileParseException.class)
-				.skip(ValidationException.class)
-				.skipLimit(10)
-
-				.listener(loggingListener)
-				.listener(exitCodeGeneratorImpl)
-				.build();
-	}
-
-	@Bean
-	public Job dbToFileJob() {
-		return new JobBuilder("DbToFile", jobRepository)
-				.start(dbToFileStep())
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
+    @Bean
+    public Job dbToFileJob() {
+        return new JobBuilder("DbToFile", jobRepository)
+                .start(dbToFileStep())
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 }

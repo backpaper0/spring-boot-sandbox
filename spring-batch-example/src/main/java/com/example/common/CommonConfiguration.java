@@ -8,14 +8,14 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 public class CommonConfiguration {
 
-	private final LocalValidatorFactoryBean localValidatorFactoryBean;
+    private final LocalValidatorFactoryBean localValidatorFactoryBean;
 
-	public CommonConfiguration(LocalValidatorFactoryBean localValidatorFactoryBean) {
-		this.localValidatorFactoryBean = localValidatorFactoryBean;
-	}
+    public CommonConfiguration(LocalValidatorFactoryBean localValidatorFactoryBean) {
+        this.localValidatorFactoryBean = localValidatorFactoryBean;
+    }
 
-	@Bean
-	public BeanValidatingItemProcessor<Object> beanValidatingItemProcessor() {
-		return new BeanValidatingItemProcessor<>(localValidatorFactoryBean);
-	}
+    @Bean
+    public BeanValidatingItemProcessor<Object> beanValidatingItemProcessor() {
+        return new BeanValidatingItemProcessor<>(localValidatorFactoryBean);
+    }
 }

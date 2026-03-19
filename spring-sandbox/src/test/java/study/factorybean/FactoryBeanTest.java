@@ -9,12 +9,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class FactoryBeanTest {
 
-	@Autowired
-	private Foos foos;
+    @Autowired
+    private Foos foos;
 
-	@Test
-	void test() {
-		assertEquals("Foo(1)", foos.getFoo1().toString());
-		assertEquals("Foo(1)", foos.getFoo2().toString());
-	}
+    @Test
+    void test() {
+        assertEquals("Foo(1)", foos.getFoo1().toString());
+        assertEquals("Foo(1)", foos.getFoo2().toString());
+    }
 }

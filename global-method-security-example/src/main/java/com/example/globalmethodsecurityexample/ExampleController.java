@@ -7,20 +7,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExampleController {
 
-	@PreAuthorize("hasRole('FOO')")
-	@GetMapping("/foo")
-	String getFoo() {
-		return "foo";
-	}
+    @PreAuthorize("hasRole('FOO')")
+    @GetMapping("/foo")
+    String getFoo() {
+        return "foo";
+    }
 
-	@PreAuthorize("hasAnyRole('FOO', 'BAR')")
-	@GetMapping("/bar")
-	String getBar() {
-		return "bar";
-	}
+    @PreAuthorize("hasAnyRole('FOO', 'BAR')")
+    @GetMapping("/bar")
+    String getBar() {
+        return "bar";
+    }
 
-	@GetMapping("/baz")
-	String getBaz() {
-		return "baz";
-	}
+    @GetMapping("/baz")
+    String getBaz() {
+        return "baz";
+    }
 }

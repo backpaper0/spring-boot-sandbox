@@ -10,20 +10,20 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @SpringJUnitConfig(ProtectedHelloConfig.class)
 class ProtectedHelloTest {
 
-	@Autowired
-	ProtectedHello hello;
+    @Autowired
+    ProtectedHello hello;
 
-	@Test
-	@WithMockUser
-	void withMockUser() {
-		String said = hello.say();
-		assertEquals("Hello, user!", said);
-	}
+    @Test
+    @WithMockUser
+    void withMockUser() {
+        String said = hello.say();
+        assertEquals("Hello, user!", said);
+    }
 
-	@Test
-	@WithMockUser(username = "hoge")
-	void withMockUserUsername() {
-		String said = hello.say();
-		assertEquals("Hello, hoge!", said);
-	}
+    @Test
+    @WithMockUser(username = "hoge")
+    void withMockUserUsername() {
+        String said = hello.say();
+        assertEquals("Hello, hoge!", said);
+    }
 }

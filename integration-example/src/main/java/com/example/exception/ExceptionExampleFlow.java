@@ -14,24 +14,22 @@ import org.springframework.messaging.MessageHeaders;
 @ComponentScan
 public class ExceptionExampleFlow {
 
-	@Autowired
-	private MessageChannel input;
-	@Autowired
-	private MessageChannel output;
+    @Autowired
+    private MessageChannel input;
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input)
-				.handle((String payload, MessageHeaders headers) -> payload.startsWith("b")
-						? new MyException(payload)
-						: payload)
+    @Autowired
+    private MessageChannel output;
 
-				// 例外をerrorChannelへルーティングする
-				.routeByException(c -> c
-						.channelMapping(MyException.class, "errorChannel")
-						.defaultOutputToParentFlow())
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input)
+                .handle((String payload, MessageHeaders headers) ->
+                        payload.startsWith("b") ? new MyException(payload) : payload)
 
-				.channel(output)
-				.get();
-	}
+                // 例外をerrorChannelへルーティングする
+                .routeByException(
+                        c -> c.channelMapping(MyException.class, "errorChannel").defaultOutputToParentFlow())
+                .channel(output)
+                .get();
+    }
 }

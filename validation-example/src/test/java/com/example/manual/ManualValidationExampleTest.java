@@ -2,9 +2,10 @@ package com.example.manual;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.example.manual.ManualValidationExampleTest.AppValidator;
+import jakarta.validation.constraints.NotNull;
 import java.util.Locale;
 import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,71 +17,71 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.SmartValidator;
 
-import com.example.manual.ManualValidationExampleTest.AppValidator;
-
-import jakarta.validation.constraints.NotNull;
-
 @SpringBootTest
 @Import(AppValidator.class)
 public class ManualValidationExampleTest {
 
-	@Autowired
-	SmartValidator smartValidator;
-	@Autowired
-	AppValidator appValidator;
+    @Autowired
+    SmartValidator smartValidator;
 
-	@Test
-	void testManualValidation() {
-		Object target = new TestObj();
-		Errors errors = new BeanPropertyBindingResult(target, "target");
-		smartValidator.validate(target, errors);
+    @Autowired
+    AppValidator appValidator;
 
-		assertEquals(true, errors.hasFieldErrors("field1"));
+    @Test
+    void testManualValidation() {
+        Object target = new TestObj();
+        Errors errors = new BeanPropertyBindingResult(target, "target");
+        smartValidator.validate(target, errors);
 
-		FieldError fieldError = errors.getFieldError("field1");
-		assertEquals("NotNull", fieldError.getCode());
-	}
+        assertEquals(true, errors.hasFieldErrors("field1"));
 
-	@Test
-	void testAppValidator() {
-		Object target = new TestObj();
-		RuntimeException exception = assertThrows(RuntimeException.class, () -> appValidator.validate(target));
-		System.out.println(exception.getMessage());
-	}
+        FieldError fieldError = errors.getFieldError("field1");
+        assertEquals("NotNull", fieldError.getCode());
+    }
 
-	public static class TestObj {
-		@NotNull
-		private String field1;
-		@NotNull
-		private String field2;
-		@NotNull
-		private String field3;
-	}
+    @Test
+    void testAppValidator() {
+        Object target = new TestObj();
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> appValidator.validate(target));
+        System.out.println(exception.getMessage());
+    }
 
-	@TestComponent
-	public static class AppValidator {
+    public static class TestObj {
+        @NotNull
+        private String field1;
 
-		@Autowired
-		private SmartValidator smartValidator;
-		@Autowired
-		private MessageSource messageSource;
+        @NotNull
+        private String field2;
 
-		public void validate(Object target) {
-			Errors errors = new BeanPropertyBindingResult(target, "target");
-			smartValidator.validate(target, errors);
-			if (errors.hasErrors()) {
-				Locale locale = Locale.getDefault();
-				String message = errors.getAllErrors().stream()
-						.map(error -> {
-							if (error instanceof FieldError) {
-								String field = ((FieldError) error).getField();
-								return field + ": " + messageSource.getMessage(error, locale);
-							}
-							return messageSource.getMessage(error, locale);
-						})
-						.collect(Collectors.joining(System.lineSeparator()));
-				throw new RuntimeException(message);
-			}
-		}
-	}
+        @NotNull
+        private String field3;
+    }
+
+    @TestComponent
+    public static class AppValidator {
+
+        @Autowired
+        private SmartValidator smartValidator;
+
+        @Autowired
+        private MessageSource messageSource;
+
+        public void validate(Object target) {
+            Errors errors = new BeanPropertyBindingResult(target, "target");
+            smartValidator.validate(target, errors);
+            if (errors.hasErrors()) {
+                Locale locale = Locale.getDefault();
+                String message = errors.getAllErrors().stream()
+                        .map(error -> {
+                            if (error instanceof FieldError) {
+                                String field = ((FieldError) error).getField();
+                                return field + ": " + messageSource.getMessage(error, locale);
+                            }
+                            return messageSource.getMessage(error, locale);
+                        })
+                        .collect(Collectors.joining(System.lineSeparator()));
+                throw new RuntimeException(message);
+            }
+        }
+    }
 }

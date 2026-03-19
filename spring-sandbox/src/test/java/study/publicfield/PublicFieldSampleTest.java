@@ -19,35 +19,35 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PublicFieldSampleTest {
 
-	@LocalServerPort
-	int port;
+    @LocalServerPort
+    int port;
 
-	RestTemplate template;
+    RestTemplate template;
 
-	@BeforeEach
-	void setup() {
-		template = new RestTemplate();
-		template.setErrorHandler(new DefaultResponseErrorHandler() {
-			@Override
-			public boolean hasError(ClientHttpResponse response) {
-				return false;
-			}
-		});
-	}
+    @BeforeEach
+    void setup() {
+        template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            public boolean hasError(ClientHttpResponse response) {
+                return false;
+            }
+        });
+    }
 
-	@Test
-	public void test() throws Exception {
-		final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
-		form.add("foo", "HELLO");
-		form.add("bar", "123");
-		form.add("baz", "true");
+    @Test
+    public void test() throws Exception {
+        final MultiValueMap<String, String> form = new LinkedMultiValueMap<>();
+        form.add("foo", "HELLO");
+        form.add("bar", "123");
+        form.add("baz", "true");
 
-		final RequestEntity<MultiValueMap<String, String>> request = RequestEntity
-				.post("http://localhost:" + port + "/sample")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
-				.body(form);
+        final RequestEntity<MultiValueMap<String, String>> request = RequestEntity.post(
+                        "http://localhost:" + port + "/sample")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .body(form);
 
-		final ResponseEntity<String> response = template.exchange(request, String.class);
-		assertEquals("HELLO:123:true", response.getBody());
-	}
+        final ResponseEntity<String> response = template.exchange(request, String.class);
+        assertEquals("HELLO:123:true", response.getBody());
+    }
 }

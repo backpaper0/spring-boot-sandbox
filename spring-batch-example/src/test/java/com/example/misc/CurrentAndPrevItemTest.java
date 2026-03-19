@@ -4,18 +4,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.UUID;
-
+import lombok.Setter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.JobExecution;
+import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
-import org.springframework.batch.core.step.Step;
-import org.springframework.batch.core.configuration.annotation.StepScope;
-import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.ItemProcessor;
 import org.springframework.batch.infrastructure.item.support.ListItemReader;
@@ -26,8 +26,6 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import lombok.Setter;
-
 /**
  * 1つ前のItemを参照する{@link ItemProcessor}の例。
  *
@@ -35,80 +33,81 @@ import lombok.Setter;
 @SpringBootTest
 public class CurrentAndPrevItemTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
-	private JobParameters jobParameters;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@BeforeEach
-	void init() {
-		config.itemWriter().getWrittenItems().clear();
-		jobParameters = new JobParametersBuilder()
-				.addString("uuid", UUID.randomUUID().toString())
-				.toJobParameters();
-	}
+    @Autowired
+    TestConfig config;
 
-	@Test
-	void test() throws Exception {
-		config.setItems(List.of(1, 2, 3, 4, 5));
-		jobLauncher.run(config.job(), jobParameters);
-		assertEquals(config.itemWriter().getWrittenItems(), List.of(1, 2, 3, 4, 5));
-	}
+    private JobParameters jobParameters;
 
-	@Test
-	void test2() throws Exception {
-		config.setItems(List.of(1, 2, 4, 3, 5));
-		JobExecution jobExecution = jobLauncher.run(config.job(), jobParameters);
+    @BeforeEach
+    void init() {
+        config.itemWriter().getWrittenItems().clear();
+        jobParameters = new JobParametersBuilder()
+                .addString("uuid", UUID.randomUUID().toString())
+                .toJobParameters();
+    }
 
-		assertEquals(1, jobExecution.getAllFailureExceptions().size());
-		Throwable exception = jobExecution.getAllFailureExceptions().get(0);
-		assertEquals("ERROR!", exception.getMessage());
-	}
+    @Test
+    void test() throws Exception {
+        config.setItems(List.of(1, 2, 3, 4, 5));
+        jobLauncher.run(config.job(), jobParameters);
+        assertEquals(config.itemWriter().getWrittenItems(), List.of(1, 2, 3, 4, 5));
+    }
 
-	@TestConfiguration
-	static class TestConfig {
+    @Test
+    void test2() throws Exception {
+        config.setItems(List.of(1, 2, 4, 3, 5));
+        JobExecution jobExecution = jobLauncher.run(config.job(), jobParameters);
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+        assertEquals(1, jobExecution.getAllFailureExceptions().size());
+        Throwable exception = jobExecution.getAllFailureExceptions().get(0);
+        assertEquals("ERROR!", exception.getMessage());
+    }
 
-		@Setter
-		private List<Integer> items;
+    @TestConfiguration
+    static class TestConfig {
 
-		@Bean
-		@StepScope
-		public ListItemReader<Integer> itemReader() {
-			return new ListItemReader<>(items);
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		@StepScope
-		public CurrentAndPrevItemProcessor itemProcessor() {
-			return new CurrentAndPrevItemProcessor();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		public ListItemWriter<Integer> itemWriter() {
-			return new ListItemWriter<>();
-		}
+        @Setter
+        private List<Integer> items;
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<Integer, Integer> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.build();
-		}
+        @Bean
+        @StepScope
+        public ListItemReader<Integer> itemReader() {
+            return new ListItemReader<>(items);
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        @StepScope
+        public CurrentAndPrevItemProcessor itemProcessor() {
+            return new CurrentAndPrevItemProcessor();
+        }
+
+        @Bean
+        public ListItemWriter<Integer> itemWriter() {
+            return new ListItemWriter<>();
+        }
+
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<Integer, Integer>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .build();
+        }
+
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 }

@@ -2,7 +2,6 @@ package com.example.file;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.channel.QueueChannel;
@@ -16,24 +15,23 @@ import org.springframework.integration.file.dsl.Files;
 @EnableIntegration
 public class FileFlow {
 
-	@Bean
-	public QueueChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public QueueChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow
-				.from(fileReadingMessageSource(), a -> a.poller(Pollers.fixedRate(100)))
-				.split(Files.splitter(true).charset(StandardCharsets.UTF_8))
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(fileReadingMessageSource(), a -> a.poller(Pollers.fixedRate(100)))
+                .split(Files.splitter(true).charset(StandardCharsets.UTF_8))
+                .channel(output())
+                .get();
+    }
 
-	@Bean
-	public FileReadingMessageSource fileReadingMessageSource() {
-		final FileReadingMessageSource ms = new FileReadingMessageSource();
-		ms.setDirectory(new File("input"));
-		return ms;
-	}
+    @Bean
+    public FileReadingMessageSource fileReadingMessageSource() {
+        final FileReadingMessageSource ms = new FileReadingMessageSource();
+        ms.setDirectory(new File("input"));
+        return ms;
+    }
 }

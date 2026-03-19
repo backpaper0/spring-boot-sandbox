@@ -8,8 +8,8 @@ import org.springframework.retry.annotation.EnableRetry;
 @EnableRetry
 public class App {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 }

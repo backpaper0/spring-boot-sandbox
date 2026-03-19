@@ -9,17 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CacheExampleTest {
 
-	@Autowired
-	CacheExample sut;
+    @Autowired
+    CacheExample sut;
 
-	@Test
-	void test() {
-		assertEquals("foo:1", sut.foo(1));
-		assertEquals("foo:2", sut.foo(2));
+    @Test
+    void test() {
+        assertEquals("foo:1", sut.foo(1));
+        assertEquals("foo:2", sut.foo(2));
 
-		//keyがfoo(1)と被っているからキャッシュされているfoo:1が表示される
-		assertEquals("foo:1", sut.bar(1));
+        // keyがfoo(1)と被っているからキャッシュされているfoo:1が表示される
+        assertEquals("foo:1", sut.bar(1));
 
-		assertEquals("bar:3", sut.bar(3));
-	}
+        assertEquals("bar:3", sut.bar(3));
+    }
 }

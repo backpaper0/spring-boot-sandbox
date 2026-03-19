@@ -14,16 +14,17 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = Channel2ChannelFlow.class)
 class Channel2ChannelFlowTest {
 
-	@Autowired
-	private MessageChannel input;
-	@Autowired
-	private QueueChannel output;
+    @Autowired
+    private MessageChannel input;
 
-	@Test
-	void test() {
-		input.send(MessageBuilder.withPayload("foobar").build());
+    @Autowired
+    private QueueChannel output;
 
-		assertEquals("foobar", output.receive().getPayload());
-		assertEquals(0, output.getQueueSize());
-	}
+    @Test
+    void test() {
+        input.send(MessageBuilder.withPayload("foobar").build());
+
+        assertEquals("foobar", output.receive().getPayload());
+        assertEquals(0, output.getQueueSize());
+    }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemNanoTimeProvider {
 
-	public long provide() {
-		return System.nanoTime();
-	}
+    public long provide() {
+        return System.nanoTime();
+    }
 }

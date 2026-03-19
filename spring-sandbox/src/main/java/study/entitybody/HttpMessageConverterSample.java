@@ -3,7 +3,6 @@ package study.entitybody;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpInputMessage;
@@ -21,49 +20,48 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HttpMessageConverterSample {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(HttpMessageConverterSample.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(HttpMessageConverterSample.class, args);
+    }
 
-	@PostMapping("/")
-	String post(@RequestBody final Hoge hoge) {
-		return "OK";
-	}
+    @PostMapping("/")
+    String post(@RequestBody final Hoge hoge) {
+        return "OK";
+    }
 }
 
 enum Hoge {
-	SINGLETON
+    SINGLETON
 }
 
 @Component
 class HogeHttpMessageConverter implements HttpMessageConverter<Hoge> {
 
-	@Override
-	public boolean canRead(final Class<?> clazz, final MediaType mediaType) {
-		return clazz == Hoge.class;
-	}
+    @Override
+    public boolean canRead(final Class<?> clazz, final MediaType mediaType) {
+        return clazz == Hoge.class;
+    }
 
-	@Override
-	public boolean canWrite(final Class<?> clazz, final MediaType mediaType) {
-		return false;
-	}
+    @Override
+    public boolean canWrite(final Class<?> clazz, final MediaType mediaType) {
+        return false;
+    }
 
-	@Override
-	public List<MediaType> getSupportedMediaTypes() {
-		return Collections.singletonList(MediaType.ALL);
-	}
+    @Override
+    public List<MediaType> getSupportedMediaTypes() {
+        return Collections.singletonList(MediaType.ALL);
+    }
 
-	@Override
-	public Hoge read(final Class<? extends Hoge> clazz, final HttpInputMessage inputMessage)
-			throws IOException, HttpMessageNotReadableException {
-		return Hoge.SINGLETON;
-	}
+    @Override
+    public Hoge read(final Class<? extends Hoge> clazz, final HttpInputMessage inputMessage)
+            throws IOException, HttpMessageNotReadableException {
+        return Hoge.SINGLETON;
+    }
 
-	@Override
-	public void write(final Hoge t, final MediaType contentType,
-			final HttpOutputMessage outputMessage)
-			throws IOException, HttpMessageNotWritableException {
-		throw new UnsupportedOperationException();
-	}
+    @Override
+    public void write(final Hoge t, final MediaType contentType, final HttpOutputMessage outputMessage)
+            throws IOException, HttpMessageNotWritableException {
+        throw new UnsupportedOperationException();
+    }
 }

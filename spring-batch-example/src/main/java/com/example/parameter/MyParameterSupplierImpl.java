@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 @StepScope
 public class MyParameterSupplierImpl implements MyParameterSupplier {
 
-	@Value("#{jobParameters['my.param']}")
-	private String value;
+    @Value("#{jobParameters['my.param']}")
+    private String value;
 
-	@Override
-	public String get() {
-		return value;
-	}
+    @Override
+    public String get() {
+        return value;
+    }
 }

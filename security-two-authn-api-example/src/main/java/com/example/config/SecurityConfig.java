@@ -23,12 +23,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain1(HttpSecurity http) throws Exception {
-        InMemoryUserDetailsManager uds = new InMemoryUserDetailsManager(
-                User.withUsername("alice").password(passwordEncoder().encode("secret")).authorities("USER").build());
+        InMemoryUserDetailsManager uds = new InMemoryUserDetailsManager(User.withUsername("alice")
+                .password(passwordEncoder().encode("secret"))
+                .authorities("USER")
+                .build());
         DaoAuthenticationProvider ap = new DaoAuthenticationProvider(uds);
         ap.setPasswordEncoder(passwordEncoder());
-        return http
-                .securityMatcher("/customers/**")
+        return http.securityMatcher("/customers/**")
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated())
                 .authenticationProvider(ap)
                 .csrf(c -> c.disable())
@@ -39,12 +40,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
-        UserDetailsService uds = new InMemoryUserDetailsManager(
-                User.withUsername("bob").password(passwordEncoder().encode("secret")).authorities("USER").build());
+        UserDetailsService uds = new InMemoryUserDetailsManager(User.withUsername("bob")
+                .password(passwordEncoder().encode("secret"))
+                .authorities("USER")
+                .build());
         DaoAuthenticationProvider ap = new DaoAuthenticationProvider(uds);
         ap.setPasswordEncoder(passwordEncoder());
-        return http
-                .securityMatcher("/orders/**")
+        return http.securityMatcher("/orders/**")
                 .authorizeHttpRequests(c -> c.anyRequest().authenticated())
                 .authenticationProvider(ap)
                 .csrf(c -> c.disable())

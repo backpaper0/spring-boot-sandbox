@@ -13,8 +13,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .securityMatcher(new NegatedRequestMatcher(PathRequest.toH2Console()))
+        return http.securityMatcher(new NegatedRequestMatcher(PathRequest.toH2Console()))
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
                 .formLogin(Customizer.withDefaults())
                 .build();
@@ -22,8 +21,7 @@ public class WebSecurityConfig {
 
     @Bean
     SecurityFilterChain h2SecurityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .securityMatcher(PathRequest.toH2Console())
+        return http.securityMatcher(PathRequest.toH2Console())
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
                 .headers(headers -> {

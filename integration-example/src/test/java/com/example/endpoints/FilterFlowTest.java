@@ -14,22 +14,23 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 @ContextConfiguration(classes = FilterFlow.class)
 class FilterFlowTest {
 
-	@Autowired
-	private MessageChannel input;
-	@Autowired
-	private QueueChannel output;
+    @Autowired
+    private MessageChannel input;
 
-	@Test
-	void test() {
-		for (int i = 0; i < 10; i++) {
-			input.send(MessageBuilder.withPayload(i).build());
-		}
+    @Autowired
+    private QueueChannel output;
 
-		assertEquals(1, output.receive().getPayload());
-		assertEquals(3, output.receive().getPayload());
-		assertEquals(5, output.receive().getPayload());
-		assertEquals(7, output.receive().getPayload());
-		assertEquals(9, output.receive().getPayload());
-		assertEquals(0, output.getQueueSize());
-	}
+    @Test
+    void test() {
+        for (int i = 0; i < 10; i++) {
+            input.send(MessageBuilder.withPayload(i).build());
+        }
+
+        assertEquals(1, output.receive().getPayload());
+        assertEquals(3, output.receive().getPayload());
+        assertEquals(5, output.receive().getPayload());
+        assertEquals(7, output.receive().getPayload());
+        assertEquals(9, output.receive().getPayload());
+        assertEquals(0, output.getQueueSize());
+    }
 }

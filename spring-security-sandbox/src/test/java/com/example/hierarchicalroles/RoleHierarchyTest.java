@@ -11,11 +11,11 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 class RoleHierarchyTest {
 
-	RoleHierarchy sut;
+    RoleHierarchy sut;
 
-	@BeforeEach
-	void init() {
-		this.sut = RoleHierarchyImpl.fromHierarchy("""
+    @BeforeEach
+    void init() {
+        this.sut = RoleHierarchyImpl.fromHierarchy("""
 				A > B > C
 
 				D > E
@@ -24,18 +24,20 @@ class RoleHierarchyTest {
 				G > H
 				H > I
 				""");
-	}
+    }
 
-	@ParameterizedTest
-	@CsvSource(delimiter = '|', value = {
-			"A | A, B, C",
-			"D | D, E, F",
-			"G | G, H, I",
-	})
-	void test(String explicitAuthorityAsString, String expectedAuthoritiesAsString) throws Exception {
-		var explicitAuthorities = AuthorityUtils.createAuthorityList(explicitAuthorityAsString);
-		var actualAuthorities = sut.getReachableGrantedAuthorities(explicitAuthorities);
-		var expectedAuthorities = AuthorityUtils.createAuthorityList(expectedAuthoritiesAsString.split("\\s*,\\s*"));
-		assertEquals(expectedAuthorities, actualAuthorities);
-	}
+    @ParameterizedTest
+    @CsvSource(
+            delimiter = '|',
+            value = {
+                "A | A, B, C",
+                "D | D, E, F",
+                "G | G, H, I",
+            })
+    void test(String explicitAuthorityAsString, String expectedAuthoritiesAsString) throws Exception {
+        var explicitAuthorities = AuthorityUtils.createAuthorityList(explicitAuthorityAsString);
+        var actualAuthorities = sut.getReachableGrantedAuthorities(explicitAuthorities);
+        var expectedAuthorities = AuthorityUtils.createAuthorityList(expectedAuthoritiesAsString.split("\\s*,\\s*"));
+        assertEquals(expectedAuthorities, actualAuthorities);
+    }
 }

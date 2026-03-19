@@ -5,8 +5,8 @@ import org.aopalliance.intercept.MethodInvocation;
 
 public class AsteriskInterceptor implements MethodInterceptor {
 
-	@Override
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		return "*" + invocation.proceed() + "*";
-	}
+    @Override
+    public Object invoke(MethodInvocation invocation) throws Throwable {
+        return "*" + invocation.proceed() + "*";
+    }
 }

@@ -1,4 +1,3 @@
 package com.example.misc;
 
-public interface Bar {
-}
+public interface Bar {}

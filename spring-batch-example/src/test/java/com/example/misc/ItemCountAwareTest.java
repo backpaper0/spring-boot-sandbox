@@ -3,14 +3,16 @@ package com.example.misc;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.ItemCountAware;
 import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
@@ -24,94 +26,90 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.PathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @SpringBootTest
 public class ItemCountAwareTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.job(), new JobParameters());
+    @Autowired
+    TestConfig config;
 
-		List<MyItem> expected = List.of(
-				new MyItem(1, "foo"),
-				new MyItem(2, "bar"),
-				new MyItem(3, "baz"),
-				new MyItem(4, "qux"),
-				new MyItem(5, "quux"),
-				new MyItem(6, "corge"),
-				new MyItem(7, "grault"),
-				new MyItem(8, "garply"),
-				new MyItem(9, "waldo"),
-				new MyItem(10, "fred"),
-				new MyItem(11, "plugh"),
-				new MyItem(12, "xyzzy"),
-				new MyItem(13, "thud"));
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.job(), new JobParameters());
 
-		assertEquals(expected, config.itemWriter().getWrittenItems());
-	}
+        List<MyItem> expected = List.of(
+                new MyItem(1, "foo"),
+                new MyItem(2, "bar"),
+                new MyItem(3, "baz"),
+                new MyItem(4, "qux"),
+                new MyItem(5, "quux"),
+                new MyItem(6, "corge"),
+                new MyItem(7, "grault"),
+                new MyItem(8, "garply"),
+                new MyItem(9, "waldo"),
+                new MyItem(10, "fred"),
+                new MyItem(11, "plugh"),
+                new MyItem(12, "xyzzy"),
+                new MyItem(13, "thud"));
 
-	@Data
-	@NoArgsConstructor
-	@AllArgsConstructor
-	public static class MyItem implements ItemCountAware {
+        assertEquals(expected, config.itemWriter().getWrittenItems());
+    }
 
-		private int itemCount;
-		private String value;
-	}
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class MyItem implements ItemCountAware {
 
-	@TestConfiguration
-	static class TestConfig {
+        private int itemCount;
+        private String value;
+    }
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+    @TestConfiguration
+    static class TestConfig {
 
-		@Bean
-		public FlatFileItemReader<MyItem> itemReader() {
-			return new FlatFileItemReaderBuilder<MyItem>()
-					.saveState(false)
-					.resource(new PathResource("inputs/foobar.txt"))
-					.delimited()
-					.delimiter(",")
-					.names("value")
-					.targetType(MyItem.class)
-					.build();
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		public PassThroughItemProcessor<MyItem> itemProcessor() {
-			return new PassThroughItemProcessor<>();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		public ListItemWriter<MyItem> itemWriter() {
-			return new ListItemWriter<>();
-		}
+        @Bean
+        public FlatFileItemReader<MyItem> itemReader() {
+            return new FlatFileItemReaderBuilder<MyItem>()
+                    .saveState(false)
+                    .resource(new PathResource("inputs/foobar.txt"))
+                    .delimited()
+                    .delimiter(",")
+                    .names("value")
+                    .targetType(MyItem.class)
+                    .build();
+        }
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<MyItem, MyItem> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.build();
-		}
+        @Bean
+        public PassThroughItemProcessor<MyItem> itemProcessor() {
+            return new PassThroughItemProcessor<>();
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        public ListItemWriter<MyItem> itemWriter() {
+            return new ListItemWriter<>();
+        }
+
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<MyItem, MyItem>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .build();
+        }
+
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 }

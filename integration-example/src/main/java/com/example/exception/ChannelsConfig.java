@@ -10,21 +10,21 @@ import org.springframework.messaging.PollableChannel;
 @Configuration
 public class ChannelsConfig {
 
-	@Bean
-	public MessageChannel input() {
-		return new DirectChannel();
-	}
+    @Bean
+    public MessageChannel input() {
+        return new DirectChannel();
+    }
 
-	@Bean
-	public PollableChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public PollableChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public PollableChannel errorChannel() {
-		// errorChannelという名前のbean
-		// デフォルトはSpringによってPublishSubscribeChannelが用意される
-		// receiveメソッドでメッセージを取り出したいため自分で定義している
-		return new QueueChannel();
-	}
+    @Bean
+    public PollableChannel errorChannel() {
+        // errorChannelという名前のbean
+        // デフォルトはSpringによってPublishSubscribeChannelが用意される
+        // receiveメソッドでメッセージを取り出したいため自分で定義している
+        return new QueueChannel();
+    }
 }

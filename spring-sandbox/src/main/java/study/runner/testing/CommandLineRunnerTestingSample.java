@@ -2,7 +2,6 @@ package study.runner.testing;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -17,33 +16,32 @@ import org.springframework.stereotype.Component;
 @SpringBootApplication
 public class CommandLineRunnerTestingSample {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		final SpringApplication sa = new SpringApplication(CommandLineRunnerTestingSample.class);
-		sa.setWebApplicationType(WebApplicationType.NONE);
-		sa.run(args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        final SpringApplication sa = new SpringApplication(CommandLineRunnerTestingSample.class);
+        sa.setWebApplicationType(WebApplicationType.NONE);
+        sa.run(args);
+    }
 }
 
 @Profile("!test")
 @Component
 class Runner implements CommandLineRunner {
-	@Override
-	public void run(final String... args) throws Exception {
-		throw new Exception();
-	}
+    @Override
+    public void run(final String... args) throws Exception {
+        throw new Exception();
+    }
 }
 
 @NotTest
 @Component
 class Runner2 implements CommandLineRunner {
-	@Override
-	public void run(final String... args) throws Exception {
-		throw new Exception();
-	}
+    @Override
+    public void run(final String... args) throws Exception {
+        throw new Exception();
+    }
 }
 
 @Retention(RetentionPolicy.RUNTIME)
 @Profile("!test")
-@interface NotTest {
-}
+@interface NotTest {}

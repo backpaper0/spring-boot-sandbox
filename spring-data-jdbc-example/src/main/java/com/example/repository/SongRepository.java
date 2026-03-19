@@ -1,8 +1,6 @@
 package com.example.repository;
 
+import com.example.entity.Song;
 import org.springframework.data.repository.ListCrudRepository;
 
-import com.example.entity.Song;
-
-public interface SongRepository extends ListCrudRepository<Song, Integer> {
-}
+public interface SongRepository extends ListCrudRepository<Song, Integer> {}

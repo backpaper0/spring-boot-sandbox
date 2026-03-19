@@ -6,13 +6,13 @@ package com.example.core.jdbc;
  */
 public enum DataSourceType {
 
-	/**
-	 * リーダーデータソースを表す値。
-	 */
-	LEADER,
+    /**
+     * リーダーデータソースを表す値。
+     */
+    LEADER,
 
-	/**
-	 * フォロワーデータソースを表す値。
-	 */
-	FOLLOWER;
+    /**
+     * フォロワーデータソースを表す値。
+     */
+    FOLLOWER;
 }

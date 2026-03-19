@@ -8,8 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @EnableCaching
 public class CacheExampleApplication {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(CacheExampleApplication.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(CacheExampleApplication.class, args);
+    }
 }

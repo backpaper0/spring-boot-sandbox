@@ -11,24 +11,24 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @SpringBootTest
 public class MockTest {
 
-	@Autowired
-	private MyService service;
+    @Autowired
+    private MyService service;
 
-	@MockitoBean
-	private Foobar mock;
+    @MockitoBean
+    private Foobar mock;
 
-	@Test
-	void noMock() {
-		assertEquals("nullnull", service.foobar());
-	}
+    @Test
+    void noMock() {
+        assertEquals("nullnull", service.foobar());
+    }
 
-	@Test
-	void mockBar() {
-		when(mock.bar()).thenReturn("Baz");
-		assertEquals("nullBaz", service.foobar());
+    @Test
+    void mockBar() {
+        when(mock.bar()).thenReturn("Baz");
+        assertEquals("nullBaz", service.foobar());
 
-		verify(mock).foo();
-		verify(mock).bar();
-		verifyNoMoreInteractions(mock);
-	}
+        verify(mock).foo();
+        verify(mock).bar();
+        verifyNoMoreInteractions(mock);
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.endpoints.annotation;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.InboundChannelAdapter;
@@ -16,31 +15,29 @@ import org.springframework.integration.dsl.IntegrationFlow;
 @EnableIntegration
 public class InboundChannelAdapterFlow {
 
-	@Bean
-	public DirectChannel input() {
-		return new DirectChannel();
-	}
+    @Bean
+    public DirectChannel input() {
+        return new DirectChannel();
+    }
 
-	@Bean
-	public QueueChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public QueueChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input())
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input()).channel(output()).get();
+    }
 
-	@MessageEndpoint
-	public static class Counter {
+    @MessageEndpoint
+    public static class Counter {
 
-		private final AtomicInteger counter = new AtomicInteger(0);
+        private final AtomicInteger counter = new AtomicInteger(0);
 
-		@InboundChannelAdapter(channel = "input", poller = @Poller(fixedRate = "10"))
-		public int count() {
-			return counter.incrementAndGet();
-		}
-	}
+        @InboundChannelAdapter(channel = "input", poller = @Poller(fixedRate = "10"))
+        public int count() {
+            return counter.incrementAndGet();
+        }
+    }
 }

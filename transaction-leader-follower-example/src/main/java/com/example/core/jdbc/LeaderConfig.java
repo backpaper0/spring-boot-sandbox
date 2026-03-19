@@ -1,13 +1,12 @@
 package com.example.core.jdbc;
 
-import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
+import com.example.core.annotation.LeaderDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
-
-import com.example.core.annotation.LeaderDataSource;
-import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * リーダーデータベースの設定。
@@ -16,17 +15,17 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 public class LeaderConfig {
 
-	/**
-	 * リーダーデータベースのプロパティを構築する。
-	 *
-	 * @return リーダーデータベースのプロパティ
-	 */
-	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource")
-	@LeaderDataSource
-	DataSourceProperties leaderDataSourceProperties() {
-		return new DataSourceProperties();
-	}
+    /**
+     * リーダーデータベースのプロパティを構築する。
+     *
+     * @return リーダーデータベースのプロパティ
+     */
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
+    @LeaderDataSource
+    DataSourceProperties leaderDataSourceProperties() {
+        return new DataSourceProperties();
+    }
 
     /**
      * リーダーデータベースのデータソースを構築する。
@@ -37,13 +36,16 @@ public class LeaderConfig {
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     @LeaderDataSource
     HikariDataSource leaderDataSource() {
-		// 以下のメソッドを参考にした。
-		// org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
-		DataSourceProperties properties = leaderDataSourceProperties();
-		HikariDataSource dataSource = properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
-		if (StringUtils.hasText(properties.getName())) {
-			dataSource.setPoolName(properties.getName());
-		}
-		return dataSource;
-	}
+        // 以下のメソッドを参考にした。
+        // org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
+        DataSourceProperties properties = leaderDataSourceProperties();
+        HikariDataSource dataSource = properties
+                .initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
+                .build();
+        if (StringUtils.hasText(properties.getName())) {
+            dataSource.setPoolName(properties.getName());
+        }
+        return dataSource;
+    }
 }

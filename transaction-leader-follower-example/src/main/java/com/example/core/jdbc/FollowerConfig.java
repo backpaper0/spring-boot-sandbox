@@ -1,13 +1,12 @@
 package com.example.core.jdbc;
 
-import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
+import com.example.core.annotation.FollowerDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
-
-import com.example.core.annotation.FollowerDataSource;
-import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * フォロワーデータベースの設定。
@@ -25,8 +24,8 @@ public class FollowerConfig {
     @ConfigurationProperties(prefix = "follower.datasource")
     @FollowerDataSource
     DataSourceProperties followerDataSourceProperties() {
-		return new DataSourceProperties();
-	}
+        return new DataSourceProperties();
+    }
 
     /**
      * フォロワーデータベースのデータソースを構築する。
@@ -37,13 +36,16 @@ public class FollowerConfig {
     @ConfigurationProperties(prefix = "follower.datasource.hikari")
     @FollowerDataSource
     HikariDataSource followerDataSource() {
-		// 以下のメソッドを参考にした。
-		// org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
-		DataSourceProperties properties = followerDataSourceProperties();
-		HikariDataSource dataSource = properties.initializeDataSourceBuilder().type(HikariDataSource.class).build();
-		if (StringUtils.hasText(properties.getName())) {
-			dataSource.setPoolName(properties.getName());
-		}
-		return dataSource;
-	}
+        // 以下のメソッドを参考にした。
+        // org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration.Hikari.dataSource(DataSourceProperties)
+        DataSourceProperties properties = followerDataSourceProperties();
+        HikariDataSource dataSource = properties
+                .initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
+                .build();
+        if (StringUtils.hasText(properties.getName())) {
+            dataSource.setPoolName(properties.getName());
+        }
+        return dataSource;
+    }
 }

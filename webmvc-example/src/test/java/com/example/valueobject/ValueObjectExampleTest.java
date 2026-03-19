@@ -13,37 +13,37 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class ValueObjectExampleTest {
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@BeforeEach
-	void init(WebApplicationContext wac) {
-		mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void init(WebApplicationContext wac) {
+        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void test() throws Exception {
-		mockMvc.perform(post("/valueobjects")
-				.param("id", "123")
-				.param("content", "hello")
-				.param("status", "TODO"))
-				.andExpect(status().isOk())
-				.andExpect(content().json("""
+    @Test
+    void test() throws Exception {
+        mockMvc.perform(post("/valueobjects")
+                        .param("id", "123")
+                        .param("content", "hello")
+                        .param("status", "TODO"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
 						{
 							"id": {"value": 123},
 							"content": {"value": "hello"},
 							"status": "TODO"
 						}
 						"""));
-	}
+    }
 
-	@Test
-	void invalid() throws Exception {
-		mockMvc.perform(post("/valueobjects")
-				.param("id", "xxx")
-				.param("content", "hello")
-				.param("status", "TODO"))
-				.andExpect(status().isOk())
-				.andExpect(content().json("""
+    @Test
+    void invalid() throws Exception {
+        mockMvc.perform(post("/valueobjects")
+                        .param("id", "xxx")
+                        .param("content", "hello")
+                        .param("status", "TODO"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
 						{
 							"fieldErrors": {
 								"id": ["タスクIDは数字でなければいけません。"]
@@ -51,5 +51,5 @@ public class ValueObjectExampleTest {
 							"globalErrors": []
 						}
 						"""));
-	}
+    }
 }

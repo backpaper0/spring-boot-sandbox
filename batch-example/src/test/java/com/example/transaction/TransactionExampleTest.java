@@ -11,15 +11,15 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 @SpringBootTest(webEnvironment = WebEnvironment.NONE)
 class TransactionExampleTest {
 
-	@Autowired
-	private JobLauncher jobLauncher;
+    @Autowired
+    private JobLauncher jobLauncher;
 
-	@Autowired
-	private Job job;
+    @Autowired
+    private Job job;
 
-	@Test
-	void transactionExampleJob() throws Exception {
-		JobParameters jobParameters = new JobParameters();
-		jobLauncher.run(job, jobParameters);
-	}
+    @Test
+    void transactionExampleJob() throws Exception {
+        JobParameters jobParameters = new JobParameters();
+        jobLauncher.run(job, jobParameters);
+    }
 }

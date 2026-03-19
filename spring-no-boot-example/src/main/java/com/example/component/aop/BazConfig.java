@@ -9,18 +9,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BazConfig {
 
-	private final BazInterceptor interceptor;
+    private final BazInterceptor interceptor;
 
-	public BazConfig(BazInterceptor interceptor) {
-		this.interceptor = interceptor;
-	}
+    public BazConfig(BazInterceptor interceptor) {
+        this.interceptor = interceptor;
+    }
 
-	@Bean
-	public DefaultPointcutAdvisor bazPointcutAdvisor() {
-		DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
-		Pointcut pointcut = AnnotationMatchingPointcut.forClassAnnotation(BazAop.class);
-		advisor.setPointcut(pointcut);
-		advisor.setAdvice(interceptor);
-		return advisor;
-	}
+    @Bean
+    public DefaultPointcutAdvisor bazPointcutAdvisor() {
+        DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+        Pointcut pointcut = AnnotationMatchingPointcut.forClassAnnotation(BazAop.class);
+        advisor.setPointcut(pointcut);
+        advisor.setAdvice(interceptor);
+        return advisor;
+    }
 }

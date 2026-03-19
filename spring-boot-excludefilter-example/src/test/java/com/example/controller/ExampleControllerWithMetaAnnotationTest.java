@@ -3,6 +3,7 @@ package com.example.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.example.excludefilter.ExcludeComExampleTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +12,23 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.example.excludefilter.ExcludeComExampleTest;
-
 @SpringBootTest
 @ExcludeComExampleTest
 public class ExampleControllerWithMetaAnnotationTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void test() throws Exception {
-		mvc.perform(get("/example"))
-				.andExpectAll(
-						status().isOk(),
-						jsonPath("$.message").value("Hello World"));
-	}
+    @Test
+    void test() throws Exception {
+        mvc.perform(get("/example"))
+                .andExpectAll(status().isOk(), jsonPath("$.message").value("Hello World"));
+    }
 }

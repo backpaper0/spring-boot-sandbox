@@ -6,5 +6,4 @@ import org.springframework.context.annotation.PropertySource;
 @Configuration
 @PropertySource("classpath:/foo.properties")
 @PropertySource("classpath:/bar.properties")
-public class MyPropsConfig {
-}
+public class MyPropsConfig {}

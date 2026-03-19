@@ -2,8 +2,8 @@ package com.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.entity.Foo;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,13 +14,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
 
-import com.example.entity.Foo;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class RestClientTest {
 
     @Autowired
     RestClient rest;
+
     @LocalServerPort
     int port;
 
@@ -40,8 +39,7 @@ public class RestClientTest {
         ResponseEntity<List<Foo>> actual = rest.get()
                 .uri("http://localhost:{port}/foos", port)
                 .retrieve()
-                .toEntity(new ParameterizedTypeReference<List<Foo>>() {
-                });
+                .toEntity(new ParameterizedTypeReference<List<Foo>>() {});
 
         assertEquals(HttpStatus.OK, actual.getStatusCode());
         assertEquals(List.of(new Foo(1, "fxx"), new Foo(2, "bar")), actual.getBody());

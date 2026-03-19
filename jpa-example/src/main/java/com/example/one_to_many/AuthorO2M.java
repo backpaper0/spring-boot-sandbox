@@ -1,44 +1,44 @@
 package com.example.one_to_many;
 
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class AuthorO2M {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	private String name;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-	@OneToMany
-	private Set<BookO2M> books;
+    private String name;
 
-	public Long getId() {
-		return id;
-	}
+    @OneToMany
+    private Set<BookO2M> books;
 
-	public void setId(final Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
-	public void setName(final String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Set<BookO2M> getBooks() {
-		return books;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public void setBooks(final Set<BookO2M> books) {
-		this.books = books;
-	}
+    public Set<BookO2M> getBooks() {
+        return books;
+    }
+
+    public void setBooks(final Set<BookO2M> books) {
+        this.books = books;
+    }
 }

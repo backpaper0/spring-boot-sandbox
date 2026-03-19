@@ -4,14 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.stream.IntStream;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.support.ListItemReader;
 import org.springframework.batch.infrastructure.item.support.ListItemWriter;
@@ -25,57 +24,57 @@ import org.springframework.transaction.PlatformTransactionManager;
 @SpringBootTest
 public class SimpleChunkTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
-	@Autowired
-	TestConfig config;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.job(), new JobParameters());
+    @Autowired
+    TestConfig config;
 
-		List<Integer> list = IntStream.rangeClosed(1, 10).boxed().toList();
-		assertEquals(list, config.itemWriter().getWrittenItems());
-	}
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.job(), new JobParameters());
 
-	@TestConfiguration
-	static class TestConfig {
+        List<Integer> list = IntStream.rangeClosed(1, 10).boxed().toList();
+        assertEquals(list, config.itemWriter().getWrittenItems());
+    }
 
-		@Autowired
-		private JobRepository jobRepository;
-		@Autowired
-		private PlatformTransactionManager transactionManager;
+    @TestConfiguration
+    static class TestConfig {
 
-		@Bean
-		public ListItemReader<Integer> itemReader() {
-			return new ListItemReader<>(IntStream.rangeClosed(1, 10).boxed().toList());
-		}
+        @Autowired
+        private JobRepository jobRepository;
 
-		@Bean
-		public PassThroughItemProcessor<Integer> itemProcessor() {
-			return new PassThroughItemProcessor<>();
-		}
+        @Autowired
+        private PlatformTransactionManager transactionManager;
 
-		@Bean
-		public ListItemWriter<Integer> itemWriter() {
-			return new ListItemWriter<>();
-		}
+        @Bean
+        public ListItemReader<Integer> itemReader() {
+            return new ListItemReader<>(IntStream.rangeClosed(1, 10).boxed().toList());
+        }
 
-		@Bean
-		public Step step() {
-			return new StepBuilder("test", jobRepository)
-					.<Integer, Integer> chunk(3, transactionManager)
-					.reader(itemReader())
-					.processor(itemProcessor())
-					.writer(itemWriter())
-					.build();
-		}
+        @Bean
+        public PassThroughItemProcessor<Integer> itemProcessor() {
+            return new PassThroughItemProcessor<>();
+        }
 
-		@Bean
-		public Job job() {
-			return new JobBuilder("test", jobRepository)
-					.start(step())
-					.build();
-		}
-	}
+        @Bean
+        public ListItemWriter<Integer> itemWriter() {
+            return new ListItemWriter<>();
+        }
+
+        @Bean
+        public Step step() {
+            return new StepBuilder("test", jobRepository)
+                    .<Integer, Integer>chunk(3, transactionManager)
+                    .reader(itemReader())
+                    .processor(itemProcessor())
+                    .writer(itemWriter())
+                    .build();
+        }
+
+        @Bean
+        public Job job() {
+            return new JobBuilder("test", jobRepository).start(step()).build();
+        }
+    }
 }

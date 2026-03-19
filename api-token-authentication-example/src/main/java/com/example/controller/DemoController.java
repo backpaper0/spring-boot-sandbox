@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo")
 public class DemoController {
 
-	@GetMapping
-	public Object get(Authentication authentication) {
-		return authentication;
-	}
+    @GetMapping
+    public Object get(Authentication authentication) {
+        return authentication;
+    }
 }

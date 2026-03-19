@@ -17,49 +17,59 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 @Configuration(proxyBeanMethods = false)
 public class WebSecurityConfig {
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http, SwitchUserFilter switchUserFilter) throws Exception {
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http, SwitchUserFilter switchUserFilter) throws Exception {
 
-		return http
-				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/bar").hasRole("SECRET")
-						.requestMatchers("/switch").hasAnyRole("ADMIN", "PREVIOUS_ADMINISTRATOR")
-						.requestMatchers("/login/impersonate").hasRole("ADMIN")
-						.requestMatchers("/logout/impersonate").hasRole("PREVIOUS_ADMINISTRATOR")
-						.anyRequest().authenticated())
+        return http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/bar")
+                        .hasRole("SECRET")
+                        .requestMatchers("/switch")
+                        .hasAnyRole("ADMIN", "PREVIOUS_ADMINISTRATOR")
+                        .requestMatchers("/login/impersonate")
+                        .hasRole("ADMIN")
+                        .requestMatchers("/logout/impersonate")
+                        .hasRole("PREVIOUS_ADMINISTRATOR")
+                        .anyRequest()
+                        .authenticated())
+                .formLogin(Customizer.withDefaults())
+                .addFilter(switchUserFilter)
+                .build();
+    }
 
-				.formLogin(Customizer.withDefaults())
+    @Bean
+    SwitchUserFilter switchUserFilter(UserDetailsService userDetailsService) {
+        SwitchUserFilter filter = new SwitchUserFilter();
+        filter.setTargetUrl("/switch");
+        filter.setSwitchFailureUrl("/switch?error");
+        filter.setUserDetailsService(userDetailsService);
+        filter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
+        return filter;
+    }
 
-				.addFilter(switchUserFilter)
+    @Bean
+    InMemoryUserDetailsManager users(PasswordEncoder passwordEncoder) {
+        UserDetails alice = User.withUsername("alice")
+                .password("password")
+                .roles("USER", "SECRET")
+                .passwordEncoder(passwordEncoder::encode)
+                .build();
+        UserDetails bob = User.withUsername("bob")
+                .password("password")
+                .roles("USER")
+                .passwordEncoder(passwordEncoder::encode)
+                .build();
+        UserDetails admin = User.withUsername("admin")
+                .password("password")
+                .roles("USER", "ADMIN")
+                .passwordEncoder(passwordEncoder::encode)
+                .build();
+        return new InMemoryUserDetailsManager(alice, bob, admin);
+    }
 
-				.build();
-	}
-
-	@Bean
-	SwitchUserFilter switchUserFilter(UserDetailsService userDetailsService) {
-		SwitchUserFilter filter = new SwitchUserFilter();
-		filter.setTargetUrl("/switch");
-		filter.setSwitchFailureUrl("/switch?error");
-		filter.setUserDetailsService(userDetailsService);
-		filter.setSecurityContextRepository(new HttpSessionSecurityContextRepository());
-		return filter;
-	}
-
-	@Bean
-	InMemoryUserDetailsManager users(PasswordEncoder passwordEncoder) {
-		UserDetails alice = User.withUsername("alice").password("password").roles("USER", "SECRET")
-				.passwordEncoder(passwordEncoder::encode).build();
-		UserDetails bob = User.withUsername("bob").password("password").roles("USER")
-				.passwordEncoder(passwordEncoder::encode).build();
-		UserDetails admin = User.withUsername("admin").password("password").roles("USER", "ADMIN")
-				.passwordEncoder(passwordEncoder::encode).build();
-		return new InMemoryUserDetailsManager(alice, bob, admin);
-	}
-
-	@Bean
-	Pbkdf2PasswordEncoder passwordEncoder() {
-		Pbkdf2PasswordEncoder passwordEncoder = Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
-		passwordEncoder.setEncodeHashAsBase64(true);
-		return passwordEncoder;
-	}
+    @Bean
+    Pbkdf2PasswordEncoder passwordEncoder() {
+        Pbkdf2PasswordEncoder passwordEncoder = Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+        passwordEncoder.setEncodeHashAsBase64(true);
+        return passwordEncoder;
+    }
 }

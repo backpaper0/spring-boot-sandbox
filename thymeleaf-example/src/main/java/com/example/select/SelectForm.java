@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SelectForm {
 
-	private String mySelect;
+    private String mySelect;
 }

@@ -10,23 +10,23 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties
 public class DemoApplication implements ApplicationRunner {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
-	private String hello;
+    private String hello;
 
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		System.out.println(hello);
-	}
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        System.out.println(hello);
+    }
 
-	public String getHello() {
-		return hello;
-	}
+    public String getHello() {
+        return hello;
+    }
 
-	public void setHello(String hello) {
-		this.hello = hello;
-	}
+    public void setHello(String hello) {
+        this.hello = hello;
+    }
 }

@@ -10,28 +10,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExitCodeGeneratorImpl extends JobExecutionExitCodeGenerator {
 
-	private boolean warning;
+    private boolean warning;
 
-	@Override
-	public int getExitCode() {
-		if (warning) {
-			return BatchStatus.ABANDONED.ordinal();
-		}
-		return super.getExitCode();
-	}
+    @Override
+    public int getExitCode() {
+        if (warning) {
+            return BatchStatus.ABANDONED.ordinal();
+        }
+        return super.getExitCode();
+    }
 
-	@OnSkipInRead
-	public void onSkipInRead(Throwable t) {
-		warning = true;
-	}
+    @OnSkipInRead
+    public void onSkipInRead(Throwable t) {
+        warning = true;
+    }
 
-	@OnSkipInProcess
-	public void onSkipInProcess(Object item, Throwable t) {
-		warning = true;
-	}
+    @OnSkipInProcess
+    public void onSkipInProcess(Object item, Throwable t) {
+        warning = true;
+    }
 
-	@OnSkipInWrite
-	public void onSkipInWrite(Object item, Throwable t) {
-		warning = true;
-	}
+    @OnSkipInWrite
+    public void onSkipInWrite(Object item, Throwable t) {
+        warning = true;
+    }
 }

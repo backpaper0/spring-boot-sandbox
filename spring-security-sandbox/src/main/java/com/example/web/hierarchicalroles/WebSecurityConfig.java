@@ -11,26 +11,28 @@ import org.springframework.security.web.access.intercept.RequestAuthorizationCon
 @Configuration(proxyBeanMethods = false)
 public class WebSecurityConfig {
 
-	private final RoleHierarchy roleHierarchy;
+    private final RoleHierarchy roleHierarchy;
 
-	public WebSecurityConfig(RoleHierarchy roleHierarchy) {
-		this.roleHierarchy = roleHierarchy;
-	}
+    public WebSecurityConfig(RoleHierarchy roleHierarchy) {
+        this.roleHierarchy = roleHierarchy;
+    }
 
-	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http
-				.authorizeHttpRequests(c -> c
-						.requestMatchers("/foo").access(hasAuthority("A"))
-						.requestMatchers("/bar").access(hasAuthority("B"))
-						.requestMatchers("/baz").access(hasAuthority("C"))
-						.anyRequest().denyAll())
-				.build();
-	}
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(c -> c.requestMatchers("/foo")
+                        .access(hasAuthority("A"))
+                        .requestMatchers("/bar")
+                        .access(hasAuthority("B"))
+                        .requestMatchers("/baz")
+                        .access(hasAuthority("C"))
+                        .anyRequest()
+                        .denyAll())
+                .build();
+    }
 
-	private AuthorityAuthorizationManager<RequestAuthorizationContext> hasAuthority(String role) {
-		AuthorityAuthorizationManager<RequestAuthorizationContext> aam = AuthorityAuthorizationManager.hasRole(role);
-		aam.setRoleHierarchy(roleHierarchy);
-		return aam;
-	}
+    private AuthorityAuthorizationManager<RequestAuthorizationContext> hasAuthority(String role) {
+        AuthorityAuthorizationManager<RequestAuthorizationContext> aam = AuthorityAuthorizationManager.hasRole(role);
+        aam.setRoleHierarchy(roleHierarchy);
+        return aam;
+    }
 }

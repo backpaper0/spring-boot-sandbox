@@ -1,9 +1,9 @@
 package com.example.profile;
 
 import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,29 +14,32 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class SwitchListenerByProfileExample {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Autowired
-	private SwitchListenerByProfileExampleListenerBuilder builder;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	public Step switchListenerByProfileExampleStep() {
-		return new StepBuilder("SwitchListenerByProfileExample", jobRepository)
-				.tasklet((contribution, chunkContext) -> {
-					System.out.println("Tasklet#execute");
-					return RepeatStatus.FINISHED;
-				}, transactionManager)
-				.listener(builder.build())
-				.build();
-	}
+    @Autowired
+    private SwitchListenerByProfileExampleListenerBuilder builder;
 
-	@Bean
-	public Job switchListenerByProfileExampleJob() {
-		return new JobBuilder("SwitchListenerByProfileExample", jobRepository)
-				.start(switchListenerByProfileExampleStep())
-				.build();
-	}
+    @Bean
+    public Step switchListenerByProfileExampleStep() {
+        return new StepBuilder("SwitchListenerByProfileExample", jobRepository)
+                .tasklet(
+                        (contribution, chunkContext) -> {
+                            System.out.println("Tasklet#execute");
+                            return RepeatStatus.FINISHED;
+                        },
+                        transactionManager)
+                .listener(builder.build())
+                .build();
+    }
+
+    @Bean
+    public Job switchListenerByProfileExampleJob() {
+        return new JobBuilder("SwitchListenerByProfileExample", jobRepository)
+                .start(switchListenerByProfileExampleStep())
+                .build();
+    }
 }

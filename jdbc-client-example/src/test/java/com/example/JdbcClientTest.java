@@ -4,18 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.example.entity.CudExample;
+import com.example.entity.RExample;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-
-import com.example.entity.CudExample;
-import com.example.entity.RExample;
 
 @SpringBootTest
 public class JdbcClientTest {
@@ -78,9 +76,7 @@ public class JdbcClientTest {
 
     @Test
     void delete() {
-        int actual1 = jdbc.sql("delete cud_example where id = ?")
-                .param(1)
-                .update();
+        int actual1 = jdbc.sql("delete cud_example where id = ?").param(1).update();
         assertEquals(1, actual1);
 
         Optional<CudExample> actual2 = jdbc.sql("select * from cud_example where id = ?")

@@ -8,10 +8,10 @@ import java.time.LocalDate;
  */
 public interface LocalDateProvider {
 
-	/**
-	 * 日付を返す。
-	 *
-	 * @return 日付
-	 */
-	LocalDate now();
+    /**
+     * 日付を返す。
+     *
+     * @return 日付
+     */
+    LocalDate now();
 }

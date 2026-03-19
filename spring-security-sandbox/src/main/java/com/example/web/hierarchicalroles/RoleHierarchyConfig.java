@@ -8,8 +8,8 @@ import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 @Configuration(proxyBeanMethods = false)
 public class RoleHierarchyConfig {
 
-	@Bean
-	RoleHierarchy roleHierarchy() {
-		return RoleHierarchyImpl.fromHierarchy("ROLE_A > ROLE_B > ROLE_C");
-	}
+    @Bean
+    RoleHierarchy roleHierarchy() {
+        return RoleHierarchyImpl.fromHierarchy("ROLE_A > ROLE_B > ROLE_C");
+    }
 }

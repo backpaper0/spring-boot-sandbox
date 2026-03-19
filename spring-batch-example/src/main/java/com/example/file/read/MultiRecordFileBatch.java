@@ -2,11 +2,10 @@ package com.example.file.read;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
 import org.springframework.batch.infrastructure.item.file.builder.FlatFileItemReaderBuilder;
@@ -29,79 +28,80 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class MultiRecordFileBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	@Bean
-	public FlatFileItemReader<MultiRecordItem> multiRecordFileItemReader() {
-		return new FlatFileItemReaderBuilder<MultiRecordItem>()
-				.resource(new PathResource("inputs/input-multi-record-fixed.txt"))
-				.lineMapper(multiRecordFilePatternMatchingCompositeLineMapper())
-				.saveState(false)
-				.build();
-	}
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	@Bean
-	public PatternMatchingCompositeLineMapper<MultiRecordItem> multiRecordFilePatternMatchingCompositeLineMapper() {
-		FixedLengthTokenizer headerLineTokenizer = new FixedLengthTokenizer();
-		headerLineTokenizer.setColumns(new Range(1, 1), new Range(2, 6));
-		headerLineTokenizer.setNames("classifier", "filler");
+    @Bean
+    public FlatFileItemReader<MultiRecordItem> multiRecordFileItemReader() {
+        return new FlatFileItemReaderBuilder<MultiRecordItem>()
+                .resource(new PathResource("inputs/input-multi-record-fixed.txt"))
+                .lineMapper(multiRecordFilePatternMatchingCompositeLineMapper())
+                .saveState(false)
+                .build();
+    }
 
-		FixedLengthTokenizer dataLineTokenizer = new FixedLengthTokenizer();
-		dataLineTokenizer.setColumns(new Range(1, 1), new Range(2, 4), new Range(5, 6));
-		dataLineTokenizer.setNames("classifier", "name", "number");
+    @Bean
+    public PatternMatchingCompositeLineMapper<MultiRecordItem> multiRecordFilePatternMatchingCompositeLineMapper() {
+        FixedLengthTokenizer headerLineTokenizer = new FixedLengthTokenizer();
+        headerLineTokenizer.setColumns(new Range(1, 1), new Range(2, 6));
+        headerLineTokenizer.setNames("classifier", "filler");
 
-		FixedLengthTokenizer footerLineTokenizer = new FixedLengthTokenizer();
-		footerLineTokenizer.setColumns(new Range(1, 1), new Range(2, 4), new Range(5, 6));
-		footerLineTokenizer.setNames("classifier", "count", "filler");
+        FixedLengthTokenizer dataLineTokenizer = new FixedLengthTokenizer();
+        dataLineTokenizer.setColumns(new Range(1, 1), new Range(2, 4), new Range(5, 6));
+        dataLineTokenizer.setNames("classifier", "name", "number");
 
-		Map<String, LineTokenizer> tokenizers = new HashMap<>();
-		tokenizers.put("H*", headerLineTokenizer);
-		tokenizers.put("D*", dataLineTokenizer);
-		tokenizers.put("F*", footerLineTokenizer);
+        FixedLengthTokenizer footerLineTokenizer = new FixedLengthTokenizer();
+        footerLineTokenizer.setColumns(new Range(1, 1), new Range(2, 4), new Range(5, 6));
+        footerLineTokenizer.setNames("classifier", "count", "filler");
 
-		Map<String, FieldSetMapper<MultiRecordItem>> fieldSetMappers = new HashMap<>();
-		fieldSetMappers.put("H*", fieldSetMapper(MultiRecordItem.Header.class));
-		fieldSetMappers.put("D*", fieldSetMapper(MultiRecordItem.Data.class));
-		fieldSetMappers.put("F*", fieldSetMapper(MultiRecordItem.Footer.class));
+        Map<String, LineTokenizer> tokenizers = new HashMap<>();
+        tokenizers.put("H*", headerLineTokenizer);
+        tokenizers.put("D*", dataLineTokenizer);
+        tokenizers.put("F*", footerLineTokenizer);
 
-		return new PatternMatchingCompositeLineMapper<>(tokenizers, fieldSetMappers);
-	}
+        Map<String, FieldSetMapper<MultiRecordItem>> fieldSetMappers = new HashMap<>();
+        fieldSetMappers.put("H*", fieldSetMapper(MultiRecordItem.Header.class));
+        fieldSetMappers.put("D*", fieldSetMapper(MultiRecordItem.Data.class));
+        fieldSetMappers.put("F*", fieldSetMapper(MultiRecordItem.Footer.class));
 
-	private static BeanWrapperFieldSetMapper<MultiRecordItem> fieldSetMapper(Class<? extends MultiRecordItem> type) {
-		BeanWrapperFieldSetMapper<MultiRecordItem> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
-		fieldSetMapper.setTargetType(type);
-		fieldSetMapper.setCustomEditors(Map.of(String.class, new StringTrimmerEditor(true)));
-		fieldSetMapper.setConversionService(new DefaultFormattingConversionService());
-		return fieldSetMapper;
-	}
+        return new PatternMatchingCompositeLineMapper<>(tokenizers, fieldSetMappers);
+    }
 
-	@Bean
-	public PassThroughItemProcessor<MultiRecordItem> multiRecordFileItemProcessor() {
-		return new PassThroughItemProcessor<>();
-	}
+    private static BeanWrapperFieldSetMapper<MultiRecordItem> fieldSetMapper(Class<? extends MultiRecordItem> type) {
+        BeanWrapperFieldSetMapper<MultiRecordItem> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
+        fieldSetMapper.setTargetType(type);
+        fieldSetMapper.setCustomEditors(Map.of(String.class, new StringTrimmerEditor(true)));
+        fieldSetMapper.setConversionService(new DefaultFormattingConversionService());
+        return fieldSetMapper;
+    }
 
-	@Bean
-	public ListItemWriter<MultiRecordItem> multiRecordFileItemWriter() {
-		return new ListItemWriter<>();
-	}
+    @Bean
+    public PassThroughItemProcessor<MultiRecordItem> multiRecordFileItemProcessor() {
+        return new PassThroughItemProcessor<>();
+    }
 
-	@Bean
-	public Step multiRecordFileStep() {
-		return new StepBuilder("MultiRecordFile", jobRepository)
-				.<MultiRecordItem, MultiRecordItem> chunk(10, transactionManager)
-				.reader(multiRecordFileItemReader())
-				.processor(multiRecordFileItemProcessor())
-				.writer(multiRecordFileItemWriter())
-				.build();
-	}
+    @Bean
+    public ListItemWriter<MultiRecordItem> multiRecordFileItemWriter() {
+        return new ListItemWriter<>();
+    }
 
-	@Bean
-	public Job multiRecordFileJob() {
-		return new JobBuilder("MultiRecordFile", jobRepository)
-				.start(multiRecordFileStep())
-				.build();
-	}
+    @Bean
+    public Step multiRecordFileStep() {
+        return new StepBuilder("MultiRecordFile", jobRepository)
+                .<MultiRecordItem, MultiRecordItem>chunk(10, transactionManager)
+                .reader(multiRecordFileItemReader())
+                .processor(multiRecordFileItemProcessor())
+                .writer(multiRecordFileItemWriter())
+                .build();
+    }
+
+    @Bean
+    public Job multiRecordFileJob() {
+        return new JobBuilder("MultiRecordFile", jobRepository)
+                .start(multiRecordFileStep())
+                .build();
+    }
 }

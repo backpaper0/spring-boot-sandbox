@@ -9,14 +9,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class TaskletDemoBatchTest {
 
-	@Autowired
-	JobLauncher jobLauncher;
+    @Autowired
+    JobLauncher jobLauncher;
 
-	@Autowired
-	TaskletDemoBatch config;
+    @Autowired
+    TaskletDemoBatch config;
 
-	@Test
-	void test() throws Exception {
-		jobLauncher.run(config.taskletDemoJob(), new JobParameters());
-	}
+    @Test
+    void test() throws Exception {
+        jobLauncher.run(config.taskletDemoJob(), new JobParameters());
+    }
 }

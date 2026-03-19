@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/handler-interceptor-example")
 public class HandlerInterceptorExampleController {
 
-	@GetMapping
-	public String get() {
-		return ClassNameHolder.get();
-	}
+    @GetMapping
+    public String get() {
+        return ClassNameHolder.get();
+    }
 }

@@ -8,58 +8,59 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class BeanNameExample2 {
 
-	public interface Foobar {
-		String name();
-	}
+    public interface Foobar {
+        String name();
+    }
 
-	@Component("firstFoobar")
-	public static class FirstFoobar implements Foobar {
-		@Override
-		public String name() {
-			return "FirstFoobar";
-		}
-	}
+    @Component("firstFoobar")
+    public static class FirstFoobar implements Foobar {
+        @Override
+        public String name() {
+            return "FirstFoobar";
+        }
+    }
 
-	@Component("secondFoobar")
-	public static class SecondFoobar implements Foobar {
-		@Override
-		public String name() {
-			return "SecondFoobar";
-		}
-	}
+    @Component("secondFoobar")
+    public static class SecondFoobar implements Foobar {
+        @Override
+        public String name() {
+            return "SecondFoobar";
+        }
+    }
 
-	@Component
-	@Qualifier("thisIdThirdFoobar")
-	public static class ThirdFoobar implements Foobar {
-		@Override
-		public String name() {
-			return "ThirdFoobar";
-		}
-	}
+    @Component
+    @Qualifier("thisIdThirdFoobar")
+    public static class ThirdFoobar implements Foobar {
+        @Override
+        public String name() {
+            return "ThirdFoobar";
+        }
+    }
 
-	@Component
-	public static class FoobarContainer {
+    @Component
+    public static class FoobarContainer {
 
-		//フィールド名をbean名に一致させる
-		@Autowired
-		private Foobar firstFoobar;
-		@Autowired
-		private Foobar secondFoobar;
-		//Qualifierを使った例
-		@Autowired
-		@Qualifier("thisIdThirdFoobar")
-		private Foobar thirdFoobar;
+        // フィールド名をbean名に一致させる
+        @Autowired
+        private Foobar firstFoobar;
 
-		public Foobar getFirstFoobar() {
-			return firstFoobar;
-		}
+        @Autowired
+        private Foobar secondFoobar;
+        // Qualifierを使った例
+        @Autowired
+        @Qualifier("thisIdThirdFoobar")
+        private Foobar thirdFoobar;
 
-		public Foobar getSecondFoobar() {
-			return secondFoobar;
-		}
+        public Foobar getFirstFoobar() {
+            return firstFoobar;
+        }
 
-		public Foobar getThirdFoobar() {
-			return thirdFoobar;
-		}
-	}
+        public Foobar getSecondFoobar() {
+            return secondFoobar;
+        }
+
+        public Foobar getThirdFoobar() {
+            return thirdFoobar;
+        }
+    }
 }

@@ -14,31 +14,25 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class ExampleControllerTest {
 
-	MockMvc mvc;
+    MockMvc mvc;
 
-	@Autowired
-	WebApplicationContext wac;
+    @Autowired
+    WebApplicationContext wac;
 
-	@BeforeEach
-	void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(wac).build();
-	}
+    @BeforeEach
+    void setup() {
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
 
-	@Test
-	void valid() throws Exception {
-		mvc.perform(post("/example")
-				.param("msg", "123"))
-				.andExpectAll(
-						status().isOk(),
-						jsonPath("$.msg").value("123"));
-	}
+    @Test
+    void valid() throws Exception {
+        mvc.perform(post("/example").param("msg", "123"))
+                .andExpectAll(status().isOk(), jsonPath("$.msg").value("123"));
+    }
 
-	@Test
-	void invalid() throws Exception {
-		mvc.perform(post("/example")
-				.param("msg", "1234"))
-				.andExpectAll(
-						status().isBadRequest(),
-						jsonPath("$['post.msg']").exists());
-	}
+    @Test
+    void invalid() throws Exception {
+        mvc.perform(post("/example").param("msg", "1234"))
+                .andExpectAll(status().isBadRequest(), jsonPath("$['post.msg']").exists());
+    }
 }

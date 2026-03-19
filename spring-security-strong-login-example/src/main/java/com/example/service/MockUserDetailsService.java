@@ -10,19 +10,19 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 public class MockUserDetailsService {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Bean
-	public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
+    @Bean
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
 
-		userDetailsManager.createUser(User.withUsername("mock01")
-				.password("pass")
-				.passwordEncoder(passwordEncoder::encode)
-				.authorities("AUTH1", "AUTH2", "ADMIN")
-				.build());
+        userDetailsManager.createUser(User.withUsername("mock01")
+                .password("pass")
+                .passwordEncoder(passwordEncoder::encode)
+                .authorities("AUTH1", "AUTH2", "ADMIN")
+                .build());
 
-		return userDetailsManager;
-	}
+        return userDetailsManager;
+    }
 }

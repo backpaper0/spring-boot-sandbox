@@ -1,14 +1,13 @@
 package com.example.component;
 
-import org.springframework.stereotype.Component;
-
 import com.example.component.aop.BazAop;
+import org.springframework.stereotype.Component;
 
 @Component
 @BazAop
 public class Baz {
 
-	public String name() {
-		return "baz";
-	}
+    public String name() {
+        return "baz";
+    }
 }

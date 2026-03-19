@@ -3,10 +3,9 @@ package com.example.common.accesslog;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import org.junit.jupiter.api.Test;
-
 import ch.qos.logback.access.common.spi.IAccessEvent;
 import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.Test;
 
 public class SessionIdConverterTest {
 
@@ -34,8 +33,7 @@ public class SessionIdConverterTest {
         IAccessEvent event = mock(IAccessEvent.class);
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(event.getRequest()).thenReturn(request);
-        when(request.getAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME))
-                .thenReturn(null);
+        when(request.getAttribute(SessionIdConverter.REQUEST_ATTRIBUTE_NAME)).thenReturn(null);
 
         String actual = sut.convert(event);
 

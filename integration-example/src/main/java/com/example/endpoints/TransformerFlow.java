@@ -12,26 +12,26 @@ import org.springframework.integration.dsl.IntegrationFlow;
 @EnableIntegration
 public class TransformerFlow {
 
-	@Bean
-	public DirectChannel input() {
-		return new DirectChannel();
-	}
+    @Bean
+    public DirectChannel input() {
+        return new DirectChannel();
+    }
 
-	@Bean
-	public QueueChannel output() {
-		return new QueueChannel();
-	}
+    @Bean
+    public QueueChannel output() {
+        return new QueueChannel();
+    }
 
-	@Bean
-	public IntegrationFlow flow() {
-		return IntegrationFlow.from(input())
-				.transform(upperCase())
-				.channel(output())
-				.get();
-	}
+    @Bean
+    public IntegrationFlow flow() {
+        return IntegrationFlow.from(input())
+                .transform(upperCase())
+                .channel(output())
+                .get();
+    }
 
-	@Bean
-	public GenericTransformer<String, String> upperCase() {
-		return String::toUpperCase;
-	}
+    @Bean
+    public GenericTransformer<String, String> upperCase() {
+        return String::toUpperCase;
+    }
 }

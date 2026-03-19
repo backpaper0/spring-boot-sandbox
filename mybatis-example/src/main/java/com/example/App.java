@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class App {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
+    @SuppressWarnings("resource")
+    public static void main(String[] args) {
+        SpringApplication.run(App.class, args);
+    }
 
-	@Bean
-	@ConfigurationProperties(prefix = "app.database-id")
-	public DatabaseIdProvider databaseIdProvider() {
-		return new VendorDatabaseIdProvider();
-	}
+    @Bean
+    @ConfigurationProperties(prefix = "app.database-id")
+    public DatabaseIdProvider databaseIdProvider() {
+        return new VendorDatabaseIdProvider();
+    }
 }

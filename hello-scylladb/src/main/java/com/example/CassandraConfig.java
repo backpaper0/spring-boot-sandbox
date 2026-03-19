@@ -8,11 +8,11 @@ import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 @Configuration
 public class CassandraConfig extends AbstractCassandraConfiguration {
 
-	@Autowired
-	private CassandraProperties cassandraProperties;
+    @Autowired
+    private CassandraProperties cassandraProperties;
 
-	@Override
-	protected String getKeyspaceName() {
-		return cassandraProperties.getKeyspaceName();
-	}
+    @Override
+    protected String getKeyspaceName() {
+        return cassandraProperties.getKeyspaceName();
+    }
 }

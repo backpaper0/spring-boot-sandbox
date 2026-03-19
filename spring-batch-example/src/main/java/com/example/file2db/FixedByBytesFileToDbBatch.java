@@ -1,16 +1,18 @@
 package com.example.file2db;
 
+import com.example.common.ExitCodeGeneratorImpl;
+import com.example.common.LoggingListener;
+import com.example.file2db.FixedByteLengthLineTokenizer.Column;
+import com.example.file2db.FixedByteLengthLineTokenizer.DataType;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.sql.DataSource;
-
-import org.springframework.batch.core.job.Job;
-import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.infrastructure.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.infrastructure.item.database.JdbcBatchItemWriter;
@@ -29,94 +31,89 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.PathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import com.example.common.ExitCodeGeneratorImpl;
-import com.example.common.LoggingListener;
-import com.example.file2db.FixedByteLengthLineTokenizer.Column;
-import com.example.file2db.FixedByteLengthLineTokenizer.DataType;
-
 @Configuration
 public class FixedByBytesFileToDbBatch {
 
-	@Autowired
-	private JobRepository jobRepository;
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+    @Autowired
+    private JobRepository jobRepository;
 
-	private final DataSource dataSource;
-	private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
-	private final LoggingListener loggingListener;
-	private final BeanValidatingItemProcessor<?> beanValidatingItemProcessor;
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
-	public FixedByBytesFileToDbBatch(DataSource dataSource,
-			ExitCodeGeneratorImpl exitCodeGeneratorImpl, LoggingListener loggingListener,
-			BeanValidatingItemProcessor<?> beanValidatingItemProcessor) {
-		this.dataSource = dataSource;
-		this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
-		this.loggingListener = loggingListener;
-		this.beanValidatingItemProcessor = beanValidatingItemProcessor;
-	}
+    private final DataSource dataSource;
+    private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
+    private final LoggingListener loggingListener;
+    private final BeanValidatingItemProcessor<?> beanValidatingItemProcessor;
 
-	@Bean
-	@StepScope
-	public FlatFileItemReader<Demo1> fixedByBytesFileToDbItemReader(
-			@Value("#{jobParameters['input.file'] ?: 'inputs/input-fixed-sjis.txt'}") String file) {
+    public FixedByBytesFileToDbBatch(
+            DataSource dataSource,
+            ExitCodeGeneratorImpl exitCodeGeneratorImpl,
+            LoggingListener loggingListener,
+            BeanValidatingItemProcessor<?> beanValidatingItemProcessor) {
+        this.dataSource = dataSource;
+        this.exitCodeGeneratorImpl = exitCodeGeneratorImpl;
+        this.loggingListener = loggingListener;
+        this.beanValidatingItemProcessor = beanValidatingItemProcessor;
+    }
 
-		List<Column> columns = new ArrayList<>();
-		columns.add(new Column("content", 20, DataType.STRING));
-		columns.add(new Column("id", 4, DataType.NUMBER));
-		LineTokenizer tokenizer = new FixedByteLengthLineTokenizer(columns, FixedByteLengthLineTokenizer.SHIFT_JIS);
+    @Bean
+    @StepScope
+    public FlatFileItemReader<Demo1> fixedByBytesFileToDbItemReader(
+            @Value("#{jobParameters['input.file'] ?: 'inputs/input-fixed-sjis.txt'}") String file) {
 
-		return new FlatFileItemReaderBuilder<Demo1>()
-				.resource(new PathResource(file))
-				.encoding("Windows-31J")
-				.linesToSkip(1)
-				.targetType(Demo1.class)
-				.lineTokenizer(tokenizer)
-				.saveState(false)
-				.build();
-	}
+        List<Column> columns = new ArrayList<>();
+        columns.add(new Column("content", 20, DataType.STRING));
+        columns.add(new Column("id", 4, DataType.NUMBER));
+        LineTokenizer tokenizer = new FixedByteLengthLineTokenizer(columns, FixedByteLengthLineTokenizer.SHIFT_JIS);
 
-	@Bean
-	public CompositeItemProcessor<Demo1, Demo1> fixedByBytesFileToDbItemProcessor() {
-		CompositeItemProcessor<Demo1, Demo1> processor = new CompositeItemProcessor<>();
-		processor.setDelegates(List.of(beanValidatingItemProcessor));
-		return processor;
-	}
+        return new FlatFileItemReaderBuilder<Demo1>()
+                .resource(new PathResource(file))
+                .encoding("Windows-31J")
+                .linesToSkip(1)
+                .targetType(Demo1.class)
+                .lineTokenizer(tokenizer)
+                .saveState(false)
+                .build();
+    }
 
-	@Bean
-	@StepScope
-	public JdbcBatchItemWriter<Demo1> fixedByBytesFileToDbItemWriter() {
-		return new JdbcBatchItemWriterBuilder<Demo1>()
-				.dataSource(dataSource)
-				.itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Demo1>())
-				.sql("insert into demo1 (id, content) values (:id, :content)")
-				.build();
-	}
+    @Bean
+    public CompositeItemProcessor<Demo1, Demo1> fixedByBytesFileToDbItemProcessor() {
+        CompositeItemProcessor<Demo1, Demo1> processor = new CompositeItemProcessor<>();
+        processor.setDelegates(List.of(beanValidatingItemProcessor));
+        return processor;
+    }
 
-	@Bean
-	public Step fixedByBytesFileToDbStep() {
-		return new StepBuilder("FixedByBytesFileToDb", jobRepository)
-				.<Demo1, Demo1> chunk(2, transactionManager)
+    @Bean
+    @StepScope
+    public JdbcBatchItemWriter<Demo1> fixedByBytesFileToDbItemWriter() {
+        return new JdbcBatchItemWriterBuilder<Demo1>()
+                .dataSource(dataSource)
+                .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<Demo1>())
+                .sql("insert into demo1 (id, content) values (:id, :content)")
+                .build();
+    }
 
-				.reader(fixedByBytesFileToDbItemReader(null))
-				.processor(fixedByBytesFileToDbItemProcessor())
-				.writer(fixedByBytesFileToDbItemWriter())
+    @Bean
+    public Step fixedByBytesFileToDbStep() {
+        return new StepBuilder("FixedByBytesFileToDb", jobRepository)
+                .<Demo1, Demo1>chunk(2, transactionManager)
+                .reader(fixedByBytesFileToDbItemReader(null))
+                .processor(fixedByBytesFileToDbItemProcessor())
+                .writer(fixedByBytesFileToDbItemWriter())
+                .faultTolerant()
+                .skip(FlatFileParseException.class)
+                .skip(ValidationException.class)
+                .skipLimit(10)
+                .listener(loggingListener)
+                .listener(exitCodeGeneratorImpl)
+                .build();
+    }
 
-				.faultTolerant()
-				.skip(FlatFileParseException.class)
-				.skip(ValidationException.class)
-				.skipLimit(10)
-
-				.listener(loggingListener)
-				.listener(exitCodeGeneratorImpl)
-				.build();
-	}
-
-	@Bean
-	public Job fixedByBytesFileToDbJob() {
-		return new JobBuilder("FixedByBytesFileToDb", jobRepository)
-				.start(fixedByBytesFileToDbStep())
-				.incrementer(new RunIdIncrementer())
-				.build();
-	}
+    @Bean
+    public Job fixedByBytesFileToDbJob() {
+        return new JobBuilder("FixedByBytesFileToDb", jobRepository)
+                .start(fixedByBytesFileToDbStep())
+                .incrementer(new RunIdIncrementer())
+                .build();
+    }
 }

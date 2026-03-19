@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Foobar {
 
-	public String foo() {
-		return "Foo";
-	}
+    public String foo() {
+        return "Foo";
+    }
 
-	public String bar() {
-		return "Bar";
-	}
+    public String bar() {
+        return "Bar";
+    }
 }

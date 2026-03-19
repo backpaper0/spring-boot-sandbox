@@ -11,18 +11,15 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 public class AppControllerAdvice {
 
-	@ExceptionHandler(BindException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public void handle(BindException exception) {
-	}
+    @ExceptionHandler(BindException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public void handle(BindException exception) {}
 
-	@ExceptionHandler(HttpMessageNotReadableException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public void handle(HttpMessageNotReadableException exception) {
-	}
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public void handle(HttpMessageNotReadableException exception) {}
 
-	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-	public void handle(MethodArgumentTypeMismatchException exception) {
-	}
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public void handle(MethodArgumentTypeMismatchException exception) {}
 }
