@@ -1,7 +1,7 @@
 # circuit-breaker-demo
 
 ```sh
-docker run -d --name hello -p 8000:80 -v $PWD/src/nginx:/usr/share/nginx/html nginx
+docker run -d --name httpbin -p 8000:80 kennethreitz/httpbin
 ```
 
 ```sh
@@ -9,37 +9,5 @@ mvn spring-boot:run
 ```
 
 ```sh
-while true; do curl -s localhost:8080/hello; sleep 1; done
-```
-
-```
-Hello, Nginx!
-Hello, Nginx!
-Hello, Nginx!
-Hello, Nginx!
-Hello, Nginx!
-```
-
-```sh
-docker stop hello
-```
-
-```
-Hello, Circuit Breaker!!!
-Hello, Circuit Breaker!!!
-Hello, Circuit Breaker!!!
-Hello, Circuit Breaker!!!
-Hello, Circuit Breaker!!!
-```
-
-```sh
-docker start hello
-```
-
-```
-Hello, Circuit Breaker!!!
-Hello, Circuit Breaker!!!
-Hello, Nginx!
-Hello, Nginx!
-Hello, Nginx!
+curl localhost:8080/demo -G -d status=200
 ```
