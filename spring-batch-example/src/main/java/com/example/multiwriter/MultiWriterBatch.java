@@ -21,16 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class MultiWriterBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Bean
     @StepScope
@@ -71,7 +67,7 @@ public class MultiWriterBatch {
     @Bean
     public Step multiWriterStep() {
         return new StepBuilder("MultiWriter", jobRepository)
-                .<String, String>chunk(1, transactionManager)
+                .<String, String>chunk(1)
                 .reader(multiWriterItemReader())
                 .processor(multiWriterItemProcessor())
                 .writer(multiWriterItemWriter())

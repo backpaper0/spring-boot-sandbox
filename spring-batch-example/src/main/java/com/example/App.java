@@ -9,7 +9,6 @@ public class App {
 
     public static void main(String[] args) {
 
-        @SuppressWarnings("resource")
         ConfigurableApplicationContext applicationContext = SpringApplication.run(App.class, args);
 
         int exitCode = SpringApplication.exit(applicationContext);

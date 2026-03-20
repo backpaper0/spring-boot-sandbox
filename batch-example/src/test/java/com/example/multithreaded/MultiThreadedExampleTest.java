@@ -3,7 +3,7 @@ package com.example.multithreaded;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 class MultiThreadedExampleTest {
 
     @Autowired
-    private JobLauncher jobLauncher;
+    private JobOperator jobOperator;
 
     @Autowired
     private Job job;
@@ -20,6 +20,6 @@ class MultiThreadedExampleTest {
     @Test
     void multiThreadedExampleJob() throws Exception {
         JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job, jobParameters);
+        jobOperator.run(job, jobParameters);
     }
 }

@@ -1,11 +1,11 @@
 package com.example;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jdbc.core.mapping.JdbcMappingContext;
-import org.springframework.lang.Nullable;
 
 @SpringBootApplication
 public class App implements BeanPostProcessor {

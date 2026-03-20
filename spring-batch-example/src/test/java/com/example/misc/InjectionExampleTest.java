@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.JobContext;
 import org.springframework.batch.core.scope.context.StepContext;
@@ -26,14 +26,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class InjectionExampleTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.job(), new JobParameters());
+        jobOperator.run(config.job(), new JobParameters());
     }
 
     @TestConfiguration

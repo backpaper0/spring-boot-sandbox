@@ -21,9 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.format.support.DefaultFormattingConversionService;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class MultiRecordFileBatch {
@@ -31,13 +30,10 @@ public class MultiRecordFileBatch {
     @Autowired
     private JobRepository jobRepository;
 
-    @Autowired
-    private PlatformTransactionManager transactionManager;
-
     @Bean
     public FlatFileItemReader<MultiRecordItem> multiRecordFileItemReader() {
         return new FlatFileItemReaderBuilder<MultiRecordItem>()
-                .resource(new PathResource("inputs/input-multi-record-fixed.txt"))
+                .resource(new FileSystemResource("inputs/input-multi-record-fixed.txt"))
                 .lineMapper(multiRecordFilePatternMatchingCompositeLineMapper())
                 .saveState(false)
                 .build();
@@ -91,7 +87,7 @@ public class MultiRecordFileBatch {
     @Bean
     public Step multiRecordFileStep() {
         return new StepBuilder("MultiRecordFile", jobRepository)
-                .<MultiRecordItem, MultiRecordItem>chunk(10, transactionManager)
+                .<MultiRecordItem, MultiRecordItem>chunk(10)
                 .reader(multiRecordFileItemReader())
                 .processor(multiRecordFileItemProcessor())
                 .writer(multiRecordFileItemWriter())

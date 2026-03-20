@@ -28,17 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.io.FileSystemResource;
 
 @Configuration
 public class FixedFileToDbBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private final DataSource dataSource;
     private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
@@ -63,7 +59,7 @@ public class FixedFileToDbBatch {
         FieldSetFactory fieldSetFactory = new TrimmingFieldSetFactory(
                 new DefaultFieldSetFactory(), TrimmingType.PREFIX_ZERO, TrimmingType.SUFFIX_SPACE);
         return new FlatFileItemReaderBuilder<Demo1>()
-                .resource(new PathResource(file))
+                .resource(new FileSystemResource(file))
                 .encoding("UTF-8")
                 .linesToSkip(1)
                 .targetType(Demo1.class)
@@ -96,7 +92,7 @@ public class FixedFileToDbBatch {
     @Bean
     public Step fixedFileToDbStep() {
         return new StepBuilder("FixedFileToDb", jobRepository)
-                .<Demo1, Demo1>chunk(2, transactionManager)
+                .<Demo1, Demo1>chunk(2)
                 .reader(fixedFileToDbItemReader(null))
                 .processor(fixedFileToDbItemProcessor())
                 .writer(fixedFileToDbItemWriter())

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -22,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.classify.Classifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * {@link ClassifierCompositeItemWriter}を使って1〜5と6〜10を別の
@@ -33,14 +32,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class ClassifierCompositeItemWriterTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.job(), new JobParameters());
+        jobOperator.run(config.job(), new JobParameters());
         assertEquals(
                 IntStream.rangeClosed(1, 5).boxed().toList(),
                 config.itemWriter1().getWrittenItems());
@@ -54,9 +53,6 @@ public class ClassifierCompositeItemWriterTest {
 
         @Autowired
         private JobRepository jobRepository;
-
-        @Autowired
-        private PlatformTransactionManager transactionManager;
 
         @Bean
         public ListItemReader<Integer> itemReader() {
@@ -94,7 +90,7 @@ public class ClassifierCompositeItemWriterTest {
         @Bean
         public Step step() {
             return new StepBuilder("test", jobRepository)
-                    .<Integer, Integer>chunk(3, transactionManager)
+                    .<Integer, Integer>chunk(3)
                     .reader(itemReader())
                     .processor(itemProcessor())
                     .writer(itemWriter())

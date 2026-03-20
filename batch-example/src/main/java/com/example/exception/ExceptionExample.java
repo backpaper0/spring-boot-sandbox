@@ -14,23 +14,17 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 @Import(PrintlnItemWriter.class)
 public class ExceptionExample {
 
     private final JobRepository jobRepository;
-    private final PlatformTransactionManager transactionManager;
     private final PrintlnItemWriter writer;
     private final ItemProcessor<Integer, String> processor = String::valueOf;
 
-    public ExceptionExample(
-            JobRepository jobRepository,
-            PlatformTransactionManager transactionManager,
-            final PrintlnItemWriter writer) {
+    public ExceptionExample(JobRepository jobRepository, final PrintlnItemWriter writer) {
         this.jobRepository = jobRepository;
-        this.transactionManager = transactionManager;
         this.writer = writer;
     }
 
@@ -47,7 +41,7 @@ public class ExceptionExample {
     @Bean
     public Step exceptionExampleStep1() {
         return new StepBuilder("exceptionExampleStep1", jobRepository)
-                .<Integer, String>chunk(3, transactionManager)
+                .<Integer, String>chunk(3)
                 .reader(reader1())
                 .processor(processor)
                 .writer(writer)
@@ -72,7 +66,7 @@ public class ExceptionExample {
     @Bean
     public Step exceptionExampleStep2() {
         return new StepBuilder("exceptionExampleStep2", jobRepository)
-                .<Integer, String>chunk(3, transactionManager)
+                .<Integer, String>chunk(3)
                 .reader(reader2())
                 .processor(processor)
                 .writer(writer)
@@ -97,7 +91,7 @@ public class ExceptionExample {
     @Bean
     public Step exceptionExampleStep3() {
         return new StepBuilder("exceptionExampleStep3", jobRepository)
-                .<Integer, String>chunk(3, transactionManager)
+                .<Integer, String>chunk(3)
                 .reader(reader3())
                 .processor(processor)
                 .writer(writer)
@@ -122,7 +116,7 @@ public class ExceptionExample {
     @Bean
     public Step exceptionExampleStep4() {
         return new StepBuilder("exceptionExampleStep4", jobRepository)
-                .<Integer, String>chunk(3, transactionManager)
+                .<Integer, String>chunk(3)
                 .reader(reader4())
                 .processor(processor)
                 .writer(writer)

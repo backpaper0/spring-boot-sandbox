@@ -13,16 +13,12 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class ChunkDemoBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Bean
     @StepScope
@@ -45,7 +41,7 @@ public class ChunkDemoBatch {
     @Bean
     public Step chunkDemoStep() {
         return new StepBuilder("ChunkDemo", jobRepository)
-                .<Integer, Integer>chunk(3, transactionManager)
+                .<Integer, Integer>chunk(3)
                 .reader(chunkDemoItemReader())
                 .processor(chunkDemoItemProcessor())
                 .writer(chunkDemoItemWriter())

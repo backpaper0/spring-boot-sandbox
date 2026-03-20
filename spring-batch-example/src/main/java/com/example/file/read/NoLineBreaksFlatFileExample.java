@@ -3,14 +3,15 @@ package com.example.file.read;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.RequiredArgsConstructor;
-import org.springframework.batch.core.annotation.AfterStep;
-import org.springframework.batch.core.annotation.BeforeStep;
+import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.listener.StepExecutionListener;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.StepExecution;
@@ -25,9 +26,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * 改行ではなく長さで区切る固定長ファイルを読み込む。
@@ -43,14 +43,11 @@ public class NoLineBreaksFlatFileExample {
     @Autowired
     private JobRepository jobRepository;
 
-    @Autowired
-    private PlatformTransactionManager transactionManager;
-
     @Bean
     @StepScope
     public FlatFileItemReader<ExampleItem> noLineBreaksFlatFileExampleReader(LineSplitter lineSplitter) {
         return new FlatFileItemReaderBuilder<ExampleItem>()
-                .resource(new PathResource(lineSplitter.getPath()))
+                .resource(new FileSystemResource(lineSplitter.getPath()))
                 .encoding("UTF-8")
                 .saveState(false)
                 .targetType(ExampleItem.class)
@@ -74,7 +71,7 @@ public class NoLineBreaksFlatFileExample {
     @Bean
     public Step noLineBreaksFlatFileExampleStep(LineSplitter lineSplitter) {
         return new StepBuilder("noLineBreaksFlatFileExampleStep", jobRepository)
-                .<ExampleItem, ExampleItem>chunk(1, transactionManager)
+                .<ExampleItem, ExampleItem>chunk(1)
                 .listener(lineSplitter)
                 .reader(noLineBreaksFlatFileExampleReader(null))
                 .processor(noLineBreaksFlatFileExampleProcessor())
@@ -96,21 +93,22 @@ public class NoLineBreaksFlatFileExample {
      */
     @Component
     @StepScope
-    public static class LineSplitter implements InitializingBean {
+    public static class LineSplitter implements InitializingBean, StepExecutionListener {
 
         private Path path;
 
         @Override
         public void afterPropertiesSet() throws Exception {
             path = Files.createTempFile("oneline-splitted-", ".txt");
+            System.out.println(path);
         }
 
         public Path getPath() {
             return path;
         }
 
-        @BeforeStep
-        public void beforeStep(StepExecution stepExecution) throws IOException {
+        @Override
+        public void beforeStep(StepExecution stepExecution) {
             try (BufferedReader in = Files.newBufferedReader(Path.of("inputs/oneline.txt"));
                     BufferedWriter out = Files.newBufferedWriter(path)) {
                 char[] cs = new char[8];
@@ -119,12 +117,18 @@ public class NoLineBreaksFlatFileExample {
                     out.write(cs, 0, i);
                     out.newLine();
                 }
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
             }
         }
 
-        @AfterStep
-        public void afterStep(StepExecution stepExecution) throws IOException {
-            Files.deleteIfExists(Path.of("target/oneline-splitted.txt"));
+        @Override
+        public ExitStatus afterStep(StepExecution stepExecution) {
+            try {
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+            }
+            return null;
         }
     }
 

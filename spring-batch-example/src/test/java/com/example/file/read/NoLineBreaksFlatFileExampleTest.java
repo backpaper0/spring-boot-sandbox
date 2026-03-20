@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,14 +13,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class NoLineBreaksFlatFileExampleTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     NoLineBreaksFlatFileExample config;
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.noLineBreaksFlatFileExampleJob(), new JobParameters());
+        jobOperator.run(config.noLineBreaksFlatFileExampleJob(), new JobParameters());
 
         List<? extends ExampleItem> items =
                 config.noLineBreaksFlatFileExampleWriter().getWrittenItems();

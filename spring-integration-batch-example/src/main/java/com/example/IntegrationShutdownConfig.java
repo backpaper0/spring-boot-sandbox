@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
-import org.springframework.integration.jdbc.JdbcPollingChannelAdapter;
+import org.springframework.integration.jdbc.inbound.JdbcPollingChannelAdapter;
 import org.springframework.jdbc.core.JdbcOperations;
 
 @Configuration

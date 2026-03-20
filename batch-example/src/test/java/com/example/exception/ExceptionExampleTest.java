@@ -3,7 +3,7 @@ package com.example.exception;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 class ExceptionExampleTest {
 
     @Autowired
-    private JobLauncher jobLauncher;
+    private JobOperator jobOperator;
 
     @Autowired
     @Qualifier("job1")
@@ -34,24 +34,24 @@ class ExceptionExampleTest {
     @Test
     void exceptionExampleJob1() throws Exception {
         JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job1, jobParameters);
+        jobOperator.run(job1, jobParameters);
     }
 
     @Test
     void exceptionExampleJob2() throws Exception {
         JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job2, jobParameters);
+        jobOperator.run(job2, jobParameters);
     }
 
     @Test
     void exceptionExampleJob3() throws Exception {
         JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job3, jobParameters);
+        jobOperator.run(job3, jobParameters);
     }
 
     @Test
     void exceptionExampleJob4() throws Exception {
         JobParameters jobParameters = new JobParameters();
-        jobLauncher.run(job4, jobParameters);
+        jobOperator.run(job4, jobParameters);
     }
 }

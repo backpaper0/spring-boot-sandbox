@@ -24,17 +24,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.io.FileSystemResource;
 
 @Configuration
 public class FileToDbBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private final DataSource dataSource;
     private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
@@ -57,7 +53,7 @@ public class FileToDbBatch {
     public FlatFileItemReader<Demo1> fileToDbItemReader(
             @Value("#{jobParameters['input.file'] ?: 'inputs/input-invalid.csv'}") String file) {
         return new FlatFileItemReaderBuilder<Demo1>()
-                .resource(new PathResource(file))
+                .resource(new FileSystemResource(file))
                 .encoding("UTF-8")
                 .linesToSkip(1)
                 .targetType(Demo1.class)
@@ -87,7 +83,7 @@ public class FileToDbBatch {
     @Bean
     public Step fileToDbStep() {
         return new StepBuilder("FileToDb", jobRepository)
-                .<Demo1, Demo1>chunk(2, transactionManager)
+                .<Demo1, Demo1>chunk(2)
                 .reader(fileToDbItemReader(null))
                 .processor(fileToDbItemProcessor())
                 .writer(fileToDbItemWriter())

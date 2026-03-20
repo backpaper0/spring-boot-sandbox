@@ -14,22 +14,16 @@ import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.task.SyncTaskExecutor;
-import org.springframework.core.task.TaskExecutor;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class MultiThreadDemoBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Bean
     @StepScope
@@ -50,27 +44,27 @@ public class MultiThreadDemoBatch {
     }
 
     @Bean
-    public TaskExecutor multiThreadDemoTaskExecutor() {
+    public AsyncTaskExecutor multiThreadDemoTaskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(Runtime.getRuntime().availableProcessors() - 1);
         return taskExecutor;
     }
 
     @Bean
-    public Step multiThreadDemoStep(@Value("${app.multithread.enabled:true}") boolean enabledMultiThread) {
+    public Step multiThreadDemoStep() {
         return new StepBuilder("MultiThreadDemo", jobRepository)
-                .<Integer, Integer>chunk(3, transactionManager)
+                .<Integer, Integer>chunk(3)
                 .reader(new SleepItemReader<>(multiThreadDemoItemReader(), 1000))
                 .processor(new SleepItemProcessor<>(multiThreadDemoItemProcessor(), 1000))
                 .writer(new SleepItemWriter<>(multiThreadDemoItemWriter(), 1000))
-                .taskExecutor(enabledMultiThread ? multiThreadDemoTaskExecutor() : new SyncTaskExecutor())
+                .taskExecutor(multiThreadDemoTaskExecutor())
                 .build();
     }
 
     @Bean
     public Job multiThreadDemoJob() {
         return new JobBuilder("MultiThreadDemo", jobRepository)
-                .start(multiThreadDemoStep(false))
+                .start(multiThreadDemoStep())
                 .incrementer(new RunIdIncrementer())
                 .build();
     }

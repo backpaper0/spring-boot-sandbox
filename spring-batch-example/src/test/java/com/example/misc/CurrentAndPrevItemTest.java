@@ -13,7 +13,7 @@ import org.springframework.batch.core.job.JobExecution;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -24,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * 1つ前のItemを参照する{@link ItemProcessor}の例。
@@ -34,7 +33,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class CurrentAndPrevItemTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
@@ -52,18 +51,18 @@ public class CurrentAndPrevItemTest {
     @Test
     void test() throws Exception {
         config.setItems(List.of(1, 2, 3, 4, 5));
-        jobLauncher.run(config.job(), jobParameters);
+        jobOperator.run(config.job(), jobParameters);
         assertEquals(config.itemWriter().getWrittenItems(), List.of(1, 2, 3, 4, 5));
     }
 
     @Test
     void test2() throws Exception {
         config.setItems(List.of(1, 2, 4, 3, 5));
-        JobExecution jobExecution = jobLauncher.run(config.job(), jobParameters);
+        JobExecution jobExecution = jobOperator.run(config.job(), jobParameters);
 
         assertEquals(1, jobExecution.getAllFailureExceptions().size());
         Throwable exception = jobExecution.getAllFailureExceptions().get(0);
-        assertEquals("ERROR!", exception.getMessage());
+        assertEquals("ERROR!", exception.getCause().getMessage());
     }
 
     @TestConfiguration
@@ -71,9 +70,6 @@ public class CurrentAndPrevItemTest {
 
         @Autowired
         private JobRepository jobRepository;
-
-        @Autowired
-        private PlatformTransactionManager transactionManager;
 
         @Setter
         private List<Integer> items;
@@ -98,7 +94,7 @@ public class CurrentAndPrevItemTest {
         @Bean
         public Step step() {
             return new StepBuilder("test", jobRepository)
-                    .<Integer, Integer>chunk(3, transactionManager)
+                    .<Integer, Integer>chunk(3)
                     .reader(itemReader())
                     .processor(itemProcessor())
                     .writer(itemWriter())

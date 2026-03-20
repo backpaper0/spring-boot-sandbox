@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -23,21 +23,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.PathResource;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.io.FileSystemResource;
 
 @SpringBootTest
 public class ItemCountAwareTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.job(), new JobParameters());
+        jobOperator.run(config.job(), new JobParameters());
 
         List<MyItem> expected = List.of(
                 new MyItem(1, "foo"),
@@ -72,14 +71,11 @@ public class ItemCountAwareTest {
         @Autowired
         private JobRepository jobRepository;
 
-        @Autowired
-        private PlatformTransactionManager transactionManager;
-
         @Bean
         public FlatFileItemReader<MyItem> itemReader() {
             return new FlatFileItemReaderBuilder<MyItem>()
                     .saveState(false)
-                    .resource(new PathResource("inputs/foobar.txt"))
+                    .resource(new FileSystemResource("inputs/foobar.txt"))
                     .delimited()
                     .delimiter(",")
                     .names("value")
@@ -100,7 +96,7 @@ public class ItemCountAwareTest {
         @Bean
         public Step step() {
             return new StepBuilder("test", jobRepository)
-                    .<MyItem, MyItem>chunk(3, transactionManager)
+                    .<MyItem, MyItem>chunk(3)
                     .reader(itemReader())
                     .processor(itemProcessor())
                     .writer(itemWriter())

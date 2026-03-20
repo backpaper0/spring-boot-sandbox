@@ -15,19 +15,16 @@ import org.springframework.batch.infrastructure.item.ItemReader;
 import org.springframework.batch.infrastructure.item.ItemWriter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.task.TaskExecutor;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootApplication
 public class MultiThreadedExample {
 
     private final JobRepository jobRepository;
-    private final PlatformTransactionManager transactionManager;
 
-    public MultiThreadedExample(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public MultiThreadedExample(JobRepository jobRepository) {
         this.jobRepository = jobRepository;
-        this.transactionManager = transactionManager;
     }
 
     @Bean
@@ -40,7 +37,7 @@ public class MultiThreadedExample {
     @Bean
     public Step multiThreadedStep() {
         return new StepBuilder(MultiThreadedExample.class.getSimpleName() + "Step", jobRepository)
-                .<Integer, Integer>chunk(3, transactionManager)
+                .<Integer, Integer>chunk(3)
                 .reader(multiThreadedReader())
                 .writer(multiThreadedWriter())
                 .taskExecutor(multiThreadedTaskExecutor())
@@ -48,7 +45,7 @@ public class MultiThreadedExample {
     }
 
     @Bean
-    public TaskExecutor multiThreadedTaskExecutor() {
+    public AsyncTaskExecutor multiThreadedTaskExecutor() {
         ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
         taskExecutor.setCorePoolSize(2);
         taskExecutor.setMaxPoolSize(2);

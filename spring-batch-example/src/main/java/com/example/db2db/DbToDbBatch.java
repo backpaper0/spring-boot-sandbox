@@ -21,16 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class DbToDbBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private final DataSource dataSource;
     private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
@@ -72,7 +68,7 @@ public class DbToDbBatch {
     @Bean
     public Step dbToDbStep() {
         return new StepBuilder("DbToDb", jobRepository)
-                .<Integer, Demo2>chunk(7, transactionManager)
+                .<Integer, Demo2>chunk(7)
                 .reader(dbToDbItemReader())
                 .processor(dbToDbItemProcessor)
                 .writer(dbToDbItemWriter())

@@ -21,9 +21,9 @@ public class WebSecurityConfig {
             HttpSecurity http, LoginUserInfo loginUserInfo, DefaultHttpSecurityExpressionHandler expressionHandler)
             throws Exception {
 
-        WebExpressionAuthorizationManager passedTwoFactorAuth =
-                new WebExpressionAuthorizationManager("isAuthenticated() and @loginUserInfo.isPassedTwoFactorAuth()");
-        passedTwoFactorAuth.setExpressionHandler(expressionHandler);
+        WebExpressionAuthorizationManager passedTwoFactorAuth = WebExpressionAuthorizationManager.withExpressionHandler(
+                        expressionHandler)
+                .expression("isAuthenticated() and @loginUserInfo.isPassedTwoFactorAuth()");
 
         return http.authorizeHttpRequests(c -> c
 

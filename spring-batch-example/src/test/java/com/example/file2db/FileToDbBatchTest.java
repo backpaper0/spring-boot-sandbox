@@ -6,7 +6,7 @@ import com.github.database.rider.junit5.api.DBRider;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.batch.core.job.parameters.JobParametersBuilder;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class FileToDbBatchTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     FileToDbBatch config;
@@ -28,6 +28,6 @@ public class FileToDbBatchTest {
                 .addString("input.file", "inputs/input-valid.csv")
                 .toJobParameters();
 
-        jobLauncher.run(config.fileToDbJob(), jobParameters);
+        jobOperator.run(config.fileToDbJob(), jobParameters);
     }
 }

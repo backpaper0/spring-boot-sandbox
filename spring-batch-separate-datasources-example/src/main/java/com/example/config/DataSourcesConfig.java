@@ -26,7 +26,6 @@ public class DataSourcesConfig {
                 .build();
     }
 
-    @SuppressWarnings("resource")
     @Bean
     @AppDataSource
     public DataSourceTransactionManager dataSourceTransactionManager() {

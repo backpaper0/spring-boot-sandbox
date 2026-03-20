@@ -17,17 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class ExampleBatchConfig {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    @AppDataSource
-    private PlatformTransactionManager transactionManager;
 
     @Autowired
     private DataSource dataSource;
@@ -62,7 +57,7 @@ public class ExampleBatchConfig {
     @Bean
     public Step exampleStep() {
         return new StepBuilder("example", jobRepository)
-                .<Integer, Example>chunk(properties.getChunkSize(), transactionManager)
+                .<Integer, Example>chunk(properties.getChunkSize())
                 .reader(exampleItemReader())
                 .processor(exampleItemProcessor)
                 .writer(exampleItemWriter())

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -19,20 +19,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @SpringBootTest
 public class SimpleChunkTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.job(), new JobParameters());
+        jobOperator.run(config.job(), new JobParameters());
 
         List<Integer> list = IntStream.rangeClosed(1, 10).boxed().toList();
         assertEquals(list, config.itemWriter().getWrittenItems());
@@ -43,9 +42,6 @@ public class SimpleChunkTest {
 
         @Autowired
         private JobRepository jobRepository;
-
-        @Autowired
-        private PlatformTransactionManager transactionManager;
 
         @Bean
         public ListItemReader<Integer> itemReader() {
@@ -65,7 +61,7 @@ public class SimpleChunkTest {
         @Bean
         public Step step() {
             return new StepBuilder("test", jobRepository)
-                    .<Integer, Integer>chunk(3, transactionManager)
+                    .<Integer, Integer>chunk(3)
                     .reader(itemReader())
                     .processor(itemProcessor())
                     .writer(itemWriter())

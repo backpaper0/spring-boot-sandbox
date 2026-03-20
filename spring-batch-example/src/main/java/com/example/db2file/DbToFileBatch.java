@@ -24,16 +24,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class DbToFileBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private final DataSource dataSource;
     private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
@@ -81,7 +77,7 @@ public class DbToFileBatch {
     @Bean
     public Step dbToFileStep() {
         return new StepBuilder("DbToFile", jobRepository)
-                .<Demo3, Demo3>chunk(2, transactionManager)
+                .<Demo3, Demo3>chunk(2)
                 .reader(dbToFileItemReader())
                 .processor(dbToFileItemProcessor())
                 .writer(dbToFileItemWriter(null))

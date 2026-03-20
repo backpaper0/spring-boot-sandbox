@@ -17,7 +17,7 @@ import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.job.Job;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.parameters.JobParameters;
-import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.listener.StepExecutionListener;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.Step;
@@ -33,9 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.io.PathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.WritableResource;
-import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * {@link RandomAccessFile}を使って後から固定長ファイルのヘッダーに処理件数を書き込む例。
@@ -45,16 +44,16 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class FlatFileWriteCountToHeaderExampleTest {
 
     @Autowired
-    JobLauncher jobLauncher;
+    JobOperator jobOperator;
 
     @Autowired
     TestConfig config;
 
-    static final WritableResource resource = new PathResource("target/output.txt");
+    static final WritableResource resource = new FileSystemResource("target/output.txt");
 
     @Test
     void test() throws Exception {
-        jobLauncher.run(config.job(), new JobParameters());
+        jobOperator.run(config.job(), new JobParameters());
 
         byte[] b;
         try (InputStream in = resource.getInputStream()) {
@@ -114,9 +113,6 @@ public class FlatFileWriteCountToHeaderExampleTest {
         @Autowired
         private JobRepository jobRepository;
 
-        @Autowired
-        private PlatformTransactionManager transactionManager;
-
         @Bean
         public IteratorItemReader<ExampleItem> itemReader() {
             Iterator<ExampleItem> iterator =
@@ -151,7 +147,7 @@ public class FlatFileWriteCountToHeaderExampleTest {
         @Bean
         public Step step() {
             return new StepBuilder("test", jobRepository)
-                    .<ExampleItem, ExampleItem>chunk(3, transactionManager)
+                    .<ExampleItem, ExampleItem>chunk(3)
                     .reader(itemReader())
                     .processor(itemProcessor())
                     .writer(itemWriter())

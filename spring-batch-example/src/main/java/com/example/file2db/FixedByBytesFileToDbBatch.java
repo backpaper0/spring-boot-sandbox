@@ -28,17 +28,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.PathResource;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.core.io.FileSystemResource;
 
 @Configuration
 public class FixedByBytesFileToDbBatch {
 
     @Autowired
     private JobRepository jobRepository;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     private final DataSource dataSource;
     private final ExitCodeGeneratorImpl exitCodeGeneratorImpl;
@@ -67,7 +63,7 @@ public class FixedByBytesFileToDbBatch {
         LineTokenizer tokenizer = new FixedByteLengthLineTokenizer(columns, FixedByteLengthLineTokenizer.SHIFT_JIS);
 
         return new FlatFileItemReaderBuilder<Demo1>()
-                .resource(new PathResource(file))
+                .resource(new FileSystemResource(file))
                 .encoding("Windows-31J")
                 .linesToSkip(1)
                 .targetType(Demo1.class)
@@ -96,7 +92,7 @@ public class FixedByBytesFileToDbBatch {
     @Bean
     public Step fixedByBytesFileToDbStep() {
         return new StepBuilder("FixedByBytesFileToDb", jobRepository)
-                .<Demo1, Demo1>chunk(2, transactionManager)
+                .<Demo1, Demo1>chunk(2)
                 .reader(fixedByBytesFileToDbItemReader(null))
                 .processor(fixedByBytesFileToDbItemProcessor())
                 .writer(fixedByBytesFileToDbItemWriter())
