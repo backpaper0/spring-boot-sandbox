@@ -1,14 +1,10 @@
-demo:
-  endpoint: http://localhost:8000
-
+# 設定できる項目とデフォルト値は次のWebページを参照:
+# https://resilience4j.readme.io/docs/circuitbreaker#create-and-configure-a-circuitbreaker
 resilience4j.circuitbreaker:
   instances:
-    demo:
-      # 直近10回で50%失敗したらOPENへ移行する
+    demo1:
       sliding-window-type: count-based
-      sliding-window-size: 10
-      failure-rate-threshold: 50
-      # OPENから10秒経過したらHALF_OPENへ移行する
-      wait-duration-in-open-state: 10s
-      # HALF_OPEN状態で10回処理したらOPENまたはCLOSEDへ移行する
-      permitted-number-of-calls-in-half-open-state: 10
+    demo2:
+      sliding-window-type: count-based
+    demo3:
+      sliding-window-type: count-based
