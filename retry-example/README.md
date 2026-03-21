@@ -1,4 +1,3 @@
-```sh
-curl localhost:8080 -d count=2
-```
+# Retry example
 
+Spring Framework 7から本体(`spring-context`)に入ったリトライ機能を試す。
