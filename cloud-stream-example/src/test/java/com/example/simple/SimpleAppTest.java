@@ -1,10 +1,11 @@
 package com.example.simple;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.function.context.FunctionProperties;
 import org.springframework.cloud.stream.binder.test.InputDestination;
 import org.springframework.cloud.stream.binder.test.OutputDestination;
 import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
@@ -19,9 +20,9 @@ class SimpleAppTest {
             var input = context.getBean(InputDestination.class);
             var output = context.getBean(OutputDestination.class);
             input.send(MessageBuilder.withPayload("Hello World").build(), "uppercase-in-0");
-            assertArrayEquals(
-                    "HELLO WORLD".getBytes(),
-                    output.receive(0, "uppercase-out-0").getPayload());
+            assertEquals(
+                    "HELLO WORLD",
+                    new String(output.receive(0, "uppercase-out-0").getPayload()));
         }
     }
 
@@ -31,8 +32,8 @@ class SimpleAppTest {
             var input = context.getBean(InputDestination.class);
             var output = context.getBean(OutputDestination.class);
             input.send(MessageBuilder.withPayload("Hello World").build(), "reverse-in-0");
-            assertArrayEquals(
-                    "dlroW olleH".getBytes(), output.receive(0, "reverse-out-0").getPayload());
+            assertEquals(
+                    "dlroW olleH", new String(output.receive(0, "reverse-out-0").getPayload()));
         }
     }
 
@@ -44,18 +45,17 @@ class SimpleAppTest {
             var input = context.getBean(InputDestination.class);
             var output = context.getBean(OutputDestination.class);
             input.send(MessageBuilder.withPayload("Hello World").build(), "myInput");
-            assertArrayEquals(
-                    "HELLO WORLD".getBytes(), output.receive(0, "myOutput").getPayload());
+            assertEquals("HELLO WORLD", new String(output.receive(0, "myOutput").getPayload()));
         }
     }
 
     @Test
-    void testStreamBridge() throws Exception {
+    void testStreamBridge() {
         try (var context = runApp()) {
             var exampleService = context.getBean(ExampleService.class);
             exampleService.greeting();
             var output = context.getBean(OutputDestination.class);
-            assertArrayEquals("Hi!".getBytes(), output.receive(0, "greeting").getPayload());
+            assertEquals("Hi!", new String(output.receive(0, "greeting").getPayload()));
         }
     }
 
@@ -69,20 +69,35 @@ class SimpleAppTest {
             var input = context.getBean(InputDestination.class);
             var output = context.getBean(OutputDestination.class);
             input.send(MessageBuilder.withPayload("Hello World").build(), "myInput");
-            assertArrayEquals(
-                    "DLROW OLLEH".getBytes(), output.receive(0, "myOutput").getPayload());
+            assertEquals("DLROW OLLEH", new String(output.receive(0, "myOutput").getPayload()));
         }
     }
 
     @Test
-    void testComposeUppercaseReverse() throws Exception {
+    void testComposeUppercaseReverse() {
         try (var context = runApp(false, "--spring.cloud.function.definition=uppercase|reverse")) {
             var input = context.getBean(InputDestination.class);
             var output = context.getBean(OutputDestination.class);
             input.send(MessageBuilder.withPayload("Hello World").build(), "uppercasereverse-in-0");
-            assertArrayEquals(
-                    "DLROW OLLEH".getBytes(),
-                    output.receive(0, "uppercasereverse-out-0").getPayload());
+            assertEquals(
+                    "DLROW OLLEH",
+                    new String(output.receive(0, "uppercasereverse-out-0").getPayload()));
+        }
+    }
+
+    @Test
+    void testRouting() {
+        try (var context = runApp(false, "--spring.cloud.stream.function.routing.enabled=true")) {
+            var input = context.getBean(InputDestination.class);
+            var output = context.getBean(OutputDestination.class);
+            input.send(MessageBuilder.withPayload("Hello Uppercase")
+                    .setHeader(FunctionProperties.FUNCTION_DEFINITION, "uppercase")
+                    .build());
+            input.send(MessageBuilder.withPayload("Hello Reverse")
+                    .setHeader(FunctionProperties.FUNCTION_DEFINITION, "reverse")
+                    .build());
+            assertEquals("HELLO UPPERCASE", new String(output.receive().getPayload()));
+            assertEquals("esreveR olleH", new String(output.receive().getPayload()));
         }
     }
 
