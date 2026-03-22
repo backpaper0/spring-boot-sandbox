@@ -59,9 +59,42 @@ class SimpleAppTest {
         }
     }
 
+    @Test
+    void testUppercaseReverse() {
+        try (var context = runApp(
+                "--spring.cloud.stream.bindings.uppercase-in-0.destination=myInput",
+                "--spring.cloud.stream.bindings.uppercase-out-0.destination=uppercase-reverse",
+                "--spring.cloud.stream.bindings.reverse-in-0.destination=uppercase-reverse",
+                "--spring.cloud.stream.bindings.reverse-out-0.destination=myOutput")) {
+            var input = context.getBean(InputDestination.class);
+            var output = context.getBean(OutputDestination.class);
+            input.send(MessageBuilder.withPayload("Hello World").build(), "myInput");
+            assertArrayEquals(
+                    "DLROW OLLEH".getBytes(), output.receive(0, "myOutput").getPayload());
+        }
+    }
+
+    @Test
+    void testComposeUppercaseReverse() throws Exception {
+        try (var context = runApp(false, "--spring.cloud.function.definition=uppercase|reverse")) {
+            var input = context.getBean(InputDestination.class);
+            var output = context.getBean(OutputDestination.class);
+            input.send(MessageBuilder.withPayload("Hello World").build(), "uppercasereverse-in-0");
+            assertArrayEquals(
+                    "DLROW OLLEH".getBytes(),
+                    output.receive(0, "uppercasereverse-out-0").getPayload());
+        }
+    }
+
     private static ConfigurableApplicationContext runApp(String... args) {
-        var arguments = Arrays.copyOf(args, args.length + 1);
-        arguments[arguments.length - 1] = "--spring.cloud.function.definition=uppercase;reverse";
+        return runApp(true, args);
+    }
+
+    private static ConfigurableApplicationContext runApp(boolean useDefaultProperties, String... args) {
+        var arguments = useDefaultProperties ? Arrays.copyOf(args, args.length + 1) : args;
+        if (useDefaultProperties) {
+            arguments[arguments.length - 1] = "--spring.cloud.function.definition=uppercase;reverse";
+        }
         return new SpringApplicationBuilder(TestChannelBinderConfiguration.getCompleteConfiguration(SimpleApp.class))
                 .run(arguments);
     }
