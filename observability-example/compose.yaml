@@ -1,18 +1,4 @@
 services:
-  zipkin:
-    image: openzipkin/zipkin
-    ports:
-      - "9411:9411"
-
-  prometheus:
-    image: prom/prometheus
-    ports:
-      - "9090:9090"
-    volumes:
-      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-
-  grafana:
-    image: grafana/grafana-oss
-    ports:
-      - "3000:3000"
-
+  grafana-lgtm:
+    image: grafana/otel-lgtm
+    ports: ["3000:3000", "4317:4317", "4318:4318"]
