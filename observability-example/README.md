@@ -4,8 +4,7 @@
 docker compose up -d
 ```
 
-- [Zipkin](http://localhost:9411/)
-- [Prometheus](http://localhost:9090/)
+- [Grafana LGTM](http://localhost:3000/)
 
 ```sh
 mvn spring-boot:run
@@ -14,4 +13,3 @@ mvn spring-boot:run
 ```sh
 curl -s localhost:8080
 ```
-
