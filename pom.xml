@@ -32,6 +32,7 @@
 		<module>aop-logging-simple-example</module>
 		<module>api-example</module>
 		<module>api-token-authentication-example</module>
+		<module>api-versioning-example</module>
 		<module>batch-example</module>
 		<module>byteman-example</module>
 		<module>cache-example</module>
