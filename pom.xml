@@ -57,6 +57,7 @@
 		<module>mybatis-executor-switch-example</module>
 		<module>observability-example/observability-example-web</module>
 		<module>oidc-example</module>
+		<module>paging-support</module>
 		<module>postgres-rls-example</module>
 		<module>profile-demo</module>
 		<module>progress-sample</module>
