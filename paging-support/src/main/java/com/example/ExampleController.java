@@ -2,12 +2,17 @@ package com.example;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ExampleController {
+
+    @Autowired
+    private ExampleRepository repository;
 
     @GetMapping("/list")
     public Object list(Pageable pageable) {
@@ -19,5 +24,11 @@ public class ExampleController {
                 "pageNumber", pageable.getPageNumber(),
                 "pageSize", pageable.getPageSize(),
                 "sort", sort);
+    }
+
+    @GetMapping("/examples")
+    public PagedModel<Example> pagedModel(Pageable pageable) {
+        var page = repository.findAll(pageable);
+        return new PagedModel<>(page);
     }
 }
